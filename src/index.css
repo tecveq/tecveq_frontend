@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@import "react-big-calendar/lib/css/react-big-calendar.css";
+@import "react-big-calendar/lib/addons/dragAndDrop/styles";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.blur {
+  filter: blur(5px);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #bdbdbd #f5f5f5;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #bdbdbd;
+  border-radius: 4px;
+  border: 1px solid #f5f5f5;
+}
+
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}
+
+.custom-shadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.rbc-allday-cell {
+  display: none !important;
+}
+
+.rbc-time-view {
+  /* border: none !important; */
+}
+.rbc-event {
+  display: flex !important;
+  justify-content: "center" !important;
+  flex: 1 !important;
+  min-height: 130px !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+}
+
+
+.rbc-event .rbc-event-label {
+  display: none !important;
+}
+
+.rbc-time-slot {
+  /* border: none !important; */
+}
+
+.rbc-time-gutter {
+  display: none !important;
+}
+
+.rbc-time-header-cell {
+  display: flex !important;
+  height: 90px !important;
+}
+
+.rbc-header {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-bottom: none !important;
+}
+.rbc-time-header-gutter {
+  width: 110px !important;
+}
+
+.rbc-events-container {
+  margin: 0 !important;
+}
+
+
+.rbc-time-slot {
+  border: none !important;
+}
+
+.register-scrollbar {
+  /* width: 100%; */
+  padding: 0 5px;
+}
+
+.register-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.register-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.register-scrollbar::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 5px solid #f3f3f3;
+  border-top: 10px solid #A41D30;
+  border-radius: 100%;
+  position: relative;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg) scale(0.5);
+  }
+  50%{
+      transform: rotate(180deg) scale(0.5);
+  }
+  100% {
+      transform: rotate(360deg) scale(0.5);
+  }
+}

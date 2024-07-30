@@ -1,0 +1,73 @@
+import React, { useEffect } from "react";
+import LargeLoader from "../../../utils/LargeLoader";
+import Navbar from "../../../components/Student/Dashboard/Navbar";
+import Deliverables from "../../../components/Student/Dashboard/Deliverables";
+import Announcements from "../../../components/Student/Dashboard/Announcements";
+import SubjectsEnrolled from "../../../components/Student/Dashboard/SubjectsEnrolled";
+import ScheduledClasses from "../../../components/Student/Dashboard/SchedualedClasses";
+
+import { useBlur } from "../../../context/BlurContext";
+import { useUser } from "../../../context/UserContext";
+import { useStudent } from "../../../context/StudentContext";
+import { studentLogin } from "../../../api/Student/StudentApis";
+
+
+const Dashboard = () => {
+
+  const { setUserData, addUserToLS } = useUser();
+  const { isBlurred } = useBlur();
+
+  const loginUser = async () => {
+    const user = await studentLogin({ email: "tests@gmail.com", password: "password" })
+    console.log("user is : ", user);
+    // setUserData(user)
+  }
+
+  useEffect(() => {
+    const tcauser = localStorage.getItem("tcauser")
+    // if (!tcauser) {
+    //   loginUser()
+    // }
+  }, [])
+
+  const { studentLogedIn, assignmentIsPending, announcementIsPending, quizIsPending } = useStudent();
+
+  return (
+    assignmentIsPending || announcementIsPending || quizIsPending || !studentLogedIn ? <LargeLoader /> :
+    <>
+      <div className="flex flex-1 bg-[#f9f9f9]/50 font-poppins ">
+        <div className="flex flex-1 gap-4">
+          <div className={`flex flex-col flex-1 px-5 lg:ml-72`}>
+            <div className="flex h-20 md:px-14 lg:px-0">
+              <Navbar />
+            </div>
+            <div
+              className={`flex flex-col md:px-10 lg:px-0 lg:flex-row flex-1 gap-5 py-2 ${isBlurred ? "blur" : ""
+                }`}
+            >
+              <div className="flex-[6] flex w-full">
+                <SubjectsEnrolled />
+              </div>
+              <div className="flex-[3.5] flex">
+                <Deliverables />
+              </div>
+            </div>
+            <div
+              className={`flex flex-col md:px-10 lg:px-0 lg:flex-row flex-1 gap-5 my-2 ${isBlurred ? "blur" : ""
+                }`}
+            >
+              <div className="flex flex-[2]">
+                <Announcements />
+              </div>
+              <div className="flex flex-[3]">
+                <ScheduledClasses />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Dashboard;

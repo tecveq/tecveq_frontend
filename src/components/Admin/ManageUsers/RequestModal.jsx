@@ -1,0 +1,84 @@
+import React from 'react'
+import IMAGES from '../../../assets/images'
+import { MdOutlinePhone } from "react-icons/md";
+import { useMutation } from '@tanstack/react-query';
+import { acceptUser, rejectUser } from '../../../api/Admin/UsersApi';
+
+const RequestModal = ({ refetch, data, onclose }) => {
+
+    const handleAcceptUser = async (id) => {
+        acceptMutation.mutate(id);
+    }
+
+    const handleRejectUser = async (id) => {
+        rejectMutation.mutate(id)
+    }
+
+    const acceptMutation = useMutation({
+        mutationKey: ["accept"], mutationFn: async (id) => {
+            const results = await acceptUser(id);
+            await refetch();
+            return results;
+        }
+    })
+
+    const rejectMutation = useMutation({
+        mutationKey: ["accept"], mutationFn: async (id) => {
+            const results = await rejectUser(id);
+            await refetch();
+            return results;
+        }
+    })
+
+    const RequestComponent = ({ user, accept, reject }) => {
+        return (
+            <div className='border-b border-black/10'>
+                <div className='flex items-center justify-center gap-4 py-4 px-4'>
+                    <div>
+                        <img src={IMAGES.ProfilePic} alt="" className='h-10 w-10 rounded-3xl' />
+                    </div>
+                    <div className='flex flex-col gap-1 text-xs'>
+                        <div className='flex items-center gap-2'>
+                            <p className='font-medium text-lg'>{user.name} </p>
+                            <p className='text-xs bg-maroon px-2 rounded-3xl text-white'>{user.userType}</p>
+                        </div>
+                        <div className='flex items-center gap-2'>
+                            <MdOutlinePhone size={10} className='text-maroon' />
+                            <p>{user.phoneNumber}</p>
+                        </div>
+                        <div className='flex items-center gap-2'>
+                            <p onClick={() => accept(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-maroon/10 text-maroon cursor-pointer`}>Accept</p>
+                            <p onClick={() =>  reject(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-yellow_green_light/10 text-yellow_green_light cursor-pointer`}>Reject</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    return (
+        <div className='py-2 mt-10 w-72 right-10 absolute z-10 px-2 rounded-md border-black/20 shadow-md bg-white'>
+            <div className=''>
+                <div className='border-b border-black/10 py-2 flex items-center justify-center'>
+                    <p>Request</p>
+                </div>
+                <div className='h-72 overflow-y-auto register-scrollbar'>
+                    {data.map((item) => {
+                        if (item.isAccepted == false) {
+                            if (item.userType !== "admin") {
+                                return <RequestComponent
+                                    user={item}
+                                    accept={handleAcceptUser}
+                                    reject={handleRejectUser}
+                                />
+                            }
+                        }
+                    })}
+                    {data.length == 0 && <div className='text-center py-2'>No pending users!</div>}
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default RequestModal

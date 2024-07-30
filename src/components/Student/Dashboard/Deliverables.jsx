@@ -1,0 +1,69 @@
+import React, { useEffect, useState } from "react";
+import { useStudent } from "../../../context/StudentContext";
+import { formatDate } from "../../../constants/formattedDate";
+import { useNavigate } from "react-router-dom";
+
+const Deliverables = () => {
+
+  const navigate = useNavigate();
+  const { allAssignments, allQuizes } = useStudent();
+  const [allDeliverables, setAllDeliverables] = useState([]);
+
+  useEffect(() => {
+
+    let arr = [...allAssignments, ...allQuizes];
+    arr.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate));
+    
+    setAllDeliverables(arr);
+    console.log(arr);
+
+  }, [allAssignments, allQuizes]);
+
+
+  const Deliverable = ({ item }) => {
+    return (
+      <div className="flex w-full px-2 py-1 bg-white rounded-lg custom-shadow">
+        <div className="flex flex-col flex-1">
+          <div className="flex justify-between">
+            <div className="flex gap-2 py-2">
+              <div className="flex flex-col items-center justify-center px-2 text-lg rounded-md text-orange bg-orange_light">
+                <div className="flex gap-1">
+                  <p className="h-4">+</p>
+                  <p className="h-4">-</p>
+                </div>
+                <div className="flex gap-1">
+                  <p className="">x</p>
+                  <p className="">=</p>
+                </div>
+              </div>
+              <div className="">
+                <p className="text-base font-medium">{item.title}</p>
+                <p className="text-xs text-black/50">Due date {formatDate(item.dueDate)} </p>
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <div>
+                <p className="px-3 py-1 text-white bg-maroon rounded-3xl" style={{ fontSize: 8 }}>{item.subjectID.name}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="flex flex-1">
+      <div className="flex flex-col flex-1 gap-2">
+        <div className="flex flex-col">
+          <p className="text-lg font-medium">Deliverables</p>
+        </div>
+        <div className="flex flex-col gap-1 px-4 py-4 bg-white overflow-y-auto register-scrollbar border-t-4 h-72 rounded-xl border-t-maroon">
+          {allDeliverables.map((item) => <Deliverable item={item} key={item._id} />)}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Deliverables;
