@@ -30,6 +30,7 @@ const IMAGES = {
     logo: new URL('./logo.png', import.meta.url).href,
     register_girl: new URL('./register-girl.png', import.meta.url).href,
     upload: new URL('./upload.png', import.meta.url).href,
+    meet: new URL("../meet.png", import.meta.url).href,
 
 }
 export default IMAGES;

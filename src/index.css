@@ -49,20 +49,22 @@
   display: flex !important;
   justify-content: "center" !important;
   flex: 1 !important;
-  min-height: 130px !important;
+  /* min-height: 100px !important; */
+  /* height: 50px !important; */
   background-color: transparent !important;
   border: none !important;
   outline: none !important;
 }
 
-
 .rbc-event .rbc-event-label {
   display: none !important;
 }
 
-.rbc-time-slot {
-  /* border: none !important; */
-}
+/*  */
+/* .rbc-time-slot {
+  height: 20px !important;
+  width: 20px !important;
+} */
 
 .rbc-time-gutter {
   display: none !important;
@@ -90,7 +92,16 @@
 
 .rbc-time-slot {
   border: none !important;
+  width: 50px !important;
+  height: 50px !important;
 }
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* timeslot box height check */
+.rbc-timeslot-group{
+  /* min-height: 100px !important; */
+}
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 .register-scrollbar {
   /* width: 100%; */
@@ -121,6 +132,28 @@
 }
 
 @keyframes spin {
+  0% {
+      transform: rotate(0deg) scale(0.5);
+  }
+  50%{
+      transform: rotate(180deg) scale(0.5);
+  }
+  100% {
+      transform: rotate(360deg) scale(0.5);
+  }
+}
+
+.loader-small {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #f3f3f3;
+  border-top: 5px solid #A41D30;
+  border-radius: 100%;
+  position: relative;
+  animation: spin-small 1s linear infinite;
+}
+
+@keyframes spin-small {
   0% {
       transform: rotate(0deg) scale(0.5);
   }

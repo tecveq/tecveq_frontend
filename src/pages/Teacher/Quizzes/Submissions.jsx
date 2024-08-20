@@ -95,7 +95,7 @@ const Submissions = () => {
   console.log("all quiz submissions are : ", data);
 
   return (
-    isPending ? <LargeLoader /> :
+    isPending ? <div className="flex justify-center flex-1"> <LargeLoader />  </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
@@ -212,8 +212,8 @@ const Submissions = () => {
                       header={false}
                       index={index + 1}
                       bgColor={"#FFFFFF"}
-                      profileLink={IMAGES.Profile}
-                      submission={submission.dueDate}
+                      profileLink={submission.studentID.profilePic || IMAGES.Profile}
+                      submission={submission?.submission.submittedAt}
                       name={submission.studentID.name}
                       submissionData={submission.submissions}
                     />

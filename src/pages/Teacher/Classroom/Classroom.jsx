@@ -57,7 +57,7 @@ const Classroom = () => {
   const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassrooms });
 
   return (
-    isPending || isRefetching ? <Loader /> :
+    isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">

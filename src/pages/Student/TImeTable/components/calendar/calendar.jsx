@@ -30,71 +30,11 @@ const MyCalendar = () => {
 
   const [events, setevents] = useState([]);
 
-  const dummyEvent = [
-    {
-      teacher: "Jack Sparrow",
-      start: new Date(2024, 6, 26, 10, 0, 0),
-      end: new Date(2024, 6, 26, 11, 0, 0),
-      subject: "Computer",
-      meetingLink: "",
-      icon: "",
-    },
-    {
-      teacher: "Thomas Shelby",
-      start: new Date(2024, 7, 26, 12, 0, 0),
-      end: new Date(2024, 7, 26, 13, 0, 0),
-      subject: "Psychology",
-      meetingLink: "",
-      icon: "",
-    },
-    {
-      teacher: "John Smith",
-      start: new Date(2024, 7, 26, 9, 0, 0),
-      end: new Date(2024, 7, 26, 10, 0, 0),
-      subject: "urdu",
-      meetingLink: "",
-      icon: "",
-    },
-    {
-      teacher: "Oliver Queen",
-      start: new Date(2024, 1, 27, 10, 0, 0),
-      end: new Date(2024, 1, 27, 11, 0, 0),
-      subject: "Mathematics",
-      meetingLink: "",
-      icon: "",
-    },
-    {
-      teacher: "Matt Murdock",
-      start: new Date(2024, 1, 27, 11, 0, 0),
-      end: new Date(2024, 1, 27, 12, 0, 0),
-      subject: "Biology",
-      meetingLink: "",
-      icon: "",
-    },
-    {
-      teacher: "Sahil Adeem",
-      start: new Date(2024, 1, 28, 12, 0, 0),
-      end: new Date(2024, 1, 28, 13, 0, 0),
-      subject: "Chemistry",
-      meetingLink: "",
-      icon: "",
-    },
-    {
-      teacher: "Sahil Adeem",
-      start: new Date(2024, 1, 29, 10, 0, 0),
-      end: new Date(2024, 1, 29, 11, 0, 0),
-      subject: "Chemistry",
-      meetingLink: "",
-      icon: "",
-    },
-  ];
   const [currentWeek, setCurrentWeek] = useState({
     start: moment().startOf("day").toDate(),
     end: moment().endOf("day").toDate(),
   });
 
-
-  console.log("dummy data is : ", dummyEvent);
   console.log("data is : ", new Date(0, 0, 0, 8, 0, 0))
 
   const handleNavigate = (newDate) => {
@@ -138,8 +78,8 @@ const MyCalendar = () => {
           formats={{
             dayRangeHeaderFormat,
           }}
-          min={new Date(0, 0, 0, 8, 0, 0)}
-          max={new Date(0, 0, 0, 14, 0, 0)}
+          min={new Date(0, 0, 0, 0, 0, 0)}
+          max={new Date(0, 0, 0, 23, 0, 0)}
           onNavigate={handleNavigate}
           view="week"
           views={{ week: true }}
@@ -147,7 +87,7 @@ const MyCalendar = () => {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          className="w-[100%] h-[140vh]"
+          className="w-[100%] h-[350vh]"
           components={{
             toolbar: (toolbar) => (
               <CustomToolbar

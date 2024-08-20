@@ -31,7 +31,7 @@ const DataRows = ({
           }`}
         >
           <img
-            className=" rounded-3xl"
+            className=" rounded-full h-14 w-14 object-cover"
             src={studentProfile}
             alt="Student Profile"
           />{" "}

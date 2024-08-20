@@ -75,8 +75,8 @@ const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
                 }`}
               onClick={() => handleOptionClick(option)}
             >
-              <p className='bg-[#00000005] px-2 py-1 rounded-sm font-medium'>
-                p
+              <p className='bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium'>
+                <img src={option.profilePic || IMAGES.ProfilePic} alt="" className='w-8 h-8 object-cover rounded-full' />
                 {option.name}
                 <span className='font-normal text-[#00000040]'>{option?.qualification}</span>
               </p>

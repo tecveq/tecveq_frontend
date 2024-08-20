@@ -6,14 +6,18 @@ import webinar from "../../../assets/webinar.png";
 import meet from "../../../assets/meet.png";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../../api/User/UserApi";
+import { useStudent } from "../../../context/StudentContext";
+import Loader from "../../../utils/Loader";
 
 const Sidebar = () => {
+
   const navigate = useNavigate();
   const [quizes, setQuizes] = useState(false);
-  const [timetable, setTimetable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [reports, setReports] = useState(false);
-  const [assignments, setAssignments] = useState(false);
   const [dashboard, setDashboard] = useState(true);
+  const [timetable, setTimetable] = useState(false);
+  const [assignments, setAssignments] = useState(false);
 
   const [isopen, setIsopen] = useState(false);
 
@@ -67,8 +71,10 @@ const Sidebar = () => {
     navigate("/timetable");
   };
 
-  const handleLogoutClick = async () => {
+  const { meetingStart } = useStudent();
 
+  const handleLogoutClick = async () => {
+    setLoading(true);
     const response = await logout();
     if (response == "error") {
       console.log("error loggin out")
@@ -78,6 +84,7 @@ const Sidebar = () => {
       navigate("/login")
     }
     console.log(response)
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -124,34 +131,41 @@ const Sidebar = () => {
             onpress={handleTimeTableClick}
           />
         </div>
-        <div
-          onClick={handleLogoutClick}
-          className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
-        >
-          <IoIosLogOut />
-          <p>Logout</p>
-        </div>
-      </div>
-      <div className="flex flex-col gap-1 h-1/3">
-        <div className="flex justify-center">
-          <img src={webinar} alt="sidebar images" className="w-2/3" />
-        </div>
-        <div className="flex flex-col gap-3 text-xs text-center text-maroon">
-          <div className="">
-            <p>
-              Your <span className="font-bold">Statistics</span> calss is in
-              progress.
-            </p>
-            <p>You can instantly join from here.</p>
+        {loading && <div className="flex flex-1"> <Loader /> </div>}
+        {!loading &&
+          <div
+            onClick={handleLogoutClick}
+            className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
+          >
+            <IoIosLogOut />
+            <p>Logout</p>
           </div>
+        }
+      </div>
+      {meetingStart?.start &&
+        <div className="flex flex-col gap-1 h-1/3">
           <div className="flex justify-center">
-            <div className="flex items-center justify-center w-40 py-2 text-center rounded-md cursor-pointer bg-maroon">
-              <img src={meet} alt="meet png" className="w-1/6" />
-              <p className="text-sm text-white">Join Meeting</p>
+            <img src={webinar} alt="sidebar images" className="w-2/3" />
+          </div>
+          <div className="flex flex-col gap-3 text-xs text-center text-maroon">
+            <div className="">
+              <p>
+                Your <span className="font-bold">{meetingStart?.event?.subjectID?.name} </span> calss is in
+                progress.
+              </p>
+              <p>You can instantly join from here.</p>
+            </div>
+            <div className="flex justify-center">
+              <a href={meetingStart?.event.meetLink} target="_blank">
+                <div className="flex items-center justify-center w-40 py-2 text-center rounded-md cursor-pointer bg-maroon">
+                  <img src={meet} alt="meet png" className="w-1/6" />
+                  <p className="text-sm text-white">Join Meeting</p>
+                </div>
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      }
     </div>
   );
 

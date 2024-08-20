@@ -4,22 +4,25 @@ import Custombutton from "./Custombutton";
 import logo from "../../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { adminLogout } from "../../../api/Admin/AdminApi";
+import Loader from "../../../utils/Loader";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [quizes, setQuizes] = useState(false);
-  const [timetable, setTimetable] = useState(false);
-  const [reports, setReports] = useState(false);
-  const [assignments, setAssignments] = useState(false);
-  const [classroom, setClassroom] = useState(false);
-  const [dashboard, setDashboard] = useState(true);
-  const [teachers, setTeachers] = useState(false);
-  const [announcements, setAnnouncements] = useState(false);
-  const [manageUsers, setManageUsers] = useState(false);
-  const [levels, setLevels] = useState(false);
-  const [subjects, setSubjects] = useState(false);
 
   const [isopen, setIsopen] = useState(false);
+  const [levels, setLevels] = useState(false);
+  const [quizes, setQuizes] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [reports, setReports] = useState(false);
+  const [teachers, setTeachers] = useState(false);
+  const [subjects, setSubjects] = useState(false);
+  const [dashboard, setDashboard] = useState(true);
+  const [classroom, setClassroom] = useState(false);
+  const [timetable, setTimetable] = useState(false);
+  const [assignments, setAssignments] = useState(false);
+  const [manageUsers, setManageUsers] = useState(false);
+  const [announcements, setAnnouncements] = useState(false);
+
 
   const toggleSidebar = () => {
     console.log("here");
@@ -159,10 +162,12 @@ const Sidebar = () => {
     navigate("/admin/subjects");
   };
 
-  const handleLogoutClick = async() => { 
+  const handleLogoutClick = async () => {
+    setLoading(true)
     localStorage.clear();
     await adminLogout();
     navigate("/admin/login");
+    setLoading(false)
   };
 
   const Menubar = () => (
@@ -229,13 +234,16 @@ const Sidebar = () => {
             onpress={handleClassroomClick}
           />
         </div>
-        <div
-          onClick={handleLogoutClick}
-          className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
-        >
-          <IoIosLogOut />
-          <p>Logout</p>
-        </div>
+        {loading && <div className="flex flex-1"> <Loader /> </div>}
+        {!loading &&
+          <div
+            onClick={handleLogoutClick}
+            className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
+          >
+            <IoIosLogOut />
+            <p>Logout</p>
+          </div>
+        }
       </div>
     </div>
   );

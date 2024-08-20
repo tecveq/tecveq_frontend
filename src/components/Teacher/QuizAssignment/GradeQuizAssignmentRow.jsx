@@ -109,7 +109,7 @@ const GradeQuizAssignmentRow = React.memo ((props) => {
                 }`}
             >
               {!props.header ? (
-                <img src={props?.profileLink} alt="profile link" />
+                <img src={props?.profileLink} alt="profile link" className="w-12 h-12 rounded-full object-cover" />
               ) : (
                 <></>
               )}

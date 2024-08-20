@@ -6,6 +6,7 @@ import IMAGES from "../../../../../../assets/images";
 import useClickOutside from "../../../../../../hooks/useClickOutlise";
 
 import { GoArrowRight } from "react-icons/go";
+import { useStudent } from "../../../../../../context/StudentContext";
 
 export default function ViewEventDetailsModal({
   open,
@@ -54,6 +55,8 @@ export default function ViewEventDetailsModal({
     }
   }, [open]);
 
+  const { setMeetingStart } = useStudent();
+
   useEffect(() => {
 
     let nowTime = new Date();
@@ -64,6 +67,7 @@ export default function ViewEventDetailsModal({
       if (eventTime.getDate() == nowTime.getDate()) {
         if (eventTime.getTime() < nowTime.getTime() && nowTime.getTime() < eventEndTime.getTime()) {
           setIsMeetingTime(true);
+          setMeetingStart({start: true, event: event})
         }
       }
     }
@@ -221,7 +225,7 @@ export default function ViewEventDetailsModal({
                 className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon"
               >
                 <img src={meet} alt="meet img" className="w-1/6" />
-                <p className="text-sm text-white"> <a href={event.meetLink} >Join Meeting</a> </p>
+                <p className="text-sm text-white"> <a href={event.meetLink} target="_blank" >Join Meeting</a> </p>
               </div>
             </div>
           }

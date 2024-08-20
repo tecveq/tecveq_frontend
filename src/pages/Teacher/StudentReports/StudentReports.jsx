@@ -138,7 +138,7 @@ const StudentReports = () => {
 
 
   return (
-    isPending || isRefetching ? <Loader /> :
+    isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
@@ -154,17 +154,15 @@ const StudentReports = () => {
                         <IoSearch />
                         <input
                           type="text"
-                          className="bg-transparent outline-none"
-                          placeholder="Search"
                           value={searchText}
+                          placeholder="Search"
+                          className="bg-transparent outline-none"
                           onChange={(e) => setSearchText(e.target.value)}
                         />
                       </div>
                       <div
                         className="p-4 text-white rounded-lg cursor-pointer bg-maroon"
-                        onClick={() => {
-                          setOpenFilterModal(true);
-                        }}
+                        onClick={() => { setOpenFilterModal(true) }}
                       >
                         <FiFilter />
                       </div>
@@ -173,42 +171,42 @@ const StudentReports = () => {
                   <div className="mt-8 h-[80%] overflow-auto">
 
                     <DataRows
+                      header={true}
                       index={"Sr. No"}
+                      subject={"Subject"}
+                      bgColor={"#F9F9F9"}
                       studentName={"Name"}
                       studentClass={"Class"}
-                      subject={"Subject"}
                       attendance={"Attendance"}
-                      bgColor={"#F9F9F9"}
-                      header={true}
                     />
 
                     {!filterActive && searchText == "" && data?.map((std, index) => {
                       return <DataRows
                         key={std._id}
+                        header={false}
                         index={index + 1}
+                        bgColor={"#FFFFFF"}
                         studentName={std.name}
-                        studentClass={std.classroom.name}
                         subject={std.subject.name}
                         attendance={std.attendance}
-                        studentProfile={IMAGES.Profile}
-                        bgColor={"#FFFFFF"}
-                        header={false}
+                        studentClass={std.classroom.name}
                         onClickFunction={handleFunctionClick(std)}
+                        studentProfile={std.profilePic || IMAGES.Profile}
                       />
                     })}
 
                     {filterActive && filteredData?.map((std, index) => {
                       return <DataRows
                         key={std._id}
+                        header={false}
                         index={index + 1}
+                        bgColor={"#FFFFFF"}
                         studentName={std.name}
-                        studentClass={std.classroom.name}
                         subject={std.subject.name}
                         attendance={std.attendance}
-                        studentProfile={IMAGES.Profile}
-                        bgColor={"#FFFFFF"}
-                        header={false}
+                        studentClass={std.classroom.name}
                         onClickFunction={handleFunctionClick(std)}
+                        studentProfile={std.profilePic || IMAGES.Profile}
                       />
                     })}
 
@@ -216,15 +214,15 @@ const StudentReports = () => {
                       if (std?.classroom?.name?.includes(searchText) || std?.name?.includes(searchText) || std?.subject?.name?.includes(searchText)) {
                         return <DataRows
                           key={std._id}
+                          header={false}
                           index={index + 1}
+                          bgColor={"#FFFFFF"}
                           studentName={std.name}
-                          studentClass={std.classroom.name}
                           subject={std.subject.name}
                           attendance={std.attendance}
-                          studentProfile={IMAGES.Profile}
-                          bgColor={"#FFFFFF"}
-                          header={false}
+                          studentClass={std.classroom.name}
                           onClickFunction={handleFunctionClick(std)}
+                          studentProfile={std.profilePic || IMAGES.Profile}
                         />
                       }
                     })}

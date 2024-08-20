@@ -17,6 +17,7 @@ import { deleteUser } from "../../../api/Admin/UsersApi";
 const ManageUsers = () => {
 
   const { isBlurred, toggleBlur } = useBlur();
+  
   const [isMenu, setIsMenu] = useState(false);
   const [editData, setEditData] = useState({});
   const [requestCount, setReqCount] = useState(0);
@@ -78,7 +79,7 @@ const ManageUsers = () => {
   })
 
   return (
-    adminUsersDataPending || userDellMutation.isPending ? <Loader /> :
+    adminUsersDataPending || userDellMutation.isPending ? <div className="flex flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">

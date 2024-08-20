@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from '../../../components/Student/Dashboard/Navbar'
 import DataRows from '../../../components/Student/Reports/DataRows'
 
 import { useNavigate } from 'react-router-dom'
 import { useBlur } from '../../../context/BlurContext'
 import { useStudent } from '../../../context/StudentContext'
+import { getAllSubjects } from '../../../api/Student/Subjects'
+import { useQuery } from '@tanstack/react-query'
+import { useUser } from '../../../context/UserContext'
 
 
 const Reports = () => {
 
   const navigate = useNavigate();
   const { isBlurred } = useBlur();
-  const { allSubjects } = useStudent();
+  const { allSubjects, setAllSubjects } = useStudent();
+
+  const {userData} = useUser();
 
   const handleFunctionClick = (report) => {
     return () => {
@@ -19,6 +24,14 @@ const Reports = () => {
     };
   };
 
+    const subjectQuery = useQuery({
+      queryKey: ["subjects"], queryFn: async () => {
+        const results = await getAllSubjects(userData._id);
+        console.log("inside reports")
+        setAllSubjects(results);
+        return results
+      }, staleTime: 300000, enabled: allSubjects.length == 0
+    });
   return (
     <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
       <div className="flex flex-1">

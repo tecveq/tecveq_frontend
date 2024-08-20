@@ -47,8 +47,8 @@ const RequestModal = ({ refetch, data, onclose }) => {
                             <p>{user.phoneNumber}</p>
                         </div>
                         <div className='flex items-center gap-2'>
-                            <p onClick={() => accept(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-maroon/10 text-maroon cursor-pointer`}>Accept</p>
-                            <p onClick={() =>  reject(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-yellow_green_light/10 text-yellow_green_light cursor-pointer`}>Reject</p>
+                            <p onClick={() => accept(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-yellow_green_light/10 text-yellow_green_light cursor-pointer`}>Accept</p>
+                            <p onClick={() =>  reject(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-maroon/10 text-maroon cursor-pointer`}>Reject</p>
                         </div>
                     </div>
                 </div>

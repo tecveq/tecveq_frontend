@@ -5,15 +5,19 @@ import logo from "../../../assets/logo.png";
 import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { userLogout } from "../../../api/ForAllAPIs";
+import Loader from "../../../utils/Loader";
 
 const Sidebar = () => {
+
   const navigate = useNavigate();
+
   const [quizes, setQuizes] = useState(false);
-  const [timetable, setTimetable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [reports, setReports] = useState(false);
-  const [assignments, setAssignments] = useState(false);
-  const [classroom, setClassroom] = useState(false);
   const [dashboard, setDashboard] = useState(true);
+  const [classroom, setClassroom] = useState(false);
+  const [timetable, setTimetable] = useState(false);
+  const [assignments, setAssignments] = useState(false);
 
   const [isopen, setIsopen] = useState(false);
 
@@ -82,10 +86,12 @@ const Sidebar = () => {
     navigate("/teacher/classroom");
   };
 
-  const handleLogoutClick = async() => {
+  const handleLogoutClick = async () => {
+    setLoading(true);
     localStorage.clear();
     await userLogout();
     navigate("/admin/login");
+    setLoading(false);
   };
 
   const Menubar = () => (
@@ -134,13 +140,16 @@ const Sidebar = () => {
             onpress={handleClassroomClick}
           />
         </div>
-        <div
-        onClick={handleLogoutClick}
-          className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
-        >
-          <IoIosLogOut />
-          <p>Logout</p>
-        </div>
+        {loading && <div className="flex"> <Loader /> </div>}
+        {!loading &&
+          <div
+            onClick={handleLogoutClick}
+            className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
+          >
+            <IoIosLogOut />
+            <p>Logout</p>
+          </div>
+        }
       </div>
     </div>
   );

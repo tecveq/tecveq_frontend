@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+
 import Loader from '../../../utils/Loader';
 import Navbar from '../../../components/Admin/Navbar'
 import QuoteCard from '../../../components/Admin/Announcements/QuoteCard';
@@ -18,14 +19,14 @@ const Announcements = () => {
     const [annouce, setAccounce] = useState(true);
     const [isquote, setisQuote] = useState(false);
     const [searchText, setSearchText] = useState("");
-    const [createAnnouncementModal, setCreateAnnouncementModal] = useState(false);
-    const [editAnnouncementModal, setEditAnnouncementModal] = useState(false);
-    const [createQuoteModal, setCreateQuoteModal] = useState(false);
-    const [editQuoteModal, setEditQuoteModal] = useState(false);
-    const [isQuotesExist, setIsQuotesExist] = useState(false);
-    const [isAnnouncementExist, setIsAnnouncementExist] = useState(false);
-    const [editAnnouncementData, setEditAnnouncementData] = useState({});
     const [editQuoteData, setEditQuoteData] = useState({});
+    const [isQuotesExist, setIsQuotesExist] = useState(false);
+    const [editQuoteModal, setEditQuoteModal] = useState(false);
+    const [createQuoteModal, setCreateQuoteModal] = useState(false);
+    const [editAnnouncementData, setEditAnnouncementData] = useState({});
+    const [isAnnouncementExist, setIsAnnouncementExist] = useState(false);
+    const [editAnnouncementModal, setEditAnnouncementModal] = useState(false);
+    const [createAnnouncementModal, setCreateAnnouncementModal] = useState(false);
 
 
     const { isBlurred, toggleBlur } = useBlur();
@@ -96,7 +97,7 @@ const Announcements = () => {
     }, [announcemnets]);
 
     return (
-        isPending || isRefetching || announceDellMutate?.isPending ? <Loader /> :
+        isPending || isRefetching || announceDellMutate?.isPending ? <div className="flex flex-1"> <Loader /> </div> :
             <div className='flex flex-1 bg-[#f9f9f9]/50 font-poppins'>
                 <div className={`flex-grow w-full px-5 lg:px-10 sm:px-10 lg:ml-72`}>
                     <div className=''>

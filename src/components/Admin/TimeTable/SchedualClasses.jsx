@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FilterButton from "./FilterButton";
+import Loader from "../../../utils/Loader";
 import IMAGES from "../../../assets/images";
 import FilterClassesModal from "./FilterClassesModal";
 
@@ -12,7 +13,6 @@ import { useAdmin } from "../../../context/AdminContext";
 import { createClasses } from "../../../api/Teacher/Class";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllClassroom } from "../../../api/Admin/classroomApi";
-import Loader from "../../../utils/Loader";
 
 const CustomSelectable = ({ label, options, setSelectedOption, selectedOption }) => {
   return (

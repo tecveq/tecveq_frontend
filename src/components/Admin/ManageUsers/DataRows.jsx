@@ -46,12 +46,12 @@ const DataRows = ({
           >
             {userId}
           </p>
-          <p
+          {/* <p
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left text-sm ${header ? "font-semibold" : ""
               }`}
           >
             {userclass}
-          </p>
+          </p> */}
           <p
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left text-sm ${header ? "font-semibold" : ""
               }`}

@@ -27,11 +27,10 @@ export const CustomEvent = ({ event, setevents }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex flex-col gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-24 w-full !overflow-hidden ${
-          event.teacher.teacherID.name
+        className={`text-xs flex flex-col gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-24 w-full !overflow-hidden ${event.teacher.teacherID.name
             ? "bg-maroon/10 text-black"
             : "bg-green_dark/10 text-black"
-        }`}
+          }`}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
         }}
@@ -75,7 +74,6 @@ export const SideTime = (props) => {
             <p className="text-[10px] text-grey">
               {moment(time[0])
                 .add(1, "hour")
-                .add(30, "minutes")
                 .format("h:mm a")}
             </p>
           </div>
@@ -109,11 +107,10 @@ export const Header = (props) => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-between flex-1 w-full font-normal h-fit ${
-        currentDate === date && currentMonth === month
+      className={`flex flex-col items-center justify-between flex-1 w-full font-normal h-fit ${currentDate === date && currentMonth === month
           ? "text-maroon"
           : "text-grey"
-      } `}
+        } `}
     >
       <p className="text-lg text-center">{date}</p>
       <p className="text-sm text-start">{day}</p>
@@ -181,19 +178,12 @@ export const CustomToolbar = ({
             >
               <MdKeyboardArrowLeft />
             </button>
+
             <p className="mx-4 text-xl font-semibold text-maroon">
-              {/* {console.log(
-                " is here : ",
-                `${toolbar.label.split("–")[0]}`,
-                `${moment(Date.now()).format("MMMM DD")}`
-              )} */}
-              {toolbar.label.split("–")[0] ==
-              moment(Date.now()).format("MMMM DD")
-                ? moment(Date.now()).format("DD MMMM, YYYY")
-                : toolbar.label.split("–")[0]}
-              {/* {moment(Date.now()).format("MMMM DD")} */}
-              {/* <span className="ml-2 text-xs font-normal text-grey/70">Today</span> */}
+              {moment(Date.now()).format("DD MMMM, YYYY")}
+              <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>
+            
             <button
               className="w-8 h-8 p-2 bg-white border rounded-2xl border-grey/50"
               onClick={goToNext}

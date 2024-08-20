@@ -23,8 +23,8 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
   const filterClasses = () => {
     let arr = [];
     arr = allClasses && allClasses.filter((item) => new Date(item.startTime).getDate() == new Date(selectedDate).getDate());
-    if(filterActive){
-      arr = allClasses && allClasses.filter((item) => new Date(item.startTime).getDate() >= new Date(filterStartDate).getDate() && new Date(item.startTime).getDate() <= new Date(filterEndDate).getDate() );
+    if (filterActive) {
+      arr = allClasses && allClasses.filter((item) => new Date(item.startTime).getDate() >= new Date(filterStartDate).getDate() && new Date(item.startTime).getDate() <= new Date(filterEndDate).getDate());
     }
     setFilteredClasses(arr);
   };
@@ -83,15 +83,16 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
           <div className="flex items-center justify-between">
             <p className="text-maroon">class has started...</p>
             <div>
-              <div
-                onClick={handleJoinClass}
-                className="flex items-center justify-center px-2 py-1 text-center cursor-pointer bg-maroon rounded-3xl"
-              >
-                <img src={IMAGES.CheckArrow} alt="" className="w-8 h-3" />
-                <p className="text-white " style={{ fontSize: 8 }}>
-                  Join class
-                </p>
-              </div>
+              <a href={item.meetLink} target="_blank">
+                <div
+                  className="flex items-center justify-center px-2 py-1 text-center cursor-pointer bg-maroon rounded-3xl"
+                >
+                  <img src={IMAGES.meet} alt="" className="w-8 h-3" />
+                  <p className="text-white " style={{ fontSize: 8 }}>
+                    Join class
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
         }
@@ -149,8 +150,8 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
           >
             <div
               className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${!filterActive && selectedDateFromChild == formattedDate ? "bg-maroon text-white" : ""
-                } ${filterActive && new Date(formattedDate).toDateString() == new Date(filterStartDate).toDateString() ? "bg-maroon text-white": ""}
-                ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-maroon text-white": ""}
+                } ${filterActive && new Date(formattedDate).toDateString() == new Date(filterStartDate).toDateString() ? "bg-maroon text-white" : ""}
+                ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-maroon text-white" : ""}
                  text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}
             >
               <div className="text-sm  group-hover:text-white">
@@ -225,7 +226,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
     );
   };
 
-  const handleApplyFilters = () =>{
+  const handleApplyFilters = () => {
     console.log("start date is : ", filterStartDate);
     console.log("end date is : ", filterEndDate);
     setFilterActive(true);

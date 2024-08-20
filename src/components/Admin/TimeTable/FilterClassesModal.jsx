@@ -10,17 +10,12 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 
 
 const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPending }) => {
-
-  console.log("all classes in calender componen is : ", classData);
-
-  const [selectedDate, setSelectedDate] = useState(new Date(Date.now()).toDateString());
-  const [filteredclasses, setFilteredClasses] = useState([]);
-
+  
   const [filterEndDate, setFilterEndDate] = useState();
   const [filterActive, setFilterActive] = useState(false);
   const [filterStartDate, setFilterSatrtDate] = useState();
-
-  const handleJoinClass = () => { };
+  const [filteredclasses, setFilteredClasses] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date(Date.now()).toDateString());
 
   const filterClasses = () => {
     let arr = [];
@@ -59,32 +54,8 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
                 {new Date(item.startTime).toLocaleTimeString().slice(0, 5)}{new Date(item.startTime).toLocaleTimeString().slice(-2)} - {new Date(item.endTime).toLocaleTimeString().slice(0, 5)}{new Date(item.endTime).toLocaleTimeString().slice(-2)}
               </p>
             </div>
-            {/* <p>{item.teacher}</p> */}
           </div>
         </div>
-
-        {/* 
-        {item.status ? (
-          <div className="flex items-center justify-between">
-            <p className="text-maroon">class has started...</p>
-            <div>
-              <div
-                onClick={handleJoinClass}
-                className="flex items-center justify-center px-2 py-1 text-center cursor-pointer bg-maroon rounded-3xl"
-              >
-                <img src={meet} alt="" className="w-8 h-3" />
-                <p className="text-white " style={{ fontSize: 8 }}>
-                  Join class
-                </p>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <FiClock />
-            <p>{item.startTime} </p>
-          </div>
-        )} */}
       </div>
     );
   };
@@ -143,7 +114,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
                 ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-maroon text-white" : ""}
                  text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}
             >
-              <div className="text-sm group-hover:text-white">
+              <div className="text-sm text-black group-hover:text-white">
                 {day.format("D")}
               </div>
 
@@ -210,7 +181,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
             }`}
         >
           <p className={`${color == "white" ? "text-white" : "text-black"}`}>
-            {title}{" "}
+            {title}
           </p>
         </div>
       </div>

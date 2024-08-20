@@ -13,6 +13,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMultipleAssignmentsForGrading, gradeAssignments } from "../../../api/Teacher/Assignments";
 import Loader from "../../../utils/Loader";
+import { useUser } from "../../../context/UserContext";
 
 const GradingAssignments = () => {
 
@@ -22,6 +23,8 @@ const GradingAssignments = () => {
   const [isProfileDetails, setIsProfileDetails] = useState(false);
 
   const { isBlurred, toggleBlur } = useBlur();
+  const {userData} = useUser();
+
   const location = useLocation();
 
   const [gradingData, setGradingData] = useState([]);
@@ -161,12 +164,12 @@ const GradingAssignments = () => {
                   />
                 </div>
                 <p className="text-justify md:text-[16px] text-[12px]">
-                  M. Haseeb
+                  {userData.name}
                 </p>
                 <div>
                   <img
                     onClick={toggleProfielMenu}
-                    src={IMAGES.ProfilePic}
+                    src={ userData.profilePic || IMAGES.ProfilePic}
                     alt=""
                     className="w-[29px] h-[30px] cursor-pointer"
                   />
@@ -232,7 +235,7 @@ const GradingAssignments = () => {
                   bgColor={"#FFFFFF"}
                   grade={submission?.grade}
                   marks={submission?.marks}
-                  profileLink={IMAGES.Profile}
+                  profileLink={submission.studentID.profilePic || IMAGES.Profile}
                   setInputField={setInputField}
                   id={submission?.studentID?._id}
                   feedback={submission?.feedback}

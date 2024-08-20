@@ -12,11 +12,12 @@ export const useStudent = () => useContext(StudentContext);
 export const StudentProvider = ({ children }) => {
 
     const [allQuizes, setAllQuizes] = useState([]);
+    const [allClasses, setAllClasses] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
     const [allAssignments, setAllAssignments] = useState([]);
     const [studentLogedIn, setStudentLogedIn] = useState(false);
     const [allAnnouncements, setAllAnnouncements] = useState([]);
-    const [allClasses, setAllClasses] = useState([]);
+    const [meetingStart, setMeetingStart] = useState({start: false, event: null});
 
     const announcementQuery = useQuery({
         queryKey: ["announcements"], queryFn: async () => {
@@ -67,13 +68,15 @@ export const StudentProvider = ({ children }) => {
             allSubjects,
             setAllSubjects,
 
+            meetingStart,
+            setMeetingStart,
+
             studentLogedIn,
             setStudentLogedIn,
 
             allQuizes,
             quizRefetch: quizQuery.refetch,
             quizIsPending: quizQuery.isPending,
-
 
             allClasses,
             classesRefetch: classesQuery.refetch,

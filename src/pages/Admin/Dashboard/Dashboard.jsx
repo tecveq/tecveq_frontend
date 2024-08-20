@@ -5,22 +5,29 @@ import TotalUsers from "../../../components/Admin/Dashboard/TotalUsers";
 import StudentsCard from "../../../components/Admin/Dashboard/StudentsCard";
 import SystemOverview from "../../../components/Admin/Dashboard/SystemOverview";
 
+import { useUser } from "../../../context/UserContext";
 import { useBlur } from "../../../context/BlurContext";
 import { useAdmin } from "../../../context/AdminContext";
-import { useUser } from "../../../context/UserContext";
 
 
 const Dashboard = () => {
 
   const { isBlurred } = useBlur();
   const { adminUsersData, adminUsersDataPending } = useAdmin();
-  const { userData } = useUser();
 
   const [students, setStudents] = useState({
     allEnrolled: adminUsersData.allStudents.filter((item) => item.isAccepted == true),
     allPending: adminUsersData.allStudents.filter((item) => item.isAccepted == false),
     allInactive: adminUsersData.allStudents.filter((item) => item.isBlocked == true)
   })
+
+  useEffect(() => {
+    setStudents({
+      allEnrolled: adminUsersData.allStudents.filter((item) => item.isAccepted == true),
+      allPending: adminUsersData.allStudents.filter((item) => item.isAccepted == false),
+      allInactive: adminUsersData.allStudents.filter((item) => item.isBlocked == true)
+    })
+  }, [adminUsersData])
 
 
   // const [isConnected, setIsConnected] = useState(socket.connected);
@@ -73,7 +80,7 @@ const Dashboard = () => {
   // }, []);
 
   return (
-    adminUsersDataPending ? <Loader /> :
+    adminUsersDataPending ? <div className="flex justify-center flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#f9f9f9]/50 font-poppins">
           <div className="flex flex-1 gap-4">
@@ -87,15 +94,13 @@ const Dashboard = () => {
               >
                 <div className="flex flex-[5] flex-col">
                   <p className="text-xl font-semibold">System Overview</p>
-                  {/* TODO: System Overview graph */}
-                  <p>System Overview graph</p>
                   <SystemOverview />
                 </div>
                 <div className="flex flex-[2] flex-col gap-2">
                   <p className="text-xl font-semibold">Students</p>
-                  <StudentsCard title={"Total Enrolled"} value={students.allEnrolled.length} />
-                  <StudentsCard title={"Total Pending"} value={students.allPending.length} />
-                  <StudentsCard title={"Total Inactive"} value={students.allInactive.length} />
+                  <StudentsCard title={"Total Enrolled"} value={students?.allEnrolled?.length} />
+                  <StudentsCard title={"Total Pending"} value={students?.allPending?.length} />
+                  <StudentsCard title={"Total Inactive"} value={students?.allInactive?.length} />
                 </div>
               </div>
               <div

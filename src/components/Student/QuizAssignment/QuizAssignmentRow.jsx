@@ -8,15 +8,20 @@ import { submitQiuz } from '../../../api/Student/Quiz';
 import { uploadFile } from '../../../utils/FileUpload';
 import { formatDate } from '../../../constants/formattedDate';
 import { submitAssignment } from '../../../api/Student/Assignments';
+import { useUser } from '../../../context/UserContext';
 
 const QuizAssignmentRow = (props) => {
 
     const [timePassed, setTimePassed] = useState(false);
     const [timeLeft, setTimeLeft] = useState('');
-    
+    const [isUploaded, setIsUploadded] = useState(false);
+
+    const { userData } = useUser();
+
     const quizAssignmentMutation = useMutation({
-        mutationKey: ["quizAssignment"], mutationFn: async (fileUrl) => {
+        mutationKey: ["quizAssignment"], mutationFn: async (event) => {
             let results;
+            let fileUrl = await uploadFile(event.target.files[0], "submissions");
             if (props.isQuiz) {
                 results = await submitQiuz({ file: fileUrl }, props.alldata._id)
             } else {
@@ -29,8 +34,7 @@ const QuizAssignmentRow = (props) => {
     })
 
     const handleFileChange = async (event) => {
-        let fileUrl = await uploadFile(event.target.files[0], "submissions");
-        quizAssignmentMutation.mutate(fileUrl);
+        quizAssignmentMutation.mutate(event);
     };
 
     const compareDateAndTime = (dateTimeString) => {
@@ -54,6 +58,13 @@ const QuizAssignmentRow = (props) => {
     };
 
     useEffect(() => {
+
+        props?.alldata?.submissions?.map((item) =>{
+            if(item.studentID == userData._id){
+                setIsUploadded(true);
+            }
+        })
+
         const formattedDateTimeString = props.deadline
             .replace(/(\d+)(st|nd|rd|th)/, '$1')
             .replace(',', '')
@@ -96,7 +107,7 @@ const QuizAssignmentRow = (props) => {
                             </p>
                         </>
                     ) : (
-                        props.upload ? (
+                        !isUploaded ? (
                             <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
                                 {quizAssignmentMutation.isPending && <div><Loader /></div>}
                                 {!quizAssignmentMutation.isPending &&
@@ -118,7 +129,7 @@ const QuizAssignmentRow = (props) => {
             </div>
             {
                 props.isQuiz && !props.header && (
-                    props.upload ? (
+                    !isUploaded ? (
                         <div className='flex flex-row items-center justify-end'>
                             {timePassed ? (
                                 <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>

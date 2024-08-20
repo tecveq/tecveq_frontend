@@ -13,12 +13,13 @@ import { deleteLevel } from "../../../api/Admin/LevelsApi";
 
 const Levels = () => {
 
-    const { isBlurred, toggleBlur } = useBlur();
     const [editData, setEditData] = useState({});
     const [editMenu, setEditMenu] = useState(false);
     const [searchText, setSearchText] = useState("");
     const [isLevelMenuOpen, setIsLevelMenuOpen] = useState(false);
     const [createLevelModal, setCreateLevelModal] = useState(false);
+    
+    const { isBlurred, toggleBlur } = useBlur();
     const { allLevels, levelsRefetch, levelIsPending } = useAdmin();
 
     const toggleLevelMenuOpen = () => {
@@ -45,7 +46,7 @@ const Levels = () => {
     });
 
     return (
-        levelIsPending ? <Loader /> :
+        levelIsPending ? <div className="flex justify-center flex-1"> <Loader /> </div> :
             <>
                 <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
                     <div className="flex flex-1">

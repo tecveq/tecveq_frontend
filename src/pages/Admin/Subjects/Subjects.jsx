@@ -51,7 +51,7 @@ const Subjects = () => {
     });
 
     return (
-        subjectsIsPending ? <Loader /> :
+        subjectsIsPending ?  <div className="flex flex-1"> <Loader /> </div> :
             <>
                 <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
                     <div className="flex flex-1">

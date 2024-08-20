@@ -75,7 +75,7 @@ const TeacherDetails = () => {
             <Navbar heading={"Teacher Reports"} />
             <div className="mt-7">
               <div className="flex flex-col items-center justify-center gap-1">
-                <img src={location.state.teacher.profilePic || IMAGES.Profile} alt="" className="w-40 h-40" />
+                <img src={location.state.teacher.profilePic || IMAGES.Profile} alt="" className="w-40 h-40 rounded-full object-cover" />
                 <p className="text-lg font-semibold">{location.state.teacher.name}</p>
                 <div className="flex items-center gap-2 text-xs">
                   <LuPhone />
@@ -85,9 +85,9 @@ const TeacherDetails = () => {
                   <IoMailOutline />
                   <p>{location.state.teacher.email}</p>
                 </div>
-                <div className="">
+                {/* <div className="">
                   <p className="text-maroon text-lg">Class Average: 88 Marks / A+ Grade</p>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="flex gap-2">

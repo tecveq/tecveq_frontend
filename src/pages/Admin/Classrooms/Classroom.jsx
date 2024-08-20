@@ -1,11 +1,11 @@
 import React, { useState } from "react";
+import Loader from "../../../utils/Loader";
 import Navbar from "../../../components/Admin/Navbar";
 import DataRow from "../../../components/Admin/Classrooms/DataRow";
 import ClassMenu from "../../../components/Admin/Classrooms/ClassMenu";
 import ClassModal from "../../../components/Admin/Classrooms/ClassModal";
 
 import { BiSearch } from "react-icons/bi";
-import Loader from "../../../utils/Loader";
 import { useBlur } from "../../../context/BlurContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteClassroom, getAllClassroom } from "../../../api/Admin/classroomApi";
@@ -52,7 +52,7 @@ const Classroom = () => {
   const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassroom });
 
   return (
-    isPending || isRefetching ? <Loader /> :
+    isPending || isRefetching ? <div className="flex flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
@@ -88,47 +88,47 @@ const Classroom = () => {
                   <div className="py-2 h-[80%] overflow-auto">
 
                     <DataRow
+                      header={true}
                       isQuiz={true}
                       index={"Sr. No"}
-                      classname={"Class Name"}
-                      classesSchedualled={"Classes Scheduled"}
+                      bgColor={"#F9F9F9"}
                       students={"Students"}
                       teachers={"Teachers"}
                       createdBy={"Created By"}
-                      bgColor={"#F9F9F9"}
-                      header={true}
+                      classname={"Class Name"}
+                      classesSchedualled={"Classes Scheduled"}
                     />
 
                     {searchText == "" && data.map((cls, index) => (
                       <DataRow
-                        key={cls._id}
                         data={cls}
-                        toggleClassMenu={toggleClassMenuOpen}
+                        key={cls._id}
+                        header={false}
                         index={index + 1}
+                        bgColor={"#FFFFFF"}
                         classname={cls.name}
-                        classesSchedualled={cls.classes.length}
                         students={cls.students.length}
                         teachers={cls.teachers.length}
                         createdBy={cls.createdBy.userType}
-                        bgColor={"#FFFFFF"}
-                        header={false}
+                        toggleClassMenu={toggleClassMenuOpen}
+                        classesSchedualled={cls.classes.length}
                       />
                     ))}
 
                     {searchText && data.map((cls, index) => {
                       if (cls.name.includes(searchText) || cls.createdBy.userType.includes(searchText)) {
                         return <DataRow
-                          key={cls._id}
                           data={cls}
-                          toggleClassMenu={toggleClassMenuOpen}
+                          key={cls._id}
+                          header={false}
                           index={index + 1}
+                          bgColor={"#FFFFFF"}
                           classname={cls.name}
-                          classesSchedualled={cls.classes.length}
                           students={cls.students.length}
                           teachers={cls.teachers.length}
                           createdBy={cls.createdBy.userType}
-                          bgColor={"#FFFFFF"}
-                          header={false}
+                          toggleClassMenu={toggleClassMenuOpen}
+                          classesSchedualled={cls.classes.length}
                         />
                       }
                     })}
@@ -145,27 +145,27 @@ const Classroom = () => {
         {createClassModal &&
           <ClassModal
             refetch={refetch}
-            open={createClassModal}
             isEditTrue={false}
+            open={createClassModal}
             setopen={setCreateClassModal}
           />
         }
 
         {editModal &&
           <ClassModal
-            editData={editClassData}
+            open={editModal}
             refetch={refetch}
             isEditTrue={true}
-            open={editModal}
             setopen={setEditModal}
+            editData={editClassData}
           />
         }
 
         <ClassMenu
-          editClassRoom={handleEditClass}
-          deleteClassRoom={handleDeleteClass}
           isopen={isClassMenuOpen}
           setIsOpen={setIsClassMenuOpen}
+          editClassRoom={handleEditClass}
+          deleteClassRoom={handleDeleteClass}
         />
       </>
   );

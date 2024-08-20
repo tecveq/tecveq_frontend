@@ -31,7 +31,7 @@ const DataRows = ({
             }`}
         >
           <img
-            className=" rounded-3xl"
+            className=" rounded-full h-14 w-14 object-cover"
             src={teacherProfile}
             alt="Teacher Profile"
           />{" "}
@@ -54,12 +54,12 @@ const DataRows = ({
         >
           {subject}
         </p>
-        <p
+        {/* <p
           className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left text-sm ${header ? "font-semibold" : ""
             }`}
         >
           {classAvg}
-        </p>
+        </p> */}
         {header ? (
           <p
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left text-sm ${header ? "font-semibold" : ""

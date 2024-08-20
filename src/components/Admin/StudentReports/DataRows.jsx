@@ -33,7 +33,7 @@ const DataRows = ({
           }`}
         >
           <img
-            className=" rounded-full h-14 w-14"
+            className=" rounded-full h-14 w-14 object-cover "
             src={studentProfile}
             alt="Student Profile"
           />{" "}
@@ -45,7 +45,7 @@ const DataRows = ({
         >
           {studentName}
         </p>
-        <p
+        {/* <p
           className={`w-full md:flex-[3] text-sm my-1 md:my-0 text-center md:text-left ${
             header ? "font-semibold" : ""
           }`}
@@ -58,13 +58,13 @@ const DataRows = ({
           }`}
         >
           {studentClass}
-        </p>
+        </p> */}
         <p
           className={`w-full flex md:flex-[3] justify-between items-center my-1 md:my-0 text-center text-sm md:text-left ${
             header ? "font-semibold" : ""
           }`}
         >
-          {contact}  {header ? <></> :  <SlArrowRight size={20} /> }
+          {contact}  {!header &&  <SlArrowRight size={20} /> }
         </p>
       </div>
     </div>

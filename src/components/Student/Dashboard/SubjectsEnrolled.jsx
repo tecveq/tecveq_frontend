@@ -5,12 +5,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useUser } from "../../../context/UserContext";
 import { useStudent } from "../../../context/StudentContext";
 import { getAllSubjects } from "../../../api/Student/Subjects";
+import Loader from "../../../utils/Loader";
 
 const SubjectsEnrolled = () => {
 
   const [popup, setPopup] = useState(false);
   const [clickedItem, setClickedItem] = useState(false);
-  
+
   const { userData } = useUser();
   const { setAllSubjects, studentLogedIn } = useStudent();
 
@@ -28,60 +29,66 @@ const SubjectsEnrolled = () => {
     queryKey: ["subjects"], queryFn: async () => {
       const results = await getAllSubjects(userData._id);
       setAllSubjects(results);
+      console.log("inside dashboard")
       return results
     }, staleTime: 300000, enabled: studentLogedIn
   });
 
-  useEffect(() => subjectQuery.data && setAllSubjects(subjectQuery.data), [subjectQuery.isSuccess, subjectQuery.data]);
+  // useEffect(() => subjectQuery.data && setAllSubjects(subjectQuery.data), [subjectQuery.isSuccess, subjectQuery.data]);
 
   return (
-    <div className="flex flex-1">
-      <div className="flex flex-col flex-1 gap-2">
-        <div>
-          <p className="text-lg font-medium">Subjects Enrolled</p>
-        </div>
-        <div className="flex flex-1">
-          <table className="flex flex-col flex-1 bg-white rounded-lg table-fixed">
+    <>
+      <div className="flex flex-1">
+        <div className="flex flex-col flex-1 gap-2">
+          <div>
+            <p className="text-lg font-medium">Subjects Enrolled</p>
+          </div>
+          <div className="flex flex-1">
+            <table className="flex flex-col flex-1 bg-white rounded-lg table-fixed">
 
-            <thead className="flex gap-5 px-2 py-3 border-t-4 rounded-tl-lg rounded-tr-lg border-t-maroon bg-maroon_10">
-              <tr className="flex flex-1 font-medium">
-                <td className="flex-[1] flex justify-center">Sr No.</td>
-                <td className="flex-[3] flex justify-center">Subject Name</td>
-                <td className="flex-[3] flex justify-center">Instructor</td>
-                <td className="flex-[3] flex justify-center">Attendence</td>
-              </tr>
-            </thead>
+              <thead className="flex gap-5 px-2 py-3 border-t-4 rounded-tl-lg rounded-tr-lg border-t-maroon bg-maroon_10">
+                <tr className="flex flex-1 font-medium">
+                  <td className="flex-[1] flex justify-center">Sr No.</td>
+                  <td className="flex-[3] flex justify-center">Subject Name</td>
+                  <td className="flex-[3] flex justify-center">Instructor</td>
+                  <td className="flex-[3] flex justify-center">Attendence</td>
+                </tr>
+              </thead>
 
-            <tbody className="flex flex-col overflow-y-auto h-60 register-scrollbar">
+              <tbody className="flex flex-col overflow-y-auto h-60 register-scrollbar">
 
-              {subjectQuery.data?.map((item, index) => {
-                return (
-                  <tr className="flex text-xs border-t border-t-black/10" key={index + 1}>
-                    <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}.</td>
-                    <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                      {item?.subject?.name}
-                    </td>
-                    <td onClick={() => toggleClickTeacher(item)} style={{ cursor: "pointer" }} className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                      {item.teacher}
-                    </td>
-                    <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex w-full justify-center">
-                      <div className="flex w-[90%] h-4 bg-grey/50 rounded-3xl">
-                        <div className="w-[70%] text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white">
-                          70%
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
+                {
+                  subjectQuery.isPending ? <div className="flex flex-1"> <Loader /> </div> :
 
-              {popup && <TeacherMessageDialog handleFeedback={handleFeedback} item={clickedItem} />}
+                    subjectQuery.data?.map((item, index) => {
+                      return (
+                        <tr className="flex text-xs border-t border-t-black/10" key={index + 1}>
+                          <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}.</td>
+                          <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                            {item?.subject?.name}
+                          </td>
+                          <td onClick={() => toggleClickTeacher(item)} style={{ cursor: "pointer" }} className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                            {item.teacher}
+                          </td>
+                          <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex w-full justify-center">
+                            <div className="flex w-[90%] h-4 bg-grey/50 rounded-3xl">
+                              <div className="w-[70%] text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white">
+                                70%
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
 
-            </tbody>
-          </table>
+                {popup && <TeacherMessageDialog handleFeedback={handleFeedback} item={clickedItem} />}
+
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

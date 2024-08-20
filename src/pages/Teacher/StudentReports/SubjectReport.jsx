@@ -54,7 +54,7 @@ const SubjectReport = () => {
   });
 
   return (
-    isPending || isRefetching ? <Loader /> :
+    isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
         <div className="flex flex-1">
           <div className="flex-grow w-full px-5 lg:px-20 sm:px-10 lg:ml-72">
@@ -62,7 +62,7 @@ const SubjectReport = () => {
               <Navbar heading={"Student Report"} />
               <div className="mt-7">
                 <div className="flex flex-col items-center justify-center gap-1">
-                  <img src={IMAGES.Profile} alt="" className="w-40 h-40" />
+                  <img src={location.state.profilePic || IMAGES.Profile} alt="" className="w-40 h-40 rounded-full" />
                   <p className="text-lg font-semibold">{location.state.name}</p>
                   <div className="flex items-center gap-2 text-xs">
                     <LuPhone />

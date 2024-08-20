@@ -88,7 +88,7 @@ const Quizzes = () => {
   // }
 
   return (
-    isPending || isRefetching ? <LargeLoader /> :
+    isPending || isRefetching ? <div className="flex justify-center flex-1"> <LargeLoader />  </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">

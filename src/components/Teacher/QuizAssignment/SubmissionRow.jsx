@@ -25,18 +25,18 @@ const SubmissionRow = (props) => {
               }`}
           >
             {!props.header ? (
-              <img src={props.profileLink} alt="profile link" />
+              <img src={props.profileLink} className="w-12 h-12 rounded-full object-cover" alt="profile link" />
             ) : (
               <></>
             )}
             {props.name}
           </p>
           <p
-            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center  md:text-[14px]  text-[11px] ${props.header ? "font-semibold !text-start" : ""
+            className={`w-full md:flex-[3] my-1 md:my-0  md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
               }`}
           >
             {props.header ? props.submission :
-              formatDate(props.submission)
+              `${formatDate(props.submission)}`
             }
           </p>
         </div>
@@ -45,14 +45,14 @@ const SubmissionRow = (props) => {
             onClick={() => {
               console.log("download the resource");
             }}
-            className={`w-full my-1 md:my-0 text-center md:text-center md:text-[20px] text-[14px] ${props.header ? "" : ""
+            className={`w-full my-1 md:my-0 text-center md:text-center md:text-[14px] text-[14px] ${props.header ? "text-start mr-10 font-semibold" : ""
               }`}
           >
-            {!props.header &&
+            {!props.header ?
               <p onClick={() =>{}} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
                 <a href={props.submissionData.file} download={`${props.name}.pdf`}> Download</a>
               </p>
-            }
+            : "Files" }
           </p>
         </div>
       </div>

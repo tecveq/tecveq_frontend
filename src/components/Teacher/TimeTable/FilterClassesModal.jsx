@@ -40,7 +40,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
 
   const EventComponet = ({ item }) => {
     return (
-      <div className={`flex flex-col text-xs gap-1 px-2 py-2 rounded-lg w-68`}>
+      <div className={`flex flex-col text-xs gap-1 px-2 py-2 rounded-lg w-72`}>
         <div className="flex gap-2">
           <div className="">
             <img src={IMAGES.MathIcon} alt="" className="w-10 h-10 rounded-md" />
@@ -62,29 +62,6 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
             </div>
           </div>
         </div>
-
-        {/* 
-        {item.status ? (
-          <div className="flex items-center justify-between">
-            <p className="text-maroon">class has started...</p>
-            <div>
-              <div
-                onClick={handleJoinClass}
-                className="flex items-center justify-center px-2 py-1 text-center cursor-pointer bg-maroon rounded-3xl"
-              >
-                <img src={meet} alt="" className="w-8 h-3" />
-                <p className="text-white " style={{ fontSize: 8 }}>
-                  Join class
-                </p>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <FiClock />
-            <p>{item.startTime} </p>
-          </div>
-        )} */}
       </div>
     );
   };
@@ -144,12 +121,12 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
                 ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-maroon text-white" : ""}
                  text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}
             >
-              <div className="text-sm group-hover:text-white">
+              <div className="text-sm text-black group-hover:text-white">
                 {day.format("D")}
               </div>
 
               {eventsForDay && eventsForDay?.length > 0 ? (
-                <GoDotFill size={10} className="group-hover:text-white" />
+                <GoDotFill size={10} className=" group-hover:text-white" />
               ) : (
                 ""
               )}
@@ -251,8 +228,8 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
             />
             <ButtonComponent
               title={"Apply"}
-              bgcolor={"ghost"}
               color={"white"}
+              bgcolor={"ghost"}
               clickHandler={handleApplyFilters}
             />
           </div>

@@ -31,15 +31,35 @@ const ScheduledClasses = () => {
   }, [selectedDate])
 
   const EventComponet = ({ item }) => {
+
+    const [isStarted, setIsStarted] = useState(false);
+
+    useEffect(() => {
+
+      let nowTime = new Date();
+      let eventTime = new Date(item.startTime);
+      let eventEndTime = new Date(item.endTime);
+
+      if (eventTime.getMonth() == nowTime.getMonth()) {
+        if (eventTime.getDate() == nowTime.getDate()) {
+          if (eventTime.getTime() < nowTime.getTime() && nowTime.getTime() < eventEndTime.getTime()) {
+            setIsStarted(true);
+          }
+        }
+      }
+
+    }, [])
+
+
     return (
       <div
-        className={`flex flex-col  w-full px-6 text-xs border-l-2 gap-1 ${item.subject == "Physics"
-            ? "border-l-maroon bg-maroon_100"
-            : item.subject == "Chemistry"
-              ? "border-l-orange bg-orange_light"
-              : item.subject == "Biology"
-                ? "border-l-green bg-green/10"
-                : "border-l-green bg-green/10"
+        className={`flex flex-col  w-full px-6 text-xs border-l-2 gap-1 ${item.subjectID.name == "PF"
+          ? "border-l-maroon bg-maroon_100"
+          : item.subjectID.name == "ICT"
+            ? "border-l-orange bg-orange_light"
+            : item.subjectID.name == "Biology"
+              ? "border-l-green bg-green/10"
+              : "border-l-green bg-green/10"
           }  px-2 py-2 rounded-lg w-60`}
       >
         <div className="flex justify-between">
@@ -47,22 +67,37 @@ const ScheduledClasses = () => {
           <p>{item.teacher.teacherID.name}</p>
         </div>
         <div className="text-sm font-medium">
-          <p>{item.topic} </p>
+          <p>{item.title} </p>
         </div>
 
-        {item.status ? (
+        {isStarted ? (
           <div className="flex items-center justify-between">
-            <p className="text-maroon">class has started...</p>
+            <p className={`${item.subjectID.name == "PF"
+              ? "border-l-maroon text-maroon"
+              : item.subjectID.name == "ICT"
+                ? "border-l-orange text-orange"
+                : item.subjectID.name == "Biology"
+                  ? " text-green"
+                  : " text-green"
+              }`}>class has started...</p>
             <div>
-              <div
-                onClick={handleJoinClass}
-                className="flex items-center justify-center px-2 py-1 text-center cursor-pointer bg-maroon rounded-3xl"
-              >
-                <img src={meet} alt="" className="w-8 h-3" />
-                <p className="text-white " style={{ fontSize: 8 }}>
-                  Join class
-                </p>
-              </div>
+              <a href={item.meetLink} target="_blank">
+                <div
+                  className={`flex items-center justify-center px-2 py-1 text-center cursor-pointer ${item.subjectID.name == "PF"
+                    ? "border-l-maroon bg-maroon"
+                    : item.subjectID.name == "ICT"
+                      ? "border-l-orange bg-orange"
+                      : item.subjectID.name == "Biology"
+                        ? "border-l-green bg-green"
+                        : "border-l-green bg-green"
+                    }  rounded-3xl`}
+                >
+                  <img src={meet} alt="" className="w-8 h-3" />
+                  <p className="text-white " style={{ fontSize: 8 }}>
+                    Join class
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
         ) : (

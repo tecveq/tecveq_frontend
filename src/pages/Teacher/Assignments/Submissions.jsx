@@ -12,6 +12,7 @@ import { useBlur } from "../../../context/BlurContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { getMultipleAssignmentsForGrading } from "../../../api/Teacher/Assignments";
+import { useUser } from "../../../context/UserContext";
 
 const Submissions = () => {
   const [mail, setmail] = useState(false);
@@ -20,6 +21,8 @@ const Submissions = () => {
   const [isProfileDetails, setIsProfileDetails] = useState(false);
 
   const { isBlurred, toggleBlur } = useBlur();
+
+  const {userData}  = useUser();
 
   const toggleProfielMenu = () => {
     setIsProfileMenu(!isProfileMenu);
@@ -71,7 +74,7 @@ const Submissions = () => {
   console.log("all submissions are are : ", data);
 
   return (
-    isPending || isRefetching ? <Loader /> :
+    isPending || isRefetching ? <div className="flex justify-center flex-1"> <Loader /> </div> :
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
         <div className="flex flex-1">
           <div
@@ -114,14 +117,14 @@ const Submissions = () => {
                     />
                   </div>
                   <p className="text-justify md:text-[16px] text-[12px]">
-                    M. Haseeb
+                    {userData.name}
                   </p>
                   <div>
                     <img
                       onClick={toggleProfielMenu}
-                      src={IMAGES.ProfilePic}
+                      src={userData?.profilePic || IMAGES.ProfilePic}
                       alt=""
-                      className="w-[29px] h-[30px] cursor-pointer"
+                      className="w-[29px] h-[30px] rounded-full cursor-pointer"
                     />
                   </div>
                   <div>
@@ -177,6 +180,7 @@ const Submissions = () => {
                   index={"Sr. No"}
                   bgColor={"#F9F9F9"}
                   submission={"Submission"}
+                  downloads={"Downloads"}
                 />
                 {isSuccess && data?.submissions.map((submission, index) => {
                   return <SubmissionRow
@@ -184,8 +188,8 @@ const Submissions = () => {
                     header={false}
                     index={index + 1}
                     bgColor={"#FFFFFF"}
-                    profileLink={IMAGES.ProfilePic}
-                    submission={submission?.dueDate}
+                    profileLink={submission.studentID.profilePic || IMAGES.ProfilePic}
+                    submission={submission?.submission?.submittedAt}
                     name={submission?.studentID?.name}
                     submissionData={submission.submission}
                   />

@@ -176,8 +176,8 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
                   setValue={setClassObj}
                 />
                 <CustomSelectable
-                  options={allClassrooms}
                   label={"Select Class"}
+                  options={allClassrooms}
                   selectedOption={selectedClassroom}
                   setSelectedOption={setSelectedClassroom}
                 />
@@ -186,34 +186,34 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
                   type={"date"}
                   title={"Date"}
                   name={"startDate"}
-                  setValue={setClassObj}
-                  valuesObj={classObj}
-                  value={classObj.startDate}
                   selectable={false}
+                  valuesObj={classObj}
                   status={allowedEdit}
+                  setValue={setClassObj}
+                  value={classObj.startDate}
                 />
                 <div className="flex gap-2">
                   <CusotmInput
                     type={"time"}
                     icon={"calendar"}
                     name={"startTime"}
-                    setValue={setClassObj}
-                    value={classObj.startTime}
                     selectable={false}
                     title={"Start Time"}
                     valuesObj={classObj}
                     status={allowedEdit}
+                    setValue={setClassObj}
+                    value={classObj.startTime}
                   />
                   <CusotmInput
                     type={"time"}
                     icon={"cake"}
                     name={"endTime"}
-                    setValue={setClassObj}
-                    valuesObj={classObj}
-                    value={classObj.endTime}
                     title={"End Time"}
                     selectable={false}
                     status={allowedEdit}
+                    valuesObj={classObj}
+                    setValue={setClassObj}
+                    value={classObj.endTime}
                   />
                 </div>
 

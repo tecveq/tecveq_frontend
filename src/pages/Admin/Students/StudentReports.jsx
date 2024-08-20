@@ -26,7 +26,7 @@ const StudentReports = () => {
   // console.log("admin studnets are : ", adminUsersData.allStudents);
 
   return (
-    adminUsersDataPending ? <Loader /> :
+    adminUsersDataPending ? <div className="flex justify-center flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
