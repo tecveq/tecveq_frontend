@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+
 import Loader from "../../../utils/Loader";
 import Navbar from "../../../components/Admin/Navbar";
 import TotalUsers from "../../../components/Admin/Dashboard/TotalUsers";
 import StudentsCard from "../../../components/Admin/Dashboard/StudentsCard";
 import SystemOverview from "../../../components/Admin/Dashboard/SystemOverview";
 
-import { useUser } from "../../../context/UserContext";
 import { useBlur } from "../../../context/BlurContext";
 import { useAdmin } from "../../../context/AdminContext";
 

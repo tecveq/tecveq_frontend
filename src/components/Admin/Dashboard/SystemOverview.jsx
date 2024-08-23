@@ -108,10 +108,10 @@ const SystemOverview = () => {
 
   return (
     <div className='px-4 py-8 bg-white border border-black/20 rounded-lg'>
-      <CanvasJSChart options={options} />
-      {/* <div>
+      {/* <CanvasJSChart options={options} /> */}
+      <div>
         <img src={IMAGES.graph} alt="" className='w-full h-full' />
-      </div> */}
+      </div>
     </div>
   );
 };
