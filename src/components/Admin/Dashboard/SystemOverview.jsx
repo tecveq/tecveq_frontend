@@ -11,15 +11,27 @@
 // }
 
 // export default SystemOverview
-import React from 'react';
+import React, { useEffect } from 'react';
 // import CanvasJSReact from '@canvasjs/react-charts';
 import IMAGES from '../../../assets/images';
 
-import CanvasJSReact from '@canvasjs/react-charts';
-//var CanvasJSReact = require('@canvasjs/react-charts');
+// import CanvasJSReact from '@canvasjs/react-charts';
+// //var CanvasJSReact = require('@canvasjs/react-charts');
  
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+// var CanvasJS = CanvasJSReact.CanvasJS;
+// var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+const [CanvasJSChart, setCanvasJSChart] = useState(null);
+
+useEffect(() => {
+  const loadCanvasJS = async () => {
+    // Dynamically import the library
+    const module = await import('@canvasjs/react-charts');
+    setCanvasJSChart(module.CanvasJSChart);
+  };
+
+  loadCanvasJS();
+}, []);
 
 const SystemOverview = () => {
   const options = {
@@ -91,6 +103,8 @@ const SystemOverview = () => {
       },
     ],
   };
+
+  if (!CanvasJSChart) return <div>Loading...</div>;
 
   return (
     <div className='px-4 py-8 bg-white border border-black/20 rounded-lg'>
