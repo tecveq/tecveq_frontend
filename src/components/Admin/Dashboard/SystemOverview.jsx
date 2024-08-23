@@ -23,15 +23,15 @@ import IMAGES from '../../../assets/images';
 
 const [CanvasJSChart, setCanvasJSChart] = useState(null);
 
-useEffect(() => {
-  const loadCanvasJS = async () => {
-    // Dynamically import the library
-    const module = await import('@canvasjs/react-charts');
-    setCanvasJSChart(module.CanvasJSChart);
-  };
+// useEffect(() => {
+//   const loadCanvasJS = async () => {
+//     // Dynamically import the library
+//     const module = await import('@canvasjs/react-charts');
+//     setCanvasJSChart(module.CanvasJSChart);
+//   };
 
-  loadCanvasJS();
-}, []);
+//   loadCanvasJS();
+// }, []);
 
 const SystemOverview = () => {
   const options = {
@@ -104,7 +104,7 @@ const SystemOverview = () => {
     ],
   };
 
-  if (!CanvasJSChart) return <div>Loading...</div>;
+  // if (!CanvasJSChart) return <div>Loading...</div>;
 
   return (
     <div className='px-4 py-8 bg-white border border-black/20 rounded-lg'>
