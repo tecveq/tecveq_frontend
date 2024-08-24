@@ -94,7 +94,7 @@ const Login = () => {
     }
 
     return (
-        <div className='flex min-h-screen w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
+        <div className='flex flex-col md:flex-row min-h-screen w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
             <div className=' bg-cover bg-hero-pattern absolute w-72 h-72' ></div>
             <div className='flex flex-1 px-10 py-10 justify-center'>
                 <div className='flex items-center justify-center'>

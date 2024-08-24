@@ -126,7 +126,7 @@ const AssignmentReport = () => {
                   />
                   <GradeCard
                     type={"Average Grade"}
-                    grade={"B"}
+                    grade={location?.state?.grade}
                     data={"Grade"}
                   />
                 </div>
@@ -183,7 +183,7 @@ const AssignmentReport = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2">
+                  {/* <div className="flex flex-col gap-2">
                     <p className="sm:text-[17px] text-[14px]">
                       Assignment and Solution
                     </p>
@@ -199,7 +199,7 @@ const AssignmentReport = () => {
                         className="h-[50px] flex-[1/2]"
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="flex-[2]">

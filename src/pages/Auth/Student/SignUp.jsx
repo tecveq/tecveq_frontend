@@ -135,7 +135,7 @@ const SignUp = () => {
   console.log("level data in signup is : ", data);
 
   return (
-    <div className='flex min-h-screen w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
+    <div className='flex min-h-screen w-full flex-col md:flex-row flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
       <div className=' bg-cover bg-hero-pattern absolute w-60 h-60 lg:w-72 lg:h-72 2xl:h-96 2xl:w-96' ></div>
       <div className='flex flex-[4] lg:flex-1 px-10 justify-center'>
         <div className='flex flex-col flex-1'>

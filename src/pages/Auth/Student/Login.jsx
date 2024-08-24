@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../context/UserContext';
 import { toast } from 'react-toastify';
 import { useStudent } from '../../../context/StudentContext';
+import { useParent } from '../../../context/ParentContext';
 
 const Login = () => {
 
@@ -50,6 +51,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { setUserData } = useUser();
+    const { setParentLogedIn } = useParent();
     const { setStudentLogedIn } = useStudent();
 
     const handleSubmit = async (e) => {
@@ -71,8 +73,9 @@ const Login = () => {
                 } else if (response.userType == "parent") {
                     localStorage.setItem("tcauser", JSON.stringify(response));
                     toast.success("Login successful");
-                    navigate("/parent/dashboard");
-                    setStudentLogedIn(true);
+                    navigate("/parent/children");
+                    // navigate("/parent/dashboard");
+                    setParentLogedIn(true);
                 } else {
                     navigate("/login")
                 }
@@ -90,7 +93,7 @@ const Login = () => {
     }
 
     return (
-        <div className='flex min-h-screen w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
+        <div className='flex min-h-screen flex-col md:flex-row w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
             <div className=' bg-cover bg-hero-pattern absolute w-72 h-72' ></div>
             <div className='flex flex-1 sm:flex-[4] px-10 py-10 justify-center'>
                 <div className='flex items-center justify-center'>

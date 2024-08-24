@@ -1,26 +1,46 @@
 import React, { useState } from 'react'
-import IMAGES from '../../../assets/images'
-import Card from '../../../components/Parent/ChildrenScreen/Card'
 import logo from "../../../assets/logo.png";
+import Card from '../../../components/Parent/ChildrenScreen/Card'
+
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { getAllChildren } from '../../../api/Parent/ParentApi';
+import { useParent } from '../../../context/ParentContext';
+import { useUser } from '../../../context/UserContext';
+import Loader from '../../../utils/Loader';
 
 const ChildrenScreen = () => {
-    const [child1, setChild1]  = useState(false);
-    const [child2, setChild2]  = useState(false);
+    const [child1, setChild1] = useState(false);
+    const [child2, setChild2] = useState(false);
     const navigate = useNavigate();
 
-    const child1Click = () =>{
+    const { parentLogedIn, setSelectedChild } = useParent();
+    const { userData } = useUser();
+
+    const child1Click = (child) => {
+        setSelectedChild(child)
         setChild1(true);
         setChild2(false);
         navigate("/parent/dashboard")
     }
 
-    const child2Click = () =>{
+    const child2Click = () => {
         setChild1(false);
         setChild2(true);
         navigate("/parent/dashboard")
     }
+
+    const {data, isPending, error, refetch} = useQuery({
+        queryKey: ["childquery"], queryFn: async () => {
+            const result = await getAllChildren(userData.email);
+            console.log(" parent children are : ",  result);
+            return result
+        }, staleTime: 30000, enabled: parentLogedIn
+    });
+
     return (
+        isPending ? <Loader /> :
+        <>
         <div className='flex'>
             <div className='flex flex-1 flex-col h-full justify-center items-center min-h-screen'>
                 <div className='flex'>
@@ -29,12 +49,14 @@ const ChildrenScreen = () => {
                 <div className='flex flex-col items-center gap-4 flex-1'>
                     <p className='font-semibold text-3xl text-maroon font-poppins'>Select a Child Profile</p>
                     <div className='flex gap-8 '>
-                        <Card active={child1} onpress={child1Click} />
-                        <Card  active={child2} onpress={child2Click}/>
+                        {data.map((item) =>(
+                            <Card active={child1} data={item} onpress={() => child1Click(item)} />
+                        ))}
                     </div>
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

@@ -130,47 +130,56 @@ const CreateQuizAssignmentModal = ({
 
   const assignmentUpdateMutate = useMutation({
     mutationFn: async (dataobj) => await editAssignment(dataobj, data?._id),
-    onSettled: async (data) => {
+    onSettled: async (data, error) => {
       console.log("after updation data is : ", data);
       await refetch();
       toggleBlur();
       setopen(false);
-      return toast.success("Assignment updated successfully");
+      if(error){}{
+        return toast.success("Assignment updated successfully");
+      }
     }
   });
 
 
   const assignmentCreateMutate = useMutation({
     mutationFn: async (data) => await createAssignment(data),
-    onSettled: async (data) => {
+    onSettled: async (data, error) => {
       console.log("after cration data is : ", data);
       await refetch();
       toggleBlur();
       setopen(false);
-      return toast.success("Assignment created successfully");
+      if(error){
+      }else{
+        return toast.success("Assignment created successfully");
+      }
     }
   });
 
 
   const quizEditMutate = useMutation({
     mutationFn: async (dataobj) => await editQuiz(dataobj, data._id),
-    onSettled: async (data) => {
+    onSettled: async (data, error) => {
       console.log("after updation data is : ", data);
       await refetch();
       toggleBlur();
       setopen(false);
-      return toast.success("Quiz updated successfully");
+      if(error){}else{
+        return toast.success("Quiz updated successfully");
+      }
     }
   });
 
   const quizCreateMutate = useMutation({
     mutationFn: async (data) => await createQuiz(data),
-    onSettled: async (data) => {
+    onSettled: async (data, error) => {
       console.log("after cration data is : ", data);
       await refetch();
       toggleBlur();
       setopen(false);
-      return toast.success("Quiz created successfully");
+      if(error){}else{ 
+        return toast.success("Quiz created successfully");
+      }
     }
   });
 

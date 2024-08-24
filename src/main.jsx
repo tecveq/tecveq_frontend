@@ -10,6 +10,7 @@ import { AdminProvider } from './context/AdminContext.jsx'
 import { TeacherProvider } from './context/TeacherContext.jsx'
 import { StudentProvider } from './context/StudentContext.jsx'
 import "../firebase.config.js"
+import { ParentProvider } from './context/ParentContext.jsx'
 
 const queryClient = new QueryClient({});
 
@@ -20,11 +21,13 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <AdminProvider>
           <TeacherProvider>
             <StudentProvider>
-              <UserProvider>
-                <BlurProvider>
-                  <App />
-                </BlurProvider>
-              </UserProvider>
+              <ParentProvider>
+                <UserProvider>
+                  <BlurProvider>
+                    <App />
+                  </BlurProvider>
+                </UserProvider>
+              </ParentProvider>
             </StudentProvider>
           </TeacherProvider>
         </AdminProvider>

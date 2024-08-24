@@ -152,7 +152,7 @@ const SchedualClasses = ({ classRefetch }) => {
           <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
             <p className="text-xl font-medium">Schedule Class</p>
             <IoClose
-              onClick={() => {
+              onClick={() => { 
                 onclose();
                 setIsOpen(false);
               }}

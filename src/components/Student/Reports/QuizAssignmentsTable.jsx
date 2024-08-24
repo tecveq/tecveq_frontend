@@ -24,34 +24,47 @@ const QuizAssignmentsTable = ({ data }) => {
                         </thead>
                         <tbody className="flex flex-col">
                             {data?.data?.map((item, index) => {
-                                return (
-                                    <tr style={{ cursor: "pointer" }} onClick={() => navigate(`/reports/${params.subject}/${item.title}`, {state: item})} className="flex flex-1 text-xs border-t border-t-black/10">
-                                        <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item?.title}
-                                        </td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item?.obtainedMarks}
-                                        </td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item?.totalMarks}
-                                        </td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item?.grade}
-                                        </td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {
-                                                item.feedback ? (
-                                                    <img src={IMAGES.Feedback} alt='' className='md:w-[22px] md:h-[22px] w-[20px] h-[20px]' />
+                                let grade = "";
+                                let mod = (item.obtainedMarks / item.totalMarks) * 100;
+                                mod > 90
+                                    ? grade = "A"
+                                    : mod > 80
+                                        ? grade = "B"
+                                        : mod > 70
+                                            ? grade = "C"
+                                            : mod > 60
+                                                ? grade = "D"
+                                                : grade = "F";
+                                if (item._id) {
+                                    return (
+                                        <tr style={{ cursor: "pointer" }} onClick={() => navigate(`/reports/${params.subject}/${item.title}`, { state: {...item, grade} })} className="flex flex-1 text-xs border-t border-t-black/10">
+                                            <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {item?.title}
+                                            </td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {item?.obtainedMarks}
+                                            </td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {item?.totalMarks}
+                                            </td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {grade}
+                                            </td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {
+                                                    item.feedback ? (
+                                                        <img src={IMAGES.Feedback} alt='' className='md:w-[22px] md:h-[22px] w-[20px] h-[20px]' />
 
-                                                ) : (
-                                                    <img src={IMAGES.NoFeedback} alt='' className='md:w-[22px] md:h-[22px] w-[20px] h-[20px]' />
+                                                    ) : (
+                                                        <img src={IMAGES.NoFeedback} alt='' className='md:w-[22px] md:h-[22px] w-[20px] h-[20px]' />
 
-                                                )
-                                            }
-                                        </td>
-                                    </tr>
-                                );
+                                                    )
+                                                }
+                                            </td>
+                                        </tr>
+                                    );
+                                }
                             })}
                         </tbody>
                     </table>
