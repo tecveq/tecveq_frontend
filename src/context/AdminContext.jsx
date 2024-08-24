@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // import { connectSocket } from "../socket"
 import { getAllUsers } from '../api/Admin/AdminApi';
@@ -138,6 +138,7 @@ export const AdminProvider = ({ children }) => {
             setAllClassrooms,
 
             adminUsersData,
+            setAdminUsersdata,
             adminUsersRefecth: userQuery.refetch,
             adminUsersDataPending: userQuery.isPending,
 

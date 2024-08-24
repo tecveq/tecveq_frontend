@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+
+import Loader from '../../../utils/Loader';
 import IMAGES from "../../../assets/images";
 
 import { IoIosArrowDown } from "react-icons/io";
@@ -158,6 +160,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
 
 
   const handleCreateClass = async () => {
+    
     if (selectedLevel && newSelectedStudents.length > 0) {
 
       let students = newSelectedStudents.map((item) => item._id);
@@ -264,16 +267,19 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
               <p>Students Selected: {newSelectedStudents.length}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div
-              onClick={() => {
-                handleCreateClass();
-              }}
-              className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
-            >
-              <p className="text-sm text-white">Create</p>
+          {createClassroomMutation.isPending && <div className='' > <Loader /> </div>}
+          {!createClassroomMutation.isPending &&
+            <div className="flex items-center gap-3">
+              <div
+                onClick={() => {
+                  handleCreateClass();
+                }}
+                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
+              >
+                <p className="text-sm text-white">Create</p>
+              </div>
             </div>
-          </div>
+          }
         </div>
       </div>
     </div>

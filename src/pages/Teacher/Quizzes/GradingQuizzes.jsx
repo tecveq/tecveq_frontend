@@ -278,7 +278,7 @@ const GradingQuizzes = () => {
             </div>
             <div className="flex justify-end my-4 border-t border-black">
               <div className="flex justify-end py-4">
-                <p onClick={handleGradeQuiz} className="flex px-8 py-3 text-sm text-white rounded-3xl bg-maroon">Submit</p>
+                <p onClick={handleGradeQuiz} className="flex px-8 py-3 text-sm text-white cursor-pointer rounded-3xl bg-maroon">Submit</p>
               </div>
             </div>
           </div>

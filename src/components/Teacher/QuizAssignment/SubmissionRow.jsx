@@ -25,18 +25,18 @@ const SubmissionRow = (props) => {
               }`}
           >
             {!props.header ? (
-              <img src={props.profileLink} className="w-12 h-12 rounded-full object-cover" alt="profile link" />
+              <img src={props?.profileLink} className="w-12 h-12 rounded-full object-cover" alt="profile link" />
             ) : (
               <></>
             )}
-            {props.name}
+            {props?.name}
           </p>
           <p
             className={`w-full md:flex-[3] my-1 md:my-0  md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
               }`}
           >
-            {props.header ? props.submission :
-              `${formatDate(props.submission)}`
+            {props.header ? props?.submission :
+              `${formatDate(props?.submission)}`
             }
           </p>
         </div>
@@ -49,10 +49,15 @@ const SubmissionRow = (props) => {
               }`}
           >
             {!props.header ?
-              <p onClick={() =>{}} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
-                <a href={props.submissionData.file} download={`${props.name}.pdf`}> Download</a>
+              props?.submissionData?.file ? 
+              <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                <a href={props?.submissionData?.file} download={`${props?.name}.pdf`} target="_blank" > Download</a>
               </p>
-            : "Files" }
+              : 
+              <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                Pending
+              </p>
+              : "Files"}
           </p>
         </div>
       </div>

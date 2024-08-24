@@ -5,6 +5,8 @@ import logo from "../../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import { adminLogout } from "../../../api/Admin/AdminApi";
 import Loader from "../../../utils/Loader";
+import { useStudent } from "../../../context/StudentContext";
+import { useAdmin } from "../../../context/AdminContext";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -162,10 +164,19 @@ const Sidebar = () => {
     navigate("/admin/subjects");
   };
 
+  const {
+    setAllClassrooms,
+    setAdminLogedIn,
+    setAdminUsersdata,
+  } = useAdmin();
+
   const handleLogoutClick = async () => {
     setLoading(true)
-    localStorage.clear();
     await adminLogout();
+    localStorage.clear();
+    setAdminLogedIn(false);
+    // setAllClassrooms([]);
+    // setAdminUsersdata([]);
     navigate("/admin/login");
     setLoading(false)
   };

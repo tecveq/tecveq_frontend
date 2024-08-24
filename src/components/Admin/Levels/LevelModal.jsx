@@ -26,8 +26,14 @@ const LevelModal = ({ open, setopen, refetch, isEditTrue, levelData, setEditTrue
 
   const handleAddLevel = async () => {
     if(levelValue){
-      mutation.mutate(levelValue)
-      setEditTrue(false);
+      const levelNamePattern = /^[a-zA-Z0-9\s]+$/;
+      const isValidLevelName = levelNamePattern.test(levelValue);
+      if(isValidLevelName){ 
+        mutation.mutate(levelValue)
+        setEditTrue(false);
+      }else{
+        toast.error("Invalid level name!. Should not have any special characters.");
+      }
     }else{
       setErrormsg(true);
       setTimeout(() => {

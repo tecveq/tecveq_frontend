@@ -116,7 +116,7 @@ const TeacherDetails = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mt-7">
+                {/* <div className="mt-7">
                   <div className="flex flex-col gap-4">
                     <p className="md:text-[20px]">Activity History</p>
                     <div className="flex flex-col gap-2">
@@ -125,7 +125,7 @@ const TeacherDetails = () => {
                       <ActivityCard />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </>
               : <>
                 <div className="flex py-4">

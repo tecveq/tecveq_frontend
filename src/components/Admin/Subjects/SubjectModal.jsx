@@ -28,9 +28,15 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
   });
 
   const handleAddSubject = async () => {
-    if (subjectValue) {
+    if (subjectValue && levelValue) {
       console.log("mutation")
-      mutation.mutate(subjectValue)
+      const subjectNamePattern = /^[a-zA-Z0-9\s]+$/;
+      const isValidSubjectName = subjectNamePattern.test(subjectValue);
+      if (isValidSubjectName) {
+        mutation.mutate(subjectValue)
+      } else {
+        toast.error("Invalid subject name!. Should not have any special characters.");
+      }
     } else {
       setErrormsg(true);
       setTimeout(() => {
@@ -52,11 +58,15 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
       await refetch();
       toast.success(`Subject ${isEditTrue ? "updated" : "added"} successfully!`);
       return result;
-    }, onSettled: () => {
-      setSubjectValue("");
-      setLevelValue("");
-      setopen(false);
-      toggleBlur();
+    }, onSettled: (data, error) => {
+      if(error){
+        toast.error("Subject name already exists!");
+      }else{
+        setSubjectValue("");
+        setLevelValue("");
+        setopen(false);
+        toggleBlur();
+      }
     }
   });
 

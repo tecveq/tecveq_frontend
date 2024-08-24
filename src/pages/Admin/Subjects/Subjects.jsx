@@ -89,11 +89,10 @@ const Subjects = () => {
                                         <DataRow
                                             index={"Sr. No"}
                                             subjectName={"Subject Name"}
-                                            levelID={"Level ID"}
+                                            levelID={"Level Name"}
                                             bgColor={"#F9F9F9"}
                                             header={true}
                                         />
-
                                         {searchText == "" && allSubjects?.map((lvl, index) => (
                                             <DataRow
                                                 data={lvl}

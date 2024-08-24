@@ -8,11 +8,12 @@ import SubmissionRow from "../../../components/Teacher/QuizAssignment/Submission
 import { BiSearch } from "react-icons/bi";
 import { IoBookOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
+import { useUser } from "../../../context/UserContext";
 import { useBlur } from "../../../context/BlurContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { getMultipleAssignmentsForGrading } from "../../../api/Teacher/Assignments";
-import { useUser } from "../../../context/UserContext";
+
 
 const Submissions = () => {
   const [mail, setmail] = useState(false);
@@ -74,7 +75,7 @@ const Submissions = () => {
   console.log("all submissions are are : ", data);
 
   return (
-    isPending || isRefetching ? <div className="flex justify-center flex-1"> <Loader /> </div> :
+    isPending || isRefetching ? <div className="flex flex-1"> <Loader /> </div> :
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
         <div className="flex flex-1">
           <div
@@ -188,10 +189,10 @@ const Submissions = () => {
                     header={false}
                     index={index + 1}
                     bgColor={"#FFFFFF"}
-                    profileLink={submission.studentID.profilePic || IMAGES.ProfilePic}
+                    profileLink={submission?.studentID?.profilePic || IMAGES.ProfilePic}
                     submission={submission?.submission?.submittedAt}
                     name={submission?.studentID?.name}
-                    submissionData={submission.submission}
+                    submissionData={submission?.submission}
                   />
                 })}
 

@@ -103,7 +103,7 @@ const ManageUsers = () => {
                       </div>
 
                       <div>
-                        {requestsModal && <RequestModal refetch={adminUsersRefecth} data={adminUsersData.allUsers} />}
+                        {requestsModal && <RequestModal onclose={() => setRequestsModal(false)} refetch={adminUsersRefecth} data={adminUsersData.allUsers} />}
                       </div>
 
                       <div className="flex items-center gap-2">

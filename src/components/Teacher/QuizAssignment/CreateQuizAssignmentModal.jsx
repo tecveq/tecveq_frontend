@@ -30,6 +30,8 @@ const CreateQuizAssignmentModal = ({
   const [QADate, setQADate] = useState("");
   const [QATime, setQATime] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const [quizAssignmentDataObj, setQuizAssignmentDataObj] = useState({
     canSubmitAfterTime: false,
     title: isEditTrue ? data?.title : "",
@@ -44,6 +46,7 @@ const CreateQuizAssignmentModal = ({
   const [selectedClassroom, setSelectedClassroom] = useState("");
 
   const handleCreateAssignment = async () => {
+    setLoading(true);
     if (isEditTrue) {
       let sendingObjdata = {
         ...quizAssignmentDataObj,
@@ -80,10 +83,11 @@ const CreateQuizAssignmentModal = ({
 
       assignmentCreateMutate.mutate(sendingObj)
     }
+    setLoading(false);
   }
 
   const handleCreateQuiz = async () => {
-
+    setLoading(true);
     if (isEditTrue) {
       let sendingObjdata = {
         ...quizAssignmentDataObj,
@@ -120,6 +124,7 @@ const CreateQuizAssignmentModal = ({
       console.log("sending data to server is : ", sendingObj);
       quizCreateMutate.mutate(sendingObj);
     }
+    setLoading(false);
   }
 
 
@@ -314,9 +319,9 @@ const CreateQuizAssignmentModal = ({
               }
             </div>
           </div>
-          {(quizCreateMutate.isPending || quizEditMutate.isPending || assignmentCreateMutate.isPending || assignmentUpdateMutate.isPending) && <div><Loader /> </div>}
+          {(loading || quizCreateMutate.isPending || quizEditMutate.isPending || assignmentCreateMutate.isPending || assignmentUpdateMutate.isPending) && <div><Loader /> </div>}
           {
-            (!quizCreateMutate.isPending && !quizEditMutate.isPending && !assignmentCreateMutate.isPending && !assignmentUpdateMutate.isPending) &&
+            (!loading && !quizCreateMutate.isPending && !quizEditMutate.isPending && !assignmentCreateMutate.isPending && !assignmentUpdateMutate.isPending) &&
             <div className="flex items-center gap-3">
               <div
                 onClick={() => { isQuiz ? handleCreateQuiz() : handleCreateAssignment() }}

@@ -66,17 +66,15 @@ const Login = () => {
             if (response !== "error") {
                 setUserData(response);
                 if (response.userType == "admin") {
-
+                    setAdminLogedIn(true);
                     toast.success("Login successful");
                     localStorage.setItem("tcauser", JSON.stringify(response))
-                    setAdminLogedIn(true);
                     navigate("/admin/dashboard")
 
                 } else if (response.userType == "teacher") {
-                    
+                    setTeacherLogedIn(true);
                     toast.success("Login successful");
                     localStorage.setItem("tcauser", JSON.stringify(response))
-                    setTeacherLogedIn(true);
                     navigate("/teacher/dashboard")
 
                 } else {
@@ -86,7 +84,7 @@ const Login = () => {
 
         } catch (error) {
             console.log("error in student login UI screen is : ", error);
-            toast.error(error.message);
+            // toast.error(error.message);
         }
         setLoading(false);
     }
@@ -134,7 +132,7 @@ const Login = () => {
                                 <div className='py-4 flex flex-col gap-2'>
                                     {loading ?
                                         <>
-                                            <Loader />
+                                            <div className='flex justify-center flex-1' > <Loader /> </div>
                                         </>
                                         : (
                                             <button type='submit' className='flex bg-maroon text-white rounded-md py-2 px-4 justify-center items-center text-center cursor-pointer hover:bg-maroon/90'>Sign In</button>

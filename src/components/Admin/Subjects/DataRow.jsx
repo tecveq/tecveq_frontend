@@ -19,6 +19,8 @@ const DataRow = (props) => {
   const [level, setLevel] = useState("");
   
   useEffect(() => {
+
+
     allLevels.map((item)=>{
       if(item._id == props.levelID){
         setLevel(item.name);

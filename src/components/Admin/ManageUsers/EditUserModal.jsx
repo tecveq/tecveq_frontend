@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import Loader from '../../../utils/Loader';
 
 import { toast } from 'react-toastify';
 import { LuAsterisk } from "react-icons/lu";
@@ -74,15 +75,22 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
                 </div>
                 <div className='flex flex-col gap-2 px-10 flex-1 py-4'>
                     <InputFiled label={"Occupation"} req={false} val={data.userType} dataObj={userObj} name={"occupation"} />
-                    <InputFiled label={"Name"} req={true} val={userObj.name} dataObj={userObj} name={"name"} setDataObj={setUsrObj} />
-                    <InputFiled label={"Email"} req={true} val={userObj.email} name={"email"} setDataObj={setUsrObj} />
-                    <InputFiled label={"Phone No."} req={true} val={userObj.phone} name={"phoneNumber"} setDataObj={setUsrObj} />
-                    <InputFiled label={"Enroll In."} req={true} />
-                    <InputFiled label={"Guardian Name"} req={true} />
-                    <InputFiled label={"Guardian Email"} req={true} />
-                    <InputFiled label={"Password"} req={true} />
-                    <InputFiled label={"Confirm Password"} req={true} />
-                    <CustomButton label={"Update User"} btnClick={handleUpdateUser} />
+                    <InputFiled label={"Name"} req={false} val={userObj.name} dataObj={userObj} name={"name"} setDataObj={setUsrObj} />
+                    <InputFiled label={"Email"} req={false} val={userObj.email} name={"email"} setDataObj={setUsrObj} />
+                    <InputFiled label={"Phone No."} req={false} val={userObj.phone} name={"phoneNumber"} setDataObj={setUsrObj} />
+                    {data.userType == "student" &&
+                        <>
+                            <InputFiled label={"Enroll In."} req={false} val={data.levelID} />
+                            <InputFiled label={"Guardian Name"} req={false} val={data.guardianName} />
+                            <InputFiled label={"Guardian Email"} req={false} val={data.guardianEmail} />
+                        </>
+                    }
+                    <InputFiled label={"Password"} req={false} />
+                    <InputFiled label={"Confirm Password"} req={false} />
+                    {mutation.isPending && <div className='flex flex-1'><Loader /></div>}
+                    {!mutation.isPending &&
+                        <CustomButton label={"Update User"} btnClick={handleUpdateUser} />
+                    }
                 </div>
             </div>
         </div>

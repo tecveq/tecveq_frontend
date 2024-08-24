@@ -111,7 +111,13 @@ const AddUserModal = ({ closeModal, refetch }) => {
 
     const CustomFileSelector = ({ label }) => {
         return <div className="flex flex-col gap-2">
-            <p className="font-semibold">{label}</p>
+            <div className='flex gap-2 items-center'>
+
+                <p className="font-semibold">{label}</p>
+                <p className='font-normal'>
+                    <FaAsterisk size={6} color='red' className='mt-1' />
+                </p>
+            </div>
             <div className="flex border border-black/20 rounded-lg px-6 py-4 flex-col text-xs justify-center items-center">
                 <input
                     type="file"
@@ -150,46 +156,72 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     profilePic: default_profile
                 }
             } else if (role == "student") {
-                dataBody = {
-                    userType: role,
-                    name: e.target[1].value,
-                    email: e.target[2].value,
-                    phoneNumber: e.target[3].value,
-                    levelID: JSON.parse(e.target[4].value)._id,
-                    guardianName: e.target[5].value,
-                    guardianEmail: e.target[6].value,
-                    guardianPhoneNumber: e.target[7].value,
-                    password: e.target[8].value,
-                    profilePic: default_profile
+                // valid email
+                const emailPattern = /^[a-zA-Z][\w\.-]*@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+                // only string
+                const namePattern = /^[a-zA-Z\s]+$/;
+                // password should have atleast one digit, one special character, and one upper case letter
+                const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+
+
+                const isValidName = namePattern.test(e.target[1].value);
+                const isValidEmail = emailPattern.test(e.target[2].value);
+                const isValidGuardainName = namePattern.test(e.target[5].value);
+                const isValidPassword = passwordPattern.test(e.target[8].value);
+                const isValidGuardianEmail = emailPattern.test(e.target[6].value);
+
+                // if (isValidEmail) {
+                //     if (isValidName) {
+                if (e.target[8].value == e.target[9].value) {
+                    dataBody = {
+                        userType: role,
+                        name: e.target[1].value,
+                        email: e.target[2].value,
+                        phoneNumber: e.target[3].value,
+                        levelID: JSON.parse(e.target[4].value)._id,
+                        guardianName: e.target[5].value,
+                        guardianEmail: e.target[6].value,
+                        guardianPhoneNumber: e.target[7].value,
+                        password: e.target[8].value,
+                        profilePic: default_profile
+                    }
+                    const response = await registerStudent(dataBody);
+                    console.log("after register user is : ", response);
+                } else {
+                    toast.error("Password and confirm password should be equal!");
                 }
-                const response = await registerStudent(dataBody);
-                console.log("after register user is : ", response);
+                //     } else {
+                //         toast.error("Name cannot have digits or special characters");
+                //     }
+                // } else {
+                //     toast.error("Invalid Email!");
+                // }
             } else {
                 console.log("teacher form is : ", e);
                 let cvurl = "cv url here",
-                dataBody = {
-                    userType: role,
-                    name: e.target[1].value,
-                    email: e.target[2].value,
-                    phoneNumber: e.target[3].value,
-                    qualification: e.target[4].value,
-                    cv: cvurl,
-                    experience: e.target[6].value,
-                    password: e.target[7].value,
-                    profilePic: default_profile
-                }
+                    dataBody = {
+                        userType: role,
+                        name: e.target[1].value,
+                        email: e.target[2].value,
+                        phoneNumber: e.target[3].value,
+                        qualification: e.target[4].value,
+                        cv: cvurl,
+                        experience: e.target[6].value,
+                        password: e.target[7].value,
+                        profilePic: default_profile
+                    }
                 cvurl = await uploadFile(e.target[5].files[0], "CV");
                 dataBody.cv = cvurl;
                 const response = await registerStudent(dataBody);
                 console.log("after register user is : ", response);
             }
 
-            toast.success("User added successfully");
+            toast.success("User added successfully!");
             await refetch();
             closeModal();
         } catch (error) {
             console.log("error in student login UI screen is : ", error);
-            toast.success("Cannot add the user!");
+            toast.error("Cannot add the user!");
         }
         setLoading(false);
     }
@@ -241,7 +273,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                             <div className='py-4 flex flex-col gap-2'>
                                 {loading ?
                                     <>
-                                        <Loader />
+                                        <div className='flex flex-1 '> <Loader /> </div>
                                     </>
                                     : (
                                         <button type='submit' className='flex self-center bg-maroon text-white rounded-3xl py-2 px-4 justify-center items-center w-3/5 text-center cursor-pointer hover:bg-maroon/90'>Add User</button>

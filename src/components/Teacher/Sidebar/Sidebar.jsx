@@ -6,6 +6,8 @@ import { IoIosLogOut } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { userLogout } from "../../../api/ForAllAPIs";
 import Loader from "../../../utils/Loader";
+import { useUser } from "../../../context/UserContext";
+import { useTeacher } from "../../../context/TeacherContext";
 
 const Sidebar = () => {
 
@@ -86,9 +88,12 @@ const Sidebar = () => {
     navigate("/teacher/classroom");
   };
 
+  const {setTeacherLogedIn} = useTeacher();
+
   const handleLogoutClick = async () => {
     setLoading(true);
     localStorage.clear();
+    setTeacherLogedIn(false);
     await userLogout();
     navigate("/admin/login");
     setLoading(false);

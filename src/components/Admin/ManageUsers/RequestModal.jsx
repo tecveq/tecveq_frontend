@@ -1,5 +1,7 @@
 import React from 'react'
 import IMAGES from '../../../assets/images'
+import LoaderSmall from '../../../utils/LoaderSmall';
+
 import { MdOutlinePhone } from "react-icons/md";
 import { useMutation } from '@tanstack/react-query';
 import { acceptUser, rejectUser } from '../../../api/Admin/UsersApi';
@@ -19,6 +21,8 @@ const RequestModal = ({ refetch, data, onclose }) => {
             const results = await acceptUser(id);
             await refetch();
             return results;
+        }, onSettled: () => {
+            onclose();
         }
     })
 
@@ -27,6 +31,8 @@ const RequestModal = ({ refetch, data, onclose }) => {
             const results = await rejectUser(id);
             await refetch();
             return results;
+        }, onSettled: () => {
+            onclose();
         }
     })
 
@@ -46,10 +52,12 @@ const RequestModal = ({ refetch, data, onclose }) => {
                             <MdOutlinePhone size={10} className='text-maroon' />
                             <p>{user.phoneNumber}</p>
                         </div>
+
                         <div className='flex items-center gap-2'>
                             <p onClick={() => accept(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-yellow_green_light/10 text-yellow_green_light cursor-pointer`}>Accept</p>
-                            <p onClick={() =>  reject(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-maroon/10 text-maroon cursor-pointer`}>Reject</p>
+                            <p onClick={() => reject(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-maroon/10 text-maroon cursor-pointer`}>Reject</p>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -62,20 +70,29 @@ const RequestModal = ({ refetch, data, onclose }) => {
                 <div className='border-b border-black/10 py-2 flex items-center justify-center'>
                     <p>Request</p>
                 </div>
-                <div className='h-72 overflow-y-auto register-scrollbar'>
-                    {data.map((item) => {
-                        if (item.isAccepted == false) {
-                            if (item.userType !== "admin") {
-                                return <RequestComponent
-                                    user={item}
-                                    accept={handleAcceptUser}
-                                    reject={handleRejectUser}
-                                />
+
+                {(acceptMutation.isPending || rejectMutation.isPending) ? <div className='flex flex-1 justify-center'><LoaderSmall /> </div> :
+                    <div className='h-72 overflow-y-auto register-scrollbar'>
+                        {data.map((item) => {
+                            if (item.isAccepted == false) {
+                                if (item.userType !== "admin") {
+                                    return <RequestComponent
+                                        user={item}
+                                        accept={handleAcceptUser}
+                                        reject={handleRejectUser}
+                                    />
+                                }
                             }
-                        }
-                    })}
-                    {data.length == 0 && <div className='text-center py-2'>No pending users!</div>}
-                </div>
+                        })}
+                        {data.filter((item) => {
+                            if (item.isAccepted == false) {
+                                if (item.userType !== "admin") {
+                                    return item
+                                }
+                            }
+                        }).length == 0 && <div className='text-center flex flex-1 py-2 justify-center text-black'>No pending users!</div>}
+                    </div>
+                }
             </div>
         </div>
     )

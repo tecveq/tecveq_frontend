@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { getMultipleQuizesForGrading } from "../../../api/Teacher/Quiz";
 import LargeLoader from "../../../utils/LargeLoader";
+import { useUser } from "../../../context/UserContext";
 
 const Submissions = () => {
   const [mail, setmail] = useState(false);
@@ -20,6 +21,7 @@ const Submissions = () => {
   const [isProfileMenu, setIsProfileMenu] = useState(false);
   const [isProfileDetails, setIsProfileDetails] = useState(false);
 
+  const { userData } = useUser();
   const { isBlurred, toggleBlur } = useBlur();
 
   const toggleProfielMenu = () => {
@@ -139,14 +141,14 @@ const Submissions = () => {
                       />
                     </div>
                     <p className="text-justify md:text-[16px] text-[12px]">
-                      M. Haseeb
+                      M. {userData.name}
                     </p>
                     <div>
                       <img
                         onClick={toggleProfielMenu}
-                        src={IMAGES.ProfilePic}
+                        src={userData.profilePic || IMAGES.ProfilePic}
                         alt=""
-                        className="w-[29px] h-[30px] cursor-pointer"
+                        className="w-[29px] h-[30px] rounded-full cursor-pointer"
                       />
                     </div>
                     <div>
@@ -199,23 +201,23 @@ const Submissions = () => {
                   <SubmissionRow
                     isQuiz={true}
                     header={true}
-                    bgColor={"#F9F9F9"}
-                    index={"Sr. No"}
                     name={"Name"}
+                    index={"Sr. No"}
+                    bgColor={"#F9F9F9"}
                     submission={"Submission"}
                   />
-                  
+
                   {isSuccess && data?.submission?.map((submission, index) => (
                     <SubmissionRow
-                      key={data._id}
                       isQuiz={true}
+                      key={data._id}
                       header={false}
                       index={index + 1}
                       bgColor={"#FFFFFF"}
-                      profileLink={submission.studentID.profilePic || IMAGES.Profile}
-                      submission={submission?.submission.submittedAt}
                       name={submission.studentID.name}
                       submissionData={submission.submissions}
+                      submission={submission?.submission.submittedAt}
+                      profileLink={submission.studentID.profilePic || IMAGES.Profile}
                     />
                   ))}
 

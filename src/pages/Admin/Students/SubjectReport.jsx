@@ -227,8 +227,8 @@ const SubjectReport = () => {
                   <div className="flex flex-col gap-2 flex-1">
                     {/* <p className="md:text-[20px]">System Usage Report</p> */}
                     <div className="flex flex-row items-center gap-2 w-full flex-1">
-                      {/* <img src={IMAGES.deviceGraph} alt="" className="w-full h-full" /> */}
-                      <SystemOverview />
+                      <img src={IMAGES.deviceGraph} alt="" className="w-full h-full" />
+                      {/* <SystemOverview /> */}
                     </div>
                   </div>
                 </div>
