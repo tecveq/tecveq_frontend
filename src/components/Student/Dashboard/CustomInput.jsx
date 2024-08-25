@@ -17,7 +17,7 @@ export const CusotmInput = ({ label, value, status, icon, inputChange }) => {
                         placeholder={`Enter ${label}`}
                         value={value}
                     />
-                    <GoPerson />
+                    {icon}
                 </div>
             </div>
         </div>

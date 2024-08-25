@@ -30,7 +30,7 @@ const Dashboard = () => {
     // }
   }, [])
 
-  const { studentLogedIn, assignmentIsPending, announcementIsPending, quizIsPending } = useStudent();
+  const { studentLogedIn, assignmentIsPending, announcementIsPending, quizIsPending, } = useStudent();
 
   return (
     assignmentIsPending || announcementIsPending || quizIsPending || !studentLogedIn ? <div className="flex justify-center flex-1"> <LargeLoader /> </div> :

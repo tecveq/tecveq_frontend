@@ -5,6 +5,8 @@ import logo from "../../../assets/logo.png";
 import webinar from "../../../assets/webinar.png";
 import meet from "../../../assets/meet.png";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../utils/Loader";
+import { logout } from "../../../api/User/UserApi";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ const Sidebar = () => {
   const [reports, setReports] = useState(false);
   const [assignments, setAssignments] = useState(false);
   const [dashboard, setDashboard] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [isopen, setIsopen] = useState(false);
 
@@ -58,7 +61,19 @@ const Sidebar = () => {
   };
 
 
-  const handleLogoutClick = () => { };
+  const handleLogoutClick = async () => {
+    setLoading(true);
+    localStorage.clear();
+    const response = await logout();
+    if (response == "error") {
+      console.log("error loggin out")
+      navigate("/login")
+    } else {
+      localStorage.clear()
+      navigate("/login")
+    }
+    setLoading(false);
+  };
 
   const Menubar = () => (
     <div
@@ -94,12 +109,16 @@ const Sidebar = () => {
             onpress={handleQuizzesClick}
           />
         </div>
-        <div
-          className={`flex items-center  gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
-        >
-          <IoIosLogOut />
-          <p>Logout</p>
-        </div>
+        {loading && <div className="flex flex-1"> <Loader /> </div>}
+        {!loading &&
+          <div
+            onClick={handleLogoutClick}
+            className={`flex items-center  gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
+          >
+            <IoIosLogOut />
+            <p>Logout</p>
+          </div>
+        }
       </div>
     </div>
   );

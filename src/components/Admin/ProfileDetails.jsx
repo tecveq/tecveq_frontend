@@ -55,6 +55,7 @@ const ProfileDetails = ({ onclose }) => {
     name: userData.name,
     email: userData.email,
     phoneNumber: userData.phoneNumber,
+    bio: userData.bio
   })
 
 
@@ -118,14 +119,15 @@ const ProfileDetails = ({ onclose }) => {
             </div>
             <div className="flex flex-col items-center justify-center text-center">
               <label htmlFor="profile" className="cursor-pointer">
-                <img src={selectedFile || profile} alt="" className="w-28 h-28 rounded-full" />
+                <img src={userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
               </label>
               <input id="profile" type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="hidden" />
               <p>{userData.name}</p>
-              <p>Bio</p>
+              {/* <p>Bio</p> */}
               <p className="text-xs">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Maxime, sint?
+                {userData.bio ? userData.bio : 
+                `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, sint?`
+                }
               </p>
             </div>
             <div className="flex flex-col gap-1 px-2 py-1 overflow-auto h-96 custom-scrollbar">

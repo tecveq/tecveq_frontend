@@ -74,7 +74,7 @@ const SubjectReport = () => {
   console.log("query for subject report data is : ", reportQuery.data);
 
   return (
-    reportQuery.isPending ? <LargeLoader /> :
+    (reportQuery.isPending || !reportQuery.data) ? <LargeLoader /> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">

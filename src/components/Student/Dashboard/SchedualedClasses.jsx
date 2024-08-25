@@ -11,7 +11,7 @@ import { useStudent } from "../../../context/StudentContext";
 
 const ScheduledClasses = () => {
 
-  const { allClasses } = useStudent();
+  const { allClasses, classesRefetch, classeIsPending } = useStudent();
 
   const [selectedDate, setSelectedDate] = useState(null);
   const [filteredclasses, setFilteredClasses] = useState([]);
@@ -21,14 +21,20 @@ const ScheduledClasses = () => {
   const filterClasses = () => {
     console.log("selected Date is : ", selectedDate);
     let arr = []
-    arr = allClasses.filter((item) => new Date(item.startTime).toDateString() == selectedDate);
-    console.log(arr);
-    setFilteredClasses(arr);
+    // if(!classeIsPending){
+      arr = allClasses.filter((item) => new Date(item.startTime).toDateString() == selectedDate);
+      console.log(arr);
+      setFilteredClasses(arr);
+    // }
   }
 
   useEffect(() => {
-    filterClasses();
-  }, [selectedDate])
+    if(allClasses.length == 0){
+      classesRefetch();
+    }else{
+      filterClasses();
+    }
+  }, [selectedDate, allClasses])
 
   const EventComponet = ({ item }) => {
 
@@ -103,7 +109,8 @@ const ScheduledClasses = () => {
         ) : (
           <div className="flex gap-2">
             <FiClock />
-            <p>{item.startTime} </p>
+            <p>{new Date(item.startTime).toDateString()} </p>
+            <p>{new Date(item.startTime).toLocaleTimeString()} </p>
           </div>
         )}
       </div>

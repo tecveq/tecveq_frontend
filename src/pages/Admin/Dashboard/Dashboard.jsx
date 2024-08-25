@@ -80,7 +80,7 @@ const Dashboard = () => {
   // }, []);
 
   return (
-    adminUsersDataPending ? <div className="flex justify-center flex-1"> <Loader /> </div> :
+    adminUsersDataPending ? <div className="flex flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#f9f9f9]/50 font-poppins">
           <div className="flex flex-1 gap-4">

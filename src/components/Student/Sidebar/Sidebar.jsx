@@ -71,10 +71,25 @@ const Sidebar = () => {
     navigate("/timetable");
   };
 
-  const { meetingStart } = useStudent();
+  const {
+    meetingStart,
+    setStudentLogedIn,
+    setAllAnnouncements,
+    setAllQuizes,
+    setAllClasses,
+    setAllAssignments
+  } = useStudent();
 
   const handleLogoutClick = async () => {
     setLoading(true);
+    localStorage.clear();
+
+    setAllQuizes([]);
+    setAllClasses([]);
+    setAllAssignments([]);
+    setStudentLogedIn(false);
+    setAllAnnouncements([]);
+
     const response = await logout();
     if (response == "error") {
       console.log("error loggin out")

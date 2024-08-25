@@ -154,7 +154,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
                 ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-maroon text-white" : ""}
                  text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}
             >
-              <div className="text-sm  group-hover:text-white">
+              <div className="text-sm text-black group-focus:text-white group-hover:text-white">
                 {day.format("D")}
               </div>
 

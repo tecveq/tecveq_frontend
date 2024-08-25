@@ -17,15 +17,7 @@ export const StudentProvider = ({ children }) => {
     const [allAssignments, setAllAssignments] = useState([]);
     const [studentLogedIn, setStudentLogedIn] = useState(false);
     const [allAnnouncements, setAllAnnouncements] = useState([]);
-    const [meetingStart, setMeetingStart] = useState({start: false, event: null});
-
-    const announcementQuery = useQuery({
-        queryKey: ["announcements"], queryFn: async () => {
-            const results = await getAllAnnouncements();
-            setAllAnnouncements(results.filter((item) => item.visibility == "student" || item.visibility == "all"));
-            return results
-        }, staleTime: 300000, enabled: studentLogedIn
-    });
+    const [meetingStart, setMeetingStart] = useState({ start: false, event: null });
 
     const assignmentQuery = useQuery({
         queryKey: ["assignment"], queryFn: async () => {
@@ -68,11 +60,18 @@ export const StudentProvider = ({ children }) => {
             allSubjects,
             setAllSubjects,
 
+            setAllQuizes,
+            setAllClasses,
+            setAllAssignments,
+
             meetingStart,
             setMeetingStart,
 
             studentLogedIn,
             setStudentLogedIn,
+
+            allAnnouncements,
+            setAllAnnouncements,
 
             allQuizes,
             quizRefetch: quizQuery.refetch,
@@ -86,9 +85,6 @@ export const StudentProvider = ({ children }) => {
             assignmentRefetch: assignmentQuery.refetch,
             assignmentIsPending: assignmentQuery.isPending,
 
-            allAnnouncements,
-            announcementRefetch: announcementQuery.refetch,
-            announcementIsPending: announcementQuery.isPending,
 
         }}>
             {children}

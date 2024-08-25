@@ -2,20 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useStudent } from "../../../context/StudentContext";
 import { formatDate } from "../../../constants/formattedDate";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../utils/Loader";
 
 const Deliverables = () => {
 
   const navigate = useNavigate();
-  const { allAssignments, allQuizes } = useStudent();
+  const { allAssignments, allQuizes, assignmentRefetch, quizRefetch, quizIsPending, assignmentIsPending } = useStudent();
   const [allDeliverables, setAllDeliverables] = useState([]);
 
   useEffect(() => {
 
-    let arr = [...allAssignments, ...allQuizes];
-    arr.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate));
-    
-    setAllDeliverables(arr);
-    console.log(arr);
+    if (allAssignments.length == 0) {
+      // console.log(" getting assignments in useeffect")
+      assignmentRefetch();
+    }
+    if (allQuizes.length == 0) {
+      // console.log(" getting quiz in useeffect")
+      quizRefetch();
+    }
+    if (allAssignments.length > 0 || allQuizes.length) {
+      let arr = [...allAssignments, ...allQuizes];
+      arr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+      setAllDeliverables(arr);
+      console.log(arr);
+    }
 
   }, [allAssignments, allQuizes]);
 
@@ -58,9 +69,12 @@ const Deliverables = () => {
         <div className="flex flex-col">
           <p className="text-lg font-medium">Deliverables</p>
         </div>
-        <div className="flex flex-col gap-1 px-4 py-4 bg-white overflow-y-auto register-scrollbar border-t-4 h-72 rounded-xl border-t-maroon">
-          {allDeliverables.map((item) => <Deliverable item={item} key={item._id} />)}
-        </div>
+        {(quizIsPending || assignmentIsPending) && <div className="flex flex-1"> <Loader /> </div>}
+        {(!quizIsPending && !assignmentIsPending) &&
+          <div className="flex flex-col gap-1 px-4 py-4 bg-white overflow-y-auto register-scrollbar border-t-4 h-72 rounded-xl border-t-maroon">
+            {allDeliverables.map((item) => <Deliverable item={item} key={item._id} />)}
+          </div>
+        }
       </div>
     </div>
   );

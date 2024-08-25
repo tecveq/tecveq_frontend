@@ -9,6 +9,9 @@ import { useUser } from "../../../context/UserContext";
 import { updateStudent } from "../../../api/Student/StudentApis";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import IMAGES from "../../../assets/images";
+import { GoMail, GoPencil, GoPerson } from "react-icons/go";
+import { MdPhone } from "react-icons/md";
+import { FaGraduationCap } from "react-icons/fa6";
 
 
 const ProfileDetails = ({ onclose }) => {
@@ -16,13 +19,13 @@ const ProfileDetails = ({ onclose }) => {
   const { userData, setUserData } = useUser();
   console.log("user data is : ", userData);
 
-  const [bio, setBio] = useState("");
+  const [bio, setBio] = useState(userData?.bio);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(userData?.name);
   const [email, setEmail] = useState(userData?.email);
   const [rollNo, setRollNo] = useState("SP21-BCS-072");
   const [allowedEdit, setAllowedEdit] = useState(false);
-  const [className, setClassName] = useState("IG BASICS");
+  const [className, setClassName] = useState("Level 1");
   const [phone, setPhone] = useState(userData?.phoneNumber);
   const [parentName, setParentName] = useState(userData?.guardianName);
   const [selectedFile, setSelectedFile] = useState(userData?.profilePic || IMAGES.Profile );
@@ -36,10 +39,6 @@ const ProfileDetails = ({ onclose }) => {
   const uploadFile = async (file) => {
     const storage = getStorage();
     const storageRef = ref(storage, file?.name);
-
-    // const metadata = {
-    //   contentType: 'image/jpeg',
-    // };
 
     console.log("begin deploye")
 
@@ -60,7 +59,7 @@ const ProfileDetails = ({ onclose }) => {
 
     const data = {
       name, email, bio, phoneNumber: phone, guardianName: parentName, guardianEmail: parentEmail,
-      guardianPhoneNumber: parentPhone, className, studentID: rollNo, profilePic: profilePicUrl
+      guardianPhoneNumber: parentPhone, className, profilePic: profilePicUrl
     }
 
     console.log("data being sent is : ", data);
@@ -95,77 +94,78 @@ const ProfileDetails = ({ onclose }) => {
             </div>
             <div className="flex flex-col items-center justify-center text-center">
               <label htmlFor="profile" className="cursor-pointer">
-                <img src={selectedFile} alt="" className="w-28 h-28 rounded-full" />
+                <img src={userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
               </label>
               <input id="profile" type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="hidden" />
               <p>{userData?.name}</p>
-              <p>Bio</p>
+              {/* <p>Bio</p> */}
               <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Maxime, sint?
+                {userData.bio ? userData.bio : 
+                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, sint?"
+                }
               </p>
             </div>
             <div className="flex flex-col gap-1 px-5 py-1 overflow-auto h-96 custom-scrollbar">
               {allowedEdit &&
                 <CusotmInput
                   value={bio}
-                  icon={"person"}
+                  icon={<GoPencil /> }
                   label={"Bio"}
                   status={allowedEdit}
                   inputChange={setBio}
                 />
               }
-              <CusotmInput
+              {/* <CusotmInput
                 value={rollNo}
                 icon={"person"}
                 label={"Roll No."}
                 status={allowedEdit}
               // inputChange={setRollNo}
-              />
+              /> */}
               <CusotmInput
                 value={name}
                 label={"Name"}
-                icon={"person"}
+                icon={<GoPerson />}
                 status={allowedEdit}
                 inputChange={setName}
               />
               <CusotmInput
                 value={email}
-                icon={"mail"}
+                icon={<GoMail /> }
                 label={"Email"}
                 status={allowedEdit}
               // inputChange={setEmail}
               />
               <CusotmInput
                 value={phone}
-                icon={"phone"}
+                icon={<MdPhone /> }
                 label={"Phone No."}
                 status={allowedEdit}
                 inputChange={setPhone}
               />
               <CusotmInput
-                icon={"cap"}
+                icon={<FaGraduationCap />}
                 label={"Class"}
                 value={className}
                 status={allowedEdit}
                 inputChange={setClassName}
               />
               <CusotmInput
-                icon={"person"}
+                icon={<GoPerson /> }
                 value={parentName}
                 status={allowedEdit}
                 label={"Parent Name"}
                 inputChange={setParentName}
               />
               <CusotmInput
-                icon={"mail"}
+                icon={<GoMail />}
                 value={parentEmail}
                 status={allowedEdit}
                 label={"Parent Email"}
                 inputChange={setParentEmail}
               />
               <CusotmInput
-                icon={"phone"}
+                icon={<MdPhone />}
                 value={parentPhone}
                 status={allowedEdit}
                 label={"Parent Phone No."}
