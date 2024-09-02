@@ -12,12 +12,12 @@ import { IoSearch } from "react-icons/io5";
 import { useMutation } from "@tanstack/react-query";
 import { useBlur } from "../../../context/BlurContext";
 import { useAdmin } from "../../../context/AdminContext";
-import { deleteUser } from "../../../api/Admin/UsersApi";
+import { deleteUser, updateUser } from "../../../api/Admin/UsersApi";
 
 const ManageUsers = () => {
 
   const { isBlurred, toggleBlur } = useBlur();
-  
+
   const [isMenu, setIsMenu] = useState(false);
   const [editData, setEditData] = useState({});
   const [requestCount, setReqCount] = useState(0);
@@ -42,6 +42,28 @@ const ManageUsers = () => {
     toggleBlur();
     setIsMenu(false);
   }
+
+  const accessMutation = useMutation({
+    mutationKey: ["access", "fees"], mutationFn: async () => {
+      let result;
+      if (!editData.isBlocked && editData.feesPaid) {
+        result = await updateUser({ isBlocked: true, feesPaid: false }, editData._id);
+      } else {
+        result = await updateUser({ isBlocked: false, feesPaid: true }, editData._id);
+      }
+      await adminUsersRefecth();
+      return result;
+    },
+    onSettled: async(data, error) =>{
+      setIsMenu(false);
+      if(error){
+        console.log("error in toggle access : ", error)
+        return;
+      }
+      console.log(" data after toggle access is : ", data);
+      return;
+    }
+  })
 
   const toggleMenu = (data) => {
     console.log("user data is : ", data);
@@ -74,12 +96,13 @@ const ManageUsers = () => {
     },
     onSettled: async (data) => {
       toast.success("user deleted successfully");
+      setIsMenu(false);
       console.log(data);
     }
   })
 
   return (
-    adminUsersDataPending || userDellMutation.isPending ? <div className="flex flex-1"> <Loader /> </div> :
+    accessMutation.isPending || adminUsersDataPending || userDellMutation.isPending ? <div className="flex flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
@@ -173,6 +196,8 @@ const ManageUsers = () => {
         </div>
         <DotsMenu
           isopen={isMenu}
+          data={editData}
+          toggleAccess={accessMutation.mutate}
           setIsOpen={setIsMenu}
           deleteUser={handleDeleteUser}
           editUser={toggleEditUserModal}

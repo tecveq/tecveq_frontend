@@ -14,7 +14,7 @@ const DataRow = (props) => {
     let temparray = props.attendeceData;
     console.log(temparray);
     console.log(props.index);
-    temparray[props.index-1] = {studentID: props.classname, isPresent: true } ;
+    temparray[props.index - 1] = { studentID: props.classname, isPresent: true };
     // temparray[props.index-1] = {studentID: props.classname, status: "present" } ;
     console.log("after : ", temparray)
     props.setAttendenceData(temparray);
@@ -25,7 +25,7 @@ const DataRow = (props) => {
 
   const onAbsentClick = () => {
     let temparray = props.attendeceData;
-    temparray[props.index-1] = {studentID: props.classname, isPresent:false } ;
+    temparray[props.index - 1] = { studentID: props.classname, isPresent: false };
     props.setAttendenceData(temparray);
     setPresent(false);
     setAbsent(true);
@@ -55,9 +55,12 @@ const DataRow = (props) => {
             {props.index + "."}
           </p>
           <p
-            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+            className={`w-full flex items-center gap-4 md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
               }`}
           >
+            {props.header ? " " :
+              <img src={props.profile} alt="" className="w-10 h-10 object-cover rounded-full" />
+            }
             {props.classname}
           </p>
           <p
@@ -87,7 +90,7 @@ const DataRow = (props) => {
                       }`}
                   >
                     <div className="flex gap-2" onClick={onAbsentClick}>
-                      {absent ? <IoMdRadioButtonOn className="text-maroon"/> : <IoMdRadioButtonOff  className="text-maroon"/>}
+                      {absent ? <IoMdRadioButtonOn className="text-maroon" /> : <IoMdRadioButtonOff className="text-maroon" />}
                     </div>
                     Absent
                   </p>

@@ -66,10 +66,14 @@ const Login = () => {
             if (response !== "error") {
                 setUserData(response);
                 if (response.userType == "student") {
-                    localStorage.setItem("tcauser", JSON.stringify(response));
-                    toast.success("Login successful");
-                    navigate("/");
-                    setStudentLogedIn(true);
+                    if(response.isBlocked == true){
+                        toast.error("Access Denied! Please contact Admin support.");
+                    }else{
+                        localStorage.setItem("tcauser", JSON.stringify(response));
+                        toast.success("Login successful");
+                        navigate("/");
+                        setStudentLogedIn(true);
+                    }
                 } else if (response.userType == "parent") {
                     localStorage.setItem("tcauser", JSON.stringify(response));
                     toast.success("Login successful");

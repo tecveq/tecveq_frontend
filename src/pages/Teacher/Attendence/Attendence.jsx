@@ -110,7 +110,7 @@ const Attendence = () => {
                         toggleClassMenu={toggleClassMenuOpen}
                         index={index + 1}
                         classname={cls.title}
-                        students={cls.classroom.students.length}
+                        students={cls.classroom.studentdetails.length}
                         teachers={cls.teacher.teacherID.name}
                         bgColor={"#FFFFFF"}
                         header={false}
@@ -124,7 +124,7 @@ const Attendence = () => {
                           toggleClassMenu={toggleClassMenuOpen}
                           index={index + 1}
                           classname={cls.title}
-                          students={cls.classroom.students.length}
+                          students={cls.classroom.studentdetails.length}
                           teachers={cls.teacher.teacherID.length}
                           bgColor={"#FFFFFF"}
                           header={false}

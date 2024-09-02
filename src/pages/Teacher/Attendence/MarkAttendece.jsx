@@ -101,23 +101,25 @@ const MarkAttendence = () => {
                                             students={"Students"}
                                             teachers={"Teachers"}
                                         />
-                                        {searchText == "" && classData?.classroom?.students?.map((cls, index) => (
+                                        {searchText == "" && classData?.classroom?.studentdetails?.map((cls, index) => (
                                             <DataRow
                                                 data={cls}
                                                 header={false}
-                                                classname={cls}
+                                                classname={cls.name}
+                                                profile={cls?.profilePic}
                                                 index={index + 1}
                                                 bgColor={"#FFFFFF"}
                                                 attendeceData={attendeceData}
                                                 setAttendenceData={setAttendenceData}
                                             />
                                         ))}
-                                        {searchText && classData?.classroom?.students?.map((cls, index) => {
+                                        {searchText && classData?.classroom?.studentdetails?.map((cls, index) => {
                                             if (cls.includes(searchText)) {
                                                 return <DataRow
                                                     data={cls}
                                                     header={false}
-                                                    classname={cls}
+                                                    classname={cls.name}
+                                                    profile={cls.profilePic}
                                                     index={index + 1}
                                                     bgColor={"#FFFFFF"}
                                                     attendeceData={attendeceData}
