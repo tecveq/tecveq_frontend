@@ -30,7 +30,7 @@ const ScheduledClasses = () => {
 
   useEffect(() => {
     if(allClasses.length == 0){
-      classesRefetch();
+      // classesRefetch();
     }else{
       filterClasses();
     }

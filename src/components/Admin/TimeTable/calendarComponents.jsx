@@ -22,7 +22,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex flex-col gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-24 w-full !overflow-hidden ${event.teacher.teacherID.name
+        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-10 w-full !overflow-hidden ${event.teacher.teacherID.name
           ? "bg-maroon/10 text-black"
           : "bg-green_dark/10 text-black"
           }`}
@@ -35,12 +35,14 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
           className="object-contain w-8 h-8"
           alt="subject img"
         />
-        <p className="text-xs text-wrap">
-          {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
-        </p>
-        <p className="text-[9px] text-wrap text-black/70">
-          {event.subjectID.name ? event.subjectID.name : ""}
-        </p>
+        <div className="flex flex-col">
+          <p className="text-xs text-wrap">
+            {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
+          </p>
+          <p className="text-[9px] text-wrap text-black/70">
+            {event.subjectID.name ? event.subjectID.name : ""}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -166,7 +168,7 @@ export const CustomToolbar = ({
               {moment(Date.now()).format("DD MMMM, YYYY")}
               <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>
-            
+
             <button
               className="w-8 h-8 p-2 bg-white border rounded-2xl border-grey/50"
               onClick={goToNext}

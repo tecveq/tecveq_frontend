@@ -18,7 +18,6 @@ export const getAllClasses = apiRequest(async () => {
     // const url = `${BACKEND_URL}/class?startDate=${endDate}&endDate=${new Date()}`;
     // const url = `${BACKEND_URL}/class?startDate=${new Date()}&endDate=${new Date()}`;
     const response = await axios.get(url, {});
-    // console.log('respose data is : ', response.data);
     return response;
 
 })

@@ -53,6 +53,8 @@ const SubjectReport = () => {
     }
   });
 
+  console.log("report data in student subject is : ", data);
+
   return (
     isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
@@ -91,9 +93,9 @@ const SubjectReport = () => {
                       type={"Percentage"}
                     />
                     <Card
-                      percentage={0}
+                      percentage={data.attendance.avgAttendencePer}
                       data={"Attendence"}
-                      grade={"F"}
+                      // grade={"F"}
                       type={"Percentage"}
                     />
                   </div>
@@ -120,7 +122,7 @@ const SubjectReport = () => {
                 <div className="flex flex-col gap-2">
                   <p className="md:text-[20px]">Attendance</p>
                   <div className="flex flex-row items-center gap-2">
-                    <AttendanceTable data={attendanceData} type="att" />
+                    <AttendanceTable data={data?.attendance?.classes} type="att" />
                   </div>
                 </div>
               </div>

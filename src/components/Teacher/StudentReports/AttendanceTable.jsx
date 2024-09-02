@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AttendanceTable = ({data}) => {
+const AttendanceTable = ({ data }) => {
     return (
         <div className="flex flex-1">
             <div className="flex flex-col flex-1 gap-2">
@@ -17,24 +17,25 @@ const AttendanceTable = ({data}) => {
                         </thead>
 
                         <tbody className="flex flex-col">
-                            {data.map((item, index) => {
-                                return (
-                                    <tr className="flex flex-1 text-xs border-t border-t-black/10">
-                                        <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.status}
-                                        </td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.date}
-                                        </td>
-                                        <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.time}
-                                        </td>
-                                                                             
-                                    </tr>
-                                );
+                            {data?.map((item, index) => {
+                                if (item?.matchedAttendance?.length !== 0) {
+                                    return (
+                                        <tr className="flex flex-1 text-xs border-t border-t-black/10">
+                                            <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {item?.matchedAttendance[0]?.isPresent ? "Present" : "Absent"}
+                                            </td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {new Date(item?.startTime).toDateString()}
+                                            </td>
+                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                {new Date(item?.startTime).toLocaleTimeString()} - {new Date(item?.endTime).toLocaleTimeString()}
+                                            </td>
+                                        </tr>
+                                    );
+                                }
                             })}
-                            
+
                         </tbody>
 
                     </table>

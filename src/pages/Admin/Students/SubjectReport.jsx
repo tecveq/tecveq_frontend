@@ -215,24 +215,23 @@ const SubjectReport = () => {
                           <Card
                             data={"Attendence"}
                             type={"Percentage"}
-                            grade={studentAssignmentsQuizes.data?.quizes?.avgGrade}
-                            percentage={studentAssignmentsQuizes.data?.quizes?.avgMarksPer ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer: 0  : 0  }
+                            // percentage={studentAssignmentsQuizes.data?.quizes?.avgMarksPer ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer: 0  : 0  }
+                            percentage={studentAssignmentsQuizes.data?.attendance?.avgAttendencePer ? studentAssignmentsQuizes.data?.attendance?.avgAttendencePer : 0 }
                           />
                         </>
                       }
                     </div>
                   </div>
                 </div>
-                <div className="mt-7 flex-1">
+                {/* <div className="mt-7 flex-1">
                   <div className="flex flex-col gap-2 flex-1">
-                    {/* <p className="md:text-[20px]">System Usage Report</p> */}
                     <div className="flex flex-row items-center gap-2 w-full flex-1">
                       <img src={IMAGES.deviceGraph} alt="" className="w-full h-full" />
-                      {/* <SystemOverview /> */}
                     </div>
                   </div>
-                </div>
-                <div className="mt-7">
+                </div> */}
+                      {/* <SystemOverview /> */}
+                {/* <div className="mt-7">
                   <div className="flex flex-col gap-4">
                     <p className="md:text-[20px]">Activity History</p>
                     <div className="flex flex-col  gap-2">
@@ -241,7 +240,7 @@ const SubjectReport = () => {
                       <ActivityCard />
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="mt-7">
                 </div>
               </div>

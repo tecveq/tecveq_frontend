@@ -1,5 +1,6 @@
 import React from "react";
 import IMAGES from "../../../assets/images";
+import LargeLoader from "../../../utils/LargeLoader";
 import Card from "../../../components/Student/Reports/Card";
 import AttendanceTable from "../../../components/Student/Reports/AttendanceTable";
 import QuizAssignmentsTable from "../../../components/Student/Reports/QuizAssignmentsTable";
@@ -10,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useUser } from "../../../context/UserContext";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { getStudentSubjectReport } from "../../../api/Student/StudentApis";
-import LargeLoader from "../../../utils/LargeLoader";
+
 
 const SubjectReport = () => {
 
@@ -26,38 +27,10 @@ const SubjectReport = () => {
       label: "Absent",
       value: 30,
     },
-    {
-      label: "Leave",
-      value: 50,
-    },
-  ];
-
-  const attendanceData = [
-    {
-      status: "Present",
-      date: "8th Jan, 2022",
-      time: "8:30am - 9:30am",
-    },
-    {
-      status: "Present",
-      date: "8th Jan, 2022",
-      time: "8:30am - 9:30am",
-    },
-    {
-      status: "Present",
-      date: "8th Jan, 2022",
-      time: "8:30am - 9:30am",
-    },
-    {
-      status: "Present",
-      date: "8th Jan, 2022",
-      time: "8:30am - 9:30am",
-    },
-    {
-      status: "Present",
-      date: "8th Jan, 2022",
-      time: "8:30am - 9:30am",
-    },
+    // {
+    //   label: "Leave",
+    //   value: 50,
+    // },
   ];
 
   const { userData } = useUser();
@@ -171,8 +144,9 @@ const SubjectReport = () => {
                       <Card
                         data={"Attendence"}
                         type={"Percentage"}
-                        grade={reportQuery?.data?.quizes?.avgGrade}
-                        percentage={reportQuery?.data?.quizes?.avgMarksPer == "NaN" ? 0 : reportQuery?.data?.quizes?.avgMarksPer}
+                        // grade={reportQuery?.data?.quizes?.avgGrade}
+                        percentage={reportQuery?.data?.attendance?.avgAttendencePer}
+                        // percentage={reportQuery?.data?.quizes?.avgMarksPer == "NaN" ? 0 : reportQuery?.data?.quizes?.avgMarksPer}
                       />
                       {/* <Card
                     data={data.type}
@@ -204,7 +178,7 @@ const SubjectReport = () => {
                   <div className="flex flex-col gap-2">
                     <p className="md:text-[20px]">Attendance</p>
                     <div className="flex flex-row items-center gap-2">
-                      <AttendanceTable data={attendanceData} />
+                      <AttendanceTable data={reportQuery?.data?.attendance?.classes} />
                     </div>
                   </div>
                 </div>

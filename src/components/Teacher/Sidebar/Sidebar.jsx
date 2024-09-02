@@ -19,6 +19,7 @@ const Sidebar = () => {
   const [dashboard, setDashboard] = useState(true);
   const [classroom, setClassroom] = useState(false);
   const [timetable, setTimetable] = useState(false);
+  const [attendence, setAttendence] = useState(false);
   const [assignments, setAssignments] = useState(false);
 
   const [isopen, setIsopen] = useState(false);
@@ -28,9 +29,21 @@ const Sidebar = () => {
     setIsopen(!isopen);
   };
 
+  const handleAttendenceClick = async () => {
+    setDashboard(false);
+    setQuizes(false);
+    setReports(false);
+    setClassroom(false);
+    setAttendence(true);
+    setAssignments(false);
+    setTimetable(false);
+    navigate("/teacher/attendence");
+  };
+
   const handleDashboardClick = async () => {
     setDashboard(true);
     setQuizes(false);
+    setAttendence(false);
     setReports(false);
     setClassroom(false);
     setAssignments(false);
@@ -44,6 +57,7 @@ const Sidebar = () => {
     setReports(true);
     setClassroom(false);
     setAssignments(false);
+    setAttendence(false);
     setTimetable(false);
     navigate("/teacher/reports");
   };
@@ -54,6 +68,7 @@ const Sidebar = () => {
     setReports(false);
     setClassroom(false);
     setAssignments(false);
+    setAttendence(false);
     setTimetable(false);
     navigate("/teacher/quizzes");
   };
@@ -62,6 +77,7 @@ const Sidebar = () => {
     setDashboard(false);
     setQuizes(false);
     setReports(false);
+    setAttendence(false);
     setClassroom(false);
     setAssignments(true);
     setTimetable(false);
@@ -72,6 +88,7 @@ const Sidebar = () => {
     setDashboard(false);
     setQuizes(false);
     setReports(false);
+    setAttendence(false);
     setClassroom(false);
     setAssignments(false);
     setTimetable(true);
@@ -80,6 +97,7 @@ const Sidebar = () => {
 
   const handleClassroomClick = async () => {
     setDashboard(false);
+    setAttendence(false);
     setQuizes(false);
     setReports(false);
     setClassroom(true);
@@ -137,6 +155,12 @@ const Sidebar = () => {
             title={"Quizzes"}
             active={quizes}
             onpress={handleQuizzesClick}
+          />
+          <Custombutton
+            icon={"quiz"}
+            title={"Attendence"}
+            active={attendence}
+            onpress={handleAttendenceClick}
           />
           <Custombutton
             icon={"quiz"}

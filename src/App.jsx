@@ -28,7 +28,8 @@ import PAssignmentsReports from "./pages/Parent/Assignments/AssignmentsReports";
 
 import TSubmissions from "./pages/Teacher/Assignments/Submissions";
 import TGradingAssignments from "./pages/Teacher/Assignments/GradingAssignments";
-
+import TAttendence from "./pages/Teacher/Attendence/Attendence";
+import TMarkAttendence from "./pages/Teacher/Attendence/MarkAttendece";
 import TQuizzSubmissions from "./pages/Teacher/Quizzes/Submissions";
 import TGradingQuizzes from "./pages/Teacher/Quizzes/GradingQuizzes";
 import Quizzes from "./pages/Student/Quizzes/Quizzes";
@@ -315,6 +316,22 @@ function App() {
             element={
               <TeacherLayout>
                 <TGradingQuizzes />
+              </TeacherLayout>
+            }
+          />
+          <Route
+            path="/teacher/attendence"
+            element={
+              <TeacherLayout>
+                <TAttendence />
+              </TeacherLayout>
+            }
+          />
+          <Route
+            path="/teacher/attendence/submission"
+            element={
+              <TeacherLayout>
+                <TMarkAttendence />
               </TeacherLayout>
             }
           />

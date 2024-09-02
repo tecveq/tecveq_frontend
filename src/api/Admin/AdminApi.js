@@ -6,11 +6,7 @@ import apiRequest from "../../utils/ApiRequest";
 
 axios.defaults.withCredentials = true;
 
-export const getAllStudents = apiRequest(async () => {
-    const url = `${BACKEND_URL}/user/students`
-    const response = await axios.get(url);
-    return response;
-})
+export const getAllStudents = apiRequest(async () => await axios.get(`${BACKEND_URL}/user/students`));
 
 
 export const getAllUsers = apiRequest(async () => {

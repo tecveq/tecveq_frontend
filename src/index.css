@@ -60,11 +60,10 @@
   display: none !important;
 }
 
-/*  */
-/* .rbc-time-slot {
+.rbc-time-slot {
   height: 20px !important;
   width: 20px !important;
-} */
+}
 
 .rbc-time-gutter {
   display: none !important;

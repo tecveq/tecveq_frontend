@@ -31,10 +31,10 @@ const AssignmentMenu = ({
               <IoBookOutline />
               <p>View Submissions</p>
             </div>
-            <div className="flex items-center gap-2 cursor-pointer " onClick={onChangeDeadlineClick}>
+            {/* <div className="flex items-center gap-2 cursor-pointer " onClick={onChangeDeadlineClick}>
               <IoCalendarOutline />
               <p>Change Deadline</p>
-            </div>
+            </div> */}
             <div className="flex items-center gap-2 cursor-pointer " onClick={onGradeAssignemntClick}>
               <IoBookOutline />
               <p>Grade {isQuizz? "Quizz": "Assignment"}</p>

@@ -14,11 +14,11 @@ const Deliverables = () => {
 
     if (allAssignments.length == 0) {
       // console.log(" getting assignments in useeffect")
-      assignmentRefetch();
+      // assignmentRefetch();
     }
     if (allQuizes.length == 0) {
       // console.log(" getting quiz in useeffect")
-      quizRefetch();
+      // quizRefetch();
     }
     if (allAssignments.length > 0 || allQuizes.length) {
       let arr = [...allAssignments, ...allQuizes];
