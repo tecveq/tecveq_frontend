@@ -19,7 +19,7 @@ const MarkAttendence = () => {
 
     const navigate = useNavigate();
 
-    const [attendeceData, setAttendenceData] = useState([{ id: "hello", isPresent: true }]);
+    const [attendeceData, setAttendenceData] = useState([{ id: "no id", isPresent: true }]);
 
     const attendenceMutation = useMutation({
         mutationKey: ["mark-attendence"], mutationFn: async () => {
@@ -47,7 +47,7 @@ const MarkAttendence = () => {
 
             let temparray = attendeceData;
             location?.state?.classroom?.students?.map((cls, index) => {
-                temparray[index] = { studentID: cls, isPresent: true };
+                temparray[index] = { studentID: cls?._id, isPresent: true };
             });
 
             setAttendenceData(temparray);

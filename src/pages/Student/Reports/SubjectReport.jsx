@@ -145,7 +145,7 @@ const SubjectReport = () => {
                         data={"Attendence"}
                         type={"Percentage"}
                         // grade={reportQuery?.data?.quizes?.avgGrade}
-                        percentage={reportQuery?.data?.attendance?.avgAttendencePer}
+                        percentage={reportQuery?.data?.attendance?.avgAttendencePer.toFixed(0)}
                         // percentage={reportQuery?.data?.quizes?.avgMarksPer == "NaN" ? 0 : reportQuery?.data?.quizes?.avgMarksPer}
                       />
                       {/* <Card

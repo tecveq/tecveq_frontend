@@ -98,6 +98,7 @@ const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
         <div>
           <select value={selectedOption} onChange={(e) => { setSelectedOption(JSON.parse(e.target.value)) }}
             className='border outline-none rounded-sm border-black/20 px-4 w-full py-[4px]'>
+              <option value="">Select Option</option>
             {options.map((item) => {
               return <option key={item._id} value={JSON.stringify(item)}>{item.name}</option>
             })}
