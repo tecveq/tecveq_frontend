@@ -44,7 +44,7 @@ const DotsMenu = ({
               :
                 <GrInsecure />
               }
-                <p>Mark {(!data.isBlocked && data.feesPaid) ? "Deactvate" : "Activate"} </p>
+                <p>Mark {(!data.isBlocked && data.feesPaid) ? "Deactivate" : "Activate"} </p>
               </div>
             }
           </div>
