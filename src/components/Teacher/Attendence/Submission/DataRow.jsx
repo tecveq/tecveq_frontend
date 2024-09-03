@@ -14,7 +14,7 @@ const DataRow = (props) => {
     let temparray = props.attendeceData;
     console.log(temparray);
     console.log(props.index);
-    temparray[props.index - 1] = { studentID: props.classname, isPresent: true };
+    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: true };
     // temparray[props.index-1] = {studentID: props.classname, status: "present" } ;
     console.log("after : ", temparray)
     props.setAttendenceData(temparray);
@@ -25,7 +25,7 @@ const DataRow = (props) => {
 
   const onAbsentClick = () => {
     let temparray = props.attendeceData;
-    temparray[props.index - 1] = { studentID: props.classname, isPresent: false };
+    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: false };
     props.setAttendenceData(temparray);
     setPresent(false);
     setAbsent(true);
