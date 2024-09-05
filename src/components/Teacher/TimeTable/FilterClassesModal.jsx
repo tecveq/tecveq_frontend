@@ -8,6 +8,7 @@ import { GoDotFill } from "react-icons/go";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useTeacher } from "../../../context/TeacherContext";
+import moment from "moment";
 
 
 const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPending }) => {
@@ -20,8 +21,6 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
   const [filterEndDate, setFilterEndDate] = useState();
   const [filterActive, setFilterActive] = useState(false);
   const [filterStartDate, setFilterSatrtDate] = useState();
-
-  const handleJoinClass = () => { };
 
   const filterClasses = () => {
     console.log("selected Date is : ", selectedDate);
@@ -53,11 +52,11 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
             <div className="flex gap-2 text-xs font-light">
               <p className="flex items-center gap-1">
                 <FiClock />
-                {new Date(item.startTime).toDateString().slice(4, -1)}
+                {moment.utc(item.startTime).format("DD-MM-YYYY")}
               </p>
               <p className="flex items-center gap-1">
                 <FiClock />
-                {new Date(item.startTime).toLocaleTimeString().slice(0, 5)}{new Date(item.startTime).toLocaleTimeString().slice(-2)} - {new Date(item.endTime).toLocaleTimeString().slice(0, 5)}{new Date(item.endTime).toLocaleTimeString().slice(-2)}
+                {moment.utc(item.startTime).format("h:mm a")}-{moment.utc(item.endTime).format("h:mm a")}
               </p>
             </div>
           </div>

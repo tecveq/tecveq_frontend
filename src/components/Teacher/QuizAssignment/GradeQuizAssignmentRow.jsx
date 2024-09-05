@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { formatDate } from "../../../constants/formattedDate";
+import moment from "moment";
 
 const GradeQuizAssignmentRow = React.memo ((props) => {
   const [timePassed, setTimePassed] = useState(false);
@@ -119,7 +120,7 @@ const GradeQuizAssignmentRow = React.memo ((props) => {
               className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center  md:text-[14px]  text-[11px] ${props.header ? "font-semibold " : ""
                 }`}
             >
-              {props.header ? props?.submission : props?.submission == "Not Submitted Yet" ? "Not Submitted Yet" : formatDate(props.submission)}
+              {props.header ? props?.submission : props?.submission == "Not Submitted Yet" ? "Not Submitted Yet" : moment(props.submission).format("Do MMM YYYY hh:mm a")}
             </p>
             <p
               className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center  md:text-[14px]  text-[11px] ${props.header ? "font-semibold " : ""

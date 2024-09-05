@@ -34,6 +34,8 @@ const SubjectsEnrolled = () => {
     }, staleTime: 300000, enabled: studentLogedIn
   });
 
+  console.log(subjectQuery.data);
+
   // useEffect(() => subjectQuery.data && setAllSubjects(subjectQuery.data), [subjectQuery.isSuccess, subjectQuery.data]);
 
   return (

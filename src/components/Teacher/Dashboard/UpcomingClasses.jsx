@@ -7,6 +7,7 @@ import { GoDotFill } from "react-icons/go";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useTeacher } from "../../../context/TeacherContext";
 import { useFetcher } from "react-router-dom";
+import moment from "moment/moment";
 
 const UpcomingClasses = () => {
   const { allClasses, classesIsPending } = useTeacher();
@@ -140,7 +141,8 @@ const UpcomingClasses = () => {
         ) : (
           <div className="flex gap-2">
             <FiClock />
-            <p>{new Date(item.startTime).toLocaleTimeString()} - {new Date(item.endTime).toLocaleTimeString()} </p>
+            
+            <p>{moment.utc(item.startTime).format("hh:mm A")} - {moment.utc(item.endTime).format("hh:mm A")} </p>
           </div>
         )}
       </div>

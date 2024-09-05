@@ -59,9 +59,9 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
       toast.success(`Subject ${isEditTrue ? "updated" : "added"} successfully!`);
       return result;
     }, onSettled: (data, error) => {
-      if(error){
+      if (error) {
         toast.error("Subject name already exists!");
-      }else{
+      } else {
         setSubjectValue("");
         setLevelValue("");
         setopen(false);

@@ -24,7 +24,6 @@ export default function ViewEventDetailsModal({
   //   const { setAlert } = useAlert();
   const ref = useRef(null);
   const eventNameRef = useRef();
-  const [field, setfield] = useState(null);
   const navigate = useNavigate();
   useClickOutside(ref, () => setopen(false));
   const [loading, setLoading] = useState(false);
@@ -42,22 +41,9 @@ export default function ViewEventDetailsModal({
     console.log("dell event method");
   };
 
-  const handleUpdateEvent = () => {
-    // updateEvent({
-    //   data: { eventName: eventNameRef.current.innerText },
-    //   id: event.id,
-    // })
-    //   .then((res) => {
-    //     setevents((eve) => {
-    //       const eventsCopy = [...eve];
-    //       const foundEve = eventsCopy.find((e) => e.id == event.id);
-    //       foundEve.eventName = eventNameRef.current.innerText;
-    //       return eventsCopy;
-    //     });
-    //   })
-    //   .catch((err) => {});
-    console.log("update event method");
-  };
+  const handleTeacherAttendance = () =>{
+    console.log("teacher attendnece clicked");
+  }
 
   useEffect(() => {
     if (open) {
@@ -172,7 +158,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">Date</p>
               <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
                 <p className="text-sm text-custom-gray-3">
-                  {moment(event.start).format("DD MMMM, YYYY")}
+                  {moment.utc(event.start).format("DD MMMM, YYYY")}
                 </p>
                 <svg
                   width="15"
@@ -196,7 +182,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">Start Time</p>
               <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                 <p className="text-sm text-custom-gray-3">
-                  {moment(event.start).format("hh:mm a")}
+                  {moment.utc(event.start).format("hh:mm a")}
                 </p>
                 <svg
                   width="15"
@@ -223,7 +209,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">End Time </p>
               <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                 <p className="text-sm text-custom-gray-3">
-                  {moment(event.end).format("hh:mm a")}
+                  {moment.utc(event.end).format("hh:mm a")}
                 </p>
                 <svg
                   width="15"
@@ -242,9 +228,8 @@ export default function ViewEventDetailsModal({
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3" onClick={handleTeacherAttendance}>
             <a href={event.meetLink} target="_blank " className="w-full">
-
               <div
                 className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon"
               >

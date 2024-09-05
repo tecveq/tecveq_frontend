@@ -7,6 +7,7 @@ import { FiClock } from "react-icons/fi";
 import { GoDotFill } from "react-icons/go";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import moment from "moment";
 
 
 const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPending }) => {
@@ -34,7 +35,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
 
   const EventComponet = ({ item }) => {
     return (
-      <div className={`flex flex-col text-xs gap-1px-2 py-2 rounded-lg w-64`}>
+      <div className={`flex flex-col text-xs gap-1px-2 py-2 rounded-lg w-72`}>
         <div className="flex gap-2">
           <div className="">
             <img src={IMAGES.MathIcon} alt="" className="w-10 h-10 rounded-md" />
@@ -47,11 +48,11 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
             <div className="flex gap-2 text-[10px] font-light">
               <p className="flex items-center gap-1">
                 <FiClock />
-                {new Date(item.startTime).toDateString()}
+                {moment.utc(item.startTime).format("DD-MM-YYY")}
               </p>
               <p className="flex items-center gap-1">
                 <FiClock />
-                {new Date(item.startTime).toLocaleTimeString().slice(0, 5)}{new Date(item.startTime).toLocaleTimeString().slice(-2)} - {new Date(item.endTime).toLocaleTimeString().slice(0, 5)}{new Date(item.endTime).toLocaleTimeString().slice(-2)}
+                {moment.utc(item.startTime).format("hh:mm A")}-{moment.utc(item.endTime).format("hh:mm A")}
               </p>
             </div>
           </div>

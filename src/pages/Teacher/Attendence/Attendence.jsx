@@ -98,6 +98,7 @@ const Attendence = () => {
                       isQuiz={true}
                       index={"Sr. No"}
                       classname={"Class Name"}
+                      subject={"Subject"}
                       students={"Students"}
                       teachers={"Teachers"}
                       bgColor={"#F9F9F9"}
@@ -110,6 +111,7 @@ const Attendence = () => {
                         toggleClassMenu={toggleClassMenuOpen}
                         index={index + 1}
                         classname={cls.title}
+                        subject={cls.subjectID.name}
                         students={cls.classroom.studentdetails.length}
                         teachers={cls.teacher.teacherID.name}
                         bgColor={"#FFFFFF"}
@@ -117,15 +119,16 @@ const Attendence = () => {
                       />
                     ))}
                     {searchText && data?.map((cls, index) => {
-                      if (cls.name.includes(searchText)) {
+                      if (cls.title.includes(searchText)) {
                         return <DataRow
                           data={cls}
+                          subject={cls.subjectID.name}
                           allData={cls}
                           toggleClassMenu={toggleClassMenuOpen}
                           index={index + 1}
                           classname={cls.title}
                           students={cls.classroom.studentdetails.length}
-                          teachers={cls.teacher.teacherID.length}
+                          teachers={cls.teacher.teacherID.name}
                           bgColor={"#FFFFFF"}
                           header={false}
                         />

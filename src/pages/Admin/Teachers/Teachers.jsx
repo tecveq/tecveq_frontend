@@ -37,7 +37,7 @@ const Teachers = () => {
   }, [teacherQuery.isPending])
 
   return (
-    adminUsersDataPending ? <div className="flex justify-center flex-1"> <Loader /> </div> :
+    adminUsersDataPending || teacherQuery.isPending ? <div className="flex flex-1"> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1 ">
@@ -75,37 +75,45 @@ const Teachers = () => {
                     />
 
                     {/* When search filter is not applied */}
-                    {searchText == "" && teacherData && teacherData.map((thr, index) => (
-                      <DataRows
-                        header={false}
-                        attendance={70}
-                        index={index + 1}
-                        bgColor={"#FFFFFF"}
-                        classAvg={thr[0].classAvg}
-                        subject={thr[0].subject.name}
-                        teacherProfile={thr[0].teacher.profilePic || IMAGES.Profile}
-                        teacherName={thr[0].teacher.name}
-                        teacherId={thr[0].teacher._id.slice(0, 4)}
-                        onClickFunction={handleFunctionClick(thr[0])}
-                      />
-                    ))}
+                    {searchText == "" && teacherData && teacherData.map((thr, index) => {
+                      return thr.map((item) => {
+                        return <DataRows
+                          key={JSON.stringify(item)}
+                          header={false}
+                          attendance={item.attendence.classData.length == 0 ? 0 : (item.attendence.attendnececount.presents/item.attendence.classData.length)*100}
+                          index={index + 1}
+                          bgColor={"#FFFFFF"}
+                          classAvg={item.classAvg}
+                          subject={item.subject.name}
+                          teacherProfile={item.teacher.profilePic || IMAGES.Profile}
+                          teacherName={item.teacher.name}
+                          teacherId={item.teacher._id.slice(0, 4)}
+                          onClickFunction={handleFunctionClick(item)}
+                        />
+                      })
+                    }
+                    )}
 
                     {/* When search filter is applied */}
                     {searchText && teacherData.map((thr, index) => {
-                      if (thr[0].teacher.name.includes(searchText)) {
-                        return <DataRows
-                          index={index + 1}
-                          teacherName={thr[0].teacher.name}
-                          teacherId={thr[0].teacher._id.slice(0, 4)}
-                          subject={thr[0].subject.name}
-                          classAvg={thr[0].classAvg}
-                          attendance={70}
-                          teacherProfile={thr[0].teacher.profilePic || IMAGES.Profile}
-                          bgColor={"#FFFFFF"}
-                          header={false}
-                          onClickFunction={handleFunctionClick(thr[0])}
-                        />
+                      return thr.map((item) => {
+                        if (item.teacher.name.includes(searchText)) {
+                          return <DataRows
+                            key={JSON.stringify(item)}
+                            index={index + 1}
+                            teacherName={item.teacher.name}
+                            teacherId={item.teacher._id.slice(0, 4)}
+                            subject={item.subject.name}
+                            classAvg={item.classAvg}
+                            attendance={item.attendence.classData.length == 0 ? 0 : (item.attendence.attendnececount.presents/item.attendence.classData.length)*100}
+                            teacherProfile={item.teacher.profilePic || IMAGES.Profile}
+                            bgColor={"#FFFFFF"}
+                            header={false}
+                            onClickFunction={handleFunctionClick(item)}
+                          />
+                        }
                       }
+                      )
                     }
                     )}
 

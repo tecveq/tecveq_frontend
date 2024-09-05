@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import IMAGES from "../../../assets/images";
 import LargeLoader from "../../../utils/LargeLoader";
 import Card from "../../../components/Student/Reports/Card";
@@ -18,20 +18,20 @@ const SubjectReport = () => {
   const { subject } = useParams();
   const navigate = useNavigate();
 
-  const chartData = [
-    {
-      label: "Present",
-      value: 20,
-    },
-    {
-      label: "Absent",
-      value: 30,
-    },
-    // {
-    //   label: "Leave",
-    //   value: 50,
-    // },
-  ];
+  const [chartData, setChartDate] = useState(
+    [
+      {
+        label: "Present",
+        value: 0,
+      },
+      {
+        label: "Absent",
+        value: 0,
+      },
+    ]
+  )
+
+
 
   const { userData } = useUser();
   const location = useLocation();
@@ -45,6 +45,20 @@ const SubjectReport = () => {
   })
 
   console.log("query for subject report data is : ", reportQuery.data);
+
+
+  useEffect(() => {
+    if (!reportQuery.isPending)
+      reportQuery?.data?.attendance?.classes.map((item) => {
+        if (item?.matchedAttendance[0]?.isPresent) {
+          setChartDate([...chartData, chartData[0].value = chartData[0].value + 1])
+        }
+        if (!item?.matchedAttendance[0]?.isPresent) {
+          setChartDate([...chartData, chartData[1].value = chartData[1].value + 1])
+        }
+      })
+  }, [reportQuery.isPending])
+
 
   return (
     (reportQuery.isPending || !reportQuery.data) ? <LargeLoader /> :
@@ -146,7 +160,7 @@ const SubjectReport = () => {
                         type={"Percentage"}
                         // grade={reportQuery?.data?.quizes?.avgGrade}
                         percentage={reportQuery?.data?.attendance?.avgAttendencePer.toFixed(0)}
-                        // percentage={reportQuery?.data?.quizes?.avgMarksPer == "NaN" ? 0 : reportQuery?.data?.quizes?.avgMarksPer}
+                      // percentage={reportQuery?.data?.quizes?.avgMarksPer == "NaN" ? 0 : reportQuery?.data?.quizes?.avgMarksPer}
                       />
                       {/* <Card
                     data={data.type}
@@ -183,7 +197,7 @@ const SubjectReport = () => {
                   </div>
                 </div>
 
-                <div className="mt-7">
+                {/* <div className="mt-7">
                   <p className="md:text-[20px]">Graph</p>
                 </div>
                 <div className="flex items-center justify-center mt-3 mb-10">
@@ -196,15 +210,15 @@ const SubjectReport = () => {
                             {
                               label: "Count",
                               data: chartData.map((data) => data.value),
-                              backgroundColor: ["#11AF03", "#C53F3F", "#EAECF0"],
-                              borderColor: ["#11AF03", "#C53F3F", "#EAECF0"],
+                              backgroundColor: ["#11AF03", "#C53F3F"],
+                              borderColor: ["#11AF03", "#C53F3F"],
                             },
                           ],
                         }}
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

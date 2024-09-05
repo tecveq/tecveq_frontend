@@ -148,7 +148,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">Date</p>
               <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
                 <p className="text-sm text-custom-gray-3">
-                  {moment(event.start).format("DD MMMM, YYYY")}
+                  {moment.utc(event.start).format("DD MMMM, YYYY")}
                 </p>
                 <svg
                   width="15"
@@ -172,7 +172,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">Start Time</p>
               <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                 <p className="text-sm text-custom-gray-3">
-                  {moment(event.start).format("hh:mm a")}
+                  {moment.utc(event.start).format("hh:mm a")}
                 </p>
                 <svg
                   width="15"
@@ -199,7 +199,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">End Time </p>
               <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                 <p className="text-sm text-custom-gray-3">
-                  {moment(event.end).format("hh:mm a")}
+                  {moment.utc(event.end).format("hh:mm a")}
                 </p>
                 <svg
                   width="15"

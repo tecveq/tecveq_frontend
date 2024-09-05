@@ -131,8 +131,8 @@ const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
           formats={{
             dayRangeHeaderFormat,
           }}
-          min={new Date(0, 0, 0, 8, 0, 0)}
-          max={new Date(0, 0, 0, 14, 0, 0)}
+          min={new Date(0, 0, 0, 0, 0, 0)}
+          max={new Date(0, 0, 0, 23, 59, 59)}
           onNavigate={handleNavigate}
           view="week"
           views={{ week: true }}
@@ -140,7 +140,7 @@ const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          className="w-[100%] h-[140vh]"
+          className="w-[100%] h-[80vh]"
           components={{
             toolbar: (toolbar) => (
               <CustomToolbar

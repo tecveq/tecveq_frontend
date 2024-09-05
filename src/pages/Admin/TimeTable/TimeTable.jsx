@@ -18,7 +18,6 @@ const TimeTable = () => {
   }
 
   return (
-    
       isPending || isRefetching ? <div className="flex flex-1 justify-start items-center" > <Loader /> </div> :
         <>
           <div className="flex flex-1 min-h-screen bg-[#f9f9f9]/50 font-poppins">
@@ -44,7 +43,6 @@ const TimeTable = () => {
             </div>
           </div>
         </>
-
   );
 };
 

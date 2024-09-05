@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2';
 
@@ -6,17 +7,19 @@ const AttendanceTable = ({ data }) => {
     const chartData = [
         {
             label: "Present",
-            value: 20,
+            value: 0,
         },
         {
             label: "Absent",
-            value: 30,
+            value: 0,
         },
         {
             label: "Leave",
-            value: 50,
+            value: 0,
         },
     ];
+
+    console.log("data in table attendance is : ", data);
     return (
         <div className="flex flex-1">
             <div className="flex flex-col flex-1 gap-2">
@@ -32,22 +35,33 @@ const AttendanceTable = ({ data }) => {
 
                         <table className="flex flex-col flex-1 bg-white rounded-lg table-fixed">
                             <tbody className="flex flex-col">
-                                {data.map((item, index) => {
+                                {data.classData.map((item, index) => {
+                                    if(item.teacher.status == "present"){
+                                        chartData[0].value = chartData[0].value + 1
+                                    }
+                                    if(item.teacher.status == "absent"){
+                                        chartData[1].value = chartData[1].value + 1
+                                    }
+                                    if(item.teacher.status == "leave"){
+                                        chartData[2].value = chartData[2].value + 1
+                                    }
                                     return (
                                         <tr className="flex flex-1 text-xs border-t border-t-black/10">
                                             <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
                                             <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                                {item.status}
+                                                {item.teacher.status}
                                             </td>
                                             <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                                {item.date}
+                                                {moment.utc(item.startTime).format("Do MMM YYYY")}
                                             </td>
                                             <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                                {item.time}
+                                                {moment.utc(item.startTime).format("hh:mm A")} - {moment.utc(item.endTime).format("hh:mm A")}
                                             </td>
                                         </tr>
                                     );
                                 })}
+
+                                {data.classData.length == 0 && <div className='justify-center flex py-2 text-xl'>No data to display</div>}
 
                             </tbody>
 
@@ -57,19 +71,22 @@ const AttendanceTable = ({ data }) => {
 
                             <div className="flex flex-col gap-2">
                                 <div className="flex w-[200px] h-[200px]">
-                                    <Doughnut
-                                        data={{
-                                            datasets: [
-                                                {
-                                                    label: "Count",
-                                                    data: chartData.map((data) => data.value),
-                                                    backgroundColor: ["#11AF03", "#C53F3F", "#EAECF0"],
-                                                    borderColor: ["#11AF03", "#C53F3F", "#EAECF0"],
-                                                },
-                                            ],
-                                            labels: chartData.map((data) => data.label),
-                                        }}
-                                    />
+                                    {data.classData.length == 0 ?
+                                        <></> :
+                                        <Doughnut
+                                            data={{
+                                                datasets: [
+                                                    {
+                                                        label: "Count",
+                                                        data: chartData.map((data) => data.value),
+                                                        backgroundColor: ["#11AF03", "#C53F3F", "#EAECF0"],
+                                                        borderColor: ["#11AF03", "#C53F3F", "#EAECF0"],
+                                                    },
+                                                ],
+                                                labels: chartData.map((data) => data.label),
+                                            }}
+                                        />
+                                    }
                                 </div>
                             </div>
                         </div>

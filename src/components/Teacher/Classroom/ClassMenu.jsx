@@ -25,10 +25,10 @@ const ClassMenu = ({
       >
         <div className="flex p-6">
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2 cursor-pointer " onClick={editClassRoom}>
+            {/* <div className="flex items-center gap-2 cursor-pointer " onClick={editClassRoom}>
               <FaRegEdit/>
               <p>Edit</p>
-            </div>
+            </div> */}
             <div className="flex items-center gap-2 cursor-pointer text-maroon " onClick={deleteClassRoom}>
               <RiDeleteBin6Line />
               <p>Delete</p>

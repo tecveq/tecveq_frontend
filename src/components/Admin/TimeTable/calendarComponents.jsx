@@ -22,7 +22,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-10 w-full !overflow-hidden ${event.teacher.teacherID.name
+        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-9 w-full !overflow-hidden ${event.teacher.teacherID.name
           ? "bg-maroon/10 text-black"
           : "bg-green_dark/10 text-black"
           }`}
@@ -32,7 +32,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
       >
         <img
           src={IMAGES.MathIcon}
-          className="object-contain w-8 h-8"
+          className="object-contain w-7 h-7"
           alt="subject img"
         />
         <div className="flex flex-col">
@@ -57,14 +57,14 @@ export const SideTime = (props) => {
         {times.map((time) => (
           <div
             key={`${time}2`}
-            className="flex w-[110px] h-[70px] justify-center items-center"
+            className="flex w-[110px] h-10 justify-center items-center"
           >
             <p className="text-[10px] text-grey">
-              {moment(time[0]).format("h:mm a")}
+              {moment.utc(time[0]).format("h:mm a")}
             </p>
             <p className="text-[10px] text-grey">-</p>
             <p className="text-[10px] text-grey">
-              {moment(time[0])
+              {moment.utc(time[0])
                 .add(1, "hour")
                 .format("h:mm a")}
             </p>
@@ -80,7 +80,7 @@ export const SideTimeHeader = (props) => {
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
-        <p className="text-sm text-black/70 ">GTM +5</p>
+        <p className="text-sm text-black/70 ">GTM +0</p>
       </div>
     </>
   );
@@ -139,12 +139,13 @@ export const CustomToolbar = ({
   //       })
   //       .catch((err) => {});
   //   };
+  const { adminUsersData } = useAdmin();
 
   useEffect(() => {
     // handleGetFields();
+    console.log(" admin user data in timetable toolbaar is : ", adminUsersData);
   }, []);
 
-  const { adminUserData } = useAdmin()
 
   return (
     <>
@@ -165,7 +166,7 @@ export const CustomToolbar = ({
             </button>
 
             <p className="mx-4 text-xl font-semibold text-maroon">
-              {moment(Date.now()).format("DD MMMM, YYYY")}
+              {moment.utc(Date.now()).format("DD MMMM, YYYY")}
               <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>
 
@@ -187,9 +188,9 @@ export const CustomToolbar = ({
                 <option value={""}>
                   Search Teacher
                 </option>
-                {adminUserData?.allTeachers?.map((item) => (
-                  <option value="">{item.name}</option>
-                ))}
+                {/* {adminUsersData?.allTeachers?.map((item) => (
+                  <option key={JSON.stringify(item)} value="">{item?.name}</option>
+                ))} */}
               </select>
             </div>
             <div className="py-1 text-xs text-black/70 flex-wrap">

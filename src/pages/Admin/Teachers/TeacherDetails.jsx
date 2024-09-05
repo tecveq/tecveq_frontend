@@ -19,6 +19,8 @@ const TeacherDetails = () => {
   const [reportActive, setReportActive] = useState(true);
   const [feedbackActive, setFeedbackActive] = useState(false);
 
+  console.log("location is : ", location.state);
+
   const onReportClick = () => {
     setReportActive(true);
     setFeedbackActive(false);
@@ -103,7 +105,7 @@ const TeacherDetails = () => {
                       <p className="md:text-2xl">Attendance <span className="text-[8px]">10/12 days Present</span></p>
                     </div>
                     <div className="flex flex-col items-center flex-1 gap-2 sm:flex-row">
-                      <AttendanceTable data={attendanceData} />
+                      <AttendanceTable data={location?.state?.attendence} />
                     </div>
                   </div>
                 </div>

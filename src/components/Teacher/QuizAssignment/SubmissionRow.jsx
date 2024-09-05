@@ -1,5 +1,6 @@
 import React from "react";
 import { formatDate } from "../../../constants/formattedDate";
+import moment from "moment";
 
 const SubmissionRow = (props) => {
 
@@ -36,7 +37,7 @@ const SubmissionRow = (props) => {
               }`}
           >
             {props.header ? props?.submission :
-              `${formatDate(props?.submission)}`
+              `${moment(props?.submission).format("Do MM YYYY hh:mm a")}`
             }
           </p>
         </div>

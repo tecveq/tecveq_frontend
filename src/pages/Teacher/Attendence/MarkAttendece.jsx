@@ -115,7 +115,7 @@ const MarkAttendence = () => {
                                             />
                                         ))}
                                         {searchText && classData?.classroom?.studentdetails?.map((cls, index) => {
-                                            if (cls.includes(searchText)) {
+                                            if (cls.name.includes(searchText)) {
                                                 return <DataRow
                                                     data={cls}
                                                     header={false}

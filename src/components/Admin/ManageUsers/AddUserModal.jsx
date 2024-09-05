@@ -163,62 +163,98 @@ const AddUserModal = ({ closeModal, refetch }) => {
                 // password should have atleast one digit, one special character, and one upper case letter
                 const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
 
-
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
                 const isValidGuardainName = namePattern.test(e.target[5].value);
                 const isValidPassword = passwordPattern.test(e.target[8].value);
                 const isValidGuardianEmail = emailPattern.test(e.target[6].value);
 
-                // if (isValidEmail) {
-                //     if (isValidName) {
-                if (e.target[8].value == e.target[9].value) {
-                    dataBody = {
-                        userType: role,
-                        name: e.target[1].value,
-                        email: e.target[2].value,
-                        phoneNumber: e.target[3].value,
-                        levelID: JSON.parse(e.target[4].value)._id,
-                        guardianName: e.target[5].value,
-                        guardianEmail: e.target[6].value,
-                        guardianPhoneNumber: e.target[7].value,
-                        password: e.target[8].value,
-                        profilePic: default_profile
+                if (isValidEmail && isValidGuardianEmail) {
+                    if (isValidName && isValidGuardainName) {
+                        if (e.target[8].value.length >= 6) {
+                            if (e.target[8].value == e.target[9].value) {
+                                dataBody = {
+                                    userType: role,
+                                    name: e.target[1].value,
+                                    email: e.target[2].value,
+                                    phoneNumber: e.target[3].value,
+                                    levelID: JSON.parse(e.target[4].value)._id,
+                                    isAccepted: true,
+                                    guardianName: e.target[5].value,
+                                    guardianEmail: e.target[6].value,
+                                    guardianPhoneNumber: e.target[7].value,
+                                    password: e.target[8].value,
+                                    profilePic: default_profile
+                                }
+                                const response = await registerStudent(dataBody);
+                                console.log("after register user is : ", response);
+                                toast.success("User added successfully!");
+                                await refetch();
+                                closeModal();
+                            } else {
+                                toast.error("Password and confirm password should be equal!");
+                            }
+                        } else {
+                            toast.error("Password should be atleast 6 characters!")
+                        }
+                    } else {
+                        toast.error("Name cannot have digits or special characters");
                     }
-                    const response = await registerStudent(dataBody);
-                    console.log("after register user is : ", response);
                 } else {
-                    toast.error("Password and confirm password should be equal!");
+                    toast.error("Invalid Email!");
                 }
-                //     } else {
-                //         toast.error("Name cannot have digits or special characters");
-                //     }
-                // } else {
-                //     toast.error("Invalid Email!");
-                // }
             } else {
                 console.log("teacher form is : ", e);
-                let cvurl = "cv url here",
-                    dataBody = {
-                        userType: role,
-                        name: e.target[1].value,
-                        email: e.target[2].value,
-                        phoneNumber: e.target[3].value,
-                        qualification: e.target[4].value,
-                        cv: cvurl,
-                        experience: e.target[6].value,
-                        password: e.target[7].value,
-                        profilePic: default_profile
+
+                // valid email
+                const emailPattern = /^[a-zA-Z][\w\.-]*@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
+                // only string
+                const namePattern = /^[a-zA-Z\s]+$/;
+                // password should have atleast one digit, one special character, and one upper case letter
+                const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+
+
+                const isValidName = namePattern.test(e.target[1].value);
+                const isValidEmail = emailPattern.test(e.target[2].value);
+                const isValidPassword = passwordPattern.test(e.target[7].value);
+
+
+                let cvurl = "cv url here";
+                if (isValidEmail) {
+                    if (isValidName) {
+                        if (e.target[7].value.length >= 6) {
+                            dataBody = {
+                                userType: role,
+                                name: e.target[1].value,
+                                email: e.target[2].value,
+                                phoneNumber: e.target[3].value,
+                                qualification: e.target[4].value,
+                                cv: cvurl,
+                                isAccepted: true,
+                                experience: e.target[6].value,
+                                password: e.target[7].value,
+                                profilePic: default_profile
+                            }
+                            cvurl = await uploadFile(e.target[5].files[0], "CV");
+                            dataBody.cv = cvurl;
+                            const response = await registerStudent(dataBody);
+                            console.log("after register user is : ", response);
+
+                            toast.success("User added successfully!");
+                            await refetch();
+                            closeModal();
+                        } else {
+                            toast.error("Password should be atleast 6 characters!")
+                        }
+                    } else {
+                        toast.error("Name cannot have digits or special characters");
                     }
-                cvurl = await uploadFile(e.target[5].files[0], "CV");
-                dataBody.cv = cvurl;
-                const response = await registerStudent(dataBody);
-                console.log("after register user is : ", response);
+                } else {
+                    toast.error("Invalid Email!");
+                }
             }
 
-            toast.success("User added successfully!");
-            await refetch();
-            closeModal();
+
         } catch (error) {
             console.log("error in student login UI screen is : ", error);
             toast.error("Cannot add the user!");

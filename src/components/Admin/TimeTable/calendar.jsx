@@ -74,7 +74,7 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
             events={events}
             startAccessor="start"
             endAccessor="end"
-            className="w-[100%] h-[100vh]"
+            className="w-[100%] h-[80vh]"
             components={{
               toolbar: (toolbar) => (
                 <CustomToolbar

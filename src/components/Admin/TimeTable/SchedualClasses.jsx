@@ -118,7 +118,7 @@ const SchedualClasses = ({ classRefetch }) => {
 
       let myobj = {
         ...classObj,
-        teacher: { teacherID: JSON.parse(selectedTeacher)._id, status: "present" },
+        teacher: { teacherID: JSON.parse(selectedTeacher)._id, status: "absent" },
         subjectID: JSON.parse(selectedSubject)._id,
         classroomID: JSON.parse(selectedClassroom)._id,
         startTime: isoFormattedStringStartTime,

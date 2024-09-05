@@ -130,7 +130,7 @@ const SubjectReport = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subjectQueryFlag, setSubjectQueryFlag] = useState(false);
 
-  console.log("locatio state is : ", location.state);
+  // console.log("locatio state in subject report is : ", location.state);
 
   useEffect(() => {
     setStudentData(location.state);
@@ -145,6 +145,8 @@ const SubjectReport = () => {
     }
   });
 
+  // console.log("unused activity data in subject report is : ", data);
+
   const { data: subjects, isSuccess, isPending: subjectPending } = useQuery({ queryKey: ["subjectofstudents"], queryFn: async () => await getStudentSubjectsForAdmin(location.state?._id) });
 
 
@@ -156,9 +158,9 @@ const SubjectReport = () => {
 
   useEffect(() => {
     setSubjectQueryFlag(true);
-    studentAssignmentsQuizes.refetch()
+    studentAssignmentsQuizes.refetch();
     if (!studentAssignmentsQuizes.isPending) {
-      console.log("data is: ", studentAssignmentsQuizes.data);
+      console.log("subject report data in subject report section in admin penal is: ", studentAssignmentsQuizes.data);
     }
   }, [selectedSubject, studentAssignmentsQuizes.data, studentAssignmentsQuizes.isPending])
 

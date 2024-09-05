@@ -50,7 +50,7 @@ const Login = () => {
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { setUserData } = useUser();
+    const { setUserData, socketContex, setSocketContext } = useUser();
     const { setParentLogedIn } = useParent();
     const { setStudentLogedIn } = useStudent();
 
@@ -69,6 +69,7 @@ const Login = () => {
                     if(response.isBlocked == true){
                         toast.error("Access Denied! Please contact Admin support.");
                     }else{
+                        
                         localStorage.setItem("tcauser", JSON.stringify(response));
                         toast.success("Login successful");
                         navigate("/");

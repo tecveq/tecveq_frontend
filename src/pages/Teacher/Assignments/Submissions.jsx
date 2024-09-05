@@ -21,9 +21,11 @@ const Submissions = () => {
   const [isProfileMenu, setIsProfileMenu] = useState(false);
   const [isProfileDetails, setIsProfileDetails] = useState(false);
 
+  const [searchText, setSearchText] = useState("");
+
   const { isBlurred, toggleBlur } = useBlur();
 
-  const {userData}  = useUser();
+  const { userData } = useUser();
 
   const toggleProfielMenu = () => {
     setIsProfileMenu(!isProfileMenu);
@@ -162,6 +164,8 @@ const Submissions = () => {
                     <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                       <BiSearch />
                       <input
+                        value={searchText}
+                        onChange={(e) => { setSearchText(e.target.value) }}
                         className="outline-none b"
                         type="text"
                         placeholder="Search"
@@ -183,17 +187,34 @@ const Submissions = () => {
                   submission={"Submission"}
                   downloads={"Downloads"}
                 />
-                {isSuccess && data?.submissions.map((submission, index) => {
+                {isSuccess && searchText == "" && data?.submissions.map((submission, index) => {
                   return <SubmissionRow
                     isQuiz={false}
                     header={false}
                     index={index + 1}
                     bgColor={"#FFFFFF"}
-                    profileLink={submission?.studentID?.profilePic || IMAGES.ProfilePic}
-                    submission={submission?.submission?.submittedAt}
+                    key={JSON.stringify(submission)}
                     name={submission?.studentID?.name}
                     submissionData={submission?.submission}
+                    submission={submission?.submission?.submittedAt}
+                    profileLink={submission?.studentID?.profilePic || IMAGES.ProfilePic}
                   />
+                })}
+
+                {isSuccess && searchText !== "" && data?.submissions.map((submission, index) => {
+                  if (submission.studentID.name.includes(searchText)) {
+                    return <SubmissionRow
+                      isQuiz={false}
+                      header={false}
+                      index={index + 1}
+                      bgColor={"#FFFFFF"}
+                      key={JSON.stringify(submission)}
+                      profileLink={submission?.studentID?.profilePic || IMAGES.ProfilePic}
+                      submission={submission?.submission?.submittedAt}
+                      name={submission?.studentID?.name}
+                      submissionData={submission?.submission}
+                    />
+                  }
                 })}
 
                 {data?.submissions?.length == 0 && <div className="text-center py-4 text-3xl font-medium">No submissions right now!</div>}

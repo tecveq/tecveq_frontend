@@ -4,6 +4,7 @@ import { MdOutlinePerson2 } from 'react-icons/md'
 import { PiDotsThreeOutlineVerticalLight } from 'react-icons/pi'
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import moment from 'moment';
 
 const AnnouncementCard = ({announcement, deleteAnnouncement, editAnnouncement, refetch}) => {
 
@@ -42,7 +43,7 @@ const AnnouncementCard = ({announcement, deleteAnnouncement, editAnnouncement, r
                     <div className='flex gap-4 items-center text-xs relative text-black/50'>
                         <div className='flex gap-2 items-center'>
                             <p><MdOutlinePerson2 size={16} /> </p>
-                            <p>{announcement?.date?.split("T")[0]}</p>
+                            <p>{announcement?.date?.split("T")[0]} { /*{moment.utc(announcement.date).format("hh:mm A")} */} </p>
                         </div>
                         <div className='flex gap-2 items-center'>
                             <p><LuClock size={16} /> </p>

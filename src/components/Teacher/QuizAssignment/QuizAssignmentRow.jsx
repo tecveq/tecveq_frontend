@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { formatDate } from "../../../constants/formattedDate";
+import moment from "moment";
 
 const QuizAssignmentRow = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -29,7 +30,7 @@ const QuizAssignmentRow = (props) => {
               }`}
           >
             {props.header ? props.assignedOn :
-              formatDate(props.assignedOn)
+              moment(props.assignedOn).format("Do MMM YYYY hh:mm a")
             }
           </p>
           <p
@@ -37,7 +38,7 @@ const QuizAssignmentRow = (props) => {
               }`}
           >
             {props.header ? props.deadline :
-              formatDate(props.deadline)
+              moment.utc(props.deadline).format("Do MMM YYYY hh:mm a")
             }
           </p>
           <p

@@ -35,8 +35,6 @@ const MyCalendar = () => {
     end: moment().endOf("day").toDate(),
   });
 
-  console.log("data is : ", new Date(0, 0, 0, 8, 0, 0))
-
   const handleNavigate = (newDate) => {
     const startOfWeek = moment(newDate).startOf("day").toDate();
     const endOfWeek = moment(newDate).endOf("day").toDate();
@@ -55,8 +53,12 @@ const MyCalendar = () => {
     if (!isPending) {
 
       let allclassfilter = data?.map((item) => {
+        // let newdate = moment.utc(item.startTime);
         let newdate = new Date(item?.startTime);
-        let end = new Date(item?.endTime);
+        console.log(moment.utc(item.startTime).toString());
+        console.log("ne date is : ", newdate);
+        // let end = moment.utc(item.endTime);
+        let end = new Date(item.endTime);
         let returnobj = { ...item, end: end, start: newdate }
         return returnobj
       })
@@ -79,7 +81,7 @@ const MyCalendar = () => {
             dayRangeHeaderFormat,
           }}
           min={new Date(0, 0, 0, 0, 0, 0)}
-          max={new Date(0, 0, 0, 23, 0, 0)}
+          max={new Date(0, 0, 0, 23, 59, 59)}
           onNavigate={handleNavigate}
           view="week"
           views={{ week: true }}

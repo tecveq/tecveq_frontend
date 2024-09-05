@@ -23,7 +23,7 @@ const GradingAssignments = () => {
   const [isProfileDetails, setIsProfileDetails] = useState(false);
 
   const { isBlurred, toggleBlur } = useBlur();
-  const {userData} = useUser();
+  const { userData } = useUser();
 
   const location = useLocation();
 
@@ -71,10 +71,13 @@ const GradingAssignments = () => {
     console.log("for submission arry is : ", gradingData);
     let objArray = [];
     let obj = {};
-    gradingData.map((item) =>{
-      obj = {grade: item.grade, marks: item.marks, feedback: item.feedback, studentID: item.studentID._id}
-      objArray.push(obj);
+    gradingData.map((item) => {
+      if (item.marks) {
+        obj = { grade: item.grade, marks: item.marks, feedback: item.feedback, studentID: item.studentID._id }
+        objArray.push(obj);
+      }
     })
+    console.log("obj array to push is ", objArray);
     gradeMutation.mutate(objArray);
   }
 
@@ -169,7 +172,7 @@ const GradingAssignments = () => {
                 <div>
                   <img
                     onClick={toggleProfielMenu}
-                    src={ userData.profilePic || IMAGES.ProfilePic}
+                    src={userData.profilePic || IMAGES.ProfilePic}
                     alt=""
                     className="w-[29px] h-[30px] cursor-pointer"
                   />
@@ -245,10 +248,10 @@ const GradingAssignments = () => {
                 />
               ))}
             </div>
-            
+
             {gradeMutation.isPending && <div> <Loader /> </div>}
 
-            { !gradeMutation.isPending && <div className="flex justify-end my-4 border-t border-black">
+            {!gradeMutation.isPending && <div className="flex justify-end my-4 border-t border-black">
               <div className="flex justify-end py-4">
                 <p onClick={handleGradeAssignment} className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon">Submit</p>
               </div>

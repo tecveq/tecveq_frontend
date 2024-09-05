@@ -3,7 +3,6 @@ import IMAGES from "../../../assets/images";
 import ViewEventDetailsModal from "./viewEventDetailsModal";
 
 import { useEffect, useState } from "react";
-import { FaChevronDown } from "react-icons/fa6";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 export const CustomEvent = ({ event, setevents }) => {
@@ -29,32 +28,36 @@ export const CustomEvent = ({ event, setevents }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex flex-col gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-24 w-full !overflow-hidden ${event.teacher
-            ? "bg-maroon/10 text-black"
-            : "bg-green_dark/10 text-black"
+        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-9 w-full !overflow-hidden ${event.teacher
+          ? "bg-maroon/10 text-black"
+          : "bg-green_dark/10 text-black"
           }`}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
         }}
       >
-        <img
-          src={IMAGES.MathIcon}
-          className="object-contain w-8 h-8"
-          alt="subject img"
-        />
-        <p className="text-xs text-wrap">
-          {event.teacher ? event.teacher.teacherID.name : ""}
-        </p>
-        <p className="text-xs text-wrap text-black/70">
-          {event.subjectID.name ? event.subjectID.name : ""}
-        </p>
+        <div>
+          <img
+            src={IMAGES.MathIcon}
+            className="object-contain w-7 h-7"
+            alt="subject img"
+          />
+        </div>
+        <div className="flex flex-col">
+          <p className="text-xs text-wrap">
+            {event.teacher ? event.teacher.teacherID.name : ""}
+          </p>
+          <p className="text-xs text-wrap text-black/70">
+            {event.subjectID.name ? event.subjectID.name : ""}
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
 export const SideTime = (props) => {
-  
+
   const times = props.slotMetrics.groups;
 
   return (
@@ -63,16 +66,15 @@ export const SideTime = (props) => {
         {times.map((time) => (
           <div
             key={`${time}2`}
-            className="flex w-[110px] h-[100px] justify-center items-center"
+            className="flex w-[110px] h-10 justify-center items-center"
           >
             <p className="text-[10px] text-grey">
-              {moment(time[0]).format("h:mm a")}
+              {moment.utc(time[0]).format("h:mm a")}
             </p>
             <p className="text-[10px] text-grey">-</p>
             <p className="text-[10px] text-grey">
-              {moment(time[0])
+              {moment.utc(time[0])
                 .add(1, "hour")
-                .add(30, "minutes")
                 .format("h:mm a")}
             </p>
           </div>
@@ -87,7 +89,7 @@ export const SideTimeHeader = (props) => {
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
-        <p className="text-sm text-black/70 ">GTM +5</p>
+        <p className="text-sm text-black/70 ">GTM +0</p>
       </div>
     </>
   );
@@ -106,8 +108,8 @@ export const Header = (props) => {
   return (
     <div
       className={`flex flex-col items-center justify-between flex-1 w-full font-normal h-fit ${currentDate === date && currentMonth === month
-          ? "text-maroon"
-          : "text-grey"
+        ? "text-maroon"
+        : "text-grey"
         } `}
     >
       <p className="text-lg text-center">{date}</p>
@@ -177,17 +179,8 @@ export const CustomToolbar = ({
               <MdKeyboardArrowLeft />
             </button>
             <p className="mx-4 text-xl font-semibold text-maroon">
-              {/* {console.log(
-                " is here : ",
-                `${toolbar.label.split("–")[0]}`,
-                `${moment(Date.now()).format("MMMM DD")}`
-              )} */}
-              {toolbar.label.split("–")[0] ==
-                moment(Date.now()).format("MMMM DD")
-                ? moment(Date.now()).format("DD MMMM, YYYY")
-                : toolbar.label.split("–")[0]}
-              {/* {moment(Date.now()).format("MMMM DD")} */}
-              {/* <span className="ml-2 text-xs font-normal text-grey/70">Today</span> */}
+              {moment(Date.now()).format("MMMM DD YYYY")}
+              <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>
             <button
               className="w-8 h-8 p-2 bg-white border rounded-2xl border-grey/50"
@@ -197,27 +190,6 @@ export const CustomToolbar = ({
             </button>
           </div>
         </div>
-        {loading && (
-          <div role="status" className="relative left-[-50px] top-[5px]">
-            <svg
-              aria-hidden="true"
-              class="w-8 h-8 text-gray-200 animate-spin fill-custom-green-1"
-              viewBox="0 0 100 101"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="currentColor"
-              />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentFill"
-              />
-            </svg>
-            <span class="sr-only">Loading...</span>
-          </div>
-        )}
         <div className="flex items-center gap-6">
           {/* <FilterButton
             className={"px-8 py-1"}
@@ -226,10 +198,11 @@ export const CustomToolbar = ({
           /> */}
           <div>
             <div className="flex justify-between py-2 px-4 w-64 border-2 border-[#00000020] rounded-xl ">
-              My Time Table <FaChevronDown size={20} color="black" />
+              My Time Table 
+              {/* <FaChevronDown size={20} color="black" /> */}
             </div>
             <div className="py-1 text-xs text-black/70">
-              <p>Selcet the time table you want to view</p>
+              <p>See all your scheduled classes below!</p>
             </div>
           </div>
         </div>

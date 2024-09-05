@@ -11,6 +11,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
 
   const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("tcauser")));
+  const [socketContext, setSocketContext] = useState(null);
 
   const addUserToLS = async () => {
     localStorage.setItem("tcauser", JSON.stringify(userData));
@@ -35,7 +36,7 @@ export const UserProvider = ({ children }) => {
   }, [])
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, addUserToLS }}>
+    <UserContext.Provider value={{ userData, setUserData, addUserToLS, socketContext, setSocketContext }}>
       {children}
     </UserContext.Provider>
   );

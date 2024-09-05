@@ -44,6 +44,16 @@
 
 .rbc-time-view {
   /* border: none !important; */
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.rbc-calendar{
+  height: 80vh !important;
+}
+
+.rbc-time-content{
+  height: 80vh !important;
 }
 .rbc-event {
   display: flex !important;

@@ -24,6 +24,8 @@ const Submissions = () => {
   const { userData } = useUser();
   const { isBlurred, toggleBlur } = useBlur();
 
+  const [searchText, setSearchText] = useState("");
+
   const toggleProfielMenu = () => {
     setIsProfileMenu(!isProfileMenu);
     setmail(false);
@@ -185,6 +187,8 @@ const Submissions = () => {
                       <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                         <BiSearch />
                         <input
+                          value={searchText}
+                          onChange={(e) => setSearchText(e.target.value)}
                           className="outline-none b"
                           type="text"
                           placeholder="Search"
@@ -207,7 +211,7 @@ const Submissions = () => {
                     submission={"Submission"}
                   />
 
-                  {isSuccess && data?.submission?.map((submission, index) => (
+                  {data?.submissions?.length !== 0 && isSuccess && searchText == "" && data?.submission?.map((submission, index) => (
                     <SubmissionRow
                       isQuiz={true}
                       key={data._id}
@@ -217,9 +221,25 @@ const Submissions = () => {
                       name={submission.studentID.name}
                       submissionData={submission.submissions}
                       submission={submission?.submission.submittedAt}
-                      profileLink={submission.studentID.profilePic || IMAGES.Profile}
+                      profileLink={submission?.studentID?.profilePic || submission?.profilePic}
                     />
                   ))}
+
+                  {data?.submissions?.length !== 0 && isSuccess && searchText !== "" && data?.submissions.map((submission, index) => {
+                    if (submission?.studentID?.name.includes(searchText)) {
+                      return <SubmissionRow
+                        isQuiz={false}
+                        header={false}
+                        index={index + 1}
+                        bgColor={"#FFFFFF"}
+                        key={JSON.stringify(submission)}
+                        name={submission?.studentID?.name}
+                        submissionData={submission?.submission}
+                        submission={submission?.submission?.submittedAt}
+                        profileLink={submission?.studentID?.profilePic || submission?.profilePic}
+                      />
+                    }
+                  })}
 
                   {data?.submissions?.length == 0 && <div className="text-center py-4 text-3xl font-medium">No submissions right now!</div>}
 

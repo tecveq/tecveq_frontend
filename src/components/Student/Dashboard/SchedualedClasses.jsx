@@ -7,6 +7,7 @@ import { GoDotFill } from "react-icons/go";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useStudent } from "../../../context/StudentContext";
+import moment from "moment/moment";
 
 
 const ScheduledClasses = () => {
@@ -109,8 +110,9 @@ const ScheduledClasses = () => {
         ) : (
           <div className="flex gap-2">
             <FiClock />
-            <p>{new Date(item.startTime).toDateString()} </p>
-            <p>{new Date(item.startTime).toLocaleTimeString()} </p>
+            <p>{moment.utc(item.startTime).format("hh:mm a")} </p>
+            <p>-</p>
+            <p>{moment.utc(item.endTime).format("hh:mm a")} </p>
           </div>
         )}
       </div>

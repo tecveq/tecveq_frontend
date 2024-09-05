@@ -12,6 +12,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMultipleQuizesForGrading, gradeQuizes } from "../../../api/Teacher/Quiz";
+import { useUser } from "../../../context/UserContext";
+import Loader from "../../../utils/Loader";
 
 const GradingQuizzes = () => {
   const [mail, setmail] = useState(false);
@@ -19,9 +21,12 @@ const GradingQuizzes = () => {
   const [isProfileMenu, setIsProfileMenu] = useState(false);
   const [isProfileDetails, setIsProfileDetails] = useState(false);
 
+  const [searchText, setSearchText] = useState("");
+
   const { isBlurred, toggleBlur } = useBlur();
 
   const [gradingData, setGradingData] = useState([]);
+  const { userData } = useUser();
 
   const toggleProfielMenu = () => {
     setIsProfileMenu(!isProfileMenu);
@@ -54,37 +59,6 @@ const GradingQuizzes = () => {
   const onSettingsClick = () => { };
   const onLogoutClick = () => { };
 
-  const submissions = [
-    {
-      name: "Muhammad Haseeb",
-      submissionTime: "22nd Jan, 2022 8:30PM",
-      profileLink: IMAGES.Profile,
-      marksObtained: 12,
-      grade: "B"
-    },
-    {
-      name: "Muhammad Haseeb",
-      submissionTime: "22nd Jan, 2022 8:30PM",
-      profileLink: IMAGES.Profile,
-      marksObtained: 12,
-      grade: "B"
-    },
-    {
-      name: "Muhammad Haseeb",
-      submissionTime: "22nd Jan, 2022 8:30PM",
-      profileLink: IMAGES.Profile,
-      marksObtained: 12,
-      grade: "B"
-    },
-    {
-      name: "Muhammad Haseeb",
-      submissionTime: "22nd Jan, 2022 8:30PM",
-      profileLink: IMAGES.Profile,
-      marksObtained: 12,
-      grade: "B"
-    },
-  ];
-
   const navigate = useNavigate();
 
   const onAssignmentClick = () => {
@@ -99,13 +73,15 @@ const GradingQuizzes = () => {
     let objArray = [];
     let obj = {};
     gradingData.map((item) => {
-      obj = {
-        grade: item.grade,
-        marks: item.marks,
-        feedback: item.feedback,
-        studentID: item.studentID._id
+      if (item.marks) {
+        obj = {
+          grade: item.grade,
+          marks: item.marks,
+          feedback: item.feedback,
+          studentID: item.studentID._id
+        }
+        objArray.push(obj);
       }
-      objArray.push(obj);
     })
     gradeMutation.mutate(objArray);
   }
@@ -200,7 +176,7 @@ const GradingQuizzes = () => {
                 <div>
                   <img
                     onClick={toggleProfielMenu}
-                    src={IMAGES.ProfilePic}
+                    src={userData.profilePic || IMAGES.ProfilePic}
                     alt=""
                     className="w-[29px] h-[30px] cursor-pointer"
                   />
@@ -239,6 +215,8 @@ const GradingQuizzes = () => {
                   <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                     <BiSearch />
                     <input
+                      value={searchText}
+                      onChange={(e) => { setSearchText(e.target.value) }}
                       className="outline-none b"
                       type="text"
                       placeholder="Search"
@@ -258,7 +236,7 @@ const GradingQuizzes = () => {
                 marksObtained={"Marks Obtained"}
                 grade={"Grade"}
               />
-              {gradingData?.map((submission, index) => (
+              {!gradingData.isPending && searchText == "" && gradingData?.map((submission, index) => (
                 <GradeQuizAssignmentRow
                   isQuiz={false}
                   header={false}
@@ -266,7 +244,7 @@ const GradingQuizzes = () => {
                   bgColor={"#FFFFFF"}
                   grade={submission?.grade}
                   marks={submission?.marks}
-                  profileLink={IMAGES.Profile}
+                  profileLink={submission.studentID.profilePic || IMAGES.Profile}
                   setInputField={setInputField}
                   id={submission?.studentID?._id}
                   feedback={submission?.feedback}
@@ -275,12 +253,36 @@ const GradingQuizzes = () => {
                   submission={submission?.submission?.submittedAt || "Not Submitted Yet"}
                 />
               ))}
+
+              {!gradingData.isPending && searchText !== "" && gradingData?.map((submission, index) => {
+                if(submission?.studentID?.name?.includes(searchText)){
+                  return <GradeQuizAssignmentRow
+                  isQuiz={false}
+                  header={false}
+                  index={index + 1}
+                  bgColor={"#FFFFFF"}
+                  grade={submission?.grade}
+                  marks={submission?.marks}
+                  profileLink={submission.studentID.profilePic || IMAGES.Profile}
+                  setInputField={setInputField}
+                  id={submission?.studentID?._id}
+                  feedback={submission?.feedback}
+                  name={submission?.studentID?.name}
+                  marksObtained={submission?.marksObtained}
+                  submission={submission?.submission?.submittedAt || "Not Submitted Yet"}
+                  />
+                }
+              }
+              )}
             </div>
-            <div className="flex justify-end my-4 border-t border-black">
+
+            {gradeMutation.isPending && <div> <Loader /> </div>}
+
+            {!gradeMutation.isPending && <div className="flex justify-end my-4 border-t border-black">
               <div className="flex justify-end py-4">
                 <p onClick={handleGradeQuiz} className="flex px-8 py-3 text-sm text-white cursor-pointer rounded-3xl bg-maroon">Submit</p>
               </div>
-            </div>
+            </div>}
           </div>
         </div>
       </div>

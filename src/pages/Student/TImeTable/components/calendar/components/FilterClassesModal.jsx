@@ -7,6 +7,7 @@ import { GoDotFill } from "react-icons/go";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useStudent } from "../../../../../../context/StudentContext";
+import moment from "moment";
 
 
 const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
@@ -68,11 +69,11 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
             <div className="flex gap-2 text-xs font-light">
               <p className="flex items-center gap-1">
                 <FiClock />
-                {new Date(item.startTime).toDateString().slice(1, -3)}
+                {moment.utc(item.startTime).format("DD-MM-YYYY")}
               </p>
               <p className="flex items-center gap-1">
                 <FiClock />
-                {new Date(item.startTime).toLocaleTimeString().slice(0, 5)}{new Date(item.startTime).toLocaleTimeString().slice(-2)} - {new Date(item.endTime).toLocaleTimeString().slice(0, 5)}{new Date(item.endTime).toLocaleTimeString().slice(-2)}
+                {moment.utc(item.startTime).format("hh:mm a")} - {moment.utc(item.endTime).format("hh:mm a")}
               </p>
             </div>
           </div>

@@ -98,7 +98,7 @@ const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
         <div>
           <select value={selectedOption} onChange={(e) => { setSelectedOption(JSON.parse(e.target.value)) }}
             className='border outline-none rounded-sm border-black/20 px-4 w-full py-[4px]'>
-              <option value="">Select Option</option>
+            <option value="">Select Option</option>
             {options.map((item) => {
               return <option key={item._id} value={JSON.stringify(item)}>{item.name}</option>
             })}
@@ -168,19 +168,24 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
       let tempstudents = newSelectedStudents.map((item) => item?._id);
 
-      let data = {
-        name: classroomName,
-        levelID: selectedLevel._id,
-        students: tempstudents,
-        teachers: teacherArr,
+      const classroomnameregex = /^[a-zA-Z0-9\s]+$/;
+
+      if (classroomnameregex.test(classroomName)) {
+        let data = {
+          name: classroomName,
+          levelID: selectedLevel._id,
+          students: tempstudents,
+          teachers: teacherArr,
+        }
+
+        console.log("data sending to backend is : ", data);
+
+        createClassroomMutation.mutate(data);
+      } else {
+        toast.error("Invalid Classroom name!. Should not have any special characters.");
       }
-
-      console.log("data sending to backend is : ", data);
-
-      createClassroomMutation.mutate(data);
     } else {
       toast.error("Fill all fields first");
-      // alert("Fill all fields first");
     }
   }
 

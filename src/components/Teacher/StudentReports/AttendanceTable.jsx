@@ -1,3 +1,4 @@
+import moment from 'moment/moment';
 import React from 'react'
 
 const AttendanceTable = ({ data }) => {
@@ -12,32 +13,31 @@ const AttendanceTable = ({ data }) => {
                                 <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Status</td>
                                 <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Date</td>
                                 <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Time</td>
-
                             </tr>
                         </thead>
 
                         <tbody className="flex flex-col">
                             {data?.map((item, index) => {
                                 if (item?.matchedAttendance?.length !== 0) {
-                                    return (
-                                        <tr className="flex flex-1 text-xs border-t border-t-black/10">
-                                            <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
-                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                                {item?.matchedAttendance[0]?.isPresent ? "Present" : "Absent"}
-                                            </td>
-                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                                {new Date(item?.startTime).toDateString()}
-                                            </td>
-                                            <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                                {new Date(item?.startTime).toLocaleTimeString()} - {new Date(item?.endTime).toLocaleTimeString()}
-                                            </td>
-                                        </tr>
-                                    );
+                                    return item.matchedAttendance.map((att) => {
+                                        return (
+                                            <tr key={JSON.stringify(att)} className="flex flex-1 text-xs border-t border-t-black/10">
+                                                <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
+                                                <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                    {att?.isPresent ? "Present" : "Absent"}
+                                                </td>
+                                                <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                    {moment.utc(item.startTime).format("Do MMM YYYY")}
+                                                </td>
+                                                <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                                                    {moment.utc(item.startTime).format("hh:mm a")} - {moment.utc(item.endTime).format("hh:mm a")}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
                                 }
                             })}
-
                         </tbody>
-
                     </table>
                 </div>
             </div>
