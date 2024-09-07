@@ -31,6 +31,7 @@ const Navbar = ({ heading }) => {
   };
 
   const toggleMail = () => {
+    toggleBlur();
     setmail(!mail);
     setIsProfileMenu(false);
     setBell(false);
@@ -97,8 +98,7 @@ const Navbar = ({ heading }) => {
                 onClick={toggleProfielMenu}
               />
             </div>
-            {bell && <Notifications dashboard={true} onclose={togglebell} /> }
-            {mail && <RecentMessages dashboard={true} onclose={toggleMail} /> }
+            {bell && <Notifications dashboard={true} onclose={togglebell} />}
             {isProfileMenu &&
               <ProfileMenu
                 onProfileClick={onProfileClick}
@@ -109,6 +109,7 @@ const Navbar = ({ heading }) => {
           </div>
         </div>
       </div>
+      {mail && <RecentMessages dashboard={true} onclose={toggleMail} />}
       {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
     </>
 

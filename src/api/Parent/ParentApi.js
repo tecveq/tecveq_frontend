@@ -11,8 +11,8 @@ export const getAllAssignmentsOfChild = apiRequest(async () => {
     return response;
 })
 
-export const getChildReport = apiRequest(async (sid) => {
-    const url = `${BACKEND_URL}/parent/student-report/${sid}`;
+export const getChildReport = apiRequest(async (sid, cid, subid, tid) => {
+    const url = `${BACKEND_URL}/parent/student-report/${sid}?classroomID=${cid}&&subjectID=${subid}&&teacherID=${tid}`;
     const response = await axios.get(url);
     return response;
 })
@@ -22,3 +22,18 @@ export const getAllChildren = apiRequest(async (mail) => {
     const response = await axios.get(url);
     return response;
 })
+
+
+export const getAllSubjects = apiRequest(async (id) => {
+    const url = `${BACKEND_URL}/parent/student-subjects/${id}`;
+    const response = await axios.get(url);
+    return response;
+})
+
+
+export const getTeachersForChat = apiRequest(async() =>{
+    const url = `${BACKEND_URL}/chatroom/chat/teachers`
+    const response = await axios.get(url);
+    return response;
+})
+

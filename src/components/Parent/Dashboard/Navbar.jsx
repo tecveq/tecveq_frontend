@@ -1,15 +1,19 @@
-import React, { useContext, useState } from "react";
-import { IoMailOutline } from "react-icons/io5";
-import { CiBellOn } from "react-icons/ci";
-import profile from "../../../assets/profile.png";
-import { FaChevronDown } from "react-icons/fa6";
-import { useSearchParams } from "react-router-dom";
+import React, { useState } from "react";
 import ProfileMenu from "./ProfileMenu";
-import ProfileDetails from "./ProfileDetails";
 import Notifications from "./Notifications";
-import { useBlur } from "../../../context/BlurContext";
+import ProfileDetails from "./ProfileDetails";
+import profile from "../../../assets/profile.png";
 
-const Navbar = () => {
+import { CiBellOn } from "react-icons/ci";
+import { FaChevronDown } from "react-icons/fa6";
+import { IoMailOutline } from "react-icons/io5";
+import { useBlur } from "../../../context/BlurContext";
+import { useUser } from "../../../context/UserContext";
+import RecentMessages from "./RecentMessages";
+
+
+const Navbar = ({heading}) => {
+  
   const [mail, setmail] = useState(false);
   const [bell, setBell] = useState(false);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
@@ -44,66 +48,65 @@ const Navbar = () => {
     toggleProfielMenu();
     toggleProfileDetails();
   };
-  const onSettingsClick = () => {};
-  const onLogoutClick = () => {};
+  const onSettingsClick = () => { };
+  const onLogoutClick = () => { };
+
+  const { userData } = useUser();
 
   return (
     <div className="flex flex-1 h-20">
-      <div className={`flex justify-between flex-1 py-5 ${isBlurred?"blur":""}`}>
+      <div className={`flex justify-between flex-1 py-5 ${isBlurred ? "blur" : ""}`}>
+        {heading ? 
+        <div className="flex text-3xl font-semibold">{heading}</div>
+      :
         <div className="flex flex-col">
-          <p className="text-xl font-semibold">Hello Muneeb</p>
+          <p className="text-xl font-semibold">Hello {userData.name} </p>
           <p className="">Welcome to your learning space!</p>
         </div>
+        }
         <div className="flex items-center gap-2">
           <div className="flex gap-4">
             <div
-              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${
-                mail ? "bg-maroon text-white" : ""
-              }`}
+              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-maroon text-white" : ""
+                }`}
               onClick={toggleMail}
             >
               <IoMailOutline />
             </div>
             <div
-              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${
-                bell ? "bg-maroon text-white" : ""
-              }`}
+              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${bell ? "bg-maroon text-white" : ""
+                }`}
               onClick={togglebell}
             >
               <CiBellOn />
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <p className="font-medium">M. Haseeb</p>
+            <p className="font-medium">M. {userData.name} </p>
             <img
-              src={profile}
               alt=""
-              className="w-12 h-12 cursor-pointer"
+              src={profile}
               onClick={toggleProfielMenu}
+              className="w-12 h-12 cursor-pointer"
             />
             <FaChevronDown
               className="cursor-pointer"
               onClick={toggleProfielMenu}
             />
           </div>
-          {mail ? <Notifications dashboard={true} onclose={toggleMail} /> : ""}
-          {isProfileMenu ? (
+          {isProfileMenu &&
             <ProfileMenu
+              dashboard={true}
+              onLogoutClick={onLogoutClick}
               onProfileClick={onProfileClick}
               onSettingsClick={onSettingsClick}
-              onLogoutClick={onLogoutClick}
-              dashboard={true}
             />
-          ) : (
-            ""
-          )}
+          }
         </div>
       </div>
-      {isProfileDetails ? (
-        <ProfileDetails onclose={toggleProfileDetails} />
-      ) : (
-        ""
-      )}
+      {bell && <Notifications dashboard={true} onclose={togglebell} />}
+      {mail && <RecentMessages dashboard={true} onclose={toggleMail} />}
+      {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
     </div>
   );
 };

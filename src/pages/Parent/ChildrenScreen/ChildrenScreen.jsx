@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
+import Loader from '../../../utils/Loader';
 import logo from "../../../assets/logo.png";
 import Card from '../../../components/Parent/ChildrenScreen/Card'
 
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { getAllChildren } from '../../../api/Parent/ParentApi';
-import { useParent } from '../../../context/ParentContext';
 import { useUser } from '../../../context/UserContext';
-import Loader from '../../../utils/Loader';
+import { useParent } from '../../../context/ParentContext';
+import { getAllChildren } from '../../../api/Parent/ParentApi';
+
 
 const ChildrenScreen = () => {
     const [child1, setChild1] = useState(false);
@@ -18,13 +19,15 @@ const ChildrenScreen = () => {
     const { userData } = useUser();
 
     const child1Click = (child) => {
-        setSelectedChild(child)
+        setSelectedChild(child);
+        localStorage.setItem("selectedChild", JSON.stringify(child));
         setChild1(true);
         setChild2(false);
         navigate("/parent/dashboard")
     }
-
-    const child2Click = () => {
+    
+    const child2Click = (child) => {
+        localStorage.setItem("selectedChild", JSON.stringify(child));
         setChild1(false);
         setChild2(true);
         navigate("/parent/dashboard")

@@ -1,3 +1,4 @@
+import moment from 'moment/moment';
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2';
 
@@ -18,24 +19,22 @@ const AttendanceTable = ({ data }) => {
                         </thead>
 
                         <tbody className="flex flex-col">
-                            {data.map((item, index) => {
+                            {data?.map((item, index) => {
                                 return (
-                                    <tr className="flex flex-1 text-xs border-t border-t-black/10">
+                                    <tr key={index} className="flex flex-1 text-xs border-t border-t-black/10">
                                         <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.status}
+                                            {item.attendancePercentage.isPresent? "Present" : "Absent"}
                                         </td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.date}
+                                            {moment(item.startTime).format("Do MMM YYYY")}
                                         </td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.time}
+                                            {moment.utc(item.startTime).format("hh:mm a")} - {moment.utc(item.endTime).format("hh:mm a")}
                                         </td>
-                                        
                                     </tr>
                                 );
                             })}
-
                         </tbody>
                     </table>
                 </div>

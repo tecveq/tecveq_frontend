@@ -1,20 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import pdf from "../../../assets/pdf.png";
 import profile from "../../../assets/profile.png";
 
 import { IoClose } from "react-icons/io5";
 import { GoDotFill } from "react-icons/go";
+import { useUser } from "../../../context/UserContext";
+import { useQuery } from "@tanstack/react-query";
+import { getMyChats } from "../../../api/UserApis";
 
 
 const Notifications = ({ onclose, dashboard, data }) => {
 
   // console.log("data in notificatio component is : ", data);
   // TODO: ---^^
+  const { socketContext } = useUser();
+
+  useEffect(() => {
+    console.log("now rendering navbar")
+    // socketContext.emit("")
+    // socketContext.join("")
+  }, [])
+
+  const chatquery = useQuery({queryKey: ["chat"], queryFn: getMyChats})
+  console.log("chat query data is : ", chatquery.data);
 
   const Notification = () => {
 
     const [moredetails, setMoredetails] = useState(false);
-    
+
     return (
       <div className={`flex flex-col gap-2 py-2 `}>
         <div className="flex gap-2">

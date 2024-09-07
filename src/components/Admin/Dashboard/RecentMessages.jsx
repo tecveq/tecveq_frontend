@@ -1,17 +1,25 @@
 import React, { useState } from "react";
+import moment from "moment/moment";
+import Loader from "../../../utils/Loader";
 import profile from "../../../assets/profile.png";
 
 import { IoClose } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
-import { getAllChatrooms } from "../../../api/Admin/ChatroomApi";
+import { getAllChatrooms, getChatroomData } from "../../../api/Admin/ChatroomApi";
+import IMAGES from "../../../assets/images";
 
 
 const RecentMessages = ({ onclose, dashboard }) => {
+
+  const [msgArray, setMsgArray] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [groupActive, setGroupActive] = useState(false);
+  const [selectedChat, setSelectedChat] = useState(null);
+  const [showFullChat, setShowFullChat] = useState(false);
   const [individualActive, setIndividualActive] = useState(true);
 
-  const {data:chats} = useQuery({queryKey: ["chat"], queryFn: getAllChatrooms})
-  console.log("chats are : ", chats);
+
+  const { data, isPending } = useQuery({ queryKey: ["chat"], queryFn: getAllChatrooms });
 
   const toggleGroupActive = () => {
     setGroupActive(!groupActive);
@@ -23,36 +31,22 @@ const RecentMessages = ({ onclose, dashboard }) => {
     setGroupActive(false);
   };
 
-  const data = [
-    {
-      id: 1,
-      name: "Amelia. A",
-      message: "my recent message",
-      time: "00:21",
-      img: "profile",
-    },
-    {
-      id: 2,
-      name: "John Smith",
-      message: "my recent message",
-      time: "00:21",
-      img: "profile",
-    },
-    {
-      id: 3,
-      name: "Phonix baker",
-      message: "my recent message",
-      time: "00:21",
-      img: "profile",
-    },
-    {
-      id: 4,
-      name: "John claw",
-      message: "my recent message",
-      time: "00:21",
-      img: "profile",
-    },
-  ];
+
+  const openFullchat = async (data) => {
+    setLoading(true);
+    setShowFullChat(true);
+    console.log("selected data is : ", data);
+    setSelectedChat(data);
+    const result = await getChatroomData(data?._id);
+    console.log("result form sever is : ", result);
+    setMsgArray(result[0]?.messages);
+    setLoading(false);
+  }
+  // close full chat modal
+  const handleShowFullChat = () => {
+    console.log("clicking full chat");
+    setShowFullChat(!showFullChat);
+  }
 
   const groupData = [
     {
@@ -92,83 +86,124 @@ const RecentMessages = ({ onclose, dashboard }) => {
     },
   ];
 
-  const Message = ({ data }) => {
-    const [moredetails, setMoredetails] = useState(false);
+  const Message = ({ data, onpress }) => {
     return (
-      <div className={`flex flex-col gap-2 py-2 `}>
+      <div className={`flex flex-col gap-2 py-2 `} onClick={onpress}>
         <div className="flex gap-2">
           <img src={profile} alt="" className="h-10 w-11" />
           <div
             className="flex flex-col flex-1 cursor-pointer"
-            onClick={() => setMoredetails(!moredetails)}
           >
             <div className="flex justify-between gap-2 text-grey_700">
               <div className="flex gap-2">
-                <p className="text-sm font-medium">{data.name}</p>
+                <p className="text-sm font-medium">{data?.name}</p>
               </div>
             </div>
             <div className="flex justify-between flex-1 text-xs">
-              <p>{data.message}</p>
-              <p className="text-xs">{data.time}</p>
+              <p>{data?.lastMsg?.message}</p>
+              <p className="text-xs">{moment(data?.lastMsg?.time).format("hh:mm a")}</p>
             </div>
           </div>
         </div>
-        {/* {moredetails ? (
-          <div className="flex items-center gap-2 ml-10">
-          </div>
-        ) : (
-          ""
-        )} */}
       </div>
     );
   };
 
-  return (
-    <div
-      className={` ${
-        !dashboard ? "mt-10" : "mt-0"
-      } fixed z-10 flex h-screen px-5 overflow-auto bg-white shadow-xl top-20 right-0 md:right-10 w-96`}
-    >
-      <div className="flex flex-col flex-1 font-poppins">
-        <div className="flex justify-between py-5 ">
-          <p className="text-lg font-semibold">Recent Messages</p>
-          <IoClose onClick={onclose} className="cursor-pointer" />
-        </div>
-        <div className="pb-2 border-b rounded-sm border-black/10">
-          <div className="flex justify-between gap-2 p-1 rounded-md bg-[#EAECF0] border-2 border-[#00000010]">
-            <div
-              onClick={toggleIndividualActive}
-              className={`cursor-pointer flex items-center justify-center flex-1 gap-2 ${
-                individualActive ? "bg-white" : "transparent"
-              } rounded-md`}
-            >
-              <p className="">Recent</p>
-              <div className="p-1 text-xs badge bg-yellow_green_light rounded-xl">
-                <p className="">2</p>
-              </div>
+  const GroupMsg = ({ msg }) => {
+    return <>
+      <div className="px-10 py-5">
+        <div className="flex items-start gap-4 py-2">
+          <div className="h-10 w-10 rounded-full">
+            <img src={msg?.sentBy?.profilePic || IMAGES.ProfilePic} alt="alt" className="rounded-full object-cover" />
+          </div>
+          <div className="flex flex-col gap-1 w-72">
+            <div className="flex justify-between items-center text-sm">
+              <p className="font-medium ">{msg?.sentBy?.name} </p>
+              <p className="">{moment(msg?.time).format("dddd hh:mm a")} </p>
             </div>
-            <div
-              onClick={toggleGroupActive}
-              className={`cursor-pointer flex items-center justify-center flex-1 ${
-                groupActive ? "bg-white" : "transparent"
-              } rounded-md py-1`}
-            >
-              <p className="">Group</p>
+            <div className="text-sm text-[#101828] flex font-medium  bg-[#F2F4F7] flex-wrap px-2 py-3 rounded-tr-lg rounded-br-lg rounded-bl-lg">
+              <p>{msg?.message}</p>
             </div>
           </div>
         </div>
-        <div className="py-2">
-          {individualActive &&
-            data.map((item) => {
-              return <Message data={item} />;
-            })}
-          {groupActive &&
-            groupData.map((item) => {
-              return <Message data={item} />;
-            })}
+      </div>
+    </>
+  }
+
+  const FullChat = ({ onclose, data }) => {
+    return <>
+      <div className="w-96 top-20 flex flex-col justify-between pb-10 right-0 absolute bg-white z-50 h-[90vh]">
+
+        <div className="h-full">
+          <div className="shadow-xl">
+            <div className="flex justify-between px-10 py-5 items-center">
+              <div className="flex gap-2 items-center">
+                <img src={IMAGES.ProfilePic} alt="" className="h-10 w-10 rounded-full object-cover" />
+                <p>{data.name} </p>
+              </div>
+              <IoClose onClick={onclose} className="cursor-pointer" />
+            </div>
+          </div>
+
+
+          {loading ? <div><Loader /></div> :
+            <div className="h-[70vh] overflow-y-auto register-scrollbar">
+              {msgArray.length == 0 && <div className="py-4 justify-center flex">No messages to display </div>}
+              {msgArray.map((item, index) => {
+                return <GroupMsg key={index} msg={item} />
+              })}
+            </div>
+          }
         </div>
       </div>
-    </div>
+    </>
+  }
+
+
+  return (
+    <>
+      <div
+        className={` ${!dashboard ? "mt-10" : "mt-0"
+          } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20  shadow-xl top-20 ${showFullChat ? "right-96" : "right-0"} w-96`}
+      >
+        <div className="flex flex-col flex-1 font-poppins">
+          <div className="flex justify-between py-5 ">
+            <p className="text-lg font-semibold">Recent Messages</p>
+            <IoClose onClick={onclose} className="cursor-pointer" />
+          </div>
+          <div className="pb-2 border-b rounded-sm border-black/10">
+            <div className="flex justify-between gap-2 p-1 rounded-md bg-[#EAECF0] border-2 border-[#00000010]">
+              <div
+                onClick={toggleIndividualActive}
+                className={`cursor-pointer flex items-center justify-center flex-1 gap-2 ${individualActive ? "bg-white" : "transparent"
+                  } rounded-md`}
+              >
+                <p className="">Recent</p>
+              </div>
+              <div
+                onClick={toggleGroupActive}
+                className={`cursor-pointer flex items-center justify-center flex-1 ${groupActive ? "bg-white" : "transparent"
+                  } rounded-md py-1`}
+              >
+                <p className="">Group</p>
+              </div>
+            </div>
+          </div>
+          <div className="py-2">
+            {isPending && <div><Loader /> </div>}
+            {individualActive &&
+              groupData.map((item) => {
+                return <Message data={item} onpress={() => { openFullchat(item) }} />
+              })}
+            {groupActive && !isPending &&
+              data?.map((item) => {
+                return <Message data={item} onpress={() => { openFullchat(item) }} />
+              })}
+          </div>
+        </div>
+      </div>
+      {showFullChat && <FullChat onclose={handleShowFullChat} data={selectedChat} />}
+    </>
   );
 };
 

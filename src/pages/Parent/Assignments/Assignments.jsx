@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IMAGES from "../../../assets/images";
 import QuizAssignmentRow from "../../../components/Parent/QuizAssignment/QuizAssignmentRow";
 import { useBlur } from "../../../context/BlurContext";
@@ -7,6 +7,10 @@ import ProfileDetails from "../../../components/Parent/Dashboard/ProfileDetails"
 import Notifications from "../../../components/Parent/Dashboard/Notifications";
 import { useNavigate } from "react-router-dom";
 import DataRows from "../../../components/Parent/Reports/DataRows";
+import { useParent } from "../../../context/ParentContext";
+import { useQuery } from "@tanstack/react-query";
+import { getAllSubjects } from "../../../api/Parent/ParentApi";
+import Navbar from "../../../components/Parent/Dashboard/Navbar";
 
 const Assignments = () => {
   const [mail, setmail] = useState(false);
@@ -130,10 +134,26 @@ const Assignments = () => {
   ];
 
   const handleFunctionClick = (report) => {
-    return () => {
-      navigate(`/parent/assignments/reports`);
-    };
+      navigate(`/parent/assignments/reports`, { state: report });
   };
+
+  const [enableQuery, setEnableQuery] = useState(false);
+
+  const { allSubjects, setAllSubjects, selectedChild } = useParent();
+
+  const subjectQuery = useQuery({
+    queryKey: ["subjects"], queryFn: async () => {
+      const results = await getAllSubjects(selectedChild._id);
+      setAllSubjects(results);
+      return results
+    }, staleTime: 300000, enabled: enableQuery
+  });
+
+  useEffect(() => {
+    if (allSubjects.length == 0) {
+      setEnableQuery(true);
+    }
+  }, []);
 
 
   return (
@@ -144,108 +164,17 @@ const Assignments = () => {
             } h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
         >
           <div className="h-screen pt-16">
-            <div className="flex flex-row items-center justify-between flex-grow">
-              <p className="font-semibold text-[20px] md:text-[30px]">
-                Assignments
-              </p>
-              <div className="flex flex-row items-center gap-2 md:gap-4">
-                <div className="p-1 bg-white rounded-sm cursor-pointer border-1 border-grey">
-                  <img
-                    onClick={togglebell}
-                    src={IMAGES.Notification}
-                    alt=""
-                    className="md:w-[22px] md:h-[22px] w-[13px] h-[13px]"
-                  />
-                </div>
-                <div className="p-1 bg-white rounded-sm cursor-pointer border-1 border-grey">
-                  <img
-                    onClick={toggleMail}
-                    src={IMAGES.SMS}
-                    alt=""
-                    className="md:w-[22px] md:h-[22px] w-[13px] h-[13px]"
-                  />
-                </div>
-                <p className="text-justify md:text-[16px] text-[12px]">
-                  M. Haseeb
-                </p>
-                <div>
-                  <img
-                    onClick={toggleProfielMenu}
-                    src={IMAGES.ProfilePic}
-                    alt=""
-                    className="w-[29px] h-[30px] cursor-pointer"
-                  />
-                </div>
-                <div>
-                  <img
-                    onClick={toggleProfielMenu}
-                    src={IMAGES.ArrowLeft}
-                    alt=""
-                    className="w-[22px] h-[30px] cursor-pointer"
-                  />
-                </div>
-              </div>
-              {mail ? (
-                <Notifications dashboard={false} onclose={toggleMail} />
-              ) : (
-                ""
-              )}
-              {isProfileMenu ? (
-                <ProfileMenu
-                  onProfileClick={onProfileClick}
-                  onSettingsClick={onSettingsClick}
-                  onLogoutClick={onLogoutClick}
-                  dashboard={false}
-                />
-              ) : (
-                ""
-              )}
-            </div>
-            {/* <div className="mt-8 h-[80%] overflow-auto">
-              <QuizAssignmentRow
-                isQuiz={false}
-                index={"Sr. No"}
-                subject={"Subject"}
-                title={"Title"}
-                deadline={"Deadline"}
-                bgColor={"#F9F9F9"}
-                header={true}
-                total_marks={"Total Marks"}
-                download={"Download"}
-                upload={"Upload"}
-              />
-              {assignments.map((assignment, index) => (
-                <QuizAssignmentRow
-                onlineclick = {onLineClick}
-                  isQuiz={false}
-                  index={index + 1}
-                  subject={assignment.subject}
-                  title={assignment.title}
-                  deadline={assignment.deadline}
-                  bgColor={"#FFFFFF"}
-                  header={false}
-                  total_marks={assignment.total_marks}
-                  download={assignment.download}
-                  upload={assignment.upload}
-                />
-              ))}
-            </div> */}
+            <Navbar heading={"Assignments"} />
             <div className='mt-8 h-[80%] overflow-auto'>
               <DataRows index={"Sr. No"} subject={"Subject"} instructor={"Instructor"} attendance={"Attendance"} bgColor={"#F9F9F9"} header={true} />
               {
-                reports.map((report, index) => (
-                  <DataRows index={index + 1} subject={report.subject} instructor={report.instructor} attendance={report.attendance} bgColor={"#FFFFFF"} header={false} onClickFunction={handleFunctionClick(report)} />
-
+                allSubjects?.subjects?.map((report, index) => (
+                  <DataRows key={index} index={index + 1} subject={report?.subject?.name} instructor={report?.teacher?.name} attendance={report?.avgAttendancePer} bgColor={"#FFFFFF"} header={false} onClickFunction={() => handleFunctionClick(report)} />
                 ))
               }
             </div>
           </div>
         </div>
-        {isProfileDetails ? (
-          <ProfileDetails onclose={toggleProfileDetails} />
-        ) : (
-          ""
-        )}
       </div>
     </div>
   );

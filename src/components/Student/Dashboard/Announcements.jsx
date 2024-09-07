@@ -7,7 +7,7 @@ import Loader from "../../../utils/Loader";
 
 const Announcements = () => {
 
-  const { allAnnouncements, setAllAnnouncements, studentLogedIn } = useStudent();
+  const { setAllAnnouncements, studentLogedIn } = useStudent();
 
   const announcementQuery = useQuery({
     queryKey: ["announcements"], queryFn: async () => {

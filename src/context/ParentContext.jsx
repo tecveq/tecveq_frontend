@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import { getAllQiuzes } from '../api/Student/Quiz';
@@ -18,7 +18,7 @@ export const ParentProvider = ({ children }) => {
     const [parentLogedIn, setParentLogedIn] = useState(false);
     const [selectedChild, setSelectedChild] = useState(null);
     const [allAnnouncements, setAllAnnouncements] = useState([]);
-    const [meetingStart, setMeetingStart] = useState({start: false, event: null});
+    const [meetingStart, setMeetingStart] = useState({ start: false, event: null });
 
     // const announcementQuery = useQuery({
     //     queryKey: ["announcements"], queryFn: async () => {
@@ -55,12 +55,23 @@ export const ParentProvider = ({ children }) => {
     //     }
     // }, [quizQuery.isSuccess, quizQuery.data]);
 
+    useEffect(() => {
+        let child = localStorage.getItem("selectedChild");
+        if (child != null) {
+            setSelectedChild(JSON.parse(child));
+            setParentLogedIn(true);
+        }
+    }, [])
+
     return (
         <ParentContext.Provider value={{
-            parentLogedIn, 
+            parentLogedIn,
             setParentLogedIn,
+            
+            allSubjects, 
+            setAllSubjects,
 
-            selectedChild, 
+            selectedChild,
             setSelectedChild
         }}>
             {children}

@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import IMAGES from '../../../assets/images'
+import React, { useEffect, useState } from 'react'
+import Navbar from '../../../components/Parent/Dashboard/Navbar'
 import DataRows from '../../../components/Parent/Reports/DataRows'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useBlur } from '../../../context/BlurContext'
-import ProfileMenu from '../../../components/Parent/Dashboard/ProfileMenu'
-import ProfileDetails from '../../../components/Parent/Dashboard/ProfileDetails'
-import Notifications from '../../../components/Parent/Dashboard/Notifications'
+
+import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { getChildReport } from '../../../api/Parent/ParentApi'
+import { useBlur } from '../../../context/BlurContext'
 import { useParent } from '../../../context/ParentContext'
+import { getAllSubjects } from '../../../api/Parent/ParentApi'
+
+
+
 
 const Reports = () => {
   const [mail, setmail] = useState(false);
@@ -89,82 +90,51 @@ const Reports = () => {
   ];
 
   const handleFunctionClick = (report) => {
-    return () => {
-      navigate(`/parent/reports/${report.subject}`);
-    };
+    console.log("selected report is : ", report);
+      navigate(`/parent/reports/${report.subject.name}`, { state: report });
   };
 
-  const { selectedChild } = useParent();
+  const [enableQuery, setEnableQuery] = useState(false);
 
-  const reportQuery = useQuery({
-    queryKey: ["report"], queryFn: async () => {
-      let results = await getChildReport(selectedChild._id);
-      console.log(" report result is : ", results);
-      return results;
-    }, staleTime: 30000
-  })
+
+  const { allSubjects, setAllSubjects, selectedChild } = useParent();
+
+  const subjectQuery = useQuery({
+    queryKey: ["subjects"], queryFn: async () => {
+      const results = await getAllSubjects(selectedChild._id);
+      setAllSubjects(results);
+      console.log("inside dashboard");
+      console.log("subject report data is  : ", results);
+      return results
+    }, staleTime: 300000, enabled: enableQuery
+  });
+
+  useEffect(() => {
+    if (allSubjects.length == 0) {
+      setEnableQuery(true);
+    }
+  }, []);
 
   return (
     <>
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
         <div className="flex flex-1">
-          {/* <div className="flex-grow w-full h-screen px-3 lg:px-20 sm:px-10 lg:ml-72"> */}
-
           <div className={`w-full h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72 ${isBlurred ? "blur" : ""}`}>
             <div className='h-screen pt-16'>
-              <div className='flex flex-row items-center justify-between flex-grow'>
-                <p className='font-semibold text-[20px] md:text-[30px]'>Reports</p>
-                <div className='flex flex-row items-center gap-2 md:gap-4'>
-                  <div className={`p-1 bg-white rounded-md border-1 cursor-pointer`}>
-                    <img onClick={togglebell} src={IMAGES.Notification} alt='' className='md:w-[22px] md:h-[22px] w-[13px] h-[13px]' />
-                  </div>
-                  <div className='p-1 bg-white rounded-md cursor-pointer border-1'>
-                    <img onClick={toggleMail} src={IMAGES.SMS} alt='' className='md:w-[22px] md:h-[22px] w-[13px] h-[13px]' />
-                  </div>
-                  <p className='text-justify md:text-[16px] text-[12px]'>M. Haseeb</p>
-                  <div>
-                    <img onClick={toggleProfielMenu} src={IMAGES.ProfilePic} alt='' className='w-[29px] h-[30px] cursor-pointer' />
-                  </div>
-                  <div>
-                    <img onClick={toggleProfielMenu} src={IMAGES.ArrowLeft} alt='' className='w-[22px] h-[30px] cursor-pointer' />
-                  </div>
-                </div>
-
-                {mail ? <Notifications dashboard={false} onclose={toggleMail} /> : ""}
-                {isProfileMenu ? (
-                  <ProfileMenu
-                    onProfileClick={onProfileClick}
-                    onSettingsClick={onSettingsClick}
-                    onLogoutClick={onLogoutClick}
-                    dashboard={false}
-                  />
-                ) : (
-                  ""
-                )}
-
-              </div>
+              <Navbar heading={"Reports"} />
               <div className='mt-8 h-[80%] overflow-auto'>
                 <DataRows index={"Sr. No"} subject={"Subject"} instructor={"Instructor"} attendance={"Attendance"} bgColor={"#F9F9F9"} header={true} />
                 {
-                  reports.map((report, index) => (
-                    <DataRows index={index + 1} subject={report.subject} instructor={report.instructor} attendance={report.attendance} bgColor={"#FFFFFF"} header={false} onClickFunction={handleFunctionClick(report)} />
-
+                  allSubjects?.subjects?.map((report, index) => (
+                    <DataRows key={index} index={index + 1} subject={report?.subject.name} instructor={report?.teacher.name} attendance={report?.avgAttendancePer} bgColor={"#FFFFFF"} header={false} onClickFunction={() => handleFunctionClick(report)} />
                   ))
                 }
               </div>
             </div>
           </div>
-          {isProfileDetails ? (
-            <ProfileDetails onclose={toggleProfileDetails} />
-          ) : (
-            ""
-          )}
         </div>
       </div>
     </>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

@@ -7,6 +7,8 @@ import { useUser } from '../../../context/UserContext';
 import { toast } from 'react-toastify';
 import { useStudent } from '../../../context/StudentContext';
 import { useParent } from '../../../context/ParentContext';
+import { io } from 'socket.io-client';
+import { BACKEND_URL, BACKEND_URL_SOCKET } from '../../../constants/api';
 
 const Login = () => {
 
@@ -69,7 +71,8 @@ const Login = () => {
                     if(response.isBlocked == true){
                         toast.error("Access Denied! Please contact Admin support.");
                     }else{
-                        
+                        const con = io(`${BACKEND_URL_SOCKET}`)
+                        setSocketContext(con);
                         localStorage.setItem("tcauser", JSON.stringify(response));
                         toast.success("Login successful");
                         navigate("/");

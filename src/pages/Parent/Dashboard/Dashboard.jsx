@@ -1,15 +1,14 @@
 import React from "react";
 import Navbar from "../../../components/Parent/Dashboard/Navbar";
-import SubjectsEnrolled from "../../../components/Parent/Dashboard/SubjectsEnrolled";
-import Deliverables from "../../../components/Parent/Dashboard/Deliverables";
-import Announcements from "../../../components/Parent/Dashboard/Announcements";
-import ScheduledClasses from "../../../components/Parent/Dashboard/SchedualedClasses";
-import { useBlur } from "../../../context/BlurContext";
-import LastDeliverables from "../../../components/Parent/Dashboard/LastDeliverables";
 import Attendance from "../../../components/Parent/Dashboard/Attendance";
+import SubjectsEnrolled from "../../../components/Parent/Dashboard/SubjectsEnrolled";
+import LastDeliverables from "../../../components/Parent/Dashboard/LastDeliverables";
+
+import { useBlur } from "../../../context/BlurContext";
+
 
 const Dashboard = () => {
-  const { isBlurred, toggleBlur } = useBlur();
+  const { isBlurred } = useBlur();
   return (
     <div className="flex flex-1 bg-[#f9f9f9]/50 font-poppins">
       <div className="flex flex-1 gap-4">

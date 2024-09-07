@@ -9,3 +9,15 @@ export const updateUser = apiRequest(async (data) => {
     const response = await axios.post(url, data);
     return response;
 })
+
+export const getMyChats = apiRequest(async() =>{
+    const url = `${BACKEND_URL}/chatroom`
+    const response = await axios.get(url);
+    return response;
+})
+
+export const getChatsRoomData = apiRequest(async(id) =>{
+    const url = `${BACKEND_URL}/chatroom/${id}`
+    const response = await axios.get(url);
+    return response;
+})

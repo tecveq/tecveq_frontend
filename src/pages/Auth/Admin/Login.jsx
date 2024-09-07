@@ -7,6 +7,8 @@ import { useUser } from '../../../context/UserContext';
 import { toast } from 'react-toastify';
 import { useAdmin } from '../../../context/AdminContext';
 import { useTeacher } from '../../../context/TeacherContext';
+import { BACKEND_URL_SOCKET } from '../../../constants/api';
+import { io } from 'socket.io-client';
 
 const Login = () => {
 
@@ -50,7 +52,7 @@ const Login = () => {
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { setUserData } = useUser();
+    const { setUserData, setSocketContext } = useUser();
     const { setAdminLogedIn } = useAdmin();
     const { setTeacherLogedIn } = useTeacher();
 
@@ -72,6 +74,8 @@ const Login = () => {
                     navigate("/admin/dashboard")
 
                 } else if (response.userType == "teacher") {
+                    const con = io(`${BACKEND_URL_SOCKET}`)
+                    setSocketContext(con);
                     setTeacherLogedIn(true);
                     toast.success("Login successful");
                     localStorage.setItem("tcauser", JSON.stringify(response))

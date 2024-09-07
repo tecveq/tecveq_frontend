@@ -48,7 +48,7 @@ const LastDeliverables = () => {
           </div>
           <div className="flex flex-1 gap-2 p-2">
             {data?.length > 0 &&
-            <DeliverableComponent deliverable={data[0]} />
+            <DeliverableComponent deliverable={data[0]? data[0] : {}} />
             }
             {/* <DeliverableComponent /> */}
           </div>

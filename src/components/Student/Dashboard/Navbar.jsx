@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 import Notifications from "./Notifications";
+import IMAGES from "../../../assets/images";
+import RecentMessages from "./RecentMessages";
 import ProfileDetails from "./ProfileDetails";
 
+import { toast } from "react-toastify";
 import { CiBellOn } from "react-icons/ci";
-import { FaChevronDown } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 import { IoMailOutline } from "react-icons/io5";
+import { FaChevronDown } from "react-icons/fa6";
+import { useQuery } from "@tanstack/react-query";
+import { logout } from "../../../api/User/UserApi";
 import { useBlur } from "../../../context/BlurContext";
 import { useUser } from "../../../context/UserContext";
-import { useQuery } from "@tanstack/react-query";
 import { getAllNotifications } from "../../../api/ForAllAPIs";
-import { toast } from "react-toastify";
-import { logout } from "../../../api/User/UserApi";
-import { useNavigate } from "react-router-dom";
-import IMAGES from "../../../assets/images";
 
 
 const Navbar = ({ heading }) => {
@@ -35,6 +36,7 @@ const Navbar = ({ heading }) => {
   };
 
   const toggleMail = () => {
+    toggleBlur();
     setmail(!mail);
     setIsProfileMenu(false);
     setBell(false);
@@ -73,7 +75,7 @@ const Navbar = ({ heading }) => {
   const notifyQuery = useQuery({
     queryKey: ["notifications"],
     queryFn: getAllNotifications,
-    staleTime: 300000,enabled: false
+    staleTime: 300000, enabled: false
   })
 
   const [allNotfications, setAllNotifications] = useState([]);
@@ -113,7 +115,7 @@ const Navbar = ({ heading }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <p className="font-medium">{userData.name}</p>
+            <p className="font-medium">{userData?.name}</p>
             <img
               src={userData?.profilePic || IMAGES.Profile}
               alt=""
@@ -126,7 +128,7 @@ const Navbar = ({ heading }) => {
             />
           </div>
 
-          {mail && <Notifications data={allNotfications} dashboard={true} onclose={toggleMail} />}
+          {bell && <Notifications data={allNotfications} dashboard={true} onclose={togglebell} />}
           {isProfileMenu && <ProfileMenu
             dashboard={true}
             onLogoutClick={onLogoutClick}
@@ -135,6 +137,7 @@ const Navbar = ({ heading }) => {
           />}
         </div>
       </div>
+      {mail && <RecentMessages dashboard={true} onclose={toggleMail} /> }
       {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
     </div>
   );

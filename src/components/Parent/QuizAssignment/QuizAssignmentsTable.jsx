@@ -23,21 +23,31 @@ const QuizAssignmentsTable = ({ data }) => {
                         </thead>
 
                         <tbody className="flex flex-col">
-                            {data.map((item, index) => {
+                            {data?.map((item, index) => {
                                 return (
-                                    <tr style={{ cursor: "pointer" }} onClick={() => navigate(`/parent/assignments/${item.title}`)} className="flex flex-1 text-xs border-t border-t-black/10">
+                                    <tr style={{ cursor: "pointer" }} onClick={() => navigate(`/parent/assignments/${item.title}`,{state: item})} className="flex flex-1 text-xs border-t border-t-black/10">
                                         <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
                                             {item.title}
                                         </td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.obtainedMarks}
+                                            {item.marksObtained}
                                         </td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
                                             {item.totalMarks}
                                         </td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.grade}
+                                            {
+                                                (item.marksObtained / item.totalMarks) * 100 > 90
+                                                    ? "A"
+                                                    : (item.marksObtained / item.totalMarks) * 100 > 80
+                                                        ? "B"
+                                                        : (item.marksObtained / item.totalMarks) * 100 > 70
+                                                            ? "C"
+                                                            : (item.marksObtained / item.totalMarks) * 100 > 60
+                                                                ? "D"
+                                                                : "F"
+                                            }
                                         </td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
                                             {
