@@ -67,11 +67,18 @@ import ProtectedParent from "./utils/ProtectedParent";
 
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import LandingPage from "./pages/Auth/LandingPage";
 
 function App() {
   return (
     <>
       <Routes>
+        <Route
+          path="/routes"
+          element={
+            <LandingPage />
+          }
+        />
         <Route
           path="/login"
           element={
