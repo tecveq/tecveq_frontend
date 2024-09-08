@@ -90,7 +90,7 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
       oneTime: true,
       classroomID: "",
       subjectID: "",
-      teacher: { teacherID: userData._id, status: "present" }
+      teacher: { teacherID: userData._id, status: "absent" }
     })
 
 

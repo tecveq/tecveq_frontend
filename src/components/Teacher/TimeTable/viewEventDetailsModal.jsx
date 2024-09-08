@@ -10,6 +10,7 @@ import { useTeacher } from "../../../context/TeacherContext";
 import { cancelClass } from "../../../api/Teacher/Class";
 import { toast } from "react-toastify";
 import Loader from "../../../utils/Loader"
+import { teacherPresent } from "../../../api/Teacher/Attendence";
 // import { LuGalleryHorizontal } from "react-icons/lu";
 
 export default function ViewEventDetailsModal({
@@ -41,8 +42,10 @@ export default function ViewEventDetailsModal({
     console.log("dell event method");
   };
 
-  const handleTeacherAttendance = () =>{
+  const handleTeacherAttendance = async() =>{
     console.log("teacher attendnece clicked");
+    const respo = await teacherPresent(event._id);
+    console.log("teaccher attendance result : ", respo);
   }
 
   useEffect(() => {

@@ -27,3 +27,10 @@ export const markAttendence = apiRequest(async (data, id) => {
 
 });
 
+
+export const teacherPresent = apiRequest(async (id) =>{
+    const url = `${BACKEND_URL}/class/mark/${id}`
+    const response  = await axios.get(url);
+    return response;
+})
+
