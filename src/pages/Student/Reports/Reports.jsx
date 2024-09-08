@@ -48,7 +48,7 @@ const Reports = () => {
                   header={true}
                 />
                 {
-                  allSubjects.map((report, index) => (
+                  allSubjects?.subjects?.map((report, index) => (
                     <DataRows index={index + 1}
                       key={index + 1}
                       subject={report.subject.name}
