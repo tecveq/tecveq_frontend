@@ -4,6 +4,7 @@ import Navbar from "../../../components/Admin/Navbar";
 import FeedbackCard from "../../../components/Admin/Teachers/FeedbackCard";
 import AttendanceTable from "../../../components/Admin/Teachers/AttendanceTable";
 import ActivityCard from "../../../components/Admin/StudentReports/ActivityCard";
+import SystemOverView from "../../../components/Admin/StudentReports/SystemOverview"
 
 import { LuPhone } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
@@ -112,9 +113,10 @@ const TeacherDetails = () => {
                 <div className="mt-7">
                   <div className="flex flex-col gap-2">
                     <p className="md:text-[20px]">System Usage Report</p>
-                    <div className="flex flex-row items-center gap-2">
+                    <div className="flex">
+                      <SystemOverView />
                       {/* <QuizAssignmentsTable data={assignmentData} /> */}
-                      <img src={IMAGES.deviceGraph} alt="" className="w-full h-full" />
+                      {/* <img src={IMAGES.deviceGraph} alt="" className="w-full h-full" /> */}
                     </div>
                   </div>
                 </div>
