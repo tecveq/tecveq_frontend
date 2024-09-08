@@ -62,7 +62,7 @@ const SubjectsEnrolled = () => {
                 {
                   subjectQuery.isPending ? <div className="flex flex-1"> <Loader /> </div> :
 
-                    subjectQuery.data?.map((item, index) => {
+                    subjectQuery.data?.subjects?.map((item, index) => {
                       return (
                         <tr className="flex text-xs border-t border-t-black/10" key={index + 1}>
                           <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}.</td>
@@ -74,8 +74,8 @@ const SubjectsEnrolled = () => {
                           </td>
                           <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex w-full justify-center">
                             <div className="flex w-[90%] h-4 bg-grey/50 rounded-3xl">
-                              <div className="w-[70%] text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white">
-                                70%
+                              <div className={`w-[${item?.avgAttendancePer}%]  text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}>
+                                {item.avgAttendancePer} %
                               </div>
                             </div>
                           </td>

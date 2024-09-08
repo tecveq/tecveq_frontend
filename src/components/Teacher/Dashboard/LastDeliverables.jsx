@@ -50,6 +50,7 @@ const LastDeliverables = () => {
             {data?.length > 0 &&
             <DeliverableComponent deliverable={data[0]? data[0] : {}} />
             }
+            {data?.length == 0 && <div className="py-4 text-xl px-4">No latest deliverables available right now!</div>}
             {/* <DeliverableComponent /> */}
           </div>
         </div>

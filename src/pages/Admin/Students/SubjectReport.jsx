@@ -194,7 +194,7 @@ const SubjectReport = () => {
                       <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
                         <select className="outline-none w-60" value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} >
                           <option value={""}>Select Subject</option>
-                          {isSuccess && subjects.map((sub) => <option value={JSON.stringify(sub)}>{sub.subject?.name}</option>)}
+                          {isSuccess && subjects?.subjects?.map((sub) => <option value={JSON.stringify(sub)}>{sub.subject?.name}</option>)}
                         </select>
                       </div>
                     </div>
