@@ -10,13 +10,12 @@ const DataRows = ({ index, subject, instructor, attendance, bgColor, header, onC
                 {
                     header ? (<p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left md:text-[16px] text-[14px] ${header ? 'font-semibold' : ''}`}>{attendance}</p>) : (
                         <div className="md:flex-[3] w-full bg-grey/50 rounded-3xl overflow-hidden">
-                            <div className="w-[70%] text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white md:text-[16px] text-[14px]">
-                                {attendance}
+                            <div style={{width: `${attendance}%` }} className=" text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white md:text-[16px] text-[14px]">
+                                {attendance}%
                             </div>
                         </div>
                     )
                 }
-
             </div>
         </div>
     )

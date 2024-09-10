@@ -53,7 +53,7 @@ const Reports = () => {
                       key={index + 1}
                       subject={report.subject.name}
                       instructor={report.teacher}
-                      attendance={"70%"}
+                      attendance={report.avgAttendancePer}
                       bgColor={"#FFFFFF"}
                       header={false}
                       onClickFunction={handleFunctionClick(report)}

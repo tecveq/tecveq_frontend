@@ -77,8 +77,8 @@ const SubjectsEnrolled = () => {
                     </td> */}
                       <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex w-full justify-center">
                         <div className="flex w-[90%] h-4 bg-grey/50 rounded-3xl">
-                          <div className={`w-[${item?.avgAttendancePer}%] text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}>
-                            {item?.avgAttendancePer} %
+                          <div style={{width: `${item.avgAttendancePer}%` }} className={` text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}>
+                            {item?.avgAttendancePer || 0} %
                           </div>
                         </div>
                       </td>

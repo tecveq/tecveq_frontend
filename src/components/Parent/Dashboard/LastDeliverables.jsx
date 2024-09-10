@@ -1,11 +1,39 @@
 import { Circle } from "rc-progress";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParent } from "../../../context/ParentContext";
+import { useQuery } from "@tanstack/react-query";
+import { getAllSubjects } from "../../../api/Parent/ParentApi";
 
 const LastDeliverables = () => {
+
+  
+  const [enableQuery, setEnableQuery] = useState(false);
+
+  const { allSubjects, setAllSubjects, selectedChild } = useParent();
+
+  const subjectQuery = useQuery({
+    queryKey: ["subjects"], queryFn: async () => {
+      const results = await getAllSubjects(selectedChild._id);
+      console.log("subject in enrolled classes is : ", results);
+      setAllSubjects(results);
+      return results
+    }, staleTime: 300000, enabled: enableQuery
+  });
+
+  useEffect(() => {
+    if (allSubjects.length == 0) {
+      setEnableQuery(true);
+    }
+  }, []);
+
+
   const DeliverableComponent = () => {
     return (
       <div className="flex flex-col items-center justify-center w-full gap-2 bg-white rounded-md md:px-8 sm:flex-1 md:py-2 md:gap-3">
         <div className="flex flex-col items-center justify-center w-28 h-36 md:flex-row">
+          {subjectQuery?.data?.map((item) =>{
+            return <div> {JSON.stringify(item)} </div>
+          })}
           <Circle
             percent={40}
             strokeColor={`#A41D30`}

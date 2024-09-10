@@ -5,7 +5,6 @@ import Navbar from "../../../components/Parent/Dashboard/Navbar";
 import AttendanceTable from "../../../components/Parent/Reports/AttendanceTable";
 import QuizAssignmentsTable from "../../../components/Parent/Reports/QuizAssignmentsTable";
 
-import { Doughnut } from "react-chartjs-2";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useParent } from "../../../context/ParentContext";
@@ -116,7 +115,7 @@ const SubjectReport = () => {
               <div className="mt-7">
                 <p className="md:text-[20px]">Graph</p>
               </div>
-              <div className="flex items-center justify-center mt-3 mb-10">
+              {/* <div className="flex items-center justify-center mt-3 mb-10">
                 <div className="flex flex-col gap-2">
                   <div className="flex w-[300px] h-[300px]">
                     <Doughnut
@@ -134,7 +133,7 @@ const SubjectReport = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
