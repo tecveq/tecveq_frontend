@@ -134,6 +134,13 @@ const Attendence = () => {
                         />
                       }
                     })}
+
+                  {data?.length == 0 && (
+                    <div className="text-center py-4 text-3xl font-medium">
+                      No attendance to display!
+                    </div>
+                  )}
+
                   </div>
                 </div>
               </div>

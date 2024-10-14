@@ -116,7 +116,7 @@ const Classroom = () => {
                       />
                     ))}
                     {searchText && data?.map((cls, index) => {
-                      if (cls.name.includes(searchText)) {
+                      if (cls?.name?.includes(searchText)) {
                         return <DataRow
                           data={cls}
                           toggleClassMenu={toggleClassMenuOpen}
@@ -131,6 +131,12 @@ const Classroom = () => {
                         />
                       }
                     })}
+
+                  {data?.length == 0 && (
+                    <div className="text-center py-4 text-3xl font-medium">
+                      No classrooms to display!
+                    </div>
+                  )}
                   </div>
                 </div>
               </div>

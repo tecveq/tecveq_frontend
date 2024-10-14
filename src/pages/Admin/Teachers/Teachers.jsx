@@ -12,7 +12,6 @@ import { useAdmin } from "../../../context/AdminContext";
 import { getAllTeachers } from "../../../api/Admin/AdminApi";
 
 const Teachers = () => {
-
   const navigate = useNavigate();
   const { isBlurred } = useBlur();
   const { adminUsersDataPending } = useAdmin();
@@ -25,7 +24,10 @@ const Teachers = () => {
     };
   };
 
-  const teacherQuery = useQuery({ queryKey: ["teacherDetails"], queryFn: getAllTeachers });
+  const teacherQuery = useQuery({
+    queryKey: ["teacherDetails"],
+    queryFn: getAllTeachers,
+  });
   console.log("teacher data is : ", teacherQuery.data);
 
   useEffect(() => {
@@ -34,99 +36,127 @@ const Teachers = () => {
       console.log("teacher object values are : ", values);
       setTeacherData(values);
     }
-  }, [teacherQuery.isPending])
+  }, [teacherQuery.isPending]);
 
-  return (
-    adminUsersDataPending || teacherQuery.isPending ? <div className="flex flex-1"> <Loader /> </div> :
-      <>
-        <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
-          <div className="flex flex-1 ">
-            <div
-              className={`w-full h-screen lg:px-10 sm:px-10 px-3 flex-grow lg:ml-72`}
-            >
-              <div className="h-screen pt-6">
-                <Navbar heading={"Teachers"} />
-                <div className={`${isBlurred ? "blur" : ""}`}>
-                  <div className="flex flex-row-reverse my-4">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
-                        <IoSearch className="hover:text-grey cursor-pointer" />
-                        <input
-                          type="text"
-                          value={searchText}
-                          placeholder="Search Teacher"
-                          className="bg-transparent outline-none"
-                          onChange={(e) => { setSearchText(e.target.value) }}
-                        />
-                      </div>
+  return adminUsersDataPending || teacherQuery.isPending ? (
+    <div className="flex flex-1">
+      {" "}
+      <Loader />{" "}
+    </div>
+  ) : (
+    <>
+      <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
+        <div className="flex flex-1 ">
+          <div
+            className={`w-full h-screen lg:px-10 sm:px-10 px-3 flex-grow lg:ml-72`}
+          >
+            <div className="h-screen pt-6">
+              <Navbar heading={"Teachers"} />
+              <div className={`${isBlurred ? "blur" : ""}`}>
+                <div className="flex flex-row-reverse my-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
+                      <IoSearch className="hover:text-grey cursor-pointer" />
+                      <input
+                        type="text"
+                        value={searchText}
+                        placeholder="Search Teacher"
+                        className="bg-transparent outline-none"
+                        onChange={(e) => {
+                          setSearchText(e.target.value);
+                        }}
+                      />
                     </div>
                   </div>
-                  <div className="mt-4 h-[70%] overflow-auto">
+                </div>
+                <div className="mt-4 h-[70%] overflow-auto">
+                  <DataRows
+                    index={"Sr No."}
+                    teacherName={"Name"}
+                    teacherId={"Teacher ID."}
+                    subject={"Subject"}
+                    classAvg={"Class Average"}
+                    attendance={"Attandence"}
+                    bgColor={"#F9F9F9"}
+                    header={true}
+                  />
 
-                    <DataRows
-                      index={"Sr No."}
-                      teacherName={"Name"}
-                      teacherId={"Teacher ID."}
-                      subject={"Subject"}
-                      classAvg={"Class Average"}
-                      attendance={"Attandence"}
-                      bgColor={"#F9F9F9"}
-                      header={true}
-                    />
-
-                    {/* When search filter is not applied */}
-                    {searchText == "" && teacherData && teacherData.map((thr, index) => {
+                  {/* When search filter is not applied */}
+                  {searchText == "" &&
+                    teacherData &&
+                    teacherData.map((thr, index) => {
                       return thr.map((item) => {
-                        return <DataRows
-                          key={JSON.stringify(item)}
-                          header={false}
-                          attendance={item.attendence.classData.length == 0 ? 0 : (item.attendence.attendnececount.presents/item.attendence.classData.length)*100}
-                          index={index + 1}
-                          bgColor={"#FFFFFF"}
-                          classAvg={item.classAvg}
-                          subject={item.subject.name}
-                          teacherProfile={item.teacher.profilePic || IMAGES.Profile}
-                          teacherName={item.teacher.name}
-                          teacherId={item.teacher._id.slice(0, 4)}
-                          onClickFunction={handleFunctionClick(item)}
-                        />
-                      })
-                    }
-                    )}
-
-                    {/* When search filter is applied */}
-                    {searchText && teacherData.map((thr, index) => {
-                      return thr.map((item) => {
-                        if (item.teacher.name.includes(searchText)) {
-                          return <DataRows
+                        return (
+                          <DataRows
                             key={JSON.stringify(item)}
-                            index={index + 1}
-                            teacherName={item.teacher.name}
-                            teacherId={item.teacher._id.slice(0, 4)}
-                            subject={item.subject.name}
-                            classAvg={item.classAvg}
-                            attendance={item.attendence.classData.length == 0 ? 0 : (item.attendence.attendnececount.presents/item.attendence.classData.length)*100}
-                            teacherProfile={item.teacher.profilePic || IMAGES.Profile}
-                            bgColor={"#FFFFFF"}
                             header={false}
+                            attendance={
+                              item?.attendence?.classData?.length == 0
+                                ? 0
+                                : (item.attendence.attendnececount.presents /
+                                    item.attendence.classData.length) *
+                                  100
+                            }
+                            index={index + 1}
+                            bgColor={"#FFFFFF"}
+                            classAvg={item?.classAvg}
+                            subject={item?.subject?.name}
+                            teacherProfile={
+                              item?.teacher?.profilePic || IMAGES?.Profile
+                            }
+                            teacherName={item?.teacher?.name}
+                            teacherId={item?.teacher?._id.slice(0, 4)}
                             onClickFunction={handleFunctionClick(item)}
                           />
+                        );
+                      });
+                    })}
+
+                  {/* When search filter is applied */}
+                  {searchText &&
+                    teacherData.map((thr, index) => {
+                      return thr.map((item) => {
+                        if (item.teacher.name.includes(searchText)) {
+                          return (
+                            <DataRows
+                              key={JSON.stringify(item)}
+                              index={index + 1}
+                              teacherName={item.teacher.name}
+                              teacherId={item.teacher._id.slice(0, 4)}
+                              subject={item.subject.name}
+                              classAvg={item.classAvg}
+                              attendance={
+                                item.attendence.classData.length == 0
+                                  ? 0
+                                  : (item.attendence.attendnececount.presents /
+                                      item.attendence.classData.length) *
+                                    100
+                              }
+                              teacherProfile={
+                                item?.teacher?.profilePic || IMAGES.Profile
+                              }
+                              bgColor={"#FFFFFF"}
+                              header={false}
+                              onClickFunction={handleFunctionClick(item)}
+                            />
+                          );
                         }
-                      }
-                      )
-                    }
-                    )}
+                      });
+                    })}
 
-                    {/* When there is not any teacher present*/}
-                    {teacherData.length == 0 && <div className="text-center py-4 text-3xl font-medium">No teachers to display!</div>}
-
-                  </div>
+                  {/* When there is not any teacher present*/}
+                  {teacherData.length == 0 && (
+                    <div className="text-center py-4 text-3xl font-medium">
+                      No teachers to display!
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </>
+      </div>
+    </>
   );
 };
 

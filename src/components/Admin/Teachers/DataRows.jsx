@@ -71,8 +71,8 @@ const DataRows = ({
           <div className="flex md:flex-[3] w-full justify-between items-center flex-1">
 
             <div className="md:flex-[3] w-full bg-grey/50 rounded-3xl overflow-hidden">
-              <div className={`w-[${attendance}%] text-xs h-4 items-center bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}>
-                {attendance}
+              <div style={{width: `${attendance}%`}} className={` px-4 text-xs h-4 items-center bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}>
+                {attendance.toFixed(0)}
               </div>
             </div>
             <div>

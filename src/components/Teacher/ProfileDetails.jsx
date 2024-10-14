@@ -35,7 +35,7 @@ const CusotmInput = ({ value, type, status, icon, name, valuesObj, setValuesObj 
         >
           <input
             value={value}
-            placeholder={value}
+            placeholder={name}
             type={type || "text"}
             className="flex flex-1 w-full py-1 outline-none"
             onChange={(e) => { setValuesObj({ ...valuesObj, [name]: e.target.value }) }}

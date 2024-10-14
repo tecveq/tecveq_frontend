@@ -7,6 +7,7 @@ const DataRow = (props) => {
   useEffect(() => { }, []);
 
   const [present, setPresent] = useState(true);
+  const [late, setLate] = useState(false);
   const [absent, setAbsent] = useState(false);
   const [leave, setLeave] = useState(false);
 
@@ -14,7 +15,7 @@ const DataRow = (props) => {
     let temparray = props.attendeceData;
     console.log(temparray);
     console.log(props.index);
-    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: true };
+    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: true, late: false };
     // temparray[props.index-1] = {studentID: props.classname, status: "present" } ;
     console.log("after : ", temparray)
     props.setAttendenceData(temparray);
@@ -25,10 +26,20 @@ const DataRow = (props) => {
 
   const onAbsentClick = () => {
     let temparray = props.attendeceData;
-    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: false };
+    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: false, late:false };
     props.setAttendenceData(temparray);
     setPresent(false);
     setAbsent(true);
+    setLeave(false);
+  }
+
+  const onLateClick = () => {
+    let temparray = props.attendeceData;
+    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: true, late: true };
+    props.setAttendenceData(temparray);
+    setPresent(true);
+    setLate(true);
+    setAbsent(false);
     setLeave(false);
   }
 

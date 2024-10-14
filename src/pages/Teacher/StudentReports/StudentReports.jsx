@@ -13,21 +13,26 @@ import { useBlur } from "../../../context/BlurContext";
 import { useTeacher } from "../../../context/TeacherContext";
 import { getAllStudentsOfTeacher } from "../../../api/Teacher/StudentReport";
 
-
-
-const FilterPopup = ({ open, setopen, subject, applyFilter, setSubject, classroom, setClassroom }) => {
-
+const FilterPopup = ({
+  open,
+  setopen,
+  subject,
+  applyFilter,
+  setSubject,
+  classroom,
+  setClassroom,
+}) => {
   const ref = useRef(null);
 
   useClickOutside(ref, () => setopen(false));
   const { allClassrooms, allSubjects } = useTeacher();
 
-
   return (
     <div
       ref={ref}
-      className={`absolute z-10 mt-10 bg-white p-8 w-[400px] text-black rounded-xl ml-60 ${open ? "" : "hidden"
-        }`}
+      className={`absolute z-10 mt-10 bg-white p-8 w-[400px] text-black rounded-xl ml-60 ${
+        open ? "" : "hidden"
+      }`}
     >
       <div className="flex gap-2">
         <div className="flex flex-col w-full gap-4">
@@ -52,10 +57,15 @@ const FilterPopup = ({ open, setopen, subject, applyFilter, setSubject, classroo
             <div className="flex flex-col flex-1 gap-1">
               <p className="text-xs font-semibold text-grey_700">Class</p>
               <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
-                <select value={classroom} onChange={(e) => setClassroom(e.target.value)} className="w-full outline-none cursor-pointer">
+                <select
+                  value={classroom}
+                  onChange={(e) => setClassroom(e.target.value)}
+                  className="w-full outline-none cursor-pointer"
+                >
                   <option value="">Select Class</option>
-                  {allClassrooms?.map((item) => <option value={JSON.stringify(item)}>{item.name}</option>
-                  )}
+                  {allClassrooms?.map((item) => (
+                    <option value={JSON.stringify(item)}>{item.name}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -64,9 +74,15 @@ const FilterPopup = ({ open, setopen, subject, applyFilter, setSubject, classroo
             <div className="flex flex-col flex-1 gap-1">
               <p className="text-xs font-semibold text-grey_700">Subject</p>
               <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
-                <select value={subject} onChange={(e) => setSubject(e.target.value)} className="w-full outline-none cursor-pointer">
+                <select
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  className="w-full outline-none cursor-pointer"
+                >
                   <option value="">Select Subject</option>
-                  {allSubjects?.map((item) => <option value={JSON.stringify(item)}>{item.name}</option>)}
+                  {allSubjects?.map((item) => (
+                    <option value={JSON.stringify(item)}>{item.name}</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -89,9 +105,7 @@ const FilterPopup = ({ open, setopen, subject, applyFilter, setSubject, classroo
   );
 };
 
-
 const StudentReports = () => {
-
   const navigate = useNavigate();
   const { isBlurred } = useBlur();
 
@@ -103,116 +117,93 @@ const StudentReports = () => {
   const [filterActive, setFilterActive] = useState(false);
   const [filteredData, setFilteredData] = useState([]);
 
-
   const handleFunctionClick = (std) => {
     return () => {
       navigate(`/teacher/reports/${std.name}`, { state: std });
     };
   };
 
-
-  const { data, isPending, isSuccess, isError, refetch, isRefetching } = useQuery({
-    queryKey: ["teacherStudets"],
-    queryFn: async () => {
-      let result = await getAllStudentsOfTeacher();
-      // console.log("result is : ", result);
-      return result
-    }
-  });
+  const { data, isPending, isSuccess, isError, refetch, isRefetching } =
+    useQuery({
+      queryKey: ["teacherStudets"],
+      queryFn: async () => {
+        let result = await getAllStudentsOfTeacher();
+        // console.log("result is : ", result);
+        return result;
+      },
+    });
 
   console.log("all studnet of teacher  are : ", data);
-
 
   const applyFilter = () => {
     if (!isPending) {
       let temparr = data?.filter((item) => {
-        if ((item.classroom._id == JSON.parse(classroom)?._id) && (item.subject._id == JSON.parse(subject)?._id)) {
+        if (
+          item.classroom._id == JSON.parse(classroom)?._id &&
+          item.subject._id == JSON.parse(subject)?._id
+        ) {
           return item;
         }
-      })
+      });
       setFilterActive(true);
       setFilteredData(temparr);
       console.log("filtered array is : ", temparr);
     }
-  }
+  };
 
-
-  return (
-    isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
-      <>
-        <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
-          <div className="flex flex-1">
-            <div
-              className={`w-full h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
-            >
-              <div className="h-screen pt-1s">
-                <Navbar heading={"Student Reports"} />
-                <div className={`${isBlurred ? "blur" : ""}`}>
-                  <div className="flex flex-row-reverse my-4">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-3 rounded-3xl">
-                        <IoSearch />
-                        <input
-                          type="text"
-                          value={searchText}
-                          placeholder="Search"
-                          className="bg-transparent outline-none"
-                          onChange={(e) => setSearchText(e.target.value)}
-                        />
-                      </div>
-                      <div
-                        className="p-4 text-white rounded-lg cursor-pointer bg-maroon"
-                        onClick={() => { setOpenFilterModal(true) }}
-                      >
-                        <FiFilter />
-                      </div>
+  return isPending || isRefetching ? (
+    <div className="flex justify-start flex-1">
+      {" "}
+      <Loader />{" "}
+    </div>
+  ) : (
+    <>
+      <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
+        <div className="flex flex-1">
+          <div
+            className={`w-full h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
+          >
+            <div className="h-screen pt-1s">
+              <Navbar heading={"Student Reports"} />
+              <div className={`${isBlurred ? "blur" : ""}`}>
+                <div className="flex flex-row-reverse my-4">
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-3 rounded-3xl">
+                      <IoSearch />
+                      <input
+                        type="text"
+                        value={searchText}
+                        placeholder="Search"
+                        className="bg-transparent outline-none"
+                        onChange={(e) => setSearchText(e.target.value)}
+                      />
+                    </div>
+                    <div
+                      className="p-4 text-white rounded-lg cursor-pointer bg-maroon"
+                      onClick={() => {
+                        setOpenFilterModal(true);
+                      }}
+                    >
+                      <FiFilter />
                     </div>
                   </div>
-                  <div className="mt-8 h-[80%] overflow-auto">
+                </div>
+                <div className="mt-8 h-[80%] overflow-auto">
+                  <DataRows
+                    header={true}
+                    index={"Sr. No"}
+                    subject={"Subject"}
+                    bgColor={"#F9F9F9"}
+                    studentName={"Name"}
+                    studentClass={"Class"}
+                    attendance={"Attendance"}
+                  />
 
-                    <DataRows
-                      header={true}
-                      index={"Sr. No"}
-                      subject={"Subject"}
-                      bgColor={"#F9F9F9"}
-                      studentName={"Name"}
-                      studentClass={"Class"}
-                      attendance={"Attendance"}
-                    />
-
-                    {!filterActive && searchText == "" && data?.map((std, index) => {
-                      return <DataRows
-                        key={std._id}
-                        header={false}
-                        index={index + 1}
-                        bgColor={"#FFFFFF"}
-                        studentName={std.name}
-                        subject={std.subject.name}
-                        attendance={std.attendance}
-                        studentClass={std.classroom.name}
-                        onClickFunction={handleFunctionClick(std)}
-                        studentProfile={std.profilePic || IMAGES.Profile}
-                      />
-                    })}
-
-                    {filterActive && filteredData?.map((std, index) => {
-                      return <DataRows
-                        key={std._id}
-                        header={false}
-                        index={index + 1}
-                        bgColor={"#FFFFFF"}
-                        studentName={std.name}
-                        subject={std.subject.name}
-                        attendance={std.attendance}
-                        studentClass={std.classroom.name}
-                        onClickFunction={handleFunctionClick(std)}
-                        studentProfile={std.profilePic || IMAGES.Profile}
-                      />
-                    })}
-
-                    {!filterActive && searchText && data?.map((std, index) => {
-                      if (std?.classroom?.name?.includes(searchText) || std?.name?.includes(searchText) || std?.subject?.name?.includes(searchText)) {
-                        return <DataRows
+                  {!filterActive &&
+                    searchText == "" &&
+                    data?.map((std, index) => {
+                      return (
+                        <DataRows
                           key={std._id}
                           header={false}
                           index={index + 1}
@@ -224,26 +215,73 @@ const StudentReports = () => {
                           onClickFunction={handleFunctionClick(std)}
                           studentProfile={std.profilePic || IMAGES.Profile}
                         />
+                      );
+                    })}
+
+                  {filterActive &&
+                    filteredData?.map((std, index) => {
+                      return (
+                        <DataRows
+                          key={std._id}
+                          header={false}
+                          index={index + 1}
+                          bgColor={"#FFFFFF"}
+                          studentName={std.name}
+                          subject={std.subject.name}
+                          attendance={std.attendance}
+                          studentClass={std.classroom.name}
+                          onClickFunction={handleFunctionClick(std)}
+                          studentProfile={std.profilePic || IMAGES.Profile}
+                        />
+                      );
+                    })}
+
+                  {!filterActive &&
+                    searchText &&
+                    data?.map((std, index) => {
+                      if (
+                        std?.classroom?.name?.includes(searchText) ||
+                        std?.name?.includes(searchText) ||
+                        std?.subject?.name?.includes(searchText)
+                      ) {
+                        return (
+                          <DataRows
+                            key={std._id}
+                            header={false}
+                            index={index + 1}
+                            bgColor={"#FFFFFF"}
+                            studentName={std.name}
+                            subject={std.subject.name}
+                            attendance={std.attendance}
+                            studentClass={std.classroom.name}
+                            onClickFunction={handleFunctionClick(std)}
+                            studentProfile={std.profilePic || IMAGES.Profile}
+                          />
+                        );
                       }
                     })}
 
-                  </div>
+                  {data?.length == 0 && (
+                    <div className="text-center py-4 text-3xl font-medium">
+                      No student reports to display!
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <FilterPopup
-          subject={subject}
-          classroom={classroom}
-          open={openFilterModal}
-          setSubject={setSubject}
-          applyFilter={applyFilter}
-          setClassroom={setClassroom}
-          setopen={setOpenFilterModal}
-        />
-      </>
-
+      </div>
+      <FilterPopup
+        subject={subject}
+        classroom={classroom}
+        open={openFilterModal}
+        setSubject={setSubject}
+        applyFilter={applyFilter}
+        setClassroom={setClassroom}
+        setopen={setOpenFilterModal}
+      />
+    </>
   );
 };
 

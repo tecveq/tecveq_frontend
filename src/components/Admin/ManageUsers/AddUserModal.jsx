@@ -177,13 +177,14 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                     userType: role,
                                     name: e.target[1].value,
                                     email: e.target[2].value,
-                                    phoneNumber: e.target[3].value,
-                                    levelID: JSON.parse(e.target[4].value)._id,
+                                    bio: e.target[3].value,
+                                    phoneNumber: e.target[4].value,
+                                    levelID: JSON.parse(e.target[5].value)._id,
                                     isAccepted: true,
-                                    guardianName: e.target[5].value,
-                                    guardianEmail: e.target[6].value,
-                                    guardianPhoneNumber: e.target[7].value,
-                                    password: e.target[8].value,
+                                    guardianName: e.target[6].value,
+                                    guardianEmail: e.target[7].value,
+                                    guardianPhoneNumber: e.target[8].value,
+                                    password: e.target[9].value,
                                     profilePic: default_profile
                                 }
                                 const response = await registerStudent(dataBody);
@@ -227,12 +228,13 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                 userType: role,
                                 name: e.target[1].value,
                                 email: e.target[2].value,
-                                phoneNumber: e.target[3].value,
-                                qualification: e.target[4].value,
+                                bio: e.target[3].value,
+                                phoneNumber: e.target[4].value,
+                                qualification: e.target[5].value,
                                 cv: cvurl,
                                 isAccepted: true,
-                                experience: e.target[6].value,
-                                password: e.target[7].value,
+                                experience: e.target[7].value,
+                                password: e.target[8].value,
                                 profilePic: default_profile
                             }
                             cvurl = await uploadFile(e.target[5].files[0], "CV");
@@ -281,6 +283,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                     <>
                                         <CustomInput label={"Name"} type="text" placeholder={"Enter your Name"} />
                                         <CustomInput label={"Email"} type="email" placeholder={"Enter your Email"} />
+                                        <CustomInput label={"Bio"} type="text" placeholder={"Enter your Bio"} />
                                         <CustomInput label={"Phone no."} type="text" placeholder={"Enter your Phone Number"} />
                                         <LevelSelectable label={"Enroll in"} alllevels={allLevels} />
                                         <CustomInput label={"Guardian Name"} type="text" placeholder={"Enter Guardian Name"} />
@@ -298,6 +301,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                         <>
                                             <CustomInput label={"Name"} type="text" placeholder={"Enter your Name"} />
                                             <CustomInput label={"Email"} type="email" placeholder={"Enter your email"} />
+                                        <CustomInput label={"Bio"} type="text" placeholder={"Enter your Bio"} />
                                             <CustomInput label={"Phone"} type="text" placeholder={"Enter your phone no."} />
                                             <CustomSelectable label={"Qualification"} options={qualification} />
                                             <CustomFileSelector label={"CV"} />

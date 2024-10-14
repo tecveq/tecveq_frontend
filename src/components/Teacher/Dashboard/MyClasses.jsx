@@ -17,8 +17,8 @@ const MyClasses = () => {
                 data.subject == "Maths"
                   ? IMAGES.MathIcon
                   : data.subject == "Chemistry"
-                    ? IMAGES.ChemistryIcon
-                    : IMAGES.MathIcon
+                  ? IMAGES.ChemistryIcon
+                  : IMAGES.MathIcon
               }
               alt="math icon"
             />
@@ -72,6 +72,12 @@ const MyClasses = () => {
             {allClassrooms.map((item) => {
               return <SubjectComponent data={item} />;
             })}
+
+            {allClassrooms?.length == 0 && (
+              <div className="text-center py-1 text-xl font-medium">
+                No classes to display!
+              </div>
+            )}
           </div>
         </div>
       </div>

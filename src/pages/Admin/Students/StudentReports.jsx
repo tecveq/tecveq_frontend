@@ -88,7 +88,10 @@ const StudentReports = () => {
 
                     {/* When only search filter is applied */}
                     {classFilter == "" && searchText && adminUsersData.allStudents.map((std, index) => {
-                      if (std.name.includes(searchText)) {
+                      console.log("stunet name  outoside is : ", searchText);
+                      console.log(std)
+                      if (std?.name.toLowerCase()?.includes(searchText.toLowerCase())) {
+                        console.log("stunet name is : ", searchText);
                         return <DataRows
                           key={index}
                           header={false}
