@@ -110,7 +110,7 @@ const Subjects = () => {
                                         ))}
 
                                         {searchText && allSubjects.map((lvl, index) => {
-                                            if (lvl.name.includes(searchText)) {
+                                            if (lvl.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                                                 return <DataRow
                                                     data={lvl}
                                                     key={lvl._id}

@@ -116,7 +116,7 @@ const Classroom = () => {
                       />
                     ))}
                     {searchText && data?.map((cls, index) => {
-                      if (cls?.name?.includes(searchText)) {
+                      if (cls?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                         return <DataRow
                           data={cls}
                           toggleClassMenu={toggleClassMenuOpen}

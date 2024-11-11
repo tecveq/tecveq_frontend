@@ -119,7 +119,7 @@ const Attendence = () => {
                       />
                     ))}
                     {searchText && data?.map((cls, index) => {
-                      if (cls.title.includes(searchText)) {
+                      if (cls.title.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                         return <DataRow
                           data={cls}
                           subject={cls.subjectID.name}

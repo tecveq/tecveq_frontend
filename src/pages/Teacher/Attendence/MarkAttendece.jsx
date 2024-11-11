@@ -115,7 +115,7 @@ const MarkAttendence = () => {
                                             />
                                         ))}
                                         {searchText && classData?.classroom?.studentdetails?.map((cls, index) => {
-                                            if (cls.name.includes(searchText)) {
+                                            if (cls.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                                                 return <DataRow
                                                     data={cls}
                                                     header={false}

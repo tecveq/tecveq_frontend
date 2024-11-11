@@ -255,7 +255,7 @@ const GradingQuizzes = () => {
               ))}
 
               {!gradingData.isPending && searchText !== "" && gradingData?.map((submission, index) => {
-                if(submission?.studentID?.name?.includes(searchText)){
+                if(submission?.studentID?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())){
                   return <GradeQuizAssignmentRow
                   isQuiz={false}
                   header={false}

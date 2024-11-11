@@ -168,7 +168,7 @@ const ManageUsers = () => {
 
                     {searchText && adminUsersData.allUsers.map((usr, index) => {
                       // CAN ADD MORE FIELDS IN IF STATEMENT
-                      if (usr.name.includes(searchText) || usr.userType.includes(searchText)) {
+                      if ((usr.name.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase()) || (usr.userType.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase())) {
                         return <DataRows
                           data={usr}
                           key={usr._id}

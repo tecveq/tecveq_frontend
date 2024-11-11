@@ -133,7 +133,7 @@ const Announcements = () => {
                                 {annouce ? [...announcemnets].reverse().map((item, index) => {
                                     if (item.type == "annoouncement") {
 
-                                        if (searchText && (item.title.includes(searchText) || item.description.includes(searchText))) {
+                                        if (searchText && ((item.title.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase()) || (item.description.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase()))) {
                                             return <AnnouncementCard refetch={refetch} editAnnouncement={editAnnouncement} deleteAnnouncement={announceDellMutate.mutate} key={index} announcement={item} />
                                         }
 
@@ -145,12 +145,12 @@ const Announcements = () => {
                                 }) : [...announcemnets].reverse().map((item, index) => {
                                     if (item.type != "annoouncement") {
 
-                                        if (searchText && (item.title.includes(searchText) || item.description.includes(searchText))) {
+                                        if (searchText && ((item.title.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase()) || (item.description.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase()))) {
                                             return <QuoteCard refetch={refetch} editQuote={editQuote} deleteQuote={announceDellMutate.mutate} key={index} quote={item} />
                                         }
 
                                         if (searchText === "") {
-                                            return <QuoteCard refetch={refetch} editQuote={editQuote} deleteQuote={announceDellMutate.mutate} key={index} quote={item} />
+                                            return <QuoteCard refetch={refetch} editQuote={editQuote} deleteQuote={announceDellMutate.mutate} key={index} quote={item} /> 
                                         }
                                     }
                                 })}

@@ -45,7 +45,7 @@ const QuoteCard = ({ quote, deleteQuote, editQuote, refetch }) => {
 
     return (
         <div className='px-2 py-2 flex flex-1 bg-white rounded-md border border-black/20'>
-            <div className='flex flex-1 p-8'>
+            <div className='flex p-8 flex-1' >
                 <div className='flex flex-col flex-1 gap-2'>
                     <div className='flex justify-between items-center'>
                         <p className='text-xl font-medium flex-[2]'>{quote.title} </p>
@@ -54,9 +54,9 @@ const QuoteCard = ({ quote, deleteQuote, editQuote, refetch }) => {
                             <PiDotsThreeOutlineVerticalLight onClick={toggleMenu} size={20} className='cursor-pointer' />
                         </div>
                     </div>
-                    <div className='flex flex-col gap-2 text-xs'>
-                        <div className='flex'>
-                            <p className='text-sm'>{quote.description}</p>
+                    <div className='flex flex-col gap-2 text-xs text-wrap flex-wrap'>
+                        <div className='flex text-sm'>
+                            <p className='flex flex-wrap'>{quote.description}</p>
                         </div>
                         <div className='flex'>
                             <div className='flex items-center gap-4'>

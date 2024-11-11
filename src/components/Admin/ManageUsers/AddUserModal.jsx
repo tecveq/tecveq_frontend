@@ -165,14 +165,19 @@ const AddUserModal = ({ closeModal, refetch }) => {
 
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
-                const isValidGuardainName = namePattern.test(e.target[5].value);
+                const isValidGuardainName = namePattern.test(e.target[6].value);
                 const isValidPassword = passwordPattern.test(e.target[8].value);
-                const isValidGuardianEmail = emailPattern.test(e.target[6].value);
+                const isValidGuardianEmail = emailPattern.test(e.target[7].value);
+                // const isValidName = namePattern.test(e.target[1].value);
+                // const isValidEmail = emailPattern.test(e.target[2].value);
+                // const isValidGuardainName = namePattern.test(e.target[6].value);
+                // const isValidPassword = passwordPattern.test(e.target[8].value);
+                // const isValidGuardianEmail = emailPattern.test(e.target[7].value);
 
                 if (isValidEmail && isValidGuardianEmail) {
                     if (isValidName && isValidGuardainName) {
                         if (e.target[8].value.length >= 6) {
-                            if (e.target[8].value == e.target[9].value) {
+                            if (e.target[10].value == e.target[9].value) {
                                 dataBody = {
                                     userType: role,
                                     name: e.target[1].value,
@@ -237,7 +242,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                 password: e.target[8].value,
                                 profilePic: default_profile
                             }
-                            cvurl = await uploadFile(e.target[5].files[0], "CV");
+                            cvurl = await uploadFile(e.target[6].files[0], "CV");
                             dataBody.cv = cvurl;
                             const response = await registerStudent(dataBody);
                             console.log("after register user is : ", response);

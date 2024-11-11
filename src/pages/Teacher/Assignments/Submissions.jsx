@@ -202,7 +202,7 @@ const Submissions = () => {
                 })}
 
                 {isSuccess && searchText !== "" && data?.submissions.map((submission, index) => {
-                  if (submission.studentID.name.includes(searchText)) {
+                  if (submission.studentID.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                     return <SubmissionRow
                       isQuiz={false}
                       header={false}

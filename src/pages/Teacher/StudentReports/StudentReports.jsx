@@ -240,9 +240,9 @@ const StudentReports = () => {
                     searchText &&
                     data?.map((std, index) => {
                       if (
-                        std?.classroom?.name?.includes(searchText) ||
-                        std?.name?.includes(searchText) ||
-                        std?.subject?.name?.includes(searchText)
+                        std?.classroom?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()) ||
+                        std?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()) ||
+                        std?.subject?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
                       ) {
                         return (
                           <DataRows
