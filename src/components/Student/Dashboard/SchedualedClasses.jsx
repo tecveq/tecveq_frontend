@@ -213,7 +213,7 @@ const ScheduledClasses = () => {
     <div className="flex flex-1">
       <div className="flex flex-col flex-1 gap-2">
         <div className="flex">
-          <p className="flex text-lg font-medium">Sheduled Classes</p>
+          <p className="flex text-lg font-medium">Scheduled Classes</p>
         </div>
         <div className="flex flex-col gap-1 p-3 bg-white rounded-lg lg:flex-row">
           <div className="flex-1 p-2 ">
@@ -221,7 +221,7 @@ const ScheduledClasses = () => {
           </div>
 
           <div className="flex flex-col flex-1 gap-1">
-            {filteredclasses.length > 0 ? "" : "No Shcedualed classes right now"}
+            {filteredclasses.length > 0 ? "" : "No Scheduled classes right now"}
             {filteredclasses.map((item) => (
               <EventComponet item={item} key={item} />
             ))}

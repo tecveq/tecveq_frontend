@@ -1,5 +1,6 @@
 import React from "react";
 import { SlArrowRight } from "react-icons/sl";
+import IMAGES from "../../../assets/images";
 
 const DataRows = ({
   index,
@@ -34,7 +35,7 @@ const DataRows = ({
         >
           <img
             className=" rounded-full h-14 w-14 object-cover "
-            src={studentProfile}
+            src={studentProfile || IMAGES.Profile}
             alt="Student Profile"
           />{" "}
         </p>

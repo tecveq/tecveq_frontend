@@ -241,7 +241,7 @@ const SchedualClasses = ({ classRefetch }) => {
                       {classCreateMutate.isPending && <div className="flex justify-center items-center"><Loader /></div>}
                       {!classCreateMutate.isPending &&
                         <>
-                          <FilterButton text={"Schedual Class"} className={"px-4 text-sm"} clickHandler={() => handleSchedualClass()} />
+                          <FilterButton text={"Schedule Class"} className={"px-4 text-sm"} clickHandler={() => handleSchedualClass()} />
                           <FilterButton text={"Cancel"} className={"px-8 text-sm bg-white border !text-maroon"} clickHandler={() => setaddEventModalOpen(false)} />
                         </>
                       }
