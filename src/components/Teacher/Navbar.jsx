@@ -69,7 +69,7 @@ const Navbar = ({ heading }) => {
               <div>
                 <p className="font-medium text-3xl">{heading}</p>
               </div> :
-              <div className="flex flex-col">
+              <div className="hidden md:flex flex-col">
                 <p className="text-xl font-semibold">Hello {userData.name} </p>
                 <p className="">Welcome to your learning space!</p>
               </div>
