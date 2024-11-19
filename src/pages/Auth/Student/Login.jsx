@@ -15,7 +15,7 @@ const Login = () => {
     const CustomInput = ({ label, placeholder, type }) => {
         return (
             <div className='flex flex-col text-start py-1'>
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col gap-2'>
                     <div className='font-medium'>
                         {label}
                     </div>
@@ -35,7 +35,7 @@ const Login = () => {
     const Selectable = ({ label }) => {
         return (
             <div className='flex flex-col text-start py-1'>
-                <div className='flex flex-col gap-1'>
+                <div className='flex flex-col gap-2'>
                     <div className='font-medium'>
                         {label}
                     </div>
@@ -102,30 +102,30 @@ const Login = () => {
 
     return (
         <div className='flex min-h-screen flex-col md:flex-row w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
-            <div className=' bg-cover bg-hero-pattern absolute w-72 h-72' ></div>
-            <div className='flex flex-1 sm:flex-[4] px-10 py-10 justify-center'>
+            <div className=' bg-cover bg-hero-pattern absolute lg:w-72 lg:h-72' ></div>
+            <div className='flex flex-1 sm:flex-[4] w-full  px-4 py-10 justify-center'>
                 <div className='flex items-center justify-center'>
-                    <img src={IMAGES.logo} alt="" className='w-52 h-32 md:w-60 md:h-40 lg:w-72 lg:h-52 bg-cover' />
+                    <img src={IMAGES.logo} alt="" className='w-full h-32 md:w-60 md:h-40 lg:w-72 lg:h-52 bg-cover' />
                 </div>
             </div>
             <div className='flex flex-1 sm:flex-[6] '>
-                <div className='relative bottom-10 items-end lg:items-end sm:left-10 md:left-10 xl:left-11 2xl:left-14 flex justify-center '>
+                <div className='relative hidden bottom-10 items-end lg:items-center sm:left-10 md:left-10 xl:left-11 2xl:left-14 lg:flex justify-center '>
                     <div className='bg-cover bg-center-img 2xl:w-80 2xl:h-72 xl:w-72 xl:h-64 h-44 w-52 absolute'></div>
                 </div>
-                <div className='flex flex-col flex-1 px-10 py-8 justify-center items-center text-center'>
+                <div className='flex flex-col flex-1 px-4 md:px-10 py-8 justify-center items-center text-center'>
                     <div className='flex flex-col bg-white h-full px-4 md:px-14 lg:px-12 xl:px-16 py-10 w-full md:w-4/5'>
                         <div className='py-3'>
                             <p className='text-2xl font-medium'>Welcome Back</p>
                             <p className='text-sm text-black/60'>Welcome back please enter your details</p>
                         </div>
                         <div>
-                            <form onSubmit={handleSubmit}>
-                                <div className=''>
+                            <form onSubmit={handleSubmit} className='space-y-2'>
+                                <div >
                                     <Selectable label={"Parent/Student"} />
                                     <CustomInput label={"Email"} type="email" placeholder={"Enter your email..."} />
                                     <CustomInput label={"Password"} type="password" placeholder={"Enter your password..."} />
                                 </div>
-                                <div className='flex justify-between items-center'>
+                                <div className='flex justify-between items-center '>
                                     <div className='flex gap-2 items-center ml-2'>
                                         <p>
                                             <input type="checkbox" />
