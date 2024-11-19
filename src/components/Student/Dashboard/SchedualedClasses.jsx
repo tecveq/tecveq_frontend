@@ -60,7 +60,7 @@ const ScheduledClasses = () => {
 
     return (
       <div
-        className={`flex flex-col  w-full px-6 text-xs border-l-2 gap-1 ${item.subjectID.name == "PF"
+        className={`flex flex-col  w-full px-6  text-xs border-l-2 gap-1 ${item.subjectID.name == "PF"
           ? "border-l-maroon bg-maroon_100"
           : item.subjectID.name == "ICT"
             ? "border-l-orange bg-orange_light"
@@ -215,7 +215,7 @@ const ScheduledClasses = () => {
         <div className="flex">
           <p className="flex text-lg font-medium">Scheduled Classes</p>
         </div>
-        <div className="flex flex-col gap-1 p-3 bg-white rounded-lg lg:flex-row">
+        <div className="flex flex-col gap-1 p-3 bg-white rounded-lg -z-50 lg:flex-row">
           <div className="flex-1 p-2 ">
             <CustomCalender setSelectedDateFromChild={setSelectedDate} classesArray={allClasses} />
           </div>

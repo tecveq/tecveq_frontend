@@ -238,7 +238,7 @@ const ScheduledClasses = () => {
           <p className="flex text-lg font-medium">Sheduled Classes</p>
         </div>
         <div className="flex flex-col gap-1 p-3 bg-white rounded-lg lg:flex-row">
-          <div className="flex-1 p-2 ">
+          <div className="flex-1 p-2  ">
             <CustomCalender setSelectedDateFromChild={setSelectedDate} classesArray={data} />
           </div>
 

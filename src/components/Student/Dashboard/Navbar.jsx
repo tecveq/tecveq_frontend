@@ -88,8 +88,8 @@ const Navbar = ({ heading }) => {
 
   return (
     <div className="flex flex-1 h-20">
-      <div className={`flex justify-between flex-1 py-5 ${isBlurred ? "blur" : ""}`}>
-        <div className="flex flex-col">
+      <div className={`flex justify-end md:justify-between flex-1 py-3 ${isBlurred ? "blur" : ""}`}>
+        <div className="hidden md:flex flex-col">
           {heading ? <div className="font-medium text-3xl">{heading} </div> :
             <div className="flex flex-col">
               <p className="text-xl font-semibold">Hello {userData.name} </p>
@@ -100,7 +100,7 @@ const Navbar = ({ heading }) => {
         <div className="flex items-center gap-2">
           <div className="flex gap-4">
             <div
-              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-maroon text-white" : ""
+              className={`p-2 border cursor-pointer  rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-maroon text-white" : ""
                 }`}
               onClick={toggleMail}
             >
@@ -115,11 +115,11 @@ const Navbar = ({ heading }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <p className="font-medium">{userData?.name}</p>
+            <p className="font-medium hidden md:block">{userData?.name}</p>
             <img
               src={userData?.profilePic || IMAGES.Profile}
               alt=""
-              className="w-12 h-12 cursor-pointer rounded-full"
+              className="w-10 h-10 cursor-pointer rounded-full"
               onClick={toggleProfielMenu}
             />
             <FaChevronDown
@@ -131,13 +131,14 @@ const Navbar = ({ heading }) => {
           {bell && <Notifications data={allNotfications} dashboard={true} onclose={togglebell} />}
           {isProfileMenu && <ProfileMenu
             dashboard={true}
+            userData={userData}
             onLogoutClick={onLogoutClick}
             onProfileClick={onProfileClick}
             onSettingsClick={onSettingsClick}
           />}
         </div>
       </div>
-      {mail && <RecentMessages dashboard={true} onclose={toggleMail} /> }
+      {mail && <RecentMessages dashboard={true} onclose={toggleMail} />}
       {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
     </div>
   );
