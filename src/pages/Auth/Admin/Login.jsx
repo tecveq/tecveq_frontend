@@ -100,7 +100,7 @@ const Login = () => {
     return (
         <div className='flex flex-col md:flex-row min-h-screen w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
             <div className=' bg-cover bg-hero-pattern absolute w-72 h-72' ></div>
-            <div className='flex flex-1 px-10 py-10 justify-center'>
+            <div className='flex flex-1 px-4 md:px-10 py-10 justify-center'>
                 <div className='flex items-center justify-center'>
                     <img src={IMAGES.logo} alt="" className='w-72 h-52 bg-cover' />
                 </div>
@@ -109,7 +109,7 @@ const Login = () => {
                 <div className='relative sm:left-14 bottom-10 md:left-14 items-end xl:left-6 2xl:left-10 flex justify-center '>
                     <div className='bg-cover bg-center-img w-80 h-72 absolute'></div>
                 </div>
-                <div className='flex flex-col flex-1 px-10 py-8 justify-center items-center text-center'>
+                <div className='flex flex-col flex-1 px-4 md:px-10 py-8 justify-center items-center text-center'>
                     <div className='flex flex-col bg-white h-full px-20 py-10 w-4/5'>
                         <div className='py-3'>
                             <p className='text-2xl font-medium'>Welcome Back</p>
