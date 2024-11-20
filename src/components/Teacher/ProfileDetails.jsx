@@ -96,7 +96,7 @@ const ProfileDetails = ({ onclose }) => {
   })
 
   return (
-    <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96">
+    <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 md:w-full">
       <div className="flex flex-col flex-1 w-full">
         <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
           <p className="text-xl font-medium">My Profile</p>
@@ -104,7 +104,7 @@ const ProfileDetails = ({ onclose }) => {
         </div>
         <div className="flex flex-col flex-1 w-full">
           <div className="flex flex-col justify-center px-8 w-full flex-1 ">
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-3">
               <div className="p-2 border-grey/10">
                 <FiEdit onClick={handleEditClick} className="cursor-pointer" />
               </div>
