@@ -106,11 +106,11 @@ const Login = () => {
                 </div>
             </div>
             <div className='flex flex-1 '>
-                <div className='relative sm:left-14 bottom-10 md:left-14 items-end xl:left-6 2xl:left-10 flex justify-center '>
-                    <div className='bg-cover bg-center-img w-80 h-72 absolute'></div>
+                <div className='relative hidden bottom-10 items-end lg:items-center lg:left-11 2xl:left-14 lg:flex justify-center '>
+                    <div className='bg-cover bg-center-img 2xl:w-80 2xl:h-72 xl:w-72 xl:h-64 h-44 w-52 absolute'></div>
                 </div>
-                <div className='flex flex-col flex-1 px-4 md:px-10 py-8 justify-center items-center text-center'>
-                    <div className='flex flex-col bg-white h-full px-20 py-10 w-4/5'>
+                <div className='flex flex-col flex-1 px-4 md:px-10 py-8 justify-center items-center text-center w-full lg:w-auto'>
+                    <div className='flex flex-col bg-white h-full px-4 md:px-8 lg:px-12 py-10 lg:w-4/5'>
                         <div className='py-3'>
                             <p className='text-2xl font-medium'>Welcome Back</p>
                             <p className='text-sm text-black/60'>Welcome back please enter your details</p>
