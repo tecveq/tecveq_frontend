@@ -65,7 +65,7 @@ const SignUp = () => {
           </div>
           <div>
             <select value={role} onChange={(e) => { setRole(e.target.value) }} className='border outline-none rounded-sm border-black/20 px-4 w-full py-[4px]'>
-              <option value="student">Studnet</option>
+              <option value="student">Student</option>
               <option value="parent">Parent</option>
             </select>
           </div>

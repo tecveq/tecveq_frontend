@@ -28,7 +28,7 @@ const ProfileDetails = ({ onclose }) => {
   const [className, setClassName] = useState("Level 1");
   const [phone, setPhone] = useState(userData?.phoneNumber);
   const [parentName, setParentName] = useState(userData?.guardianName);
-  const [selectedFile, setSelectedFile] = useState(userData?.profilePic || IMAGES.Profile );
+  const [selectedFile, setSelectedFile] = useState(userData?.profilePic || IMAGES.Profile);
   const [parentEmail, setParentEmail] = useState(userData?.guardianEmail);
   const [parentPhone, setParentPhone] = useState(userData?.guardianPhoneNumber);
 
@@ -79,107 +79,111 @@ const ProfileDetails = ({ onclose }) => {
   }
 
   return (
-    <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96">
-      <div className="flex flex-col">
-        <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
-          <p className="text-xl font-medium">My Profile</p>
-          <IoClose onClick={onclose} className="cursor-pointer" />
-        </div>
-        <div className="flex flex-col">
-          <div className="flex flex-col justify-center px-10 ">
-            <div className="flex justify-end">
-              <div className="p-2 border-grey/10">
-                <FiEdit onClick={handleEditClick} className="cursor-pointer" />
+    <div className="relative justify-end items-end">
+      <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 ">
+        <div className="flex flex-col w-full">
+          <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
+            <p className="text-xl font-medium">My Profile</p>
+            <IoClose onClick={onclose} className="cursor-pointer" />
+          </div>
+          <div className="flex flex-col">
+            <div className="flex flex-col justify-center px-10 ">
+              <div className="flex justify-end mt-3">
+                <div className="p-2 border-grey/10">
+                  <FiEdit onClick={handleEditClick} className="cursor-pointer" />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col items-center justify-center text-center">
-              <label htmlFor="profile" className="cursor-pointer">
-                <img src={userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
-              </label>
-              <input id="profile" type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="hidden" />
-              <p>{userData?.name}</p>
-              {/* <p>Bio</p> */}
-              <p>
-                {userData.bio ? userData.bio : 
-                "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, sint?"
+              <div className="flex flex-col items-center justify-center text-center">
+                <label htmlFor="profile" className="cursor-pointer">
+                  <img src={userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
+                </label>
+                <input id="profile" type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="hidden" />
+                <p>{userData?.name}</p>
+                {/* <p>Bio</p> */}
+                <p>
+                  {userData.bio ? userData.bio :
+                    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, sint?"
+                  }
+                </p>
+              </div>
+              <div className="flex flex-col gap-2 px-5 py-10 overflow-auto h-96 custom-scrollbar">
+                {allowedEdit &&
+                  <CusotmInput
+                    value={bio}
+                    icon={<GoPencil />}
+                    label={"Bio"}
+                    status={allowedEdit}
+                    inputChange={setBio}
+                  />
                 }
-              </p>
-            </div>
-            <div className="flex flex-col gap-1 px-5 py-1 overflow-auto h-96 custom-scrollbar">
-              {allowedEdit &&
-                <CusotmInput
-                  value={bio}
-                  icon={<GoPencil /> }
-                  label={"Bio"}
-                  status={allowedEdit}
-                  inputChange={setBio}
-                />
-              }
-              {/* <CusotmInput
+                {/* <CusotmInput
                 value={rollNo}
                 icon={"person"}
                 label={"Roll No."}
                 status={allowedEdit}
               // inputChange={setRollNo}
               /> */}
-              <CusotmInput
-                value={name}
-                label={"Name"}
-                icon={<GoPerson />}
-                status={allowedEdit}
-                inputChange={setName}
-              />
-              <CusotmInput
-                value={email}
-                icon={<GoMail /> }
-                label={"Email"}
-                status={allowedEdit}
-              // inputChange={setEmail}
-              />
-              <CusotmInput
-                value={phone}
-                icon={<MdPhone /> }
-                label={"Phone No."}
-                status={allowedEdit}
-                inputChange={setPhone}
-              />
-              <CusotmInput
-                icon={<FaGraduationCap />}
-                label={"Class"}
-                value={className}
-                status={allowedEdit}
-                inputChange={setClassName}
-              />
-              <CusotmInput
-                icon={<GoPerson /> }
-                value={parentName}
-                status={allowedEdit}
-                label={"Parent Name"}
-                inputChange={setParentName}
-              />
-              <CusotmInput
-                icon={<GoMail />}
-                value={parentEmail}
-                status={allowedEdit}
-                label={"Parent Email"}
-                inputChange={setParentEmail}
-              />
-              <CusotmInput
-                icon={<MdPhone />}
-                value={parentPhone}
-                status={allowedEdit}
-                label={"Parent Phone No."}
-                inputChange={setParentPhone}
-              />
-              {loading  && <div className="py-4"> <Loader /> </div>}
-              {!loading && allowedEdit && <div className="flex justify-center my-4">
-                <p onClick={handleSaveDetails} className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon">Save</p>
-              </div> }
+                <CusotmInput
+                  value={name}
+                  label={"Name"}
+                  icon={<GoPerson />}
+                  status={allowedEdit}
+                  inputChange={setName}
+                />
+                <CusotmInput
+                  value={email}
+                  icon={<GoMail />}
+                  label={"Email"}
+                  status={allowedEdit}
+                // inputChange={setEmail}
+                />
+                <CusotmInput
+                  value={phone}
+                  icon={<MdPhone />}
+                  label={"Phone No."}
+                  status={allowedEdit}
+                  inputChange={setPhone}
+                />
+                <CusotmInput
+                  icon={<FaGraduationCap />}
+                  label={"Class"}
+                  value={className}
+                  status={allowedEdit}
+                  inputChange={setClassName}
+                />
+                <CusotmInput
+                  icon={<GoPerson />}
+                  value={parentName}
+                  status={allowedEdit}
+                  label={"Parent Name"}
+                  inputChange={setParentName}
+                />
+                <CusotmInput
+                  icon={<GoMail />}
+                  value={parentEmail}
+                  status={allowedEdit}
+                  label={"Parent Email"}
+                  inputChange={setParentEmail}
+                />
+                <CusotmInput
+                  icon={<MdPhone />}
+                  value={parentPhone}
+                  status={allowedEdit}
+                  label={"Parent Phone No."}
+                  inputChange={setParentPhone}
+                />
+                {loading && <div className="py-4"> <Loader /> </div>}
+                {!loading && allowedEdit && <div className="flex justify-center my-4">
+                  <p onClick={handleSaveDetails} className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon">Save</p>
+                </div>}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+
   );
 };
 
