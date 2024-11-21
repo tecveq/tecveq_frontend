@@ -131,9 +131,9 @@ const Sidebar = () => {
       >
         <div className="flex justify-center bg-maroon w-9">
           <div className="flex flex-col gap-2 py-2">
-            <p className="w-7 bg-white h-0.5"></p>
-            <p className="w-7 bg-white h-0.5"></p>
-            <p className="w-7 bg-white h-0.5"></p>
+            <p className="w-6 bg-white h-0.5"></p>
+            <p className="w-6 bg-white h-0.5"></p>
+            <p className="w-6 bg-white h-0.5"></p>
           </div>
         </div>
       </div>

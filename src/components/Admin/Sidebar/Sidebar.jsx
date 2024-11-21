@@ -183,7 +183,7 @@ const Sidebar = () => {
 
   const Menubar = () => (
     <div
-      className={`w-72 h-lvh shadow-lg bg-white z-50 fixed px-8 py-5 flex flex-col justify-between`}
+      className={`w-72  shadow-lg bg-white z-50 md:h-screen  px-8 py-5 `}
     >
       <div className="">
         <div className="flex justify-center">
@@ -262,14 +262,14 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col">
       <div
-        className="px-3 py-3 cursor-pointer lg:hidden h-14"
+        className="px-3 py-3 cursor-pointer lg:hidden h-20 flex items-center justify-center"
         onClick={toggleSidebar}
       >
-        <div className="flex justify-center rounded-sm opacity-40 bg-maroon w-14">
-          <div className="flex flex-col gap-2 py-3">
-            <p className="w-9 bg-white h-0.5"></p>
-            <p className="w-9 bg-white h-0.5"></p>
-            <p className="w-9 bg-white h-0.5"></p>
+        <div className="flex justify-center bg-maroon w-9 h-fit">
+          <div className="flex flex-col gap-2 py-2">
+            <p className="w-6 bg-white h-0.5"></p>
+            <p className="w-6 bg-white h-0.5"></p>
+            <p className="w-6 bg-white h-0.5"></p>
           </div>
         </div>
       </div>

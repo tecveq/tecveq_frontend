@@ -76,7 +76,7 @@ const ProfileDetails = ({ onclose }) => {
   const updateuserMutation = useMutation({
     mutationFn: async (data) => {
       let url = await uploadFile(selectedProfile, "teachers");
-      const result = await updateTeacher({...data, profilePic: url })
+      const result = await updateTeacher({ ...data, profilePic: url })
       return result;
     },
 
@@ -96,142 +96,146 @@ const ProfileDetails = ({ onclose }) => {
   })
 
   return (
-    <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 md:w-full">
-      <div className="flex flex-col flex-1 w-full">
-        <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
-          <p className="text-xl font-medium">My Profile</p>
-          <IoClose onClick={onclose} className="cursor-pointer" />
-        </div>
-        <div className="flex flex-col flex-1 w-full">
-          <div className="flex flex-col justify-center px-8 w-full flex-1 ">
-            <div className="flex justify-end mt-3">
-              <div className="p-2 border-grey/10">
-                <FiEdit onClick={handleEditClick} className="cursor-pointer" />
+    <div className=" relative w-full justify-end items-end">
+      <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 md:w-full">
+        <div className="flex flex-col flex-1 w-full my-5">
+          <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
+            <p className="text-xl font-medium">My Profile</p>
+            <IoClose onClick={onclose} className="cursor-pointer" />
+          </div>
+          <div className="flex flex-col flex-1 w-full">
+            <div className="flex flex-col justify-center px-8 my-5 w-full flex-1 ">
+              <div className="flex justify-end mt-3">
+                <div className="p-2 border-grey/10">
+                  <FiEdit onClick={handleEditClick} className="cursor-pointer" />
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col items-center justify-center text-center">
-              <label className="cursor-pointer" htmlFor="profile">
-                <img src={userData.profilePic || profile} alt="" className="w-28 h-28 rounded-full" />
-              </label>
-              <input type="file" onChange={(e) => { setSelectedProfile(e.target.files[0]) }} id={"profile"} className="hidden" />
-              <p>{userData.name}</p>
-              <p>Bio</p>
-              <p className="text-xs">
-                {!allowedEdit && userData.bio}
-              </p>
-            </div>
-            <div className="flex flex-col gap-1 px-2 py-7 w-full h-[75vh] overflow-auto register-scrollbar">
-              {allowedEdit &&
+              <div className="flex flex-col items-center justify-center text-center">
+                <label className="cursor-pointer" htmlFor="profile">
+                  <img src={userData.profilePic || profile} alt="" className="w-28 h-28 rounded-full" />
+                </label>
+                <input type="file" onChange={(e) => { setSelectedProfile(e.target.files[0]) }} id={"profile"} className="hidden" />
+                <p>{userData.name}</p>
+                <p>Bio</p>
+                <p className="text-xs">
+                  {!allowedEdit && userData.bio}
+                </p>
+              </div>
+              <div className="flex flex-col gap-1 px-2 py-7 w-full h-[75vh] overflow-auto register-scrollbar">
+                {allowedEdit &&
+                  <CusotmInput
+                    name={"bio"}
+                    label={"Bio"}
+                    icon={"person"}
+                    status={allowedEdit}
+                    value={userDataObj.bio}
+                    valuesObj={userDataObj}
+                    setValuesObj={setUserDataOjb}
+                  />
+                }
                 <CusotmInput
-                  name={"bio"}
-                  label={"Bio"}
+                  name={"name"}
+                  label={"Name"}
                   icon={"person"}
                   status={allowedEdit}
-                  value={userDataObj.bio}
+                  valuesObj={userDataObj}
+                  value={userDataObj.name}
+                  setValuesObj={setUserDataOjb}
+                />
+                <CusotmInput
+                  icon={"mail"}
+                  name={"email"}
+                  label={"Email"}
+                  status={allowedEdit}
+                  valuesObj={userDataObj}
+                  value={userDataObj.email}
+                  setValuesObj={setUserDataOjb}
+                />
+                <CusotmInput
+                  icon={"phone"}
+                  label={"Phone No."}
+                  name={"phoneNumber"}
+                  status={allowedEdit}
+                  valuesObj={userDataObj}
+                  setValuesObj={setUserDataOjb}
+                  value={userDataObj.phoneNumber}
+                />
+                <CusotmInput
+                  icon={"cap"}
+                  status={allowedEdit}
+                  name={"qualification"}
+                  label={"Qualification"}
+                  valuesObj={userDataObj}
+                  setValuesObj={setUserDataOjb}
+                  value={userDataObj.qualification}
+                />
+                <CusotmInput
+                  icon={"calendar"}
+                  name={"experience"}
+                  label={"Experience"}
+                  status={allowedEdit}
+                  valuesObj={userDataObj}
+                  setValuesObj={setUserDataOjb}
+                  value={userDataObj.experience}
+                />
+                <CusotmInput
+                  name={"dob"}
+                  label={"DOB"}
+                  type={"date"}
+                  icon={"cake"}
+                  status={allowedEdit}
+                  value={userDataObj.dob}
                   valuesObj={userDataObj}
                   setValuesObj={setUserDataOjb}
                 />
-              }
-              <CusotmInput
-                name={"name"}
-                label={"Name"}
-                icon={"person"}
-                status={allowedEdit}
-                valuesObj={userDataObj}
-                value={userDataObj.name}
-                setValuesObj={setUserDataOjb}
-              />
-              <CusotmInput
-                icon={"mail"}
-                name={"email"}
-                label={"Email"}
-                status={allowedEdit}
-                valuesObj={userDataObj}
-                value={userDataObj.email}
-                setValuesObj={setUserDataOjb}
-              />
-              <CusotmInput
-                icon={"phone"}
-                label={"Phone No."}
-                name={"phoneNumber"}
-                status={allowedEdit}
-                valuesObj={userDataObj}
-                setValuesObj={setUserDataOjb}
-                value={userDataObj.phoneNumber}
-              />
-              <CusotmInput
-                icon={"cap"}
-                status={allowedEdit}
-                name={"qualification"}
-                label={"Qualification"}
-                valuesObj={userDataObj}
-                setValuesObj={setUserDataOjb}
-                value={userDataObj.qualification}
-              />
-              <CusotmInput
-                icon={"calendar"}
-                name={"experience"}
-                label={"Experience"}
-                status={allowedEdit}
-                valuesObj={userDataObj}
-                setValuesObj={setUserDataOjb}
-                value={userDataObj.experience}
-              />
-              <CusotmInput
-                name={"dob"}
-                label={"DOB"}
-                type={"date"}
-                icon={"cake"}
-                status={allowedEdit}
-                value={userDataObj.dob}
-                valuesObj={userDataObj}
-                setValuesObj={setUserDataOjb}
-              />
 
-              <div>
-                <p className="flex font-semibold ">Resume: </p>
-                <div className="flex items-center gap-2">
-                  <div className="border-2 flex py-2 w-full rounded-md px-4 justify-between gap-4 border-[#00000020]">
-                    <div className="flex gap-2">
-                      <img src={IMAGES.pdf} alt="" className="w-8 h-8" />
-                      <div className="">
-                        <p className="flex text-sm font-medium">Resume.pdf</p>
-                        <p className="flex text-xs">200 KB</p>
+                <div>
+                  <p className="flex font-semibold ">Resume: </p>
+                  <div className="flex items-center gap-2">
+                    <div className="border-2 flex py-2 w-full rounded-md px-4 justify-between gap-4 border-[#00000020]">
+                      <div className="flex gap-2">
+                        <img src={IMAGES.pdf} alt="" className="w-8 h-8" />
+                        <div className="">
+                          <p className="flex text-sm font-medium">Resume.pdf</p>
+                          <p className="flex text-xs">200 KB</p>
+                        </div>
+                      </div>
+                      <div className="cursor-pointer">
+                        <IoCloseCircle />
                       </div>
                     </div>
-                    <div className="cursor-pointer">
-                      <IoCloseCircle />
-                    </div>
+                    <label
+                      for="file"
+                      className="p-4 text-white rounded-sm cursor-pointer bg-maroon"
+                    >
+                      <div className="">
+                        <GoDownload />
+                      </div>
+                    </label>
+                    <input type="file" id="file" onChange={(e) => { setSelectedPdf(e.target.files[0]) }} hidden />
                   </div>
-                  <label
-                    for="file"
-                    className="p-4 text-white rounded-sm cursor-pointer bg-maroon"
-                  >
-                    <div className="">
-                      <GoDownload />
-                    </div>
-                  </label>
-                  <input type="file" id="file" onChange={(e) => { setSelectedPdf(e.target.files[0]) }} hidden />
                 </div>
-              </div>
 
-              {updateuserMutation.isPending && <div className="mb-4"><Loader /></div>}
-              
-              {!updateuserMutation.isPending && allowedEdit &&
-                <div className="flex justify-center my-4">
-                  <p
-                    onClick={handleSaveDetails}
-                    className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon"
-                  >
-                    Save
-                  </p>
-                </div>
-              }
+                {updateuserMutation.isPending && <div className="mb-4"><Loader /></div>}
+
+                {!updateuserMutation.isPending && allowedEdit &&
+                  <div className="flex justify-center my-4">
+                    <p
+                      onClick={handleSaveDetails}
+                      className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon"
+                    >
+                      Save
+                    </p>
+                  </div>
+                }
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+
   );
 };
 
