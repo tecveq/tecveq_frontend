@@ -165,13 +165,13 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
         </div>
 
         <div className="relative grid grid-cols-7 gap-2 ">
-          <div className="text-center font-semibold text-[10px] ">Mon</div>
-          <div className="text-center font-semibold text-[10px] ">Tue</div>
-          <div className="text-center font-semibold text-[10px] ">Wed</div>
-          <div className="text-center font-semibold text-[10px] ">Thu</div>
-          <div className="text-center font-semibold text-[10px] ">Fri</div>
-          <div className="text-center font-semibold text-[10px] ">Sat</div>
-          <div className="text-center font-semibold text-[10px] ">Sun</div>
+          <div className="px-3 font-semibold text-[10px] ">Mon</div>
+          <div className="px-3 font-semibold text-[10px] ">Tue</div>
+          <div className="px-3 font-semibold text-[10px] ">Wed</div>
+          <div className="px-3 font-semibold text-[10px] ">Thu</div>
+          <div className="px-3 font-semibold text-[10px] ">Fri</div>
+          <div className="px-3 font-semibold text-[10px] ">Sat</div>
+          <div className="px-3 font-semibold text-[10px] ">Sun</div>
           {renderDays()}
         </div>
       </div>
@@ -202,8 +202,8 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
 
 
   return (
-    <div className="flex flex-col flex-1 bg-white rounded-md w-72">
-      <div className="flex justify-center w-full">
+    <div className="flex flex-col flex-1 bg-white rounded-md lg:w-72">
+      <div className="flex justify-end w-full">
         <FilterButton text={"Schedual Classes"} className={"px-4"} clickHandler={() => setaddModalOpen(true)} />
       </div>
       <div className="flex flex-col flex-1 gap-2">

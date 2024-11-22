@@ -63,10 +63,10 @@ const Navbar = ({ heading }) => {
   return (
     <>
       <div className="flex flex-1 h-20">
-        <div className={`flex justify-between flex-1 py-5 ${isBlurred ? "blur" : ""}`}>
-          <div className="flex flex-col">
+        <div className={`flex justify-end  md:justify-between flex-1 px-4 ${isBlurred ? "blur" : ""}`}>
+          <div className="md:flex flex-col hidden items-center justify-center md:justify-center md:items-start  ">
             {heading ?
-              <div>
+              <div className="ml-14">
                 <p className="font-medium text-3xl">{heading}</p>
               </div> :
               <div className="hidden md:flex flex-col">
@@ -82,14 +82,14 @@ const Navbar = ({ heading }) => {
                   }`}
                 onClick={toggleMail}
               >
-                <IoMailOutline />
+                <IoMailOutline  />
               </div>
               <div
                 className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${bell ? "bg-maroon text-white" : ""
                   }`}
                 onClick={togglebell}
               >
-                <CiBellOn />
+                <CiBellOn  />
               </div>
             </div>
             <div className="flex items-center gap-2">

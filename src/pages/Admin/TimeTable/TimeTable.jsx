@@ -27,10 +27,10 @@ const TimeTable = () => {
                   <Navbar heading={"Time Table"} />
                 </div>
                 <div
-                  className={`flex px-10 flex-col md:px-10 lg:px-0 lg:flex-row flex-1 gap-5 py-2 ${isBlurred ? "blur" : ""
+                  className={`flex px-4 flex-col md:px-10 lg:px-0 lg:flex-row flex-1 gap-5 py-2 ${isBlurred ? "blur" : ""
                     }`}
                 >
-                  <div className="flex flex-1 gap-4 bg-white">
+                  <div className="flex flex-1 gap-4 bg-white flex-col lg:flex-row">
                     <div className="flex-[4] border p-5 border-grey/30 rounded-md shadow-lg">
                       <MyCalendar data={data} isPending={isPending} refetch={refetch} isRefetching={isRefetching} />
                     </div>

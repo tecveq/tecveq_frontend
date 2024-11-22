@@ -68,11 +68,11 @@ const MarkAttendence = () => {
                 <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
                     <div className="flex flex-1">
                         <div
-                            className={`w-full h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
+                            className={`w-full h-screen flex-grow lg:ml-72`}
                         >
-                            <div className="h-screen pt-4">
+                            <div className="h-screen pt-1">
                                 <Navbar heading={"Mark Attendence"} />
-                                <div className={`${isBlurred ? "blur" : ""}`}>
+                                <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                                     <div className="py-4">
                                         <div className="flex items-center justify-between">
                                             <div className="">

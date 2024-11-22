@@ -16,7 +16,7 @@ const DataRows = ({
       <div
         style={{ backgroundColor: bgColor, cursor: "pointer" }}
         onClick={onClickFunction}
-        className={`md:py-5 py-2 md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey mt-2`}
+        className={` md:py-5 py-2 md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey mt-2`}
       >
         <p
           className={`w-full md:flex-[1] flex-[1] md:text-[16px] text-[14px] text-center md:text-left ${
@@ -31,14 +31,14 @@ const DataRows = ({
           }`}
         >
           <img
-            className=" rounded-full h-14 w-14 object-cover"
+            className=" rounded-full h-9 w-9 object-cover"
             src={studentProfile}
             alt="Student Profile"
           />{" "}
         </p>
         <p
           className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-[16px] text-[14px] md:text-left ${
-            header ? "font-semibold ml-14 text-center" : ""
+            header ? "font-semibold md:ml-14 text-center" : ""
           }`}
         >
           {studentName}

@@ -37,6 +37,7 @@ const Sidebar = () => {
     setAttendence(true);
     setAssignments(false);
     setTimetable(false);
+    setIsopen(false);
     navigate("/teacher/attendence");
   };
 
@@ -46,6 +47,7 @@ const Sidebar = () => {
     setAttendence(false);
     setReports(false);
     setClassroom(false);
+    setIsopen(false);
     setAssignments(false);
     setTimetable(false);
     navigate("/teacher/dashboard");
@@ -56,6 +58,7 @@ const Sidebar = () => {
     setQuizes(false);
     setReports(true);
     setClassroom(false);
+    setIsopen(false);
     setAssignments(false);
     setAttendence(false);
     setTimetable(false);
@@ -66,6 +69,7 @@ const Sidebar = () => {
     setDashboard(false);
     setQuizes(true);
     setReports(false);
+    setIsopen(false);
     setClassroom(false);
     setAssignments(false);
     setAttendence(false);
@@ -77,6 +81,7 @@ const Sidebar = () => {
     setDashboard(false);
     setQuizes(false);
     setReports(false);
+    setIsopen(false);
     setAttendence(false);
     setClassroom(false);
     setAssignments(true);
@@ -88,6 +93,7 @@ const Sidebar = () => {
     setDashboard(false);
     setQuizes(false);
     setReports(false);
+    setIsopen(false);
     setAttendence(false);
     setClassroom(false);
     setAssignments(false);
@@ -99,6 +105,7 @@ const Sidebar = () => {
     setDashboard(false);
     setAttendence(false);
     setQuizes(false);
+    setIsopen(false);
     setReports(false);
     setClassroom(true);
     setAssignments(false);
@@ -106,32 +113,34 @@ const Sidebar = () => {
     navigate("/teacher/classroom");
   };
 
-  const {setTeacherLogedIn} = useTeacher();
+  const { setTeacherLogedIn } = useTeacher();
 
   const handleLogoutClick = async () => {
     setLoading(true);
     localStorage.clear();
     setTeacherLogedIn(false);
     await userLogout();
+    setIsopen(false);
     navigate("/admin/login");
     setLoading(false);
   };
 
   const Menubar = () => (
     <div
-      className={`w-72 h-lvh shadow-lg bg-white z-50 fixed px-8 py-5 flex flex-col justify-between`}
+      className='w-72  shadow-lg  z-index  px-8 py-5 mt-4 bg-white md:h-screen '
     >
-      <div className="">
+      <div className=" h-full z-50">
         <div className="flex justify-center">
           <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
         </div>
-        <div className="flex flex-col gap-1 py-2 border-b border-b-black">
+        <div className="flex flex-col h-full gap-1 py-2 border-b border-b-black">
           <Custombutton
             icon={"home"}
             title={"Dashboard"}
             active={dashboard}
             onpress={handleDashboardClick}
           />
+
           <Custombutton
             icon={"time"}
             title={"Time Table"}
@@ -186,18 +195,18 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col">
       <div
-        className="px-3 py-3 cursor-pointer lg:hidden h-14"
+        className="px-3 py-3 cursor-pointer lg:hidden h-20 flex justify-center items-center"
         onClick={toggleSidebar}
       >
-        <div className="flex justify-center rounded-sm opacity-40 bg-maroon w-14">
-          <div className="flex flex-col gap-2 py-3">
-            <p className="w-9 bg-white h-0.5"></p>
-            <p className="w-9 bg-white h-0.5"></p>
-            <p className="w-9 bg-white h-0.5"></p>
+        <div className="flex justify-center bg-maroon w-9 h-fit">
+          <div className="flex flex-col gap-2 py-2">
+            <p className="w-6 bg-white h-0.5"></p>
+            <p className="w-6 bg-white h-0.5"></p>
+            <p className="w-6 bg-white h-0.5"></p>
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isopen ? "block" : "hidden"} fixed top-16`}>
+      <div className={` lg:hidden ${isopen ? "block" : "hidden"} fixed top-16`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden ">
