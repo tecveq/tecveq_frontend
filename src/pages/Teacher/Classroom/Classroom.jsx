@@ -62,24 +62,23 @@ const Classroom = () => {
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
             <div
-              className={`w-full h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
+              className={`w-full h-screen  flex-grow lg:ml-72`}
             >
-              <div className="h-screen pt-4">
+              <div className="h-screen pt-1">
                 <Navbar heading={"Classroom"} />
-                <div className={`${isBlurred ? "blur" : ""}`}>
+                <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                   <div className="py-4">
-                    <div className="flex items-center justify-between">
-                      <div className="">
-                        <p className="text-black/60"></p>
-                      </div>
-                      <div className="flex gap-2">
+                    <div className="flex items-center justify-end">
+                     
+                     
+                      <div className="flex flex-col w-full md:flex-row md:w-auto  gap-2">
                         <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                           <BiSearch />
                           <input
                             type="text"
                             value={searchText}
                             placeholder="Search"
-                            className="outline-none b"
+                            className="outline-none "
                             onChange={(e) => setSearchText(e.target.value)}
                           />
                         </div>

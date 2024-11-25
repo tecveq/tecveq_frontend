@@ -140,7 +140,7 @@ const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          className="w-[100%] h-[80vh]"
+          className="w-[99%] h-[80vh]"
           components={{
             toolbar: (toolbar) => (
               <CustomToolbar
@@ -151,6 +151,7 @@ const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
                 addModalOpen={addModalOpen}
                 setaddModalOpen={setaddModalOpen}
                 toolbar={toolbar}
+               
               />
             ),
             event: (e) => {

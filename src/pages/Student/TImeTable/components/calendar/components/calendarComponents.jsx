@@ -160,7 +160,7 @@ export const CustomToolbar = ({
     <>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <div className="flex items-center w-full gap-3 mt-4">
+          <div className="flex items-center w-full gap-2 mt-4">
             {/* <button
               className="px-3 py-1 rounded-md bg-custom-light-1"
               onClick={goToCurrent}

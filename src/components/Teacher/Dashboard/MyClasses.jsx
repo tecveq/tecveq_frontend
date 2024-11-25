@@ -52,12 +52,12 @@ const MyClasses = () => {
           <p className="flex text-xl font-medium">My Classes</p>
         </div>
         <div className="flex flex-col gap-1 px-3 py-8 bg-white rounded-lg custom-shadow">
-          <div className="flex items-center px-5 text-sm text-grey">
-            <div className="flex items-center flex-1">
+          <div className="flex items-center px-2 text-sm text-grey">
+            <div className="flex items-center flex-1 ml-20 ">
               <p>Subject</p>
             </div>
-            <div className="flex flex-1">
-              <div className="flex justify-center flex-1">
+            <div className="flex flex-1 gap-1 md:gap-3">
+              <div className="flex justify-start flex-1">
                 <p className="">Class</p>
               </div>
               <div className="flex justify-center flex-2">

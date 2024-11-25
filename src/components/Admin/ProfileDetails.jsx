@@ -112,7 +112,7 @@ const ProfileDetails = ({ onclose }) => {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-col justify-center px-8 ">
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-3">
               <div className="p-2 border-grey/10">
                 <FiEdit onClick={handleEditClick} className="cursor-pointer" />
               </div>

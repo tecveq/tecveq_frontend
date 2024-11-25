@@ -60,7 +60,7 @@ const ScheduledClasses = () => {
 
     return (
       <div
-        className={`flex flex-col  w-full px-6 text-xs border-l-2 gap-1 ${item.subjectID.name == "PF"
+        className={`flex flex-col  w-full px-6  text-xs border-l-2 gap-1 ${item.subjectID.name == "PF"
           ? "border-l-maroon bg-maroon_100"
           : item.subjectID.name == "ICT"
             ? "border-l-orange bg-orange_light"
@@ -196,13 +196,13 @@ const ScheduledClasses = () => {
         </div>
 
         <div className="relative grid grid-cols-7 gap-2 ">
-          <div className="text-center font-semibold text-[10px] ">Mon</div>
-          <div className="text-center font-semibold text-[10px] ">Tue</div>
-          <div className="text-center font-semibold text-[10px] ">Wed</div>
-          <div className="text-center font-semibold text-[10px] ">Thu</div>
-          <div className="text-center font-semibold text-[10px] ">Fri</div>
-          <div className="text-center font-semibold text-[10px] ">Sat</div>
-          <div className="text-center font-semibold text-[10px] ">Sun</div>
+          <div className="px-3 font-semibold text-[10px] ">Mon</div>
+          <div className="px-3 font-semibold text-[10px] ">Tue</div>
+          <div className="px-3 font-semibold text-[10px] ">Wed</div>
+          <div className="px-3 font-semibold text-[10px] ">Thu</div>
+          <div className="px-3 font-semibold text-[10px] ">Fri</div>
+          <div className="px-3 font-semibold text-[10px] ">Sat</div>
+          <div className="px-3 font-semibold text-[10px] ">Sun</div>
           {renderDays()}
         </div>
       </div>
@@ -215,7 +215,7 @@ const ScheduledClasses = () => {
         <div className="flex">
           <p className="flex text-lg font-medium">Scheduled Classes</p>
         </div>
-        <div className="flex flex-col gap-1 p-3 bg-white rounded-lg lg:flex-row">
+        <div className="flex flex-col gap-1 p-3 bg-white rounded-lg -z-50 lg:flex-row">
           <div className="flex-1 p-2 ">
             <CustomCalender setSelectedDateFromChild={setSelectedDate} classesArray={allClasses} />
           </div>

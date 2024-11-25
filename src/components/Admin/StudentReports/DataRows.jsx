@@ -19,7 +19,7 @@ const DataRows = ({
       <div
         style={{ backgroundColor: bgColor, cursor: "pointer" }}
         onClick={onClickFunction}
-        className={`md:py-5 py-2 md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey mt-2`}
+        className={`p-[0.5] md:py-5 py-2 md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey mt-2`}
       >
         <p
           className={`w-full md:flex-[1] flex-[1] text-sm text-center md:text-left ${
@@ -41,7 +41,7 @@ const DataRows = ({
         </p>
         <p
           className={`w-full md:flex-[3] my-1 md:my-0 text-center text-sm md:text-left ${
-            header ? "font-semibold ml-14 text-center" : ""
+            header ? "font-semibold md:ml-14  text-center" : ""
           }`}
         >
           {studentName}

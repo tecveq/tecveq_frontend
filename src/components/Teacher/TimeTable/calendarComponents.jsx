@@ -20,7 +20,7 @@ export const CustomEvent = ({ event, setevents }) => {
   };
 
   return (
-    <div className="relative flex flex-1 w-full overflow-visible">
+    <div className="relative flex flex-1 w-full overflow-visible ">
       <ViewEventDetailsModal
         event={event}
         setevents={setevents}
@@ -165,7 +165,7 @@ export const CustomToolbar = ({
     <>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <div className="flex items-center w-full gap-3 mt-4">
+          <div className="flex items-center w-full gap-2 mt-4">
             {/* <button
               className="px-3 py-1 rounded-md bg-custom-light-1"
               onClick={goToCurrent}
@@ -197,7 +197,7 @@ export const CustomToolbar = ({
             clickHandler={() => setaddModalOpen(!addModalOpen)}
           /> */}
           <div>
-            <div className="flex justify-between py-2 px-4 w-64 border-2 border-[#00000020] rounded-xl ">
+            <div className="flex justify-between py-2 px-4 w-full border-2 border-[#00000020] rounded-xl ">
               My Time Table 
               {/* <FaChevronDown size={20} color="black" /> */}
             </div>

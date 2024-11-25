@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
     return (
-        <div className='flex justify-center py-10 px-10'>
+        <div className='flex justify-center px-4 py-10 md:px-10'>
             <div className='flex flex-col gap-8'>
                 <div className='flex'>
                     <img src={IMAGES.logo} alt="" className='w-4/5 h-4/5 object-cover' />

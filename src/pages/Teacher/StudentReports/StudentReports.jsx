@@ -161,11 +161,11 @@ const StudentReports = () => {
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
         <div className="flex flex-1">
           <div
-            className={`w-full h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
+            className={`w-full h-screen flex-grow lg:ml-72`}
           >
-            <div className="h-screen pt-1s">
+            <div className="h-screen pt-1">
               <Navbar heading={"Student Reports"} />
-              <div className={`${isBlurred ? "blur" : ""}`}>
+              <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                 <div className="flex flex-row-reverse my-4">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-3 rounded-3xl">

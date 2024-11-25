@@ -93,11 +93,11 @@ const Quizzes = () => {
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
             <div
-              className={`w-full h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
+              className={`w-full h-screen lg:px-20 sm:px-10  flex-grow lg:ml-72`}
             >
               <div className="h-screen pt-1">
                 <Navbar heading={"Quizes"} />
-                <div className={`${isBlurred ? "blur" : ""}`}>
+                <div className={`px-3 ${isBlurred ? "blur" : ""}`}>
                   <div className="flex justify-end my-2">
                     <div
                       className="flex cursor-pointer bg-maroon rounded-3xl"

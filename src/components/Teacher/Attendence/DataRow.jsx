@@ -35,13 +35,13 @@ const DataRow = (props) => {
           >
             {props.subject}
           </p>
-          <p
+          {/* <p
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${
               props.header ? "font-semibold" : ""
             }`}
           >
             {props.classesSchedualled}
-          </p>
+          </p> */}
           <p
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${
               props.header ? "font-semibold" : ""
