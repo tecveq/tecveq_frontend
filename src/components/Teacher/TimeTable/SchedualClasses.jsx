@@ -71,39 +71,32 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
     const [selectedSubject, setSelctedSubject] = useState();
     const [selectedClassroom, setSelectedClassroom] = useState();
 
-    // "{\n  \"title\": \"this is topic\",\n
-    // \"startTime\": \"2024-02-18T09:00:13.386+00:00\",\n
-    // \"endTime\": \"2024-02-18T10:29:13.386+00:00\",\n
-    // \"oneTime\": true,\n  
-    // \"classroomID\": \"65cd344d324a603b2040a6bc\",\n
-    // \"subjectID\": \"65ccaae6fc6ffe2ac4fe3f88\",\n
-    // \"teacher\": {\n
-    // \"teacherID\": \"65cca68c9747c80928061e71\",\n
-    // \"status\": \"present\"\n
-    // }\n}",
+
 
     const [classObj, setClassObj] = useState({
       title: "",
       startTime: "",
-      startDate: "",
       endTime: "",
       oneTime: true,
+      meetingUrl: "",
       classroomID: "",
       subjectID: "",
+      startEventDate: "",
+      endEventDate: "",
       teacher: { teacherID: userData._id, status: "absent" }
     })
 
 
     const handleSaveDetails = () => { };
 
-    function convertToISOWithTimezoneOffset(startDate, startTime) {
-      const dateTimeString = `${startDate}T${startTime}:00.000Z`;
+    function convertToISOWithTimezoneOffset(startEventDate, startTime) {
+      const dateTimeString = `${startEventDate}T${startTime}:00.000Z`;
       return dateTimeString;
     }
 
     const handleSchedualClass = () => {
-      const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startDate, classObj.endTime));
-      const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startDate, classObj.startTime));
+      const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime));
+      const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.startTime));
 
       let myobj = {
         ...classObj,
@@ -113,7 +106,6 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
         endTime: isoFormattedStringEndTime
       };
 
-      console.log(new Date());
 
       console.log("my obj is : ", myobj);
       classCreateMutate.mutate(myobj);
@@ -175,6 +167,7 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
                   valuesObj={classObj}
                   setValue={setClassObj}
                 />
+
                 <CustomSelectable
                   label={"Select Class"}
                   options={allClassrooms}
@@ -182,16 +175,40 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
                   setSelectedOption={setSelectedClassroom}
                 />
                 <CusotmInput
-                  icon={"cap"}
-                  type={"date"}
-                  title={"Date"}
-                  name={"startDate"}
-                  selectable={false}
+                  type={"text"}
+                  name={"meetingUrl"}
+                  title={"Meeting URL"}
                   valuesObj={classObj}
-                  status={allowedEdit}
                   setValue={setClassObj}
-                  value={classObj.startDate}
+                  value={classObj.meetingUrl}
+                  status={allowedEdit}
                 />
+
+                <div>
+                  <CusotmInput
+                    icon={"cap"}
+                    type={"date"}
+                    title={"Start Event Date"}
+                    name={"startEventDate"}
+                    selectable={false}
+                    valuesObj={classObj}
+                    status={allowedEdit}
+                    setValue={setClassObj}
+                    value={classObj.startEventDate}
+                  />
+                  <CusotmInput
+                    icon={"cap"}
+                    type={"date"}
+                    title={"End Event Date"}
+                    name={"endEventDate"}
+                    selectable={false}
+                    valuesObj={classObj}
+                    status={allowedEdit}
+                    setValue={setClassObj}
+                    value={classObj.endEventDate}
+                  />
+                </div>
+
                 <div className="flex gap-2">
                   <CusotmInput
                     type={"time"}
@@ -215,7 +232,11 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
                     setValue={setClassObj}
                     value={classObj.endTime}
                   />
+
+
                 </div>
+
+
 
                 <div className="py-8 border-t border-black/20">
                   <div className="flex items-center gap-2">

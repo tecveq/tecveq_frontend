@@ -12,13 +12,15 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 
 const localizer = momentLocalizer(moment);
 
-const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
+const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
   const [loading, setloading] = useState(false);
   const [addModalOpen, setaddModalOpen] = useState(false);
   const [activeFilteredField, setactiveFilteredField] = useState(null);
-  
+
   const { allClasses, classesIsPending } = useTeacher();
 
+
+ 
 
   const dayRangeHeaderFormat = ({ start, end }, culture, local) =>
     local.format(start, "MMMM DD", culture) +
@@ -55,53 +57,53 @@ const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
     });
   };
 
-  const handleUpdateTime = () => {
-    let filteredEvents = eventsCopy.filter((event) => {
-      return event.start >= currentWeek.start && event.start <= currentWeek.end;
-    });
-    filteredEvents = filteredEvents.map((event) => {
-      if (moment(event.start).hours() == 0) {
-        event.start.setMinutes(1);
-      }
-      return event;
-    });
+  // const handleUpdateTime = () => {
+  //   let filteredEvents = eventsCopy.filter((event) => {
+  //     return event.start >= currentWeek.start && event.start <= currentWeek.end;
+  //   });
+  //   filteredEvents = filteredEvents.map((event) => {
+  //     if (moment(event.start).hours() == 0) {
+  //       event.start.setMinutes(1);
+  //     }
+  //     return event;
+  //   });
 
-    let times = filteredEvents.map((eve) => {
-      return moment(eve.start).hours();
-    });
-    const startTime = Math.min(...times);
+  //   let times = filteredEvents.map((eve) => {
+  //     return moment(eve.start).hours();
+  //   });
+  //   const startTime = Math.min(...times);
 
-    const endTime = Math.max(...times);
-    const mainStartDate = moment(filteredEvents[0]?.start);
-    const mainEndDate = moment(filteredEvents[0]?.start);
-    if (filteredEvents.length > 0) {
-      mainStartDate.set("hours", startTime);
-      mainStartDate.set("minutes", 0);
-      mainEndDate.set("hours", endTime);
-      mainEndDate.set("minutes", 59);
+  //   const endTime = Math.max(...times);
+  //   const mainStartDate = moment(filteredEvents[0]?.start);
+  //   const mainEndDate = moment(filteredEvents[0]?.start);
+  //   if (filteredEvents.length > 0) {
+  //     mainStartDate.set("hours", startTime);
+  //     mainStartDate.set("minutes", 0);
+  //     mainEndDate.set("hours", endTime);
+  //     mainEndDate.set("minutes", 59);
 
-      if (endTime - startTime <= 6) {
-        let gap = 6;
-        let startTimeAdd = 0;
-        let endTimeAdd = 0;
-        for (let i = 0; i < gap; i++) {
-          if (endTime + endTimeAdd >= 23) {
-            startTimeAdd += 1;
-          } else {
-            endTimeAdd += 1;
-          }
-        }
+  //     if (endTime - startTime <= 6) {
+  //       let gap = 6;
+  //       let startTimeAdd = 0;
+  //       let endTimeAdd = 0;
+  //       for (let i = 0; i < gap; i++) {
+  //         if (endTime + endTimeAdd >= 23) {
+  //           startTimeAdd += 1;
+  //         } else {
+  //           endTimeAdd += 1;
+  //         }
+  //       }
 
-        mainStartDate.set("hours", startTime - startTimeAdd);
-        mainEndDate.set("hours", endTime + endTimeAdd);
-      }
-    } else {
-      mainStartDate.set("hours", 7);
-      mainEndDate.set("hours", 14);
-    }
-    setminTime(mainStartDate);
-    setmaxTime(mainEndDate);
-  };
+  //       mainStartDate.set("hours", startTime - startTimeAdd);
+  //       mainEndDate.set("hours", endTime + endTimeAdd);
+  //     }
+  //   } else {
+  //     mainStartDate.set("hours", 7);
+  //     mainEndDate.set("hours", 14);
+  //   }
+  //   setminTime(mainStartDate);
+  //   setmaxTime(mainEndDate);
+  // };
 
   useEffect(() => {
     if (!isPending) {
@@ -116,12 +118,14 @@ const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
       console.log("all class filter is : ", allclassfilter);
       setevents(allclassfilter);
     }
-  // }, [currentWeek, isPending, isRefetching]);
+    // }, [currentWeek, isPending, isRefetching]);
   }, [currentWeek, isPending]);
 
   if (!classesIsPending) {
     console.log("all classes array is : ", allClasses);
   }
+
+
 
   return (
     <>
@@ -151,7 +155,7 @@ const MyCalendar = ({data, isPending, refetch, isRefetching}) => {
                 addModalOpen={addModalOpen}
                 setaddModalOpen={setaddModalOpen}
                 toolbar={toolbar}
-               
+
               />
             ),
             event: (e) => {

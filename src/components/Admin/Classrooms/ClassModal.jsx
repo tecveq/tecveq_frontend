@@ -133,6 +133,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
   const ref = useRef(null);
   const { toggleBlur } = useBlur();
+  const [headTeacher, setHeadTeacher] = useState(null);
 
   const { adminUsersData, allLevels, allSubjects } = useAdmin();
   const [selectedLevel, setSelectedLevel] = useState([]);
@@ -164,7 +165,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
   }, [selectedTeachers, selectedStudents])
 
   const handleCreateClass = async () => {
-    if (classroomName && selectedLevel && newSelectedStudents.length > 0 && newSelectedTeachers.length > 0) {
+    if (classroomName && selectedLevel && newSelectedStudents.length > 0 && newSelectedTeachers.length > 0 && headTeacher) {
 
       let tempstudents = newSelectedStudents.map((item) => item?._id);
 
@@ -176,7 +177,8 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
           levelID: selectedLevel._id,
           students: tempstudents,
           teachers: teacherArr,
-        }
+          headTeacher: headTeacher._id,  // Pass the head teacher ID
+        };
 
         console.log("data sending to backend is : ", data);
 
@@ -188,6 +190,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
       toast.error("Fill all fields first");
     }
   }
+
 
   const createClassroomMutation = useMutation({
     mutationKey: ["addclassroom"], mutationFn: async (data) => {
@@ -203,148 +206,161 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-8 w-[500px] px-20 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center flex ${open ? "" : "hidden"
+      className={`fixed z-10 mt-10 bg-white p-8 w-[500px] px-20 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center ${open ? "" : "hidden"
         }`}
     >
-      <div className="flex flex-1 gap-2">
-        <div className="flex flex-col w-full gap-4">
-          <div className="flex items-center justify-between">
-            <div className="flex justify-center flex-1 w-[fit] gap-2 items-center">
-              <p className="text-2xl font-semibold cursor-text">
-                {isEditTrue ? "Edit" : "Create"} Classroom
-              </p>
-            </div>
-            <div className="flex items-center gap-2 cursor-pointer">
-              <img
-                src={IMAGES.CloseIcon}
-                className="w-[15px] h-[15px]"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleBlur();
-                  setopen(false);
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="flex flex-col flex-1 gap-1">
-              <p className="text-xs font-semibold text-grey_700">Class name</p>
-              <div className="flex flex-col border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
-                <input
-                  className="w-full text-sm outline-none text-custom-gray-3"
-                  placeholder="Enter subject name"
-                  value={classroomName}
-                  onChange={(e) => setClassroomName(e.target.value)}
+      <div className="flex flex-1 ">
+        <div className="flex flex-col w-full gap-4 overflow-y-auto max-h-[80vh] custom-scrollbar">
+          <div className='pr-2'>
+            <div className="flex items-center justify-between">
+              <div className="flex justify-center flex-1 w-[fit] gap-2 items-center">
+                <p className="text-2xl font-semibold cursor-text">
+                  {isEditTrue ? "Edit" : "Create"} Classroom
+                </p>
+              </div>
+              <div className="flex items-center gap-2 cursor-pointer">
+                <img
+                  src={IMAGES.CloseIcon}
+                  className="w-[15px] h-[15px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleBlur();
+                    setopen(false);
+                  }}
                 />
               </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-3 flex-1">
-            <div className="flex flex-col flex-1 gap-1">
-              <p className="text-xs font-semibold text-grey_700">Select Level</p>
-              <Selectable
-                options={allLevels}
-                setSelectedOption={setSelectedLevel}
-              />
+            <div className="flex items-center gap-3">
+              <div className="flex flex-col flex-1 gap-1">
+                <p className="text-xs font-semibold text-grey_700">Classroom Name</p>
+                <div className="flex flex-col border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
+                  <input
+                    className="w-full text-sm outline-none text-custom-gray-3"
+                    placeholder="Enter subject name"
+                    value={classroomName}
+                    onChange={(e) => setClassroomName(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col">
-            <div className="flex flex-col flex-1 gap-1">
-              <p className="text-xs font-semibold text-grey_700">
-                Select Teachers
-              </p>
-              <MultiSelect
-                placeholder="Select Teachers"
-                onSelect={setSelectedTeachers}
-                options={adminUsersData.allTeachers}
-                onChange={handleMultiSelectTeachersChange}
-              />
+            <div className="flex items-center gap-3 flex-1">
+              <div className="flex flex-col flex-1 gap-1">
+                <p className="text-xs font-semibold text-grey_700">Select Level</p>
+                <Selectable
+                  options={allLevels}
+                  setSelectedOption={setSelectedLevel}
+                />
+              </div>
             </div>
-            <div className="flex justify-end py-1 text-xs text-maroon">
-              <p>Teachers Selected: {newSelectedTeachers.length}</p>
+
+            <div className="flex flex-col">
+              <div className="flex flex-col flex-1 gap-1">
+                <p className="text-xs font-semibold text-grey_700">Select Head Teacher</p>
+                <Selectable
+                  options={adminUsersData.allTeachers}  // Assuming the teachers are in this array
+                  setSelectedOption={setHeadTeacher}    // setHeadTeacher will be the state for the selected head teacher
+                />
+              </div>
             </div>
-          </div>
 
-          {newSelectedStudents && newSelectedTeachers.map((item) => {
 
-            const updateFunc = (val) => {
-              console.log("selected subject for a specific teacher is : ", val);
-              let teacherObj = {
-                teacher: item._id,
-                subject: val._id
-              }
-              let flag = true;
-              let tempArr = teacherArr;
-              let myarr = tempArr.map((item) => {
-                if (item.teacher == teacherObj.teacher) {
-                  item.subject = teacherObj.subject
-                  flag = false;
+            <div className="flex flex-col">
+              <div className="flex flex-col flex-1 gap-1">
+                <p className="text-xs font-semibold text-grey_700">
+                  Select Teachers
+                </p>
+                <MultiSelect
+                  placeholder="Select Teachers"
+                  onSelect={setSelectedTeachers}
+                  options={adminUsersData.allTeachers}
+                  onChange={handleMultiSelectTeachersChange}
+                />
+              </div>
+              <div className="flex justify-end py-1 text-xs text-maroon">
+                <p>Teachers Selected: {newSelectedTeachers.length}</p>
+              </div>
+            </div>
+
+            {newSelectedStudents && newSelectedTeachers.map((item) => {
+
+              const updateFunc = (val) => {
+                console.log("selected subject for a specific teacher is : ", val);
+                let teacherObj = {
+                  teacher: item._id,
+                  subject: val._id
                 }
-                return item;
-              })
+                let flag = true;
+                let tempArr = teacherArr;
+                let myarr = tempArr.map((item) => {
+                  if (item.teacher == teacherObj.teacher) {
+                    item.subject = teacherObj.subject
+                    flag = false;
+                  }
+                  return item;
+                })
 
-              if (flag) {
-                myarr.push(teacherObj);
+                if (flag) {
+                  myarr.push(teacherObj);
+                }
+
+                setTeachersArr(myarr);
+
+                console.log("temp arr is : ", myarr);
               }
 
-              setTeachersArr(myarr);
-
-              console.log("temp arr is : ", myarr);
-            }
-
-            return (
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col flex-1 gap-1">
-                  <p className="text-xs font-semibold text-grey_700">Select subject for teachers</p>
-                  <div>
-                    <div className='flex gap-4 items-center'>
-                      <p>{item?.name} </p>
-                      <div className='flex-1'>
-                        <Selectable
-                          options={allSubjects}
-                          setSelectedOption={updateFunc}
-                        />
+              return (
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col flex-1 gap-1">
+                    <p className="text-xs font-semibold text-grey_700">Select subject for teachers</p>
+                    <div>
+                      <div className='flex gap-4 items-center'>
+                        <p>{item?.name} </p>
+                        <div className='flex-1'>
+                          <Selectable
+                            options={allSubjects}
+                            setSelectedOption={updateFunc}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              )
+            })}
+
+
+            <div className="flex flex-col">
+              <div className="flex flex-col flex-1 gap-1">
+                <p className="text-xs font-semibold text-grey_700">
+                  Select Students
+                </p>
+                <MultiSelect
+                  placeholder="Select Students"
+                  onSelect={setSelectedStudents}
+                  options={adminUsersData.allStudents}
+                  onChange={handleMultiSelectStudentsChange}
+                />
               </div>
-            )
-          })}
-
-
-          <div className="flex flex-col">
-            <div className="flex flex-col flex-1 gap-1">
-              <p className="text-xs font-semibold text-grey_700">
-                Select Students
-              </p>
-              <MultiSelect
-                placeholder="Select Students"
-                onSelect={setSelectedStudents}
-                options={adminUsersData.allStudents}
-                onChange={handleMultiSelectStudentsChange}
-              />
+              <div className="flex justify-end py-1 text-xs text-maroon">
+                <p>Students Selected: {newSelectedStudents.length}</p>
+              </div>
             </div>
-            <div className="flex justify-end py-1 text-xs text-maroon">
-              <p>Students Selected: {newSelectedStudents.length}</p>
-            </div>
+
+            {createClassroomMutation.isPending && <div><Loader /></div>}
+
+            {!createClassroomMutation.isPending && <div className="flex items-center gap-3">
+              <div
+                onClick={() => {
+                  handleCreateClass();
+                }}
+                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
+              >
+                <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
+              </div>
+            </div>}
           </div>
-
-          {createClassroomMutation.isPending && <div><Loader /></div>}
-
-          {!createClassroomMutation.isPending && <div className="flex items-center gap-3">
-            <div
-              onClick={() => {
-                handleCreateClass();
-              }}
-              className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
-            >
-              <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
-            </div>
-          </div>}
 
         </div>
       </div>

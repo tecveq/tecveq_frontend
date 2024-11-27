@@ -149,7 +149,7 @@ export const CustomToolbar = ({
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between gap-6 mb-6">
         <div>
           <div className="flex items-center w-full gap-2 mt-4">
             {/* <button
@@ -188,12 +188,12 @@ export const CustomToolbar = ({
                 <option value={""}>
                   Search Teacher
                 </option>
-                {/* {adminUsersData?.allTeachers?.map((item) => (
-                  <option key={JSON.stringify(item)} value="">{item?.name}</option>
-                ))} */}
+                {adminUsersData?.allTeachers?.map((item) => (
+                  <option key={JSON.stringify(item)} className="p-2" value="">{item?.name}</option>
+                ))}
               </select>
             </div>
-            <div className="py-1 text-xs text-black/70 flex-wrap">
+            <div className="py-1 mt-3 text-xs text-black/70 flex-wrap">
               <p>Selcet the time table you want to view</p>
             </div>
           </div>

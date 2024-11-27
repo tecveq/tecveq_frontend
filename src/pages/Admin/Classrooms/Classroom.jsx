@@ -79,7 +79,7 @@ const Classroom = () => {
                           />
                         </div>
                         <p onClick={onAddClass} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-maroon rounded-3xl">
-                          Add Class
+                          Add Classroom
                         </p>
                       </div>
                     </div>
@@ -95,7 +95,7 @@ const Classroom = () => {
                       students={"Students"}
                       teachers={"Teachers"}
                       createdBy={"Created By"}
-                      classname={"Class Name"}
+                      classname={"Classroom"}
                       classesSchedualled={"Classes Scheduled"}
                     />
 
