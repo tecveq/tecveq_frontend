@@ -220,7 +220,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
           </div>
           <div className="flex items-center gap-3">
             <div className="flex flex-col flex-1 gap-1">
-              <p className="text-xs font-semibold text-grey_700">Class name</p>
+              <p className="text-xs font-semibold text-grey_700">Classroom name</p>
               <CusotmInput label={"ClassName"}
                 type={"text"}
                 value={className}

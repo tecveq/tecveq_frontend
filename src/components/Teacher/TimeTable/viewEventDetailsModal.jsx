@@ -42,7 +42,7 @@ export default function ViewEventDetailsModal({
     console.log("dell event method");
   };
 
-  const handleTeacherAttendance = async() =>{
+  const handleTeacherAttendance = async () => {
     console.log("teacher attendnece clicked");
     const respo = await teacherPresent(event._id);
     console.log("teaccher attendance result : ", respo);
@@ -90,6 +90,10 @@ export default function ViewEventDetailsModal({
       toast.success("Class Cancelled successfully!");
     }
   };
+
+
+  console.log(event ,"Class Cancelled");
+  
 
   return (
     <div
@@ -231,8 +235,10 @@ export default function ViewEventDetailsModal({
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-3" onClick={handleTeacherAttendance}>
-            <a href={event.meetLink} target="_blank " className="w-full">
+          <div className="flex items-center gap-3"
+          // onClick={handleTeacherAttendance}
+          >
+            <a href={event.meetingUrl} target="_blank " className="w-full">
               <div
                 className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon"
               >
@@ -241,7 +247,7 @@ export default function ViewEventDetailsModal({
               </div>
             </a>
           </div>
-          
+
           {loading && <div><Loader /> </div>}
 
           {!loading &&
