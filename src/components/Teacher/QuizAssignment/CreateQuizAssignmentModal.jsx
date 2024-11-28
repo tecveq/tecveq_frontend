@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Loader from "../../../utils/Loader";
 import IMAGES from "../../../assets/images";
 
@@ -62,7 +62,7 @@ const CreateQuizAssignmentModal = ({
           subjectId = item.subject;
         }
       })
-      
+
       let fileUrl = await uploadFile(selectedFile, "deliverable");
 
       let fileObj = {
@@ -77,7 +77,7 @@ const CreateQuizAssignmentModal = ({
         ...quizAssignmentDataObj,
         classroomID: JSON.parse(selectedClassroom)._id,
         subjectID: subjectId,
-        files:filesArr,
+        files: filesArr,
         dueDate: (QADate && QATime) ? QADate + "T" + QATime + ":00.000Z" : new Date(Date.now()).toISOString()
       }
 
@@ -127,6 +127,10 @@ const CreateQuizAssignmentModal = ({
     setLoading(false);
   }
 
+  useEffect(() => {
+
+  }, [])
+
 
   const assignmentUpdateMutate = useMutation({
     mutationFn: async (dataobj) => await editAssignment(dataobj, data?._id),
@@ -135,7 +139,7 @@ const CreateQuizAssignmentModal = ({
       await refetch();
       toggleBlur();
       setopen(false);
-      if(error){}{
+      if (error) { } {
         return toast.success("Assignment updated successfully");
       }
     }
@@ -149,8 +153,8 @@ const CreateQuizAssignmentModal = ({
       await refetch();
       toggleBlur();
       setopen(false);
-      if(error){
-      }else{
+      if (error) {
+      } else {
         return toast.success("Assignment created successfully");
       }
     }
@@ -164,7 +168,7 @@ const CreateQuizAssignmentModal = ({
       await refetch();
       toggleBlur();
       setopen(false);
-      if(error){}else{
+      if (error) { } else {
         return toast.success("Quiz updated successfully");
       }
     }
@@ -177,7 +181,7 @@ const CreateQuizAssignmentModal = ({
       await refetch();
       toggleBlur();
       setopen(false);
-      if(error){}else{ 
+      if (error) { } else {
         return toast.success("Quiz created successfully");
       }
     }
@@ -186,7 +190,7 @@ const CreateQuizAssignmentModal = ({
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-8 w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
+      className={`fixed z-10 mt-10 bg-white p-8 w-full md:w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
         }`}
     >
       <div className="flex gap-2">

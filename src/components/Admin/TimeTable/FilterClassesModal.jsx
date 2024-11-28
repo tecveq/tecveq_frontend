@@ -132,7 +132,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
 
     return (
       <div className="text-black">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between my-4">
           <p
             className=""
             onClick={() => setSelectedDate(selectedDate.subtract(1, "month"))}
@@ -148,13 +148,13 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
           </p>
         </div>
         <div className="flex w-full gap-2 my-3 text-xs">
-          <div className="flex justify-around flex-1 w-full">
-            <div className="flex px-1 py-2 border rounded-lg border-grey/50">
-              <input type="date" value={filterStartDate} onChange={(e) => setFilterSatrtDate(e.target.value)} placeholder="Jan 19, 2024" className={"w-24 outline-none "} />
+          <div className="flex justify-around md:justify-between flex-1 gap-x-2 w-full">
+            <div className="flex px-4 md:px-1 py-2 w-full border rounded-lg border-grey/50">
+              <input type="date" value={filterStartDate} onChange={(e) => setFilterSatrtDate(e.target.value)} placeholder="Jan 19, 2024" className={"w-full md:w-28 outline-none "} />
             </div>
             <p className="flex items-center">-</p>
-            <div className="flex px-1 py-2 border rounded-lg border-grey/50">
-              <input type="date" value={filterEndDate} onChange={(e) => setFilterEndDate(e.target.value)} placeholder="Jan 19, 2024" className={"w-24 outline-none "} />
+            <div className="flex px-4 md:px-1 py-2 w-full border rounded-lg border-grey/50">
+              <input type="date" value={filterEndDate} onChange={(e) => setFilterEndDate(e.target.value)} placeholder="Jan 19, 2024" className={"w-full md:w-28 outline-none "} />
             </div>
           </div>
         </div>
@@ -202,7 +202,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
         <FilterButton text={"Schedual Classes"} className={"px-4"} clickHandler={() => setaddModalOpen(true)} />
       </div>
       <div className="flex flex-col flex-1 gap-2">
-        <div className="flex flex-col gap-1 p-3 bg-white rounded-lg">
+        <div className="flex flex-col gap-1 bg-white rounded-lg">
           <div className="flex-1 p-2 ">
             <CustomCalender
               classesArray={classData}

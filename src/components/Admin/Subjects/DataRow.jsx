@@ -56,7 +56,7 @@ const DataRow = (props) => {
               {props.header? props.levelID: level}
             </p>
           </div>
-          <div className="flex mr-5 cursor-pointer">
+          <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
             <p
               onClick={() => {
                 toggleMenu();

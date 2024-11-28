@@ -12,15 +12,14 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 
 const localizer = momentLocalizer(moment);
 
-const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
+const MyCalendar = ({ data, isPending, refetch }) => {
   const [loading, setloading] = useState(false);
   const [addModalOpen, setaddModalOpen] = useState(false);
   const [activeFilteredField, setactiveFilteredField] = useState(null);
 
-  const { allClasses, classesIsPending } = useTeacher();
 
 
- 
+
 
   const dayRangeHeaderFormat = ({ start, end }, culture, local) =>
     local.format(start, "MMMM DD", culture) +
@@ -121,9 +120,9 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
     // }, [currentWeek, isPending, isRefetching]);
   }, [currentWeek, isPending]);
 
-  if (!classesIsPending) {
-    console.log("all classes array is : ", allClasses);
-  }
+
+
+ 
 
 
 

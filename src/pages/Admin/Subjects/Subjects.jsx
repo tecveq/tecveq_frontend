@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../../../utils/Loader";
 import Navbar from "../../../components/Admin/Navbar";
 import DataRow from "../../../components/Admin/Subjects/DataRow";
@@ -20,7 +20,7 @@ const Subjects = () => {
     const [createSubjectModal, setCreateSubjectModal] = useState(false);
 
     const { isBlurred, toggleBlur } = useBlur();
-    const { allSubjects, subjectsRefetch, subjectsIsPending, allLevels } = useAdmin();
+    const { allSubjects, subjectsRefetch, subjectsIsPending, allLevels, levelsRefetch } = useAdmin();
 
     if (!subjectsIsPending) {
         console.log("all subjects are : ", allSubjects);
@@ -50,15 +50,20 @@ const Subjects = () => {
         }
     });
 
+    useEffect(() => {
+        subjectsRefetch();
+        levelsRefetch();
+    }, [])
+
     return (
-        subjectsIsPending ?  <div className="flex flex-1"> <Loader /> </div> :
+        subjectsIsPending ? <div className="flex flex-1"> <Loader /> </div> :
             <>
                 <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
                     <div className="flex flex-1">
                         <div
                             className={`w-full h-screen lg:px-10 sm:px-10 px-3 flex-grow lg:ml-72`}
                         >
-                            <div className="min-h-screenn pt-6">
+                            <div className="min-h-screenn md:pt-6">
                                 <Navbar heading={"Subject"} />
                                 <div className={`${isBlurred ? "blur" : ""}`}>
                                     <div className="py-2">
@@ -66,8 +71,8 @@ const Subjects = () => {
                                             <div className="">
                                                 <p className="text-black/60"></p>
                                             </div>
-                                            <div className="flex gap-2">
-                                                <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
+                                            <div className="flex gap-2 flex-wrap md:flex space-y-5 md:space-y-0">
+                                                <div className="flex w-full md:w-auto items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                                                     <BiSearch />
                                                     <input
                                                         type="text"

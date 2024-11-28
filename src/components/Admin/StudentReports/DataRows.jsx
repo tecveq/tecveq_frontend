@@ -15,11 +15,11 @@ const DataRows = ({
   onClickFunction,
 }) => {
   return (
-    <div className="min-w-full">
+    <div className=" min-w-full">
       <div
         style={{ backgroundColor: bgColor, cursor: "pointer" }}
         onClick={onClickFunction}
-        className={`p-[0.5] md:py-5 py-2 md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey mt-2`}
+        className={`p-[0.5] w-full md:py-5 py-2 md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey mt-2`}
       >
         <p
           className={`w-full md:flex-[1] flex-[1] text-sm text-center md:text-left ${

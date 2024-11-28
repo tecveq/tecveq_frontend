@@ -55,7 +55,7 @@ const QuizAssignmentRow = (props) => {
             </p>
           </p>
         </div>
-        <div className="flex mr-5 cursor-pointer">
+        <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
           <p
             onClick={() => { setModalOpen(!modalOpen); props.toggleAssignmentMenu(props.data) }}
             className={`w-full my-1 md:my-0 text-center md:text-center md:text-[20px] text-[14px] ${props.header ? "hidden" : ""

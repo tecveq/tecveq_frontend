@@ -65,8 +65,8 @@ const Navbar = ({ heading }) => {
     <>
       <div className="flex flex-1 h-20">
         <div className={`flex justify-between flex-1 py-5 ${isBlurred ? "blur" : ""}`}>
-          <div className="flex flex-col">
-            <p className="text-2xl font-medium">{heading} </p>
+          <div className="flex flex-col justify-center">
+            <p className="text-sm  ml-10 md:ml-0 md:text-2xl font-medium">{heading} </p>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex gap-4">
@@ -86,7 +86,7 @@ const Navbar = ({ heading }) => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <p className="font-medium">{userData.name}</p>
+              <p className="font-medium hidden md:block">{userData.name}</p>
               <img
                 src={userData.profilePic || profile}
                 alt=""
@@ -105,6 +105,7 @@ const Navbar = ({ heading }) => {
                 onSettingsClick={onSettingsClick}
                 onLogoutClick={onLogoutClick}
                 dashboard={true}
+                userData={userData}
               />}
           </div>
         </div>

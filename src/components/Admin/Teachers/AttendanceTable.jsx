@@ -21,9 +21,9 @@ const AttendanceTable = ({ data }) => {
 
     console.log("data in table attendance is : ", data);
     return (
-        <div className="flex flex-1">
-            <div className="flex flex-col flex-1 gap-2">
-                <div className="flex flex-1 flex-col border-t-maroon bg-maroon_10">
+        <div className="flex w-full md:flex-1">
+            <div className="flex flex-col w-full md:flex-1 gap-2">
+                <div className="flex flex-1  flex-col w-full border-t-maroon bg-maroon_10">
                     <div className='flex py-3'>
                         <td className="flex-[1] flex justify-center md:text-[15px] text-[13px]">Sr No.</td>
                         <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Status</td>
@@ -31,7 +31,7 @@ const AttendanceTable = ({ data }) => {
                         <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Time</td>
                         <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Class</td>
                     </div>
-                    <div className='flex flex-1'>
+                    <div className='flex w-full md:flex-1'>
 
                         <table className="flex flex-col flex-1 bg-white rounded-lg table-fixed">
                             <tbody className="flex flex-col">
@@ -69,8 +69,8 @@ const AttendanceTable = ({ data }) => {
 
                         <div className="flex items-center justify-center  bg-white ">
 
-                            <div className="flex flex-col gap-2">
-                                <div className="flex w-[200px] h-[200px]">
+                            <div className="flex flex-col gap-2 w-full">
+                                <div className=" hidden md:flex  md:w-[200px] md:h-[200px]">
                                     {data.classData.length == 0 ?
                                         <></> :
                                         <Doughnut

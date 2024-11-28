@@ -109,11 +109,11 @@ const ManageUsers = () => {
             <div
               className={`w-full h-screen lg:px-10 sm:px-6 px-3 flex-grow lg:ml-72`}
             >
-              <div className="h-screen pt-4">
+              <div className="h-screen md:pt-4">
                 <Navbar heading={"Manage Users"} />
                 <div className={`${isBlurred ? "blur" : ""}`}>
                   <div className="flex flex-row-reverse my-4">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center flex-wrap gap-4">
                       <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
                         <IoSearch />
                         <input
