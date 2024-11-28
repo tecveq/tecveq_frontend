@@ -22,9 +22,9 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md h-9 w-full !overflow-hidden ${event.teacher.teacherID.name
-          ? "bg-maroon/10 text-black"
-          : "bg-green_dark/10 text-black"
+        className={`text-xs flex  justify-center text-center items-center rounded-md h-9 md:h-10 w-full !overflow-hidden ${event.teacher.teacherID.name
+          ? "bg-maroon/10  text-black flex flex-col p-1"
+          : "bg-green_dark/10  text-black"
           }`}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
@@ -32,14 +32,14 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
       >
         <img
           src={IMAGES.MathIcon}
-          className="object-contain w-7 h-7"
+          className="object-contain hidden md:block w-7 h-7 md:h-4 md:w-4"
           alt="subject img"
         />
         <div className="flex flex-col">
-          <p className="text-xs text-wrap">
+          <p className="text-[10px] md:text-[7px] md:h-[10px] text-wrap">
             {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
           </p>
-          <p className="text-[9px] text-wrap text-black/70">
+          <p className="text-[7px] md:text-[7px] md:h-[10px] text-wrap text-black/70">
             {event.subjectID.name ? event.subjectID.name : ""}
           </p>
         </div>

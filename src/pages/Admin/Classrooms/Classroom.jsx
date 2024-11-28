@@ -59,7 +59,7 @@ const Classroom = () => {
             <div
               className={`w-full h-screen lg:px-10 sm:px-10 px-3 flex-grow lg:ml-72`}
             >
-              <div className="min-h-screenn pt-6">
+              <div className="min-h-screenn md:pt-6">
                 <Navbar heading={"Classroom"} />
                 <div className={`${isBlurred ? "blur" : ""}`}>
                   <div className="py-2">
@@ -67,8 +67,8 @@ const Classroom = () => {
                       <div className="">
                         <p className="text-black/60"></p>
                       </div>
-                      <div className="flex gap-2">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
+                      <div className="flex gap-2 flex-wrap md:flex space-y-5 md:space-y-0 w-full md:w-auto">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl w-full md:w-auto">
                           <BiSearch />
                           <input
                             className="outline-none b"

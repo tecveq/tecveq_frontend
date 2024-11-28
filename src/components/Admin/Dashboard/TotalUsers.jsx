@@ -18,7 +18,7 @@ const TotalUsers = () => {
                         trailWidth={9}
                     />
                     <div className='absolute flex flex-col items-center'>
-                        <span className='text-sm md:text-xs'>{"users"}</span>
+                        <span className='text-sm md:text-xs'>{title}</span>
                         <span className='text-[10px] font-medium md:text-lg'>{value}</span>
                     </div>
                 </div>
@@ -33,7 +33,7 @@ const TotalUsers = () => {
         <div className='flex flex-1'>
             <div className='flex flex-col gap-4 flex-1'>
                 <p className='text-xl font-medium'>Total Users</p>
-                <div className='flex gap-2 flex-1'>
+                <div className='grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-2'>
                     <UsersCard value={adminUsersData.allStudents.length} title={"Students"} />
                     <UsersCard value={adminUsersData.allTeachers.length} title={"Teachers"} />
                     <UsersCard value={adminUsersData.allParents.length} title={"Parents"} />

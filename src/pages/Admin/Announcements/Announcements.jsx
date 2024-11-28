@@ -106,13 +106,13 @@ const Announcements = () => {
                         </div>
                         <div className={`flex ${isBlurred ? "blur" : ""} `}>
                             <div className='flex flex-col gap-4 flex-1'>
-                                <div className='flex justify-between items-center'>
+                                <div className='flex justify-between flex-wrap space-y-5 lg:space-y-0  items-center'>
                                     <div className='flex gap-2'>
                                         <p onClick={announceClick} className={`cursor-pointer py-2 font-medium px-2 ${annouce ? "border-b-2 border-maroon" : "text-black/50"} `}>Announcements</p>
                                         <p onClick={quoteClick} className={`cursor-pointer py-2 font-medium px-2 ${annouce ? "text-black/50" : "border-b-2 border-maroon"} `}>Motivational Quotes</p>
                                     </div>
-                                    <div className='flex gap-2 text-sm'>
-                                        <div className='flex gap-2 border bg-white border-black/20 rounded-3xl py-1 px-2 items-center'>
+                                    <div className='flex gap-2 text-sm mb-5'>
+                                        <div className='flex gap-2 border bg-white border-black/20 rounded-3xl py-1 px-2 items-center '>
 
                                             <FaSearch />
                                             <input

@@ -50,7 +50,7 @@ const Teachers = () => {
           <div
             className={`w-full h-screen lg:px-10 sm:px-10 px-3 flex-grow lg:ml-72`}
           >
-            <div className="h-screen pt-6">
+            <div className="h-screen md:pt-6">
               <Navbar heading={"Teachers"} />
               <div className={`${isBlurred ? "blur" : ""}`}>
                 <div className="flex flex-row-reverse my-4">

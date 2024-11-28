@@ -35,7 +35,7 @@ const TimeTable = () => {
                       <MyCalendar data={data} isPending={isPending} refetch={refetch} isRefetching={isRefetching} />
                     </div>
                     <div className="flex-1 p-5 border rounded-md shadow-lg border-grey/30">
-                      <SchedualClasses classRefetch={refetch} data={data} isPending={isPending} />
+                      <SchedualClasses refetch={refetch} data={data} isPending={isPending} />
                     </div>
                   </div>
                 </div>

@@ -33,29 +33,30 @@ const StudentReports = () => {
             <div
               className={`w-full h-screen lg:px-10 sm:px-10 px-3 flex-grow lg:ml-72`}
             >
-              <div className="h-screen pt-6">
+              <div className="h-screen md:pt-6">
                 <Navbar heading={"Student Details"} />
                 <div className={`${isBlurred ? "blur" : ""}`}>
-                  <div className="flex flex-row-reverse my-4">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
-                        <select value={classFilter} onChange={(e) => setClassFilter(e.target.value)} className="bg-transparent outline-none w-52">
-                          <option value="">Select Class</option>
-                          {allLevels.map((item) => {
-                            return <option className="text-black" value={JSON.stringify(item)}>{item.name}</option>
-                          })}
-                        </select>
-                      </div>
+                  <div className="flex flex-row-reverse my-4 w-full">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-4 md:gap-0">
                       <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
                         <IoSearch />
                         <input
                           type="text"
                           value={searchText}
                           placeholder="Search"
-                          className="bg-transparent outline-none"
+                          className="bg-transparent outline-none w-full"
                           onChange={(e) => setSearchText(e.target.value)}
                         />
                       </div>
+                      <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
+                        <select value={classFilter} onChange={(e) => setClassFilter(e.target.value)} className="bg-transparent outline-none w-full md:w-52">
+                          <option value="">Select Class</option>
+                          {allLevels.map((item) => {
+                            return <option className="text-black" value={JSON.stringify(item)}>{item.name}</option>
+                          })}
+                        </select>
+                      </div>
+
                     </div>
                   </div>
                   <div className="mt-4 h-[70%] overflow-auto">

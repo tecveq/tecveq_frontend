@@ -57,7 +57,7 @@ const DataRow = (props) => {
             {props.createdBy}
           </p>
         </div>
-        <div className="flex mr-5 cursor-pointer">
+        <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
           <p
             onClick={() => {
               props.toggleClassMenu(props);

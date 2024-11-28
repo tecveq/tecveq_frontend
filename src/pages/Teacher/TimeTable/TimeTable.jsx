@@ -15,6 +15,8 @@ const TimeTable = () => {
     queryFn: getAllClasses,
   });
 
+
+
   return (
     <div className="flex flex-1 min-h-screen bg-[#f9f9f9]/50 font-poppins">
       <div className="flex flex-1 gap-4">

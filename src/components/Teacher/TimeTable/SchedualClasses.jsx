@@ -57,7 +57,7 @@ const CusotmInput = ({ valuesObj, value, type, name, status, title, setValue }) 
   );
 };
 
-const SchedualClasses = ({ classesRefetch, data, isPending }) => {
+const SchedualClasses = ({ refetch, data, isPending }) => {
 
   const SchedualClassesComponent = ({ onclose, isOpen, setIsOpen }) => {
     const [allowedEdit, setAllowedEdit] = useState(false);
@@ -117,7 +117,7 @@ const SchedualClasses = ({ classesRefetch, data, isPending }) => {
       onSettled: async (data, error) => {
         if (!error) {
           toast.success("Class created successfully");
-          await classesRefetch();
+          refetch();
           setaddEventModalOpen(false);
         }
       }

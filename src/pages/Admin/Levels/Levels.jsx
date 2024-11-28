@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../../../utils/Loader";
 import Navbar from "../../../components/Admin/Navbar";
 import DataRow from "../../../components/Admin/Levels/DataRow";
@@ -18,13 +18,17 @@ const Levels = () => {
     const [searchText, setSearchText] = useState("");
     const [isLevelMenuOpen, setIsLevelMenuOpen] = useState(false);
     const [createLevelModal, setCreateLevelModal] = useState(false);
-    
+
     const { isBlurred, toggleBlur } = useBlur();
     const { allLevels, levelsRefetch, levelIsPending } = useAdmin();
 
     const toggleLevelMenuOpen = () => {
         setIsLevelMenuOpen(!isLevelMenuOpen);
     };
+
+    useEffect(() => {
+        levelsRefetch()
+    }, [])
 
     const onAddLevel = () => {
         setCreateLevelModal(!createLevelModal);
@@ -53,7 +57,7 @@ const Levels = () => {
                         <div
                             className={`w-full h-screen lg:px-10 sm:px-10 px-3 flex-grow lg:ml-72`}
                         >
-                            <div className="min-h-screenn pt-6">
+                            <div className="min-h-screenn md:pt-6">
                                 <Navbar heading={"Level"} />
                                 <div className={`${isBlurred ? "blur" : ""}`}>
                                     <div className="py-2">
