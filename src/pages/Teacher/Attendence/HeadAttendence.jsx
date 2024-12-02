@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Loader from "../../../utils/Loader";
 import Navbar from "../../../components/Teacher/Navbar";
-import DataRow from "../../../components/Teacher/Attendence/DataRow";
+import DataRow from "../../../components/Teacher/Classroom/DataRow";
 import ClassMenu from "../../../components/Teacher/Classroom/ClassMenu";
 import ClassModal from "../../../components/Teacher/Classroom/ClassModal";
 
@@ -9,20 +9,16 @@ import { BiSearch } from "react-icons/bi";
 import { useBlur } from "../../../context/BlurContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteClassroom } from "../../../api/Admin/classroomApi";
-import { getTodayClasses } from "../../../api/Teacher/Attendence";
 import { getAllClassrooms } from "../../../api/Teacher/ClassroomApi";
-import { useNavigate } from "react-router-dom";
 import { useUser } from "../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
-const Attendence = () => {
+const HeadAttendence = () => {
   const [isClassMenuOpen, setIsClassMenuOpen] = useState(false);
   const [editClassData, setEditClassData] = useState({});
-  const navigate = useNavigate()
   const [editModal, setEditModal] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const { userData } = useUser();
-  const [head, setHead] = useState()
-  const { data, isPending, refetch, isRefetching, isLoading } = useQuery({ queryKey: ["today-classes"], queryFn: getTodayClasses });
+  const [classOfHeadTeacher, setClassOfHeadTeacher] = useState()
 
   const toggleClassMenuOpen = (data) => {
     console.log("data is in menu ", data)
@@ -41,7 +37,9 @@ const Attendence = () => {
 
 
   const { isBlurred, toggleBlur } = useBlur();
-
+  const { userData } = useUser();
+  const navigate = useNavigate();
+  console.log(userData, "Its Me User")
   const [createClassModal, setCreateClassModal] = useState(false);
 
   const onAddClass = () => {
@@ -59,6 +57,25 @@ const Attendence = () => {
   });
 
 
+  const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassrooms });
+
+
+  console.log(data, "dats stored in")
+  useEffect(() => {
+    if (data) {
+      const HeadTeacherClass = data.filter((item) =>
+        item.teachers.some(
+          (teach) => teach.type === "head" || item.teacher === userData._id
+        )
+      );
+      setClassOfHeadTeacher(HeadTeacherClass)
+
+      console.log(HeadTeacherClass, "Classroom Of All Head");
+
+    }
+  }, [data, userData]);
+
+
 
   return (
     isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
@@ -66,39 +83,30 @@ const Attendence = () => {
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
             <div
-              className={`w-full h-screen flex-grow lg:ml-72`}
+              className={`w-full h-screen  flex-grow lg:ml-72`}
             >
-              <div className="h-screen">
-                <Navbar heading={"Attendence"} />
+              <div className="h-screen pt-1">
+                <Navbar heading={"Classroom"} />
                 <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                   <div className="py-4">
-                    <div className={`flex w-full`}>
+                    <div className="flex items-center justify-end">
 
-                      <div
-                        className={`cursor-pointer bg-maroon rounded-3xl ${!setHead ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        onClick={() => {
-                          if (setHead) {
-                            navigate("/teacher/classroom/head-attendence", { state: data });
-                          }
-                        }}
-                      >
-                        <p className="px-4 py-2 text-white">Classroom Attendance +</p>
-                      </div>
 
-                      <div className="flex gap-2">
+                      <div className="flex flex-col w-full md:flex-row md:w-auto  gap-2">
+
                         <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                           <BiSearch />
                           <input
                             type="text"
                             value={searchText}
                             placeholder="Search"
-                            className="outline-none b"
+                            className="outline-none "
                             onChange={(e) => setSearchText(e.target.value)}
                           />
                         </div>
-                        {/* <p onClick={onAddClass} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-maroon rounded-3xl">
-                          Add Class
-                        </p> */}
+
+                     
+
                       </div>
                     </div>
                   </div>
@@ -106,64 +114,83 @@ const Attendence = () => {
                     <DataRow
                       isQuiz={true}
                       index={"Sr. No"}
-                      classname={"Class Name"}
-                      subject={"Subject"}
+                      classname={"Classroom Name"}
+                      classesSchedualled={"Classes Scheduled"}
                       students={"Students"}
                       teachers={"Teachers"}
+                      createdBy={"Created By"}
                       bgColor={"#F9F9F9"}
                       header={true}
-                      threeDots={true}
-
                     />
-                    {searchText == "" && data?.map((cls, index) => (
-                      <DataRow
-                        data={cls}
-                        allData={cls}
-                        toggleClassMenu={toggleClassMenuOpen}
-                        index={index + 1}
-                        classname={cls.title}
-                        subject={cls.subjectID.name}
-                        students={cls.classroom.studentdetails.length}
-                        teachers={cls.teacher.teacherID.name}
-                        bgColor={"#FFFFFF"}
-                        header={false}
-                        threeDots={true}
+                    {
 
-                      />
-                    ))}
-                    {searchText && data?.map((cls, index) => {
-                      if (cls.title.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
-                        return <div>
+                      searchText == "" && classOfHeadTeacher?.map((cls, index) => (
+                        <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission", { state: cls })}>
                           <DataRow
                             data={cls}
-                            subject={cls.subjectID.name}
-                            allData={cls}
                             toggleClassMenu={toggleClassMenuOpen}
                             index={index + 1}
-                            classname={cls.title}
-                            students={cls.classroom.studentdetails.length}
-                            teachers={cls.teacher.teacherID.name}
+                            classname={cls.name}
+                            classesSchedualled={cls.classes.length}
+                            students={cls.students.length}
+                            teachers={cls.teachers.length}
+                            createdBy={cls.createdBy.userType}
                             bgColor={"#FFFFFF"}
                             header={false}
-                            threeDots={true}
-
                           />
                         </div>
+
+                      ))}
+                    {searchText && classOfHeadTeacher && classOfHeadTeacher?.map((cls, index) => {
+                      if (cls?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
+                        return <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission")}>
+                          <DataRow
+                            data={cls}
+                            toggleClassMenu={toggleClassMenuOpen}
+                            index={index + 1}
+                            classname={cls.name}
+                            classesSchedualled={cls.classes.length}
+                            students={cls.students.length}
+                            teachers={cls.teachers.length}
+                            createdBy={cls.createdBy.userType}
+                            bgColor={"#FFFFFF"}
+                            header={false}
+                            threeDots={false}
+                            
+                          />
+                        </div>
+
                       }
                     })}
 
                     {data?.length == 0 && (
                       <div className="text-center py-4 text-3xl font-medium">
-                        No attendance to display!
+                        No classrooms to display!
                       </div>
                     )}
-
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div >
+        <ClassModal
+          refetch={refetch}
+          open={createClassModal}
+          isEditTrue={false}
+          setopen={setCreateClassModal}
+        />
+
+        {
+          editModal &&
+          <ClassModal
+            editData={editClassData}
+            refetch={refetch}
+            isEditTrue={true}
+            open={editModal}
+            setopen={setEditModal}
+          />
+        }
 
         <ClassMenu
           editClassRoom={handleEditClass}
@@ -172,7 +199,7 @@ const Attendence = () => {
           setIsOpen={setIsClassMenuOpen}
         />
       </>
-  )
-}
+  );
+};
 
-export default Attendence;
+export default HeadAttendence;

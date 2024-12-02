@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../../../utils/Loader";
 import Navbar from "../../../components/Teacher/Navbar";
 import DataRow from "../../../components/Teacher/Classroom/DataRow";
@@ -56,6 +56,10 @@ const Classroom = () => {
 
   const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassrooms });
 
+
+  console.log(data);
+
+
   return (
     isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
       <>
@@ -69,8 +73,8 @@ const Classroom = () => {
                 <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                   <div className="py-4">
                     <div className="flex items-center justify-end">
-                     
-                     
+
+
                       <div className="flex flex-col w-full md:flex-row md:w-auto  gap-2">
                         <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                           <BiSearch />
@@ -99,21 +103,26 @@ const Classroom = () => {
                       createdBy={"Created By"}
                       bgColor={"#F9F9F9"}
                       header={true}
+                      threeDots={true}
+
                     />
-                    {searchText == "" && data?.map((cls, index) => (
-                      <DataRow
-                        data={cls}
-                        toggleClassMenu={toggleClassMenuOpen}
-                        index={index + 1}
-                        classname={cls.name}
-                        classesSchedualled={cls.classes.length}
-                        students={cls.students.length}
-                        teachers={cls.teachers.length}
-                        createdBy={cls.createdBy.userType}
-                        bgColor={"#FFFFFF"}
-                        header={false}
-                      />
-                    ))}
+                    {
+
+                      searchText == "" && data?.map((cls, index) => (
+                        <DataRow
+                          data={cls}
+                          toggleClassMenu={toggleClassMenuOpen}
+                          index={index + 1}
+                          classname={cls.name}
+                          classesSchedualled={cls.classes.length}
+                          students={cls.students.length}
+                          teachers={cls.teachers.length}
+                          createdBy={cls.createdBy.userType}
+                          bgColor={"#FFFFFF"}
+                          header={false}
+                          threeDots={true}
+                        />
+                      ))}
                     {searchText && data?.map((cls, index) => {
                       if (cls?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                         return <DataRow
@@ -131,11 +140,11 @@ const Classroom = () => {
                       }
                     })}
 
-                  {data?.length == 0 && (
-                    <div className="text-center py-4 text-3xl font-medium">
-                      No classrooms to display!
-                    </div>
-                  )}
+                    {data?.length == 0 && (
+                      <div className="text-center py-4 text-3xl font-medium">
+                        No classrooms to display!
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

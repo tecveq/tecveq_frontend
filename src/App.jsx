@@ -31,6 +31,7 @@ import TGradingAssignments from "./pages/Teacher/Assignments/GradingAssignments"
 import TAttendence from "./pages/Teacher/Attendence/Attendence";
 import TMarkAttendence from "./pages/Teacher/Attendence/MarkAttendece";
 import TQuizzSubmissions from "./pages/Teacher/Quizzes/Submissions";
+import ClassroomAttandence from "./pages/Teacher/Attendence/ClassroomAttendence";
 import TGradingQuizzes from "./pages/Teacher/Quizzes/GradingQuizzes";
 import Quizzes from "./pages/Student/Quizzes/Quizzes";
 import TQuizzes from "./pages/Teacher/Quizzes/Quizzes";
@@ -68,6 +69,7 @@ import ProtectedParent from "./utils/ProtectedParent";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from "./pages/Auth/LandingPage";
+import HeadAttendence from "./pages/Teacher/Attendence/HeadAttendence";
 
 function App() {
   return (
@@ -339,6 +341,23 @@ function App() {
             element={
               <TeacherLayout>
                 <TMarkAttendence />
+              </TeacherLayout>
+            }
+          />
+
+          <Route
+            path="/teacher/classroom/head-attendence"
+            element={
+              <TeacherLayout>
+                <HeadAttendence />
+              </TeacherLayout>
+            }
+          />
+          <Route
+            path="/teacher/classroom/attendence/submission"
+            element={
+              <TeacherLayout>
+                <ClassroomAttandence />
               </TeacherLayout>
             }
           />
