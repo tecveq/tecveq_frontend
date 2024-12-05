@@ -31,7 +31,7 @@ export const markHeadAttendence = apiRequest(async (data, id) => {
 
     console.log(" dataand id is : ", data, id);
 
-    const url = `${BACKEND_URL}/classroom/attendence/get-today-classes/${id}`;
+    const url = `${BACKEND_URL}/classroom/attendence/add-classroom-attendence/${id}`;
     const response = await axios.post(url, {data});
     return response;
 

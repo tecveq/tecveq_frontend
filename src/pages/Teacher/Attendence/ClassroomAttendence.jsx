@@ -86,7 +86,13 @@ const ClassroomAttendence = () => {
                       />
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
-                      <input type="date" value={currentDate} placeholder="add date" />
+                      <input
+                        type="date"
+                        value={currentDate}
+                        placeholder="add date"
+                        onChange={(e) => setCurrentDate(e.target.value)}
+
+                      />
                     </div>
                   </div>
                 </div>

@@ -21,8 +21,10 @@ const Attendence = () => {
   const [editModal, setEditModal] = useState(false);
   const [searchText, setSearchText] = useState("");
   const { userData } = useUser();
-  const [head, setHead] = useState()
-  const { data, isPending, refetch, isRefetching, isLoading } = useQuery({ queryKey: ["today-classes"], queryFn: getTodayClasses });
+  const [head, setHead] = useState(false)
+
+  const { data, isPending, refetch, isLoading: isLoadingClass } = useQuery({ queryKey: ["today-classes"], queryFn: getTodayClasses });
+  const { data: classrooms, isLoading: isLoadingClassroom } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassrooms });
 
   const toggleClassMenuOpen = (data) => {
     console.log("data is in menu ", data)
@@ -42,12 +44,12 @@ const Attendence = () => {
 
   const { isBlurred, toggleBlur } = useBlur();
 
-  const [createClassModal, setCreateClassModal] = useState(false);
+  // const [createClassModal, setCreateClassModal] = useState(false);
 
-  const onAddClass = () => {
-    setCreateClassModal(!createClassModal);
-    toggleBlur();
-  }
+  // const onAddClass = () => {
+  //   setCreateClassModal(!createClassModal);
+  //   toggleBlur();
+  // }
 
 
   const classroomDellMutate = useMutation({
@@ -58,10 +60,22 @@ const Attendence = () => {
     }
   });
 
+  console.log("Classroom", classrooms)
 
+
+
+  useEffect(() => {
+    if (!isLoadingClassroom && classrooms) {
+      // Check if any teacher has type "head"
+      const hasHeadTeacher = classrooms.some((classroom) =>
+        classroom.teachers.some((teacher) => teacher.type === "head")
+      );
+      setHead(hasHeadTeacher);
+    }
+  }, [classrooms, isLoadingClassroom]);
 
   return (
-    isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
+    isLoadingClass || isLoadingClassroom ? <div className="flex justify-center items-center flex-1 mt-20 "> <Loader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
@@ -72,18 +86,21 @@ const Attendence = () => {
                 <Navbar heading={"Attendence"} />
                 <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                   <div className="py-4">
-                    <div className={`flex w-full`}>
+                    <div className={`flex w-full justify-between`}>
 
-                      <div
-                        className={`cursor-pointer bg-maroon rounded-3xl ${!setHead ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        onClick={() => {
-                          if (setHead) {
-                            navigate("/teacher/classroom/head-attendence", { state: data });
-                          }
-                        }}
-                      >
-                        <p className="px-4 py-2 text-white">Classroom Attendance +</p>
-                      </div>
+                      {
+                        head ? (<>
+                          <div
+                            className={`cursor-pointer bg-maroon rounded-3xl`}
+                            onClick={() => {
+
+                              navigate("/teacher/classroom/head-attendence", { state: data });
+
+                            }}
+                          >
+                            <p className="px-4 py-2 text-white">Classroom Attendance +</p>
+                          </div></>) : (<><div></div></>)
+                      }
 
                       <div className="flex gap-2">
                         <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
