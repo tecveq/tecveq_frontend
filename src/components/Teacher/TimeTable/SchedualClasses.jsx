@@ -171,7 +171,7 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
                 />
 
                 <CustomSelectable
-                  label={"Select Class"}
+                  label={"Select Classroom"}
                   options={allClassrooms}
                   selectedOption={selectedClassroom}
                   setSelectedOption={setSelectedClassroom}

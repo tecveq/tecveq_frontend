@@ -92,7 +92,7 @@ const Levels = () => {
                                             header={true}
                                         />
 
-                                        {searchText == "" && allLevels.map((lvl, index) => (
+                                        {searchText == "" && allLevels?.map((lvl, index) => (
                                             <DataRow
                                                 key={lvl._id}
                                                 toggleLevelMenu={toggleLevelMenuOpen}
@@ -107,7 +107,7 @@ const Levels = () => {
                                             />
                                         ))}
 
-                                        {searchText && allLevels.map((lvl, index) => {
+                                        {searchText && allLevels?.map((lvl, index) => {
                                             if ((lvl.name.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase())) {
                                                 return <DataRow
                                                     key={lvl._id}

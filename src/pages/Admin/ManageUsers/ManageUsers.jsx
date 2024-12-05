@@ -149,7 +149,7 @@ const ManageUsers = () => {
                       bgColor={"#F9F9F9"}
                     />
 
-                    {searchText == "" && adminUsersData.allUsers.map((usr, index) => (
+                    {searchText == "" && adminUsersData?.allUsers?.map((usr, index) => (
                       <DataRows
                         data={usr}
                         key={usr._id}
@@ -166,7 +166,7 @@ const ManageUsers = () => {
                       />
                     ))}
 
-                    {searchText && adminUsersData.allUsers.map((usr, index) => {
+                    {searchText && adminUsersData?.allUsers?.map((usr, index) => {
                       // CAN ADD MORE FIELDS IN IF STATEMENT
                       if ((usr.name.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase()) || (usr.userType.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase())) {
                         return <DataRows
