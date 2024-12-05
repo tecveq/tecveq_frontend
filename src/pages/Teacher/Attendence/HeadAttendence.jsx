@@ -10,14 +10,15 @@ import { useBlur } from "../../../context/BlurContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteClassroom } from "../../../api/Admin/classroomApi";
 import { getAllClassrooms } from "../../../api/Teacher/ClassroomApi";
+import { useUser } from "../../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
-const Classroom = () => {
+const HeadAttendence = () => {
   const [isClassMenuOpen, setIsClassMenuOpen] = useState(false);
   const [editClassData, setEditClassData] = useState({});
-
   const [editModal, setEditModal] = useState(false);
   const [searchText, setSearchText] = useState("");
-
+  const [classOfHeadTeacher, setClassOfHeadTeacher] = useState()
 
   const toggleClassMenuOpen = (data) => {
     console.log("data is in menu ", data)
@@ -36,7 +37,9 @@ const Classroom = () => {
 
 
   const { isBlurred, toggleBlur } = useBlur();
-
+  const { userData } = useUser();
+  const navigate = useNavigate();
+  console.log(userData, "Its Me User")
   const [createClassModal, setCreateClassModal] = useState(false);
 
   const onAddClass = () => {
@@ -57,7 +60,21 @@ const Classroom = () => {
   const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassrooms });
 
 
-  console.log(data);
+  console.log(data, "dats stored in")
+  useEffect(() => {
+    if (data) {
+      const HeadTeacherClass = data.filter((item) =>
+        item.teachers.some(
+          (teach) => teach.type === "head" || item.teacher === userData._id
+        )
+      );
+      setClassOfHeadTeacher(HeadTeacherClass)
+
+      console.log(HeadTeacherClass, "Classroom Of All Head");
+
+    }
+  }, [data, userData]);
+
 
 
   return (
@@ -76,6 +93,7 @@ const Classroom = () => {
 
 
                       <div className="flex flex-col w-full md:flex-row md:w-auto  gap-2">
+
                         <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                           <BiSearch />
                           <input
@@ -86,9 +104,9 @@ const Classroom = () => {
                             onChange={(e) => setSearchText(e.target.value)}
                           />
                         </div>
-                        <p onClick={onAddClass} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-maroon rounded-3xl">
-                          Add Classroom
-                        </p>
+
+                     
+
                       </div>
                     </div>
                   </div>
@@ -103,40 +121,45 @@ const Classroom = () => {
                       createdBy={"Created By"}
                       bgColor={"#F9F9F9"}
                       header={true}
-                      threeDots={true}
-
                     />
                     {
 
-                      searchText == "" && data?.map((cls, index) => (
-                        <DataRow
-                          data={cls}
-                          toggleClassMenu={toggleClassMenuOpen}
-                          index={index + 1}
-                          classname={cls.name}
-                          classesSchedualled={cls.classes.length}
-                          students={cls.students.length}
-                          teachers={cls.teachers.length}
-                          createdBy={cls.createdBy.userType}
-                          bgColor={"#FFFFFF"}
-                          header={false}
-                          threeDots={true}
-                        />
+                      searchText == "" && classOfHeadTeacher?.map((cls, index) => (
+                        <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission", { state: cls })}>
+                          <DataRow
+                            data={cls}
+                            toggleClassMenu={toggleClassMenuOpen}
+                            index={index + 1}
+                            classname={cls.name}
+                            classesSchedualled={cls.classes.length}
+                            students={cls.students.length}
+                            teachers={cls.teachers.length}
+                            createdBy={cls.createdBy.userType}
+                            bgColor={"#FFFFFF"}
+                            header={false}
+                          />
+                        </div>
+
                       ))}
-                    {searchText && data?.map((cls, index) => {
+                    {searchText && classOfHeadTeacher && classOfHeadTeacher?.map((cls, index) => {
                       if (cls?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
-                        return <DataRow
-                          data={cls}
-                          toggleClassMenu={toggleClassMenuOpen}
-                          index={index + 1}
-                          classname={cls.name}
-                          classesSchedualled={cls.classes.length}
-                          students={cls.students.length}
-                          teachers={cls.teachers.length}
-                          createdBy={cls.createdBy.userType}
-                          bgColor={"#FFFFFF"}
-                          header={false}
-                        />
+                        return <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission")}>
+                          <DataRow
+                            data={cls}
+                            toggleClassMenu={toggleClassMenuOpen}
+                            index={index + 1}
+                            classname={cls.name}
+                            classesSchedualled={cls.classes.length}
+                            students={cls.students.length}
+                            teachers={cls.teachers.length}
+                            createdBy={cls.createdBy.userType}
+                            bgColor={"#FFFFFF"}
+                            header={false}
+                            threeDots={false}
+                            
+                          />
+                        </div>
+
                       }
                     })}
 
@@ -150,7 +173,7 @@ const Classroom = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div >
         <ClassModal
           refetch={refetch}
           open={createClassModal}
@@ -158,7 +181,8 @@ const Classroom = () => {
           setopen={setCreateClassModal}
         />
 
-        {editModal &&
+        {
+          editModal &&
           <ClassModal
             editData={editClassData}
             refetch={refetch}
@@ -178,4 +202,4 @@ const Classroom = () => {
   );
 };
 
-export default Classroom;
+export default HeadAttendence;

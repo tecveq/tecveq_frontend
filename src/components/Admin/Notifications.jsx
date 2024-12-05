@@ -8,11 +8,12 @@ import { getAllNotifications } from "../../api/Admin/NotificationApi";
 
 const Notifications = ({ onclose, dashboard }) => {
 
-  
-  const {data} = useQuery({queryKey: ["chat"], queryFn: getAllNotifications});
+
+  const { data } = useQuery({ queryKey: ["chat"], queryFn: getAllNotifications });
   console.log("notificationas in admin are : ", data);
 
-  const Notification = () => {
+  const Notification = ({item}) => {
+    
     const [moredetails, setMoredetails] = useState(false)
     return (
       <div className={`flex flex-col gap-2 py-2 w-full `}>
@@ -57,8 +58,8 @@ const Notifications = ({ onclose, dashboard }) => {
           <IoClose onClick={onclose} className="cursor-pointer" />
         </div>
         <div className="w-full">
-          {[...new Array(3)].map((item) => {
-            return <Notification />;
+          {data.map((item) => {
+            return <Notification item={item} />;
           })}
         </div>
       </div>

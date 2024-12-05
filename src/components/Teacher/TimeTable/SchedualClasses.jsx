@@ -49,7 +49,9 @@ const CusotmInput = ({ valuesObj, value, type, name, status, title, setValue }) 
             value={value}
             placeholder={`Enter ${name}`}
             className="flex flex-1 w-full py-1 outline-none"
+            min={type === "date" ? new Date().toISOString().split("T")[0] : undefined}
             onChange={(e) => setValue({ ...valuesObj, [name]: e.target.value })}
+
           />
         </div>
       </div>
