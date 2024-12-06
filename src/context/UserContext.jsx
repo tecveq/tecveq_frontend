@@ -11,6 +11,7 @@ export const useUser = () => useContext(UserContext);
 export const UserProvider = ({ children }) => {
 
   const [userData, setUserData] = useState(JSON.parse(localStorage.getItem("tcauser")));
+  
   const [socketContext, setSocketContext] = useState(null);
 
   const addUserToLS = async () => {

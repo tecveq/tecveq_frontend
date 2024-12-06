@@ -48,6 +48,12 @@ const DataRow = (props) => {
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
               }`}
           >
+            {props.levelName}
+          </p>
+          <p
+            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+              }`}
+          >
             {props.createdBy}
           </p>
         </div>

@@ -17,12 +17,12 @@ const DataRow = (props) => {
 
   const { allLevels } = useAdmin();
   const [level, setLevel] = useState("");
-  
+
   useEffect(() => {
 
 
-    allLevels.map((item)=>{
-      if(item._id == props.levelID){
+    allLevels.map((item) => {
+      if (item._id == props.levelID) {
         setLevel(item.name);
       }
     })
@@ -53,7 +53,7 @@ const DataRow = (props) => {
               className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px] text-[11px] ${props.header ? "font-semibold" : ""
                 }`}
             >
-              {props.header? props.levelID: level}
+              {props.levelName}
             </p>
           </div>
           <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
