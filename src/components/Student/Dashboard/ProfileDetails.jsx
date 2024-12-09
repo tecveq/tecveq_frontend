@@ -25,7 +25,7 @@ const ProfileDetails = ({ onclose }) => {
   const [email, setEmail] = useState(userData?.email);
   const [rollNo, setRollNo] = useState("SP21-BCS-072");
   const [allowedEdit, setAllowedEdit] = useState(false);
-  const [className, setClassName] = useState("Level 1");
+  const [className, setClassName] = useState(userData.levelName);
   const [phone, setPhone] = useState(userData?.phoneNumber);
   const [parentName, setParentName] = useState(userData?.guardianName);
   const [selectedFile, setSelectedFile] = useState(userData?.profilePic || IMAGES.Profile);
@@ -146,7 +146,7 @@ const ProfileDetails = ({ onclose }) => {
                 />
                 <CusotmInput
                   icon={<FaGraduationCap />}
-                  label={"Class"}
+                  label={"Level"}
                   value={className}
                   status={allowedEdit}
                   inputChange={setClassName}

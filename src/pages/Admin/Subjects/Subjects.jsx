@@ -94,7 +94,7 @@ const Subjects = () => {
                                         <DataRow
                                             index={"Sr. No"}
                                             subjectName={"Subject Name"}
-                                            levelID={"Level Name"}
+                                            levelName={"Level Name"}
                                             bgColor={"#F9F9F9"}
                                             header={true}
                                         />
@@ -106,7 +106,7 @@ const Subjects = () => {
                                                 refetch={subjectsRefetch}
                                                 index={index + 1}
                                                 subjectName={lvl.name}
-                                                levelID={lvl.levelID}
+                                                levelName={lvl.levelName}
                                                 deleteSubject={subjectDellMutate.mutate}
                                                 editSubject={(e) => onEditSubject(e)}
                                                 bgColor={"#FFFFFF"}
@@ -115,7 +115,7 @@ const Subjects = () => {
                                         ))}
 
                                         {searchText && allSubjects.map((lvl, index) => {
-                                            if (lvl.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
+                                            if (lvl.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()) || lvl.levelName.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                                                 return <DataRow
                                                     data={lvl}
                                                     key={lvl._id}
@@ -123,7 +123,7 @@ const Subjects = () => {
                                                     refetch={subjectsRefetch}
                                                     index={index + 1}
                                                     subjectName={lvl.name}
-                                                    levelID={lvl.levelID}
+                                                    levelName={lvl.levelName}
                                                     deleteSubject={subjectDellMutate.mutate}
                                                     editSubject={(e) => onEditSubject(e)}
                                                     bgColor={"#FFFFFF"}

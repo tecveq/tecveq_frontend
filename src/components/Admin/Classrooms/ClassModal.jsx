@@ -17,18 +17,19 @@ const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
 
   const handleOptionClick = (option) => {
     setSelectedOptions((prevSelected) => {
-      if (prevSelected.includes(option)) {
-        return prevSelected.filter((item) => item !== option);
-      } else {
-        return [...prevSelected, option];
-      }
+      const updatedSelection = prevSelected.includes(option)
+        ? prevSelected.filter((item) => item !== option)
+        : [...prevSelected, option];
+
+      // Trigger the parent onSelect immediately
+      onSelect(updatedSelection);
+      return updatedSelection;
     });
   };
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setIsOpen(false);
-      onSelect(selectedOptions);
     }
   };
 
@@ -47,23 +48,15 @@ const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
     <div className="relative inline-block w-full" ref={ref}>
       <div
         className="bg-white border border-[#00000040] rounded-md cursor-pointer"
-        onClick={() => {
-          if (isOpen) {
-            onSelect(selectedOptions)
-          };
-          setIsOpen(!isOpen)
-        }}
+        onClick={() => setIsOpen(!isOpen)}
       >
         <div className="p-1 text-sm flex justify-between items-center px-4">
           <p>
-
             {selectedOptions.length > 0
               ? selectedOptions.map((option) => option.name).join(', ')
               : placeholder}
           </p>
-          <p>
-            <IoIosArrowDown />
-          </p>
+          <IoIosArrowDown />
         </div>
       </div>
       {isOpen && (
@@ -75,10 +68,16 @@ const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
                 }`}
               onClick={() => handleOptionClick(option)}
             >
-              <p className='bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium'>
-                <img src={option.profilePic || IMAGES.ProfilePic} alt="" className='w-8 h-8 object-cover rounded-full' />
+              <p className="bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium">
+                <img
+                  src={option.profilePic || IMAGES.ProfilePic}
+                  alt=""
+                  className="w-8 h-8 object-cover rounded-full"
+                />
                 {option.name}
-                <span className='font-normal text-[#00000040]'>{option?.qualification}</span>
+                <span className="font-normal text-[#00000040]">
+                  {option?.qualification}
+                </span>
               </p>
             </div>
           ))}

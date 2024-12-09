@@ -16,7 +16,7 @@ import { RiGraduationCapLine } from "react-icons/ri";
 import { updateUser } from "../../api/Admin/UsersApi";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
-const CusotmInput = ({ label, value, status, icon, name, valuesObj, setValuesObj }) => {
+const CusotmInput = ({ label, value, status, icon, name, valuesObj, setValuesObj, isEmail }) => {
   return (
     <div className="my-1 text-sm">
       <div className="flex items-center gap-4">
@@ -33,8 +33,9 @@ const CusotmInput = ({ label, value, status, icon, name, valuesObj, setValuesObj
             type="text"
             value={value}
             readOnly={!status}
+            disabled={isEmail}
             placeholder={value}
-            className="flex flex-1 w-full py-1 outline-none"
+            className={`flex flex-1 w-full py-1 outline-none ${isEmail ? 'opacity-50 cursor-not-allowed' : ''}`}
             onChange={(e) => { setValuesObj({ ...valuesObj, [name]: e.target.value }) }}
           />
         </div>
@@ -125,8 +126,8 @@ const ProfileDetails = ({ onclose }) => {
               <p>{userData.name}</p>
               {/* <p>Bio</p> */}
               <p className="text-xs">
-                {userData.bio ? userData.bio : 
-                `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, sint?`
+                {userData.bio ? userData.bio :
+                  `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, sint?`
                 }
               </p>
             </div>
@@ -135,6 +136,7 @@ const ProfileDetails = ({ onclose }) => {
                 label={"Name"}
                 value={userDataObj.name}
                 name={"name"}
+                isEmail={false}
                 status={allowedEdit}
                 valuesObj={userDataObj}
                 setValuesObj={setUserDataOjb}
@@ -145,6 +147,7 @@ const ProfileDetails = ({ onclose }) => {
                 name="email"
                 value={userDataObj.email}
                 status={allowedEdit}
+                isEmail={true}
                 valuesObj={userDataObj}
                 setValuesObj={setUserDataOjb}
                 icon={"mail"}
@@ -152,6 +155,7 @@ const ProfileDetails = ({ onclose }) => {
               <CusotmInput
                 label={"Phone No."}
                 name="phoneNumber"
+                isEmail={false}
                 value={userDataObj.phoneNumber}
                 status={allowedEdit}
                 valuesObj={userDataObj}

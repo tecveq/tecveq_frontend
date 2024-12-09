@@ -57,7 +57,7 @@ const Classroom = () => {
   const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassrooms });
 
 
-  console.log(data);
+  console.log(data, "data of classroom");
 
 
   return (
@@ -100,6 +100,7 @@ const Classroom = () => {
                       classesSchedualled={"Classes Scheduled"}
                       students={"Students"}
                       teachers={"Teachers"}
+                      levelName={"Level Name"}
                       createdBy={"Created By"}
                       bgColor={"#F9F9F9"}
                       header={true}
@@ -117,6 +118,7 @@ const Classroom = () => {
                           classesSchedualled={cls.classes.length}
                           students={cls.students.length}
                           teachers={cls.teachers.length}
+                          levelName={cls.levelName || ""}
                           createdBy={cls.createdBy.userType}
                           bgColor={"#FFFFFF"}
                           header={false}
