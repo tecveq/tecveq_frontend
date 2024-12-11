@@ -3,7 +3,8 @@
 import axios from "axios";
 import { BACKEND_URL } from "../../constants/api";
 import apiRequest from "../../utils/ApiRequest";
-
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 axios.defaults.withCredentials = true;
 
 export const getAllStudents = apiRequest(async () => await axios.get(`${BACKEND_URL}/user/students`));
@@ -14,6 +15,40 @@ export const getAllUsers = apiRequest(async () => {
     const response = await axios.get(url);
     return response;
 })
+
+
+
+export const useGetAllStudentsWithLevel = (levelId) => {
+
+
+    const getMyStudentWithLevelRequest = async () => {
+        const url = `${BACKEND_URL}/user/students-with-level/${levelId}`;
+        const response = await axios.get(url);
+
+        // Note: Axios does not use response.ok, so check the status code directly
+        if (response.status !== 200) {
+            throw new Error('Failed to get user');
+        }
+
+        return response.data; // Axios automatically parses the JSON response
+    };
+
+    // Updated useQuery call with object form
+    const { data: studentWithLevel, isLoading, error } = useQuery({
+        queryKey: ['fetchStudentsWithLevel', levelId],
+        queryFn: getMyStudentWithLevelRequest,
+        enabled: !!levelId, // Only run the query if levelId is truthy
+    });
+
+    // if (error) {
+    //     toast.error(error.toString());
+    // }
+
+    return {
+        isLoading,
+        studentWithLevel,
+    };
+};
 
 
 export const getAllTeachers = apiRequest(async () => {

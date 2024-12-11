@@ -7,6 +7,9 @@ const DataRow = (props) => {
 
   useEffect(() => { }, []);
 
+  console.log(props.data ,"props data hahahhahah");
+  
+
   return (
     <div className="min-w-full">
       <div
@@ -56,6 +59,12 @@ const DataRow = (props) => {
           >
             {props.createdBy}
           </p>
+          {/* <p
+            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+              }`}
+          >
+            {props.status}
+          </p> */}
         </div>
         <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
           <p

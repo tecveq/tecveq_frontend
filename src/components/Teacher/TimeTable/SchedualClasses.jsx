@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useUser } from "../../../context/UserContext";
 import { createClasses } from "../../../api/Teacher/Class";
 import { useTeacher } from "../../../context/TeacherContext";
+import { useGetAllTeacherSubjects } from "../../../api/Teacher/TeacherSubjectApi";
 
 
 const CustomSelectable = ({ label, options, setSelectedOption, selectedOption }) => {
@@ -23,7 +24,7 @@ const CustomSelectable = ({ label, options, setSelectedOption, selectedOption })
           <select value={selectedOption} onChange={(e) => { setSelectedOption(e.target.value) }}
             className='border text-sm text-grey/70 outline-none rounded-md border-black/20 px-4 w-full py-2'>
             <option value={""}>Select</option>
-            {options.map((item) => {
+            {options?.map((item) => {
               return <option key={item._id} value={JSON.stringify(item)}>{item.name}</option>
             })}
           </select>
@@ -70,9 +71,18 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
 
     const { allSubjects, allClassrooms, classesRefetch } = useTeacher();
     const { userData } = useUser();
+
+    const { teacherSubjects, isLoading } = useGetAllTeacherSubjects(userData._id)
+
+    console.log(allSubjects ,"allSubjects");
+    console.log(teacherSubjects,"teacher subject");
+    
+
     const [selectedSubject, setSelctedSubject] = useState();
     const [selectedClassroom, setSelectedClassroom] = useState();
 
+
+    console.log(userData, "user data is ");
 
 
     const [classObj, setClassObj] = useState({
@@ -153,7 +163,7 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
               <div className="flex flex-col w-full flex-1 gap-1 px-2 py-1 overflow-y-auto custom-scrollbar">
 
                 <CustomSelectable
-                  options={allSubjects}
+                  options={teacherSubjects}
                   label={"Select Subject"}
                   selectedOption={selectedSubject}
                   setSelectedOption={setSelctedSubject}

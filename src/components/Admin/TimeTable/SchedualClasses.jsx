@@ -83,6 +83,9 @@ const SchedualClasses = ({ classRefetch }) => {
       }
     }, [])
 
+    console.log(userData ,"user data is ");
+    
+
     // "{\n  \"title\": \"this is topic\",\n
     // \"startTime\": \"2024-02-18T09:00:13.386+00:00\",\n
     // \"endTime\": \"2024-02-18T10:29:13.386+00:00\",\n
@@ -194,7 +197,7 @@ const SchedualClasses = ({ classRefetch }) => {
                   setValue={setClassObj}
                 />
                 <CustomSelectable
-                  label={"Select Class"}
+                  label={"Select Classroom"}
                   options={allClassrooms}
                   selectedOption={selectedClassroom}
                   setSelectedOption={setSelectedClassroom}

@@ -118,7 +118,7 @@ const Classroom = () => {
                           classesSchedualled={cls.classes.length}
                           students={cls.students.length}
                           teachers={cls.teachers.length}
-                          levelName={cls.levelName || ""}
+                          levelName={cls.levelName || "Admin not add level yet"}
                           createdBy={cls.createdBy.userType}
                           bgColor={"#FFFFFF"}
                           header={false}

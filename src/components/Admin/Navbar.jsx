@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 import Notifications from "./Notifications";
 import ProfileDetails from "./ProfileDetails";
@@ -12,6 +12,10 @@ import { FaChevronDown } from "react-icons/fa6";
 import { userLogout } from "../../api/ForAllAPIs";
 import { useUser } from "../../context/UserContext";
 import { useBlur } from "../../context/BlurContext";
+import { useQuery } from "@tanstack/react-query";
+import { getAllNotifications } from "../../api/Admin/NotificationApi";
+import moment from "moment";
+import { Dot } from "recharts";
 
 
 const Navbar = ({ heading }) => {
@@ -20,9 +24,20 @@ const Navbar = ({ heading }) => {
   const [bell, setBell] = useState(false);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
   const [isProfileDetails, setIsProfileDetails] = useState(false);
+  const [hasNewNotifications, setHasNewNotifications] = useState(false);
   const navigate = useNavigate();
   const { userData } = useUser();
   const { isBlurred, toggleBlur } = useBlur();
+
+  const { data } = useQuery({ queryKey: ["chat"], queryFn: getAllNotifications });
+
+  useEffect(() => {
+    if (data) {
+      // Check if there's a new notification (received within the last 5 minutes)
+      const isNewNotification = data.some((item) => moment().diff(moment(item.createdAt), 'minutes') < 2);
+      setHasNewNotifications(isNewNotification);
+    }
+  }, [data]);
 
   const toggleProfielMenu = () => {
     setIsProfileMenu(!isProfileMenu);
@@ -41,6 +56,7 @@ const Navbar = ({ heading }) => {
     setBell(!bell);
     setmail(false);
     setIsProfileMenu(false);
+    setHasNewNotifications(false);
   };
 
   const toggleProfileDetails = () => {
@@ -77,12 +93,19 @@ const Navbar = ({ heading }) => {
               >
                 <IoMailOutline />
               </div>
-              <div
-                className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${bell ? "bg-maroon text-white" : ""
-                  }`}
-                onClick={togglebell}
-              >
-                <CiBellOn />
+              <div className="relative">
+                <div
+                  className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 `}
+                  onClick={togglebell}
+                >
+                  <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""}`}>
+                    <CiBellOn />
+                  </div>
+
+                </div>
+                {hasNewNotifications && (
+                  <div className="absolute top-1 right-1 w-[9px] h-[9px] rounded-full bg-green"><Dot /></div>
+                )}
               </div>
             </div>
             <div className="flex items-center gap-2">
