@@ -24,7 +24,7 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
       culture
     );
 
-  const [events, setevents] = useState([]);
+  const [events, setEvents] = useState([]);
 
   const [currentWeek, setCurrentWeek] = useState({
     start: moment().startOf("day").toDate(),
@@ -52,8 +52,11 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
       return returnobj
     })
     console.log("all class in admin are filter is : ", allclassfilter);
-    setevents(allclassfilter);
+    setEvents(allclassfilter);
   }, [currentWeek, isPending]);
+
+
+  
 
 
   return (
@@ -83,7 +86,7 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
                 />
               ),
               event: (e) => {
-                return <CustomEvent setevents={setevents} event={e.event} refetch={refetch} isRefetching={isRefetching} />;
+                return <CustomEvent setevents={setEvents} event={e.event} refetch={refetch} isRefetching={isRefetching} />;
               },
               timeGutterHeader: SideTimeHeader,
               timeGutterWrapper: SideTime,

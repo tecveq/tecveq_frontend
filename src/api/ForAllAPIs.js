@@ -21,9 +21,9 @@ export const userLogout = apiRequest(async () => {
 export const getAllClasses = apiRequest(async () => {
 
     let endDate = new Date(Date.now());
-    endDate.setDate(endDate.getDate() - 7);
+    endDate.setDate(endDate.getDate() - 15);
     let startDate = new Date(Date.now());
-    startDate.setDate(startDate.getDate() + 7);
+    startDate.setDate(startDate.getDate() + 15);
 
     const url = `${BACKEND_URL}/class?startDate=${endDate}&endDate=${startDate}`;
     const response = await axios.get(url);

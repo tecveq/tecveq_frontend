@@ -26,7 +26,7 @@ const DataRow = (props) => {
 
   const onAbsentClick = () => {
     let temparray = props.attendeceData;
-    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: false, late:false };
+    temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: false, late: false };
     props.setAttendenceData(temparray);
     setPresent(false);
     setAbsent(true);
@@ -37,7 +37,7 @@ const DataRow = (props) => {
     let temparray = props.attendeceData;
     temparray[props.index - 1] = { studentID: props?.data?._id, isPresent: true, late: true };
     props.setAttendenceData(temparray);
-    setPresent(true);
+    setPresent(false);
     setLate(true);
     setAbsent(false);
     setLeave(false);
@@ -53,7 +53,7 @@ const DataRow = (props) => {
   // }
 
   return (
-    <div className="min-w-full">
+    <div className="min-w-full ">
       <div
         style={{ backgroundColor: props.bgColor }}
         className={`min-w-full border-b flex border-grey items-center`}
@@ -109,10 +109,10 @@ const DataRow = (props) => {
                     className={`w-full flex gap-2 items-center md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
                       }`}
                   >
-                    <div className="flex gap-2" onClick={onLeaveClick}>
-                      {leave ? <IoMdRadioButtonOn  className="text-maroon"/> : <IoMdRadioButtonOff className="text-maroon" />}
+                    <div className="flex gap-2" onClick={onLateClick}>
+                      {late ? <IoMdRadioButtonOn className="text-maroon" /> : <IoMdRadioButtonOff className="text-maroon" />}
                     </div>
-                    Leave
+                    Late
                   </p> */}
                 </div>
               </>

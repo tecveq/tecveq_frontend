@@ -60,7 +60,7 @@ const Attendence = () => {
     }
   });
 
-  console.log("Classroom", classrooms)
+  console.log("Classroom", data)
 
 
 
@@ -84,7 +84,7 @@ const Attendence = () => {
             >
               <div className="h-screen">
                 <Navbar heading={"Attendence"} />
-                <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
+                <div className={`px-3 lg:px-10 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                   <div className="py-4">
                     <div className={`flex w-full justify-between`}>
 
@@ -127,6 +127,7 @@ const Attendence = () => {
                       subject={"Subject"}
                       students={"Students"}
                       teachers={"Teachers"}
+                      startDate={"Start Date"}
                       bgColor={"#F9F9F9"}
                       header={true}
                       threeDots={true}
@@ -142,6 +143,7 @@ const Attendence = () => {
                         subject={cls.subjectID.name}
                         students={cls.classroom.studentdetails.length}
                         teachers={cls.teacher.teacherID.name}
+                        startDate={cls.startTime}
                         bgColor={"#FFFFFF"}
                         header={false}
                         threeDots={true}
@@ -160,6 +162,7 @@ const Attendence = () => {
                             classname={cls.title}
                             students={cls.classroom.studentdetails.length}
                             teachers={cls.teacher.teacherID.name}
+                            startDate={cls.startTime}
                             bgColor={"#FFFFFF"}
                             header={false}
                             threeDots={true}

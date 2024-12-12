@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 // import { connectSocket } from "../socket"
-import { getAllUsers } from '../api/Admin/AdminApi';
+import {getAllUsers } from '../api/Admin/AdminApi';
 import { getAllLevels } from '../api/Admin/LevelsApi';
 import { getAllSubjects } from '../api/Admin/SubjectsApi';
 
@@ -18,12 +18,21 @@ export const AdminProvider = ({ children }) => {
     const [allSubjects, setAllSubjects] = useState([]);
     const [allClassrooms, setAllClassrooms] = useState([]);
     const [adminLogedIn, setAdminLogedIn] = useState(false);
+
+    const [studentWithLevel, setStudentWithLevel] = useState([])
+
+
     const [adminUsersData, setAdminUsersdata] = useState({
         allStudents: [],
         allTeachers: [],
         allParents: [],
         allUsers: []
     })
+
+
+
+   
+
 
     const userQuery = useQuery({
         queryKey: ["users"],
@@ -42,6 +51,9 @@ export const AdminProvider = ({ children }) => {
         staleTime: 300000,
         enabled: adminLogedIn,
     });
+
+
+
 
     const subjectQuery = useQuery({
         queryKey: ["subjects"], queryFn: async () => {

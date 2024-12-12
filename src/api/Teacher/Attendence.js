@@ -17,12 +17,10 @@ export const getTodayClasses = apiRequest(async () => {
 });
 
 
-export const markAttendence = apiRequest(async (data, id) => {
+export const markAttendence = apiRequest(async (data, classID, classroomID) => {
 
-    console.log(" dataand id is : ", data, id);
-
-    const url = `${BACKEND_URL}/class/get-today-classes/${id}`;
-    const response = await axios.put(url, {data});
+    const url = `${BACKEND_URL}/class/get-today-classes/${classID}`;
+    const response = await axios.put(url, { data, classroomID });
     return response;
 
 });
@@ -32,15 +30,15 @@ export const markHeadAttendence = apiRequest(async (data, id) => {
     console.log(" dataand id is : ", data, id);
 
     const url = `${BACKEND_URL}/classroom/attendence/add-classroom-attendence/${id}`;
-    const response = await axios.post(url, {data});
+    const response = await axios.post(url, { data });
     return response;
 
 });
 
 
-export const teacherPresent = apiRequest(async (id) =>{
+export const teacherPresent = apiRequest(async (id) => {
     const url = `${BACKEND_URL}/class/mark/${id}`
-    const response  = await axios.get(url);
+    const response = await axios.get(url);
     return response;
 })
 

@@ -18,6 +18,9 @@ const MyCalendar = ({ data, isPending, refetch }) => {
   const [activeFilteredField, setactiveFilteredField] = useState(null);
 
 
+  console.log(data ,"data is pending");
+  
+
 
 
 
@@ -114,7 +117,6 @@ const MyCalendar = ({ data, isPending, refetch }) => {
         return returnobj
       })
 
-      console.log("all class filter is : ", allclassfilter);
       setevents(allclassfilter);
     }
     // }, [currentWeek, isPending, isRefetching]);
@@ -158,7 +160,6 @@ const MyCalendar = ({ data, isPending, refetch }) => {
               />
             ),
             event: (e) => {
-              console.log("event e is: ", e);
               return <CustomEvent setevents={setevents} event={e.event} />;
             },
             timeGutterHeader: SideTimeHeader,

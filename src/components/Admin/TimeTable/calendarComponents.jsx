@@ -1,7 +1,6 @@
-import moment from "moment";
 import IMAGES from "../../../assets/images";
 import ViewEventDetailsModal from "./viewEventDetailsModal";
-
+import moment from 'moment-timezone';
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
@@ -48,39 +47,41 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
   );
 };
 
+
+
 export const SideTime = (props) => {
   const times = props.slotMetrics.groups;
 
   return (
-    <>
-      <div className="flex flex-col w-[130px]">
-        {times.map((time) => (
-          <div
-            key={`${time}2`}
-            className="flex w-[110px] h-10 justify-center items-center"
-          >
-            <p className="text-[10px] text-grey">
-              {moment.utc(time[0]).format("h:mm a")}
-            </p>
-            <p className="text-[10px] text-grey">-</p>
-            <p className="text-[10px] text-grey">
-              {moment.utc(time[0])
-                .add(1, "hour")
-                .format("h:mm a")}
-            </p>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="flex flex-col w-[130px]">
+      {times.map((time) => (
+        <div
+          key={`${time}2`}
+          className="flex w-[110px] h-10 justify-center items-center"
+        >
+          <p className="text-[10px] text-grey">
+            {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
+          </p>
+          <p className="text-[10px] text-grey">-</p>
+          <p className="text-[10px] text-grey">
+            {moment.utc(time[0])
+              .add(1, "hour")
+              .tz("Asia/Karachi") // Convert to PKT
+              .format("h:mm a")}
+          </p>
+        </div>
+      ))}
+    </div>
   );
 };
+
 
 export const SideTimeHeader = (props) => {
   const times = props;
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
-        <p className="text-sm text-black/70 ">GTM +0</p>
+        <p className="text-sm text-black/70 ">GTM +5</p>
       </div>
     </>
   );

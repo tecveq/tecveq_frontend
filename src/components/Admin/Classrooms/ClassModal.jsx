@@ -8,14 +8,16 @@ import { useAdmin } from "../../../context/AdminContext";
 import { createClassroom } from '../../../api/Admin/classroomApi';
 import Loader from '../../../utils/Loader';
 import { toast } from 'react-toastify';
+import { useGetAllStudentsWithLevel } from '../../../api/Admin/AdminApi';
+import { useGetAllSubjectsWithLevel } from '../../../api/Admin/SubjectsApi';
 
 
 const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const ref = useRef();
+  const allSelected = selectedOptions.length === options.length;
+  const someSelected = selectedOptions.length > 0 && !allSelected;
 
-  const handleOptionClick = (option) => {
+  const handleCheckboxChange = (option) => {
     setSelectedOptions((prevSelected) => {
       const updatedSelection = prevSelected.includes(option)
         ? prevSelected.filter((item) => item !== option)
@@ -27,66 +29,59 @@ const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
     });
   };
 
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      setIsOpen(false);
+  const handleSelectAllChange = () => {
+    if (allSelected) {
+      setSelectedOptions([]);
+      onSelect([]);
+    } else {
+      setSelectedOptions(options);
+      onSelect(options);
     }
   };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   useEffect(() => {
     onChange(selectedOptions);
   }, [selectedOptions]);
 
   return (
-    <div className="relative inline-block w-full" ref={ref}>
-      <div
-        className="bg-white border border-[#00000040] rounded-md cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <div className="p-1 text-sm flex justify-between items-center px-4">
-          <p>
-            {selectedOptions.length > 0
-              ? selectedOptions.map((option) => option.name).join(', ')
-              : placeholder}
-          </p>
-          <IoIosArrowDown />
-        </div>
+    <div className="w-full">
+      <p className="text-xs font-semibold text-grey_700">{placeholder}</p>
+      <div className="mb-4 flex items-center p-2">
+        <input
+          type="checkbox"
+          checked={allSelected}
+          onChange={handleSelectAllChange}
+          className="form-checkbox"
+          indeterminate={someSelected.toString()} // Optional: For visual indication of partial selection
+        />
+        <span className="ml-2 font-medium">Select All</span>
       </div>
-      {isOpen && (
-        <div className="absolute z-10 w-full h-60 overflow-y-auto register-scrollbar bg-white border border-[#00000020] rounded shadow-sm">
-          {options.map((option) => (
-            <div
-              key={option._id}
-              className={`p-2 cursor-pointer hover:bg-gray-100 ${selectedOptions.includes(option) ? 'bg-gray-500' : ''
-                }`}
-              onClick={() => handleOptionClick(option)}
-            >
-              <p className="bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium">
-                <img
-                  src={option.profilePic || IMAGES.ProfilePic}
-                  alt=""
-                  className="w-8 h-8 object-cover rounded-full"
-                />
-                {option.name}
-                <span className="font-normal text-[#00000040]">
-                  {option?.qualification}
-                </span>
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start justify-items-start">
+        {options.map((option) => (
+          <div key={option._id} className="flex items-center p-2">
+            <input
+              type="checkbox"
+              checked={selectedOptions.includes(option)}
+              onChange={() => handleCheckboxChange(option)}
+              className="form-checkbox"
+            />
+            <p className="bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium ml-2">
+              <img
+                src={option.profilePic || IMAGES.ProfilePic}
+                alt=""
+                className="w-8 h-8 object-cover rounded-full"
+              />
+              {option.name}
+              <span className="font-normal text-[#00000040]">
+                {option?.qualification}
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
-
 const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
   return (
     <div className='flex flex-col text-start py-1'>
@@ -95,7 +90,13 @@ const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
           {label}
         </div>
         <div>
-          <select value={selectedOption} onChange={(e) => { setSelectedOption(JSON.parse(e.target.value)) }}
+          <select
+
+            value={selectedOption ? JSON.stringify(selectedOption) : ""} // Set default value for the select
+            onChange={(e) => {
+              const selectedItem = JSON.parse(e.target.value); // Parse the selected option back to an object
+              setSelectedOption(selectedItem);  // Update the state
+            }}
             className='border outline-none rounded-sm border-black/20 px-4 w-full py-[4px]'>
             <option value="">Select Option</option>
             {options.map((item) => {
@@ -133,16 +134,23 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
   const ref = useRef(null);
   const { toggleBlur } = useBlur();
   const [headTeacher, setHeadTeacher] = useState(null);
-
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [selectedSubjects, setSelectedSubjects] = useState({});
   const { adminUsersData, allLevels, allSubjects } = useAdmin();
-  const [selectedLevel, setSelectedLevel] = useState([]);
+  const { studentWithLevel, isLoading } = useGetAllStudentsWithLevel(selectedLevel?._id)
+  const { subjectWithLevel } = useGetAllSubjectsWithLevel(selectedLevel?._id)
+
   const [classroomName, setClassroomName] = useState("");
   const [selectedTeachers, setSelectedTeachers] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [teacherArr, setTeachersArr] = useState([]);
-
   const [newSelectedTeachers, setNewSelectedTeachers] = useState([]);
   const [newSelectedStudents, setNewSelectedStudents] = useState([]);
+
+
+
+
+
 
   const handleMultiSelectTeachersChange = (options) => {
     console.log('Selected options:', options);
@@ -162,6 +170,8 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
       setNewSelectedTeachers(selectedTeachers);
     }
   }, [selectedTeachers, selectedStudents])
+
+
 
   const handleCreateClass = async () => {
     if (classroomName && selectedLevel && newSelectedStudents.length > 0 && newSelectedTeachers.length > 0 && headTeacher) {
@@ -202,10 +212,43 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
     }
   });
 
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  console.log(adminUsersData.allStudents, "all students developer", studentWithLevel, "student with level");
+
+
+  const handleSubjectSelect = (teacherId, subject) => {
+    setTeachersArr((prev) => {
+      // Create a new copy of the array to ensure immutability
+      const updatedArr = [...prev];
+      let flag = true;
+
+      // Update the existing teacher's subject or add a new entry
+      const newArr = updatedArr.map((item) => {
+        if (item.teacher === teacherId) {
+          item.subject = subject._id;
+          flag = false;
+        }
+        return item;
+      });
+
+      if (flag) {
+        newArr.push({ teacher: teacherId, subject: subject._id });
+      }
+
+      return newArr;
+    });
+
+    // Update selected subject state for this teacher
+    setSelectedSubjects((prev) => ({ ...prev, [teacherId]: subject }));
+  };
+
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-8 w-[500px] px-20 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center ${open ? "" : "hidden"
+      className={`fixed z-10 mt-10 bg-white p-3  md:p-8 w-[90%] md:w-[800px] lg:w-[900px] px-4 md:px-10 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-80 place-self-center ${open ? "" : "hidden"
         }`}
     >
       <div className="flex flex-1 ">
@@ -246,110 +289,104 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
             <div className="flex items-center gap-3 flex-1">
               <div className="flex flex-col flex-1 gap-1">
-                <p className="text-xs font-semibold text-grey_700">Select Level</p>
+                <p className="text-xs font-semibold text-grey_700 mt-2">Select Level</p>
                 <Selectable
                   options={allLevels}
                   setSelectedOption={setSelectedLevel}
+                  selectedOption={selectedLevel}
                 />
               </div>
             </div>
 
-            <div className="flex flex-col">
-              <div className="flex flex-col flex-1 gap-1">
-                <p className="text-xs font-semibold text-grey_700">Select Head Teacher</p>
-                <Selectable
-                  options={adminUsersData.allTeachers}  // Assuming the teachers are in this array
-                  setSelectedOption={setHeadTeacher}    // setHeadTeacher will be the state for the selected head teacher
-                />
-              </div>
-            </div>
+            {
+              selectedLevel && (
+                <div className="flex flex-col">
+                  <div className="flex flex-col flex-1 gap-1">
+                    <p className="text-xs font-semibold text-grey_700">Select Head Teacher</p>
+                    <Selectable
+                      options={adminUsersData.allTeachers}  // Assuming the teachers are in this array
+                      setSelectedOption={setHeadTeacher}    // setHeadTeacher will be the state for the selected head teacher
+                      selectedOption={headTeacher}
+                    />
+                  </div>
+                </div>
+              )}
 
 
-            <div className="flex flex-col">
-              <div className="flex flex-col flex-1 gap-1">
-                <p className="text-xs font-semibold text-grey_700">
-                  Select Teachers
-                </p>
-                <MultiSelect
-                  placeholder="Select Teachers"
-                  onSelect={setSelectedTeachers}
-                  options={adminUsersData.allTeachers}
-                  onChange={handleMultiSelectTeachersChange}
-                />
-              </div>
-              <div className="flex justify-end py-1 text-xs text-maroon">
-                <p>Teachers Selected: {newSelectedTeachers.length}</p>
-              </div>
-            </div>
+            {
+              selectedLevel && (
+                <div className="flex flex-col">
+                  <div className="flex flex-col flex-1 gap-1">
 
-            {newSelectedStudents && newSelectedTeachers.map((item) => {
-
-              const updateFunc = (val) => {
-                console.log("selected subject for a specific teacher is : ", val);
-                let teacherObj = {
-                  teacher: item._id,
-                  subject: val._id
-                }
-                let flag = true;
-                let tempArr = teacherArr;
-                let myarr = tempArr.map((item) => {
-                  if (item.teacher == teacherObj.teacher) {
-                    item.subject = teacherObj.subject
-                    flag = false;
+                    <MultiSelect
+                      placeholder="Select Teachers"
+                      onSelect={setSelectedTeachers}
+                      options={adminUsersData.allTeachers}
+                      onChange={handleMultiSelectTeachersChange}
+                    />
+                  </div>
+                  {
+                    newSelectedTeachers.length === 0 ? (
+                      ""
+                    ) : (
+                      <div className="flex justify-end py-1 text-xs text-maroon">
+                        <p>Teachers Selected: {newSelectedTeachers.length}</p>
+                      </div>
+                    )
                   }
-                  return item;
-                })
+                </div>
+              )
+            }
 
-                if (flag) {
-                  myarr.push(teacherObj);
-                }
-
-                setTeachersArr(myarr);
-
-                console.log("temp arr is : ", myarr);
-              }
-
-              return (
-                <div className="flex items-center gap-3">
+            {newSelectedTeachers && newSelectedTeachers.map((item) => (
+              selectedLevel && (
+                <div key={item._id} className="flex items-center gap-3">
                   <div className="flex flex-col flex-1 gap-1">
                     <p className="text-xs font-semibold text-grey_700">Select subject for teachers</p>
-                    <div>
-                      <div className='flex gap-4 items-center'>
-                        <p>{item?.name} </p>
-                        <div className='flex-1'>
-                          <Selectable
-                            options={allSubjects}
-                            setSelectedOption={updateFunc}
-                          />
-                        </div>
+                    <div className='flex gap-4 items-center'>
+                      <p>{item?.name}</p>
+                      <div className='flex-1'>
+                        <Selectable
+                          options={subjectWithLevel}
+                          setSelectedOption={(val) => handleSubjectSelect(item._id, val)}
+                          selectedOption={selectedSubjects[item._id]} // Pass the selected subject for this teacher
+                        />
                       </div>
                     </div>
                   </div>
                 </div>
               )
-            })}
+            ))}
 
 
-            <div className="flex flex-col">
-              <div className="flex flex-col flex-1 gap-1">
-                <p className="text-xs font-semibold text-grey_700">
-                  Select Students
-                </p>
-                <MultiSelect
-                  placeholder="Select Students"
-                  onSelect={setSelectedStudents}
-                  options={adminUsersData.allStudents}
-                  onChange={handleMultiSelectStudentsChange}
-                />
-              </div>
-              <div className="flex justify-end py-1 text-xs text-maroon">
-                <p>Students Selected: {newSelectedStudents.length}</p>
-              </div>
-            </div>
+
+            {
+              selectedLevel && (
+                <div className="flex flex-col">
+                  <div className="flex flex-col flex-1 gap-1">
+                    <MultiSelect
+                      placeholder="Select Students"
+                      onSelect={setSelectedStudents}
+                      options={studentWithLevel}
+                      onChange={handleMultiSelectStudentsChange}
+                    />
+                  </div>
+                  {
+                    newSelectedStudents.length === 0 ? (
+                      ""
+                    ) : (
+                      <div className="flex justify-end py-1 text-xs text-maroon">
+                        <p>Students Selected: {newSelectedStudents.length}</p>
+                      </div>
+                    )
+                  }
+                </div>
+              )
+            }
 
             {createClassroomMutation.isPending && <div><Loader /></div>}
 
-            {!createClassroomMutation.isPending && <div className="flex items-center gap-3">
+            {!createClassroomMutation.isPending && <div className="flex items-center gap-3 mt-2">
               <div
                 onClick={() => {
                   handleCreateClass();

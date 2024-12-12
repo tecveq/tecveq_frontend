@@ -87,7 +87,7 @@ export const SideTimeHeader = (props) => {
   return (
     <>
       <div className="flex items-center justify-center w-full h-full">
-        <p className="text-sm text-black/70 ">GTM +0</p>
+        <p className="text-sm text-black/70 ">GTM +5</p>
       </div>
     </>
   );

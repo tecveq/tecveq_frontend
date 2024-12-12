@@ -167,7 +167,8 @@
   border-top: 5px solid #A41D30;
   border-radius: 100%;
   position: relative;
-  animation: spin-small 1s linear infinite;
+
+  animation: spin-small 2s linear infinite;
 }
 
 @keyframes spin-small {
@@ -182,4 +183,31 @@
   100% {
     transform: rotate(360deg) scale(0.5);
   }
+}
+
+
+/* add animation of bellicon */
+
+/* Animation for the bell icon shake */
+@keyframes bellShake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px); /* Move left */
+  }
+  50% {
+    transform: translateX(6px);  /* Move right */
+  }
+  75% {
+    transform: translateX(-6px); /* Move left */
+  }
+  100% {
+    transform: translateX(0); /* Reset to original position */
+  }
+}
+
+/* Apply the animation to the bell icon */
+.animate-bellShake {
+  animation: bellShake 1s ease-in-out infinite;
 }

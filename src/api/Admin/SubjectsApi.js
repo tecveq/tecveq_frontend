@@ -1,6 +1,8 @@
 import axios from "axios";
 import apiRequest from "../../utils/ApiRequest";
 import { BACKEND_URL } from "../../constants/api";
+import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 axios.defaults.withCredentials = true;
 
@@ -9,6 +11,42 @@ export const getAllSubjects = apiRequest(async () => {
   const response = await axios.get(url);
   return response;
 });
+
+
+export const useGetAllSubjectsWithLevel = (levelId) => {
+
+
+  const getMySubjectWithLevelRequest = async () => {
+    const url = `${BACKEND_URL}/subject/${levelId}`;
+    const response = await axios.get(url);
+
+    // Note: Axios does not use response.ok, so check the status code directly
+    if (response.status !== 200) {
+      throw new Error('Failed to get user');
+    }
+
+    return response.data; // Axios automatically parses the JSON response
+  };
+
+  // Updated useQuery call with object form
+  const { data: subjectWithLevel, isLoading, error } = useQuery({
+    queryKey: ['fetchSubjectWithLevel', levelId],
+    queryFn: getMySubjectWithLevelRequest,
+    enabled: !!levelId, // Only run the query if levelId is truthy
+
+  });
+
+  // if (error) {
+  //   toast.error(error.toString());
+  // }
+
+  return {
+    isLoading,
+    subjectWithLevel,
+  };
+};
+
+
 
 export const createSubject = apiRequest(async (data) => {
   const url = `${BACKEND_URL}/subject`;

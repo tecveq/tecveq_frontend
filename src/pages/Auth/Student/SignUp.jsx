@@ -115,7 +115,7 @@ const SignUp = () => {
 
       const response = await registerStudent(dataBody);
       setUserData(response);
-      navigate('/');
+      navigate('/routes');
     } catch (error) {
       console.log('error in student login UI screen is : ', error);
     }

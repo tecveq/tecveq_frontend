@@ -105,7 +105,7 @@ const HeadAttendence = () => {
                           />
                         </div>
 
-                     
+
 
                       </div>
                     </div>
@@ -119,6 +119,7 @@ const HeadAttendence = () => {
                       students={"Students"}
                       teachers={"Teachers"}
                       createdBy={"Created By"}
+                      // status={"Status"}
                       bgColor={"#F9F9F9"}
                       header={true}
                     />
@@ -140,7 +141,10 @@ const HeadAttendence = () => {
                           />
                         </div>
 
-                      ))}
+                      )
+
+                      )
+                    }
                     {searchText && classOfHeadTeacher && classOfHeadTeacher?.map((cls, index) => {
                       if (cls?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                         return <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission")}>
@@ -156,7 +160,7 @@ const HeadAttendence = () => {
                             bgColor={"#FFFFFF"}
                             header={false}
                             threeDots={false}
-                            
+
                           />
                         </div>
 
