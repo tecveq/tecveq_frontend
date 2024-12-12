@@ -105,7 +105,7 @@ const HeadAttendence = () => {
                           />
                         </div>
 
-                     
+
 
                       </div>
                     </div>
@@ -126,22 +126,25 @@ const HeadAttendence = () => {
                     {
 
                       searchText == "" && classOfHeadTeacher?.map((cls, index) => (
-                        <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission", { state: cls })}>
-                          <DataRow
-                            data={cls}
-                            toggleClassMenu={toggleClassMenuOpen}
-                            index={index + 1}
-                            classname={cls.name}
-                            classesSchedualled={cls.classes.length}
-                            students={cls.students.length}
-                            teachers={cls.teachers.length}
-                            createdBy={cls.createdBy.userType}
-                            bgColor={"#FFFFFF"}
-                            header={false}
-                          />
-                        </div>
+                          <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission", { state: cls })}>
+                            <DataRow
+                              data={cls}
+                              toggleClassMenu={toggleClassMenuOpen}
+                              index={index + 1}
+                              classname={cls.name}
+                              classesSchedualled={cls.classes.length}
+                              students={cls.students.length}
+                              teachers={cls.teachers.length}
+                              createdBy={cls.createdBy.userType}
+                              bgColor={"#FFFFFF"}
+                              header={false}
+                            />
+                          </div>
 
-                      ))}
+                        )
+                      }
+                      )
+                    }
                     {searchText && classOfHeadTeacher && classOfHeadTeacher?.map((cls, index) => {
                       if (cls?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                         return <div className="cursor-pointer" onClick={() => navigate("/teacher/classroom/attendence/submission")}>
@@ -157,7 +160,7 @@ const HeadAttendence = () => {
                             bgColor={"#FFFFFF"}
                             header={false}
                             threeDots={false}
-                            
+
                           />
                         </div>
 

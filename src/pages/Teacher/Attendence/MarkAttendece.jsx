@@ -23,7 +23,9 @@ const MarkAttendence = () => {
 
     const attendenceMutation = useMutation({
         mutationKey: ["mark-attendence"], mutationFn: async () => {
-            const result = await markAttendence(attendeceData, location?.state?._id);
+            const result = await markAttendence(attendeceData, location?.state?._id, location?.state?.
+                classroomID
+            );
             return result;
         },
         onSettled: (data, error) => {
@@ -58,8 +60,8 @@ const MarkAttendence = () => {
 
     }, [location])
 
-    console.log(classData,"class dta si");
-    
+    console.log(classData, "class dta si");
+
 
     return (
         false ? <div className="flex justify-start flex-1"> <Loader /> </div> :
@@ -103,19 +105,19 @@ const MarkAttendence = () => {
                                         />
                                         {classData?.classroom?.studentdetails?.map((cls, index) =>
 
-                                                (
+                                        (
 
-                                                    <DataRow
-                                                        data={cls}
-                                                        header={false}
-                                                        classname={cls.name}
-                                                        profile={cls?.profilePic}
-                                                        index={index + 1}
-                                                        bgColor={"#FFFFFF"}
-                                                        attendeceData={attendeceData}
-                                                        setAttendenceData={setAttendenceData}
-                                                    />
-                                                ))}
+                                            <DataRow
+                                                data={cls}
+                                                header={false}
+                                                classname={cls.name}
+                                                profile={cls?.profilePic}
+                                                index={index + 1}
+                                                bgColor={"#FFFFFF"}
+                                                attendeceData={attendeceData}
+                                                setAttendenceData={setAttendenceData}
+                                            />
+                                        ))}
                                         {searchText && classData?.classroom?.studentdetails?.map((cls, index) => {
                                             if (cls.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                                                 return <DataRow
