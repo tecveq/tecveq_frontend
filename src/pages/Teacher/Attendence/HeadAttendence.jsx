@@ -119,7 +119,7 @@ const HeadAttendence = () => {
                       students={"Students"}
                       teachers={"Teachers"}
                       createdBy={"Created By"}
-                      // status={"Status"}
+                      status={"Status"}
                       bgColor={"#F9F9F9"}
                       header={true}
                     />
