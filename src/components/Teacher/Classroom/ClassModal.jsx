@@ -13,79 +13,72 @@ import { createClassroom } from '../../../api/Admin/classroomApi';
 
 
 const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
-  const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const ref = useRef();
+  const allSelected = selectedOptions.length === options.length;
+  const someSelected = selectedOptions.length > 0 && !allSelected;
 
-  const handleOptionClick = (option) => {
+  const handleCheckboxChange = (option) => {
     setSelectedOptions((prevSelected) => {
-      if (prevSelected.includes(option)) {
-        return prevSelected.filter((item) => item !== option);
-      } else {
-        return [...prevSelected, option];
-      }
+      const updatedSelection = prevSelected.includes(option)
+        ? prevSelected.filter((item) => item !== option)
+        : [...prevSelected, option];
+
+      // Trigger the parent onSelect immediately
+      onSelect(updatedSelection);
+      return updatedSelection;
     });
   };
 
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      setIsOpen(false);
-      onSelect(selectedOptions);
+  const handleSelectAllChange = () => {
+    if (allSelected) {
+      setSelectedOptions([]);
+      onSelect([]);
+    } else {
+      setSelectedOptions(options);
+      onSelect(options);
     }
   };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   useEffect(() => {
     onChange(selectedOptions);
   }, [selectedOptions]);
 
   return (
-    <div className="relative inline-block w-full" ref={ref}>
-      <div
-        className="bg-white border border-[#00000040] rounded-md cursor-pointer"
-        onClick={() => {
-          if (isOpen) {
-            onSelect(selectedOptions)
-          };
-          setIsOpen(!isOpen)
-        }}
-      >
-        <div className="p-1 py-2 text-sm flex justify-between items-center px-4">
-          <p>
-
-            {selectedOptions.length > 0
-              ? selectedOptions.map((option) => option.name).join(', ')
-              : placeholder}
-          </p>
-          <p>
-            <IoIosArrowDown />
-          </p>
-        </div>
+    <div className="w-full">
+      <p className="text-xs font-semibold text-grey_700">{placeholder}</p>
+      <div className="mb-4 flex items-center p-2">
+        <input
+          type="checkbox"
+          checked={allSelected}
+          onChange={handleSelectAllChange}
+          className="form-checkbox"
+          indeterminate={someSelected.toString()} // Optional: For visual indication of partial selection
+        />
+        <span className="ml-2 font-medium">Select All</span>
       </div>
-      {isOpen && (
-        <div className="absolute z-10 w-full h-60 overflow-y-auto register-scrollbar bg-white border border-[#00000020] rounded shadow-md">
-          {options.map((option) => (
-            <div
-              key={option._id}
-              className={`p-2 cursor-pointer hover:bg-gray-100 ${selectedOptions.includes(option) ? 'bg-gray-500' : ''
-                }`}
-              onClick={() => handleOptionClick(option)}
-            >
-              <p className='bg-[#00000005] px-2 py-1 rounded-sm font-medium flex  gap-2 items-center'>
-                <img src={option.profilePic} alt="" className='w-8 h-8 rounded-full' />
-                {option.name}
-                <span className='font-normal text-[#00000040]'>{option?.qualification}</span>
-              </p>
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start justify-items-start">
+        {options.map((option) => (
+          <div key={option._id} className="flex items-center p-2">
+            <input
+              type="checkbox"
+              checked={selectedOptions.includes(option)}
+              onChange={() => handleCheckboxChange(option)}
+              className="form-checkbox"
+            />
+            <p className="bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium ml-2">
+              <img
+                src={option.profilePic || IMAGES.ProfilePic}
+                alt=""
+                className="w-8 h-8 object-cover rounded-full"
+              />
+              {option.name}
+              <span className="font-normal text-[#00000040]">
+                {option?.qualification}
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -160,7 +153,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
 
 
   const handleCreateClass = async () => {
-    
+
     if (selectedLevel && newSelectedStudents.length > 0) {
 
       let students = newSelectedStudents.map((item) => item._id);
@@ -195,7 +188,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-8 w-[500px] px-20 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center flex ${open ? "" : "hidden"
+      className={`fixed z-10 mt-10 bg-white p-3  md:p-8 w-[90%] md:w-[800px] lg:w-[900px] px-4 md:px-10 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-80 place-self-center flex ${open ? "" : "hidden"
         }`}
     >
       <div className="flex flex-1 gap-2">
@@ -253,9 +246,9 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
           </div>
           <div className="flex flex-col">
             <div className="flex flex-col flex-1 gap-1">
-              <p className="text-xs font-semibold text-grey_700">
+              {/* <p className="text-xs font-semibold text-grey_700">
                 Select Students
-              </p>
+              </p> */}
               <MultiSelect
                 placeholder="Select Students"
                 onSelect={setSelectedStudents}

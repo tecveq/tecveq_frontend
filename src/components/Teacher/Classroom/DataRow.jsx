@@ -2,13 +2,10 @@ import React, { useEffect, useState } from "react";
 import IMAGES from "../../../assets/images/index";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-
 const DataRow = (props) => {
 
   useEffect(() => { }, []);
 
-  console.log(props.data ,"props data hahahhahah");
-  
 
   return (
     <div className="min-w-full">
@@ -59,12 +56,11 @@ const DataRow = (props) => {
           >
             {props.createdBy}
           </p>
-          {/* <p
-            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
-              }`}
+          <p
+            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px] text-[11px] ${props.header ? "font-semibold" : ""}`}
           >
-            {props.status}
-          </p> */}
+            {props.header ? props.status : props.status ? "Attendance Submitted" : "Not Submitted"}
+          </p>
         </div>
         <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
           <p

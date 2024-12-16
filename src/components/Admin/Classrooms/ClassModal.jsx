@@ -216,7 +216,6 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
     return <div>Loading...</div>
   }
 
-  console.log(adminUsersData.allStudents, "all students developer", studentWithLevel, "student with level");
 
 
   const handleSubjectSelect = (teacherId, subject) => {

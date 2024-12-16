@@ -69,12 +69,13 @@ export const SideTime = (props) => {
             className="flex w-[110px] h-10 justify-center items-center"
           >
             <p className="text-[10px] text-grey">
-              {moment.utc(time[0]).format("h:mm a")}
+              {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
             </p>
             <p className="text-[10px] text-grey">-</p>
             <p className="text-[10px] text-grey">
               {moment.utc(time[0])
                 .add(1, "hour")
+                .tz("Asia/Karachi") // Convert to PKT
                 .format("h:mm a")}
             </p>
           </div>
@@ -198,7 +199,7 @@ export const CustomToolbar = ({
           /> */}
           <div>
             <div className="flex justify-between py-2 px-4 w-full border-2 border-[#00000020] rounded-xl ">
-              My Time Table 
+              My Time Table
               {/* <FaChevronDown size={20} color="black" /> */}
             </div>
             <div className="py-1 text-xs text-black/70">
