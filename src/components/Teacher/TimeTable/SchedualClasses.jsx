@@ -64,7 +64,6 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
 
   const SchedualClassesComponent = ({ onclose, isOpen, setIsOpen }) => {
     const [allowedEdit, setAllowedEdit] = useState(false);
-
     const handleEditClick = () => {
       setAllowedEdit(true);
     };
@@ -74,12 +73,27 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
 
     const { teacherSubjects, isLoading } = useGetAllTeacherSubjects(userData._id)
 
-    console.log(allSubjects ,"allSubjects");
-    console.log(teacherSubjects,"teacher subject");
-    
+    console.log(allSubjects, "allSubjects");
+    console.log(teacherSubjects, "teacher subject");
+
 
     const [selectedSubject, setSelctedSubject] = useState();
     const [selectedClassroom, setSelectedClassroom] = useState();
+
+    const [selectedDays, setSelectedDays] = useState(["Monday"]);
+
+
+
+    const handleDayCheckboxChange = (day) => {
+      setSelectedDays((prev) =>
+        prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
+      );
+    };
+
+
+    console.log(selectedDays,"selected Days");
+    
+
 
 
     console.log(userData, "user data is ");
@@ -115,7 +129,8 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
         subjectID: JSON.parse(selectedSubject)._id,
         classroomID: JSON.parse(selectedClassroom)._id,
         startTime: isoFormattedStringStartTime,
-        endTime: isoFormattedStringEndTime
+        endTime: isoFormattedStringEndTime,
+        selectedDays,
       };
 
 
@@ -220,6 +235,18 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
                     value={classObj.endEventDate}
                   />
                 </div>
+                <div className="flex gap-2 my-4 flex-wrap">
+                  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
+                    <label key={day} className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        checked={selectedDays.includes(day)}
+                        onChange={() => handleDayCheckboxChange(day)}
+                      />
+                      {day}
+                    </label>
+                  ))}
+                </div>
 
                 <div className="flex gap-2">
                   <CusotmInput
@@ -284,6 +311,7 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
 
   const [addEventModalOpen, setaddEventModalOpen] = useState(false);
   const [classModal, setClassModal] = useState(false);
+
 
   return (
     <div>

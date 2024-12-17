@@ -20,7 +20,7 @@ const ClassroomAttendence = () => {
   const navigate = useNavigate();
 
   const { getAttandence } = useGetAttandenceOfClassroom(location?.state?._id, currentDate)
-  
+
   const { updateAttandence } = useUpdateAttandenceOfClassroom()
 
   const [showPopup, setShowPopup] = useState(false);
@@ -92,7 +92,19 @@ const ClassroomAttendence = () => {
   }, [getAttandence, location.state]);
 
 
+  useEffect(() => {
+    if (location.state?.studentDetails) {
+      const initialAttendance = location.state.studentDetails.map((student) => ({
+        studentID: student._id,
+        isPresent: true,
+        late: false,
+      }));
+      setAttendenceData(initialAttendance);
+      setFilteredStudents(location.state.studentDetails);
+    }
+  }, [location.state?.studentDetails]);
 
+  // Filter students by search text
   useEffect(() => {
     const filtered = searchText
       ? location.state?.studentDetails?.filter((student) =>
