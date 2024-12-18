@@ -61,14 +61,6 @@ const DataRow = (props) => {
     setLeave(false);
   }
 
-  // const onLeaveClick = () => {
-  //   let temparray = props.attendeceData;
-  //   temparray[props.index-1] = {studentID: props.classname, status: "leave" } ;
-  //   props.setAttendenceData(temparray);
-  //   setPresent(false);
-  //   setAbsent(false);
-  //   setLeave(true);
-  // }
 
   return (
     <div className="min-w-full ">

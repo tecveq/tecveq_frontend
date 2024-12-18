@@ -74,6 +74,10 @@ const SchedualClasses = ({ classRefetch }) => {
     const [selectedSubject, setSelctedSubject] = useState();
     const [selectedTeacher, setSelectedTeacher] = useState();
     const [selectedClassroom, setSelectedClassroom] = useState();
+    const [selectedDays, setSelectedDays] = useState(["Monday"]);
+
+
+
 
     const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassroom });
 
@@ -83,8 +87,8 @@ const SchedualClasses = ({ classRefetch }) => {
       }
     }, [])
 
-    console.log(userData ,"user data is ");
-    
+    console.log(userData, "user data is ");
+
 
     // "{\n  \"title\": \"this is topic\",\n
     // \"startTime\": \"2024-02-18T09:00:13.386+00:00\",\n
@@ -97,12 +101,19 @@ const SchedualClasses = ({ classRefetch }) => {
     // \"status\": \"present\"\n
     // }\n}",
 
+    const handleDayCheckboxChange = (day) => {
+      setSelectedDays((prev) =>
+        prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
+      );
+    };
+
     const [classObj, setClassObj] = useState({
       title: "",
       startTime: "",
-      startDate: "",
       endTime: "",
       oneTime: true,
+      startEventDate: "",
+      endEventDate: "",
       classroomID: "",
       subjectID: "",
       teacher: ""
@@ -116,8 +127,8 @@ const SchedualClasses = ({ classRefetch }) => {
     }
 
     const handleSchedualClass = () => {
-      const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startDate, classObj.endTime));
-      const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startDate, classObj.startTime));
+      const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime));
+      const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.startTime));
 
       let myobj = {
         ...classObj,
@@ -125,7 +136,8 @@ const SchedualClasses = ({ classRefetch }) => {
         subjectID: JSON.parse(selectedSubject)._id,
         classroomID: JSON.parse(selectedClassroom)._id,
         startTime: isoFormattedStringStartTime,
-        endTime: isoFormattedStringEndTime
+        endTime: isoFormattedStringEndTime,
+        selectedDays
       };
 
       console.log(new Date());
@@ -155,7 +167,7 @@ const SchedualClasses = ({ classRefetch }) => {
           <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
             <p className="text-xl font-medium">Schedule Class</p>
             <IoClose
-              onClick={() => { 
+              onClick={() => {
                 onclose();
                 setIsOpen(false);
               }}
@@ -202,17 +214,46 @@ const SchedualClasses = ({ classRefetch }) => {
                   selectedOption={selectedClassroom}
                   setSelectedOption={setSelectedClassroom}
                 />
-                <CusotmInput
-                  icon={"cap"}
-                  type={"date"}
-                  title={"Date"}
-                  name={"startDate"}
-                  selectable={false}
-                  valuesObj={classObj}
-                  status={allowedEdit}
-                  setValue={setClassObj}
-                  value={classObj.startDate}
-                />
+                <div>
+                  <CusotmInput
+                    icon={"cap"}
+                    type={"date"}
+                    title={"Start Event Date"}
+                    name={"startEventDate"}
+                    selectable={false}
+                    valuesObj={classObj}
+                    status={allowedEdit}
+                    setValue={setClassObj}
+                    value={classObj.startEventDate}
+                  />
+                  <CusotmInput
+                    icon={"cap"}
+                    type={"date"}
+                    title={"End Event Date"}
+                    name={"endEventDate"}
+                    selectable={false}
+                    valuesObj={classObj}
+                    status={allowedEdit}
+                    setValue={setClassObj}
+                    value={classObj.endEventDate}
+                  />
+                </div>
+
+                <div className="flex gap-2 my-4 flex-wrap">
+                  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
+                    <label key={day} className="flex items-center gap-1">
+                      <input
+                        type="checkbox"
+                        checked={selectedDays.includes(day)}
+                        onChange={() => handleDayCheckboxChange(day)}
+                      />
+                      {day}
+                    </label>
+                  ))}
+                </div>
+            
+            
+
                 <div className="flex gap-2">
                   <CusotmInput
                     type={"time"}
@@ -237,6 +278,7 @@ const SchedualClasses = ({ classRefetch }) => {
                     value={classObj.endTime}
                   />
                 </div>
+
 
                 <div className="py-8 border-t border-black/20">
                   <div className="flex items-center gap-2">
