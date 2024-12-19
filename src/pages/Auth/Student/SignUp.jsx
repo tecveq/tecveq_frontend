@@ -21,9 +21,8 @@ const SignUp = () => {
           </div>
           <div>
             <input
-              className={`border outline-none rounded-sm border-black/20 px-4 w-full py-[4px] ${
-                type === 'password' ? 'font-bold text-xl' : ''
-              } placeholder:text-base placeholder:font-normal `}
+              className={`border outline-none rounded-sm border-black/20 px-4 w-full py-[4px] ${type === 'password' ? 'font-bold text-xl' : ''
+                } placeholder:text-base placeholder:font-normal `}
               required
               type={type}
               placeholder={placeholder}
@@ -86,7 +85,7 @@ const SignUp = () => {
 
       if (role === 'parent') {
         dataBody = {
-          role,
+          userType: role,
           sName: e.target[1].value,
           sID: e.target[2].value,
           password: e.target[3].value,

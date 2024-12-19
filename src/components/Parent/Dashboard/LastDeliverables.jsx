@@ -6,14 +6,14 @@ import { getAllSubjects } from "../../../api/Parent/ParentApi";
 
 const LastDeliverables = () => {
 
-  
+
   const [enableQuery, setEnableQuery] = useState(false);
 
   const { allSubjects, setAllSubjects, selectedChild } = useParent();
 
   const subjectQuery = useQuery({
     queryKey: ["subjects"], queryFn: async () => {
-      const results = await getAllSubjects(selectedChild._id);
+      const results = await getAllSubjects(selectedChild?._id);
       console.log("subject in enrolled classes is : ", results);
       setAllSubjects(results);
       return results
@@ -27,16 +27,24 @@ const LastDeliverables = () => {
   }, []);
 
 
-  const DeliverableComponent = () => {
+  const DeliverableComponent = ({ subjectQuery }) => {
     return (
       <div className="flex flex-col items-center justify-center w-full gap-2 bg-white rounded-md md:px-8 sm:flex-1 md:py-2 md:gap-3">
-        <div className="flex flex-col items-center justify-center w-28 h-36 md:flex-row">
-          {subjectQuery?.data?.map((item) =>{
-            return <div> {JSON.stringify(item)} </div>
-          })}
+        <div className="flex flex-col items-center justify-center w-28 h-36 md:flex-row relative">
+          {subjectQuery?.data?.length > 0 ? (
+            subjectQuery.data.map((item, index) => (
+              <div className="text-xs" key={index}>
+                {JSON.stringify(item)}
+              </div>
+            ))
+          ) : (
+            <div className="text-sm text-gray-500"></div>
+          )}
+
+          
           <Circle
             percent={40}
-            strokeColor={`#A41D30`}
+            strokeColor="#A41D30"
             strokeWidth={12}
             trailColor="#EAECF0"
             trailWidth={12}
@@ -44,14 +52,15 @@ const LastDeliverables = () => {
           <div className="absolute flex flex-col items-center">
             <span className="text-[7px] md:text-[10px]">Submission</span>
             <div className="flex">
-              <span className="text-[7px] text-base font-semibold">40 %</span>
+              <span className="text-[7px] md:text-base font-semibold">40 %</span>
             </div>
           </div>
+
         </div>
         <p className="text-xs text-center">Submissions: 40/100</p>
       </div>
     );
-  };
+  }
   const CustomGradeComponent = () => {
     return (
       <div className="flex flex-col items-center justify-center w-full gap-2 bg-white rounded-md md:px-8 sm:flex-1 md:py-2 md:gap-3">

@@ -24,7 +24,7 @@ const MarkAttendence = () => {
     const attendenceMutation = useMutation({
         mutationKey: ["mark-attendence"], mutationFn: async () => {
             const result = await markAttendence(attendeceData, location?.state?._id, location?.state?.
-                classroomID
+                classroomID, location?.state?.startTime
             );
             return result;
         },
