@@ -19,10 +19,10 @@ export const getTodayClasses = apiRequest(async () => {
 });
 
 
-export const markAttendence = apiRequest(async (data, classID, classroomID) => {
+export const markAttendence = apiRequest(async (data, classID, classroomID, startTime) => {
 
     const url = `${BACKEND_URL}/class/get-today-classes/${classID}`;
-    const response = await axios.put(url, { data, classroomID });
+    const response = await axios.put(url, { data, classroomID, startTime });
     return response;
 
 });
@@ -89,7 +89,7 @@ export const useUpdateAttandenceOfClassroom = () => {
         {
             mutationKey: ["update-attendence",],
             mutationFn: updateMyAttandenceOfClassroom,
-            
+
             onSuccess: () => {
                 toast.success("Attendance Updated Successfully!");
             },

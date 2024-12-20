@@ -6,38 +6,43 @@ import { getAllSubjects } from "../../../api/Parent/ParentApi";
 import Loader from "../../../utils/Loader";
 
 const SubjectsEnrolled = () => {
-
   const [popup, setPopup] = useState(false);
-  const [clickedItem, setClickedItem] = useState(false);
-  const toggleClickTeacher = (item) => {
-    setPopup(!popup);
-    setClickedItem(item)
-  }
-
-  const handleFeedback = () => {
-    toggleClickTeacher();
-    // backend call
-  }
-
+  const [clickedItem, setClickedItem] = useState(null);
   const [enableQuery, setEnableQuery] = useState(false);
 
   const { allSubjects, setAllSubjects, selectedChild } = useParent();
 
+  const toggleClickTeacher = (item) => {
+    setPopup(!popup);
+    setClickedItem(item);
+  };
+
+  const handleFeedback = () => {
+    toggleClickTeacher();
+    // Add backend call here if needed
+  };
+
+  // Fetch subjects with React Query
   const subjectQuery = useQuery({
-    queryKey: ["subjects"], queryFn: async () => {
-      const results = await getAllSubjects(selectedChild._id);
-      console.log("subject in enrolled classes is : ", results);
+    queryKey: ["subjects", selectedChild?._id],
+    queryFn: async () => {
+      const results = await getAllSubjects(selectedChild?._id);
+      console.log("Subjects in enrolled classes:", results);
       setAllSubjects(results);
-      return results
-    }, staleTime: 300000, enabled: enableQuery
+      return results;
+    },
+    staleTime: 300000,
+    enabled: enableQuery && !!selectedChild?._id, // Enable query only if `selectedChild._id` is defined
   });
 
+  // Enable query if `allSubjects` is empty
   useEffect(() => {
-    if (allSubjects.length == 0) {
+    if (allSubjects.length === 0 && selectedChild?._id) {
       setEnableQuery(true);
     }
-  }, []);
+  }, [allSubjects, selectedChild]);
 
+  console.log(subjectQuery.data);
 
   return (
     <div className="flex flex-1">
@@ -52,42 +57,64 @@ const SubjectsEnrolled = () => {
                 <td className="flex-[1] flex justify-center">Sr No.</td>
                 <td className="flex-[3] flex justify-center">Subject Name</td>
                 <td className="flex-[3] flex justify-center">Instructor</td>
-                {/* <td className="flex-[3] flex justify-center">Assignment</td>
-                <td className="flex-[3] flex justify-center">Quiz</td> */}
-                <td className="flex-[3] flex justify-center">Attendence</td>
+                <td className="flex-[3] flex justify-center">Attendance</td>
               </tr>
             </thead>
-            {subjectQuery.isPending ? <div className="flex"><Loader /></div> :
+
+            {subjectQuery.isPending ? (
+              <tbody className="flex flex-1">
+                <tr className="flex flex-1 justify-center py-5">
+                  <td colSpan="4">
+                    <Loader />
+                  </td>
+                </tr>
+              </tbody>
+            ) : subjectQuery.isError ? (
+              <tbody className="flex flex-1">
+                <tr className="flex flex-1 justify-center py-5">
+                  <td colSpan="4" className="text-red-500">
+                    Error fetching subjects. Please try again later.
+                  </td>
+                </tr>
+              </tbody>
+            ) : (
               <tbody className="flex flex-col">
-                {subjectQuery?.data?.subjects?.map((item, index) => {
-                  return (
+                {subjectQuery?.data?.subjects?.length > 0 ? (
+                  subjectQuery.data.subjects.map((item, index) => (
                     <tr key={index} className="flex flex-1 text-xs border-t border-t-black/10">
                       <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
                       <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
                         {item.subject.name}
                       </td>
-                      <td onClick={() => toggleClickTeacher(item)} style={{ cursor: "pointer" }} className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                      <td
+                        onClick={() => toggleClickTeacher(item)}
+                        style={{ cursor: "pointer" }}
+                        className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center"
+                      >
                         {item.teacher.name}
                       </td>
-                      {/* <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                      {item.assignment}
-                    </td>
-                    <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                      {item.quiz}
-                    </td> */}
                       <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex w-full justify-center">
                         <div className="flex w-[90%] h-4 bg-grey/50 rounded-3xl">
-                          <div style={{width: `${item.avgAttendancePer}%` }} className={` text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}>
+                          <div
+                            style={{ width: `${item.avgAttendancePer || 0}%` }}
+                            className="text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white"
+                          >
                             {item?.avgAttendancePer || 0} %
                           </div>
                         </div>
                       </td>
                     </tr>
-                  );
-                })}
-                {popup ? <TeacherMessageDialog handleFeedback={handleFeedback} item={clickedItem} /> : ""}
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="py-4 text-center">
+                      No subjects are found.
+                    </td>
+                  </tr>
+                )}
+                {popup && <TeacherMessageDialog handleFeedback={handleFeedback} item={clickedItem} />}
               </tbody>
-            }
+            )}
           </table>
         </div>
       </div>

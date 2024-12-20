@@ -19,6 +19,8 @@ const ChildrenScreen = () => {
     const { userData } = useUser();
 
     const child1Click = (child) => {
+        console.log(child,"child1Click");
+        
         setSelectedChild(child);
         localStorage.setItem("selectedChild", JSON.stringify(child));
         setChild1(true);

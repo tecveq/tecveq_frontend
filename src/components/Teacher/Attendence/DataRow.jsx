@@ -7,6 +7,9 @@ const DataRow = (props) => {
   useEffect(() => { }, []);
   const navigate = useNavigate();
 
+  console.log(props?.allData, "all data of props");
+  
+
   return (
     <div className="min-w-full cursor-pointer" onClick={() => { !props.header && navigate("/teacher/attendence/submission", { state: props?.allData }) }}>
       <div

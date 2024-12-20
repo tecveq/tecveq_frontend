@@ -57,11 +57,21 @@ export const ParentProvider = ({ children }) => {
 
     useEffect(() => {
         let child = localStorage.getItem("selectedChild");
+        console.log(child ,"child");
+        
         if (child != null) {
+            console.log("inside");
+            
             setSelectedChild(JSON.parse(child));
             setParentLogedIn(true);
+
+
         }
     }, [])
+
+    useEffect(() => {
+        console.log("parse dataa is is success", selectedChild);
+    }, [selectedChild]);
 
     return (
         <ParentContext.Provider value={{

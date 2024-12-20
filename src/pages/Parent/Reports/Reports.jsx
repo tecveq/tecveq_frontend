@@ -120,7 +120,7 @@ const Reports = () => {
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
         <div className="flex flex-1">
           <div className={`w-full h-screen lg:px-20 sm:px-10  flex-grow lg:ml-72 ${isBlurred ? "blur" : ""}`}>
-            <div className='h-screen pt-16'>
+            <div className='h-screen pt-8'>
               <Navbar heading={"Reports"} />
               <div className='px-3 mt-8 h-[80%] overflow-auto'>
                 <DataRows index={"Sr. No"} subject={"Subject"} instructor={"Instructor"} attendance={"Attendance"} bgColor={"#F9F9F9"} header={true} />
