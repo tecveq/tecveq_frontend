@@ -24,4 +24,8 @@ export const getAllClasses = apiRequest(async () => {
 
 export const createClasses = apiRequest(async (data) => await axios.post(`${BACKEND_URL}/class/`, data));
 
+export const updateClasses = apiRequest(async (data) => await axios.put(`${BACKEND_URL}/class/`, data));
+
+
+
 export const cancelClass = apiRequest(async (id) => await axios.delete(`${BACKEND_URL}/class/${id}`));

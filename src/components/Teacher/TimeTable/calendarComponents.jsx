@@ -5,7 +5,7 @@ import ViewEventDetailsModal from "./viewEventDetailsModal";
 import { useEffect, useState } from "react";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
-export const CustomEvent = ({ event, setevents }) => {
+export const CustomEvent = ({ event, setevents ,refetch }) => {
   const [detailsModalOpen, setdetailsModalOpen] = useState(false);
 
   console.log("current event is : ", event);
@@ -25,6 +25,7 @@ export const CustomEvent = ({ event, setevents }) => {
         event={event}
         setevents={setevents}
         open={detailsModalOpen}
+        refetch={refetch}
         setopen={setdetailsModalOpen}
       />
       <div

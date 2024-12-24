@@ -11,54 +11,9 @@ import { useUser } from "../../../context/UserContext";
 import { createClasses } from "../../../api/Teacher/Class";
 import { useTeacher } from "../../../context/TeacherContext";
 import { useGetAllTeacherSubjects } from "../../../api/Teacher/TeacherSubjectApi";
-
-
-const CustomSelectable = ({ label, options, setSelectedOption, selectedOption }) => {
-  return (
-    <div className='flex flex-col text-start py-1'>
-      <div className='flex flex-col gap-1'>
-        <div className='font-normal text-sm'>
-          {label}
-        </div>
-        <div>
-          <select value={selectedOption} onChange={(e) => { setSelectedOption(e.target.value) }}
-            className='border text-sm text-grey/70 outline-none rounded-md border-black/20 px-4 w-full py-2'>
-            <option value={""}>Select</option>
-            {options?.map((item) => {
-              return <option key={item._id} value={JSON.stringify(item)}>{item.name}</option>
-            })}
-          </select>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const CusotmInput = ({ valuesObj, value, type, name, status, title, setValue }) => {
-  return (
-    <div className="my-1 text-sm flex w-full">
-      <div className="flex flex-col gap-2 flex-1 w-full">
-        <div className="bg-white ">
-          {title}
-        </div>
-        <div
-          className={`flex px-2 py-1 w-full flex-1 border justify-between rounded-md items-center border-grey/70 ${status ? "text-black" : "text-grey"
-            }`}
-        >
-          <input
-            type={type}
-            value={value}
-            placeholder={`Enter ${name}`}
-            className="flex flex-1 w-full py-1 outline-none"
-            min={type === "date" ? new Date().toISOString().split("T")[0] : undefined}
-            onChange={(e) => setValue({ ...valuesObj, [name]: e.target.value })}
-
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
+import { convertToISOWithTimezoneOffset } from "../../../utils/ConvertTimeZone";
+import CustomSelectableField from '../../../commonComponents/CustomSelectableField'
+import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
 
 const SchedualClasses = ({ refetch, data, isPending }) => {
 
@@ -91,8 +46,8 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
     };
 
 
-    console.log(selectedDays,"selected Days");
-    
+    console.log(selectedDays, "selected Days");
+
 
 
 
@@ -114,11 +69,6 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
 
 
     const handleSaveDetails = () => { };
-
-    function convertToISOWithTimezoneOffset(startEventDate, startTime) {
-      const dateTimeString = `${startEventDate}T${startTime}:00.000Z`;
-      return dateTimeString;
-    }
 
     const handleSchedualClass = () => {
       const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime));
@@ -177,13 +127,13 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
               </div>
               <div className="flex flex-col w-full flex-1 gap-1 px-2 py-1 overflow-y-auto custom-scrollbar">
 
-                <CustomSelectable
+                <CustomSelectableField
                   options={teacherSubjects}
                   label={"Select Subject"}
                   selectedOption={selectedSubject}
                   setSelectedOption={setSelctedSubject}
                 />
-                <CusotmInput
+                <CusotmInputField
                   type={"text"}
                   icon={"mail"}
                   name={"title"}
@@ -195,13 +145,13 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
                   setValue={setClassObj}
                 />
 
-                <CustomSelectable
+                <CustomSelectableField
                   label={"Select Classroom"}
                   options={allClassrooms}
                   selectedOption={selectedClassroom}
                   setSelectedOption={setSelectedClassroom}
                 />
-                <CusotmInput
+                <CusotmInputField
                   type={"text"}
                   name={"meetingUrl"}
                   title={"Meeting URL"}
@@ -212,7 +162,7 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
                 />
 
                 <div>
-                  <CusotmInput
+                  <CusotmInputField
                     icon={"cap"}
                     type={"date"}
                     title={"Start Event Date"}
@@ -223,7 +173,7 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
                     setValue={setClassObj}
                     value={classObj.startEventDate}
                   />
-                  <CusotmInput
+                  <CusotmInputField
                     icon={"cap"}
                     type={"date"}
                     title={"End Event Date"}
@@ -249,7 +199,7 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
                 </div>
 
                 <div className="flex gap-2">
-                  <CusotmInput
+                  <CusotmInputField
                     type={"time"}
                     icon={"calendar"}
                     name={"startTime"}
@@ -260,7 +210,7 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
                     setValue={setClassObj}
                     value={classObj.startTime}
                   />
-                  <CusotmInput
+                  <CusotmInputField
                     type={"time"}
                     icon={"cake"}
                     name={"endTime"}
