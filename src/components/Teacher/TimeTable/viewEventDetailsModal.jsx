@@ -13,6 +13,8 @@ import Loader from "../../../utils/Loader"
 import { teacherPresent } from "../../../api/Teacher/Attendence";
 import { useUser } from "../../../context/UserContext";
 import { useMutation } from "@tanstack/react-query";
+import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
+import { convertToISOWithTimezoneOffset } from "../../../utils/ConvertTimeZone";
 // import { LuGalleryHorizontal } from "react-icons/lu";
 
 
@@ -73,7 +75,7 @@ export default function ViewEventDetailsModal({
     startEventDate: event.startEventDate,
     endEventDate: event.endEventDate,
     teacher: { teacherID: userData._id, status: "absent" },
-    status: eventType
+    updateSeries: eventType
   })
 
   //   const { setAlert } = useAlert();
@@ -148,10 +150,10 @@ export default function ViewEventDetailsModal({
 
 
 
-  function convertToISOWithTimezoneOffset(startEventDate, startTime) {
-    const dateTimeString = `${startEventDate}T${startTime}:00.000Z`;
-    return dateTimeString;
-  }
+  // function convertToISOWithTimezoneOffset(startEventDate, startTime) {
+  //   const dateTimeString = `${startEventDate}T${startTime}:00.000Z`;
+  //   return dateTimeString;
+  // }
 
 
 
@@ -174,7 +176,7 @@ export default function ViewEventDetailsModal({
       startEventDate: startDate,
       endEventDate: endEventDate,
       teacher: { teacherID: userData._id, status: classObj.status },
-      status: eventType,
+      updateSeries: eventType,
     };
 
     console.log(obj, "My Update Data");
@@ -333,7 +335,7 @@ export default function ViewEventDetailsModal({
           </div>
           <div className="flex items-center gap-3">
             <div className="flex  gap-x-5">
-              <CusotmInput
+              <CusotmInputField
                 type={"time"}
                 icon={"calendar"}
                 name={"startTime"}
@@ -344,7 +346,7 @@ export default function ViewEventDetailsModal({
                 setValue={setClassObj}
                 value={classObj.startTime}
               />
-              <CusotmInput
+              <CusotmInputField
                 type={"time"}
                 icon={"cake"}
                 name={"endTime"}
