@@ -29,11 +29,14 @@ const MarkAttendence = () => {
             return result;
         },
         onSettled: (data, error) => {
-            if (error) console.log(error);
+            if (error) console.log(error, "error is accurs");
             if (!error) {
                 toast.success("Attendance submitted successfully!");
                 navigate("/teacher/attendence");
                 console.log(" data is: ", data);
+            } else {
+                toast.error(error.response.data.message);
+
             }
         }
     })

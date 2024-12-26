@@ -65,11 +65,11 @@ import ProtectedStudent from "./utils/ProtectedStudent";
 import ProtectedTeacher from "./utils/ProtectedTeacher";
 import ProtectedAdmin from "./utils/ProtectedAdmin";
 import ProtectedParent from "./utils/ProtectedParent";
-
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from "./pages/Auth/LandingPage";
 import HeadAttendence from "./pages/Teacher/Attendence/HeadAttendence";
+import AttandenceSettings from "./pages/Admin/AttandenceSettings/AttandenceSettings";
 
 function App() {
   return (
@@ -180,11 +180,20 @@ function App() {
               </AdminLayout>
             }
           />
+
           <Route
             path="/admin/teachers/:teacher"
             element={
               <AdminLayout>
                 <ATeacherDetails />
+              </AdminLayout>
+            }
+          />
+          <Route
+            path="/admin/attandenceSettings"
+            element={
+              <AdminLayout>
+                <AttandenceSettings />
               </AdminLayout>
             }
           />
