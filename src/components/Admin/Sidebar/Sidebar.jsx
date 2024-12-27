@@ -188,7 +188,7 @@ const Sidebar = () => {
     setLevels(false);
     setSubjects(false);
     setSetting(true);
-    navigate("/admin/attandenceSettings");
+    navigate("/admin/settings");
   };
 
   const {

@@ -10,6 +10,7 @@ import Loader from '../../../utils/Loader';
 import { toast } from 'react-toastify';
 import { useGetAllStudentsWithLevel } from '../../../api/Admin/AdminApi';
 import { useGetAllSubjectsWithLevel } from '../../../api/Admin/SubjectsApi';
+import MultiSelectField from '../../../commonComponents/MultiSelectField';
 
 
 const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
@@ -104,25 +105,6 @@ const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
             })}
           </select>
         </div>
-      </div>
-    </div>
-  )
-}
-
-const CustomInput = ({ label, val, setVal, errormsg }) => {
-  return (
-    <div className="flex items-center gap-3">
-      <div className="flex flex-col flex-1 gap-1">
-        <p className="text-xs font-semibold text-grey_700">{label} </p>
-        <div className="flex flex-col border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
-          <input
-            className="w-full text-sm outline-none text-custom-gray-3"
-            placeholder="Enter subject name"
-            value={val}
-            onChange={(e) => setVal(e.target.value)}
-          />
-        </div>
-        {errormsg && <p className="text-maroon text-sm self-center">Classroom Name is required!</p>}
       </div>
     </div>
   )
@@ -317,7 +299,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
                 <div className="flex flex-col">
                   <div className="flex flex-col flex-1 gap-1">
 
-                    <MultiSelect
+                    <MultiSelectField
                       placeholder="Select Teachers"
                       onSelect={setSelectedTeachers}
                       options={adminUsersData.allTeachers}
@@ -363,7 +345,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               selectedLevel && (
                 <div className="flex flex-col">
                   <div className="flex flex-col flex-1 gap-1">
-                    <MultiSelect
+                    <MultiSelectField
                       placeholder="Select Students"
                       onSelect={setSelectedStudents}
                       options={studentWithLevel}

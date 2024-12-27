@@ -29,7 +29,7 @@ const AttandenceSetting = () => {
     // Sync API data to component state
     useEffect(() => {
         if (!isGetHeadSettingLoading && headSettings) {
-            setIsEnableHeadSetting(headSettings?.mode?.enableHeadAttendance || false); // Set checkbox state
+            setIsEnableHeadSetting(headSettings?.attendenceSetting?.enableHeadAttendance || false); // Set checkbox state
             setSettingId(headSettings?._id || null); // Store setting ID if present
         }
     }, [headSettings, isGetHeadSettingLoading]); // Watch for changes

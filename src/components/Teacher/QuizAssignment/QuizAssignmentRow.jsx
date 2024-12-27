@@ -12,7 +12,7 @@ const QuizAssignmentRow = (props) => {
         style={{ backgroundColor: props.bgColor }}
         className={`min-w-full border-b flex border-grey items-center`}
       >
-        <div className="flex flex-row items-center flex-1 py-2 mt-2 md:py-5 md:pl-3 md:pr-5 md:gap-3 ">
+        <div className="flex flex-row items-center flex-1 py-[4px] mt-1 md:pl-3 md:pr-5 md:gap-3 ">
           <p
             className={`w-full md:flex-[1] flex-[1] md:text-[14px] text-[11px] text-center md:text-left ${props.header ? "font-semibold" : ""
               }`}

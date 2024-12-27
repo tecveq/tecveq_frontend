@@ -13,53 +13,11 @@ import { useAdmin } from "../../../context/AdminContext";
 import { createClasses } from "../../../api/Teacher/Class";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllClassroom } from "../../../api/Admin/classroomApi";
+import { convertToISOWithTimezoneOffset } from "../../../utils/ConvertTimeZone";
+import CustomSelectableField from "../../../commonComponents/CustomSelectableField";
+import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
 
-const CustomSelectable = ({ label, options, setSelectedOption, selectedOption }) => {
-  return (
-    <div className='flex flex-col text-start py-1'>
-      <div className='flex flex-col gap-1'>
-        <div className='font-normal text-sm'>
-          {label}
-        </div>
-        <div>
-          <select value={selectedOption} onChange={(e) => { setSelectedOption(e.target.value) }}
-            className='border text-sm text-grey/70 outline-none rounded-md border-black/20 px-4 w-full py-2'>
-            <option value={""}>Select</option>
-            {options.map((item) => {
-              return <option key={item._id} value={JSON.stringify(item)}>{item.name}</option>
-            })}
-          </select>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const CusotmInput = ({ valuesObj, value, type, name, status, title, setValue }) => {
-  return (
-    <div className="my-1 text-sm flex w-full">
-      <div className="flex flex-col gap-2 flex-1 w-full">
-        <div className="bg-white ">
-          {title}
-        </div>
-        <div
-          className={`flex px-2 py-1 w-full flex-1 border justify-between rounded-md items-center border-grey/70 ${status ? "text-black" : "text-grey"
-            }`}
-        >
-          <input
-            type={type}
-            value={value}
-            placeholder={`Enter ${name}`}
-            className="flex flex-1 w-full py-1 outline-none"
-            onChange={(e) => setValue({ ...valuesObj, [name]: e.target.value })}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const SchedualClasses = ({ classRefetch }) => {
+const SchedualClasses = ({ refetch }) => {
 
   const SchedualClassesComponent = ({ onclose, isOpen, setIsOpen }) => {
     const [allowedEdit, setAllowedEdit] = useState(false);
@@ -121,11 +79,6 @@ const SchedualClasses = ({ classRefetch }) => {
 
     const handleSaveDetails = () => { };
 
-    function convertToISOWithTimezoneOffset(startDate, startTime) {
-      const dateTimeString = `${startDate}T${startTime}:00.000Z`;
-      return dateTimeString;
-    }
-
     const handleSchedualClass = () => {
       const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime));
       const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.startTime));
@@ -151,7 +104,7 @@ const SchedualClasses = ({ classRefetch }) => {
       onSettled: async (data, error) => {
         if (!error) {
           toast.success("Class created successfully");
-          await classRefetch();
+          await refetch();
           setaddEventModalOpen(false);
         }
       }
@@ -184,20 +137,20 @@ const SchedualClasses = ({ classRefetch }) => {
               </div>
               <div className="flex flex-col w-full flex-1 gap-1 px-2 py-1 overflow-y-auto custom-scrollbar">
 
-                <CustomSelectable
+                <CustomSelectableField
                   label={"Select Teacher"}
                   selectedOption={selectedTeacher}
                   options={adminUsersData.allTeachers}
                   setSelectedOption={setSelectedTeacher}
                 />
 
-                <CustomSelectable
+                <CustomSelectableField
                   options={allSubjects}
                   label={"Select Subject"}
                   selectedOption={selectedSubject}
                   setSelectedOption={setSelctedSubject}
                 />
-                <CusotmInput
+                <CusotmInputField
                   type={"text"}
                   icon={"mail"}
                   name={"title"}
@@ -208,14 +161,14 @@ const SchedualClasses = ({ classRefetch }) => {
                   value={classObj.title}
                   setValue={setClassObj}
                 />
-                <CustomSelectable
+                <CustomSelectableField
                   label={"Select Classroom"}
                   options={allClassrooms}
                   selectedOption={selectedClassroom}
                   setSelectedOption={setSelectedClassroom}
                 />
                 <div>
-                  <CusotmInput
+                  <CusotmInputField
                     icon={"cap"}
                     type={"date"}
                     title={"Start Event Date"}
@@ -226,7 +179,7 @@ const SchedualClasses = ({ classRefetch }) => {
                     setValue={setClassObj}
                     value={classObj.startEventDate}
                   />
-                  <CusotmInput
+                  <CusotmInputField
                     icon={"cap"}
                     type={"date"}
                     title={"End Event Date"}
@@ -251,11 +204,11 @@ const SchedualClasses = ({ classRefetch }) => {
                     </label>
                   ))}
                 </div>
-            
-            
+
+
 
                 <div className="flex gap-2">
-                  <CusotmInput
+                  <CusotmInputField
                     type={"time"}
                     icon={"calendar"}
                     selectable={false}
@@ -266,7 +219,7 @@ const SchedualClasses = ({ classRefetch }) => {
                     setValue={setClassObj}
                     value={classObj.startTime}
                   />
-                  <CusotmInput
+                  <CusotmInputField
                     type={"time"}
                     icon={"cake"}
                     name={"endTime"}
@@ -312,7 +265,7 @@ const SchedualClasses = ({ classRefetch }) => {
     );
   };
 
-  const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classes"], queryFn: getAllClasses });
+  const { data, isPending } = useQuery({ queryKey: ["classes"], queryFn: getAllClasses });
 
   const [addEventModalOpen, setaddEventModalOpen] = useState(false);
   const [classModal, setClassModal] = useState(false);

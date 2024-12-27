@@ -69,7 +69,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from "./pages/Auth/LandingPage";
 import HeadAttendence from "./pages/Teacher/Attendence/HeadAttendence";
-import AttandenceSettings from "./pages/Admin/AttandenceSettings/AttandenceSettings";
+import Settings from "./pages/Admin/Settings/Settings";
 
 function App() {
   return (
@@ -190,10 +190,10 @@ function App() {
             }
           />
           <Route
-            path="/admin/attandenceSettings"
+            path="/admin/settings"
             element={
               <AdminLayout>
-                <AttandenceSettings />
+                <Settings />
               </AdminLayout>
             }
           />
