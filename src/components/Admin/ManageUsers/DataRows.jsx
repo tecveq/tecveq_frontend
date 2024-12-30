@@ -21,7 +21,7 @@ const DataRows = ({
         style={{ backgroundColor: bgColor, cursor: "pointer" }}
         className={`flex flex-row items-center justify-around border-b border-grey custom-shadow my-1`}
       >
-        <div className={`flex flex-row items-center flex-1 ${header? "py-1 md:py-1 md:pl-3 md:pr-5": "py-3 md:py-6 md:pl-3 md:pr-5"} mt-2 `}>
+        <div className={`flex flex-row items-center flex-1 ${header? "py-1 md:py-1 md:pl-3 md:pr-5": "py-[6px] md:pl-3 md:pr-5"} my-1 `}>
           <p
             className={`w-full md:flex-[1] flex-[1] text-sm text-center md:text-left ${header ? "font-semibold" : ""
               }`}

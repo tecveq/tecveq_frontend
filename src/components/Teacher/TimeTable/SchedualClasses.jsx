@@ -45,15 +45,6 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
       );
     };
 
-
-    console.log(selectedDays, "selected Days");
-
-
-
-
-    console.log(userData, "user data is ");
-
-
     const [classObj, setClassObj] = useState({
       title: "",
       startTime: "",
@@ -73,6 +64,9 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
     const handleSchedualClass = () => {
       const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime));
       const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.startTime));
+
+
+      console.log(isoFormattedStringStartTime, "start time", isoFormattedStringEndTime, "end time", isoFormattedStringStartTime);
 
       let myobj = {
         ...classObj,

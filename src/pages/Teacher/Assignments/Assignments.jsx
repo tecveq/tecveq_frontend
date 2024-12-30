@@ -59,7 +59,7 @@ const Assignments = () => {
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
             <div
-              className={`w-full h-screen lg:px-20 sm:px-10  flex-grow lg:ml-72`}
+              className={`w-full h-screen lg:px-12 sm:px-10  flex-grow lg:ml-72`}
             >
               <div className="h-screen pt-1">
                 <Navbar heading={"Assignment"} />

@@ -21,6 +21,8 @@ const Sidebar = () => {
   const [dashboard, setDashboard] = useState(true);
   const [classroom, setClassroom] = useState(false);
   const [timetable, setTimetable] = useState(false);
+  const [setting, setSetting] = useState(false);
+
   const [assignments, setAssignments] = useState(false);
   const [manageUsers, setManageUsers] = useState(false);
   const [announcements, setAnnouncements] = useState(false);
@@ -43,6 +45,7 @@ const Sidebar = () => {
     setAnnouncements(false);
     setLevels(false);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/dashboard");
   };
 
@@ -58,6 +61,7 @@ const Sidebar = () => {
     setTimetable(false);
     setLevels(false);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/reports");
   };
 
@@ -72,6 +76,7 @@ const Sidebar = () => {
     setTimetable(false);
     setLevels(false);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/manageusers");
   };
 
@@ -86,6 +91,7 @@ const Sidebar = () => {
     setTimetable(false);
     setLevels(false);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/announcements");
   };
 
@@ -101,6 +107,7 @@ const Sidebar = () => {
     setTimetable(false);
     setLevels(false);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/teachers");
   };
 
@@ -116,6 +123,7 @@ const Sidebar = () => {
     setTimetable(true);
     setLevels(false);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/timetable");
   };
 
@@ -131,6 +139,7 @@ const Sidebar = () => {
     setTimetable(false);
     setLevels(false);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/classrooms");
   };
 
@@ -146,6 +155,7 @@ const Sidebar = () => {
     setTimetable(false);
     setLevels(true);
     setSubjects(false);
+    setSetting(false);
     navigate("/admin/levels");
   };
 
@@ -161,7 +171,24 @@ const Sidebar = () => {
     setTimetable(false);
     setLevels(false);
     setSubjects(true);
+    setSetting(false);
     navigate("/admin/subjects");
+  };
+
+  const handleSettingClick = async () => {
+    setDashboard(false);
+    setTeachers(false);
+    setManageUsers(false);
+    setQuizes(false);
+    setReports(false);
+    setAnnouncements(false);
+    setClassroom(false);
+    setAssignments(false);
+    setTimetable(false);
+    setLevels(false);
+    setSubjects(false);
+    setSetting(true);
+    navigate("/admin/settings");
   };
 
   const {
@@ -183,7 +210,7 @@ const Sidebar = () => {
 
   const Menubar = () => (
     <div
-      className={`w-72  shadow-lg bg-white z-50 md:h-screen  px-8 py-5 `}
+      className={`w-72  shadow-lg bg-white z-50 md:h-screen  px-8 py-5 overflow-y-auto custom-scrollbar`}
     >
       <div className="">
         <div className="flex justify-center">
@@ -243,6 +270,12 @@ const Sidebar = () => {
             title={"Classroom"}
             active={classroom}
             onpress={handleClassroomClick}
+          />
+          <Custombutton
+            icon={"setting"}
+            title={"Settings"}
+            active={setting}
+            onpress={handleSettingClick}
           />
         </div>
         {loading && <div className="flex flex-1"> <Loader /> </div>}
