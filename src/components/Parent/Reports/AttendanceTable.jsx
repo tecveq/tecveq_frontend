@@ -24,7 +24,7 @@ const AttendanceTable = ({ data }) => {
                                     <tr key={index} className="flex flex-1 text-xs border-t border-t-black/10">
                                         <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
-                                            {item.attendancePercentage.isPresent? "Present" : "Absent"}
+                                            {item?.attendancePercentage?.isPresent? "Present" : "Absent"}
                                         </td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
                                             {moment(item.startTime).format("Do MMM YYYY")}

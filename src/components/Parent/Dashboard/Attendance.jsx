@@ -1,8 +1,22 @@
 import React from 'react'
 import { Doughnut } from 'react-chartjs-2';
 import { FaAngleDown } from "react-icons/fa6";
+import { useParent } from '../../../context/ParentContext';
+import { useGetAllSubjectAttendence } from '../../../api/Parent/OverallAttendenceApi';
 
 const Attendance = () => {
+
+
+    const { selectedChild } = useParent();
+
+
+    const { studentAllSubjectsAttendence } = useGetAllSubjectAttendence(selectedChild?._id)
+
+
+    console.log(studentAllSubjectsAttendence, "attendance of all subjects");
+
+
+
 
 
     const chartData = [
@@ -38,13 +52,13 @@ const Attendance = () => {
                             <div className="flex gap-2 flex-1 justify-between">
                                 <div className="flex w-[210px] h-[210px] flex-1">
                                     <Doughnut
-                                    className='!flex'
+                                        className='!flex'
                                         data={{
-                                            labels: chartData.map((data) => data.label),
+                                            labels: studentAllSubjectsAttendence?.map((data) => data.label),
                                             datasets: [
                                                 {
                                                     label: "Count",
-                                                    data: chartData.map((data) => data.value),
+                                                    data: studentAllSubjectsAttendence?.map((data) => data.value),
                                                     backgroundColor: ["#11AF03", "#C53F3F", "#EAECF0"],
                                                     borderColor: ["#11AF03", "#C53F3F", "#EAECF0"],
                                                 },

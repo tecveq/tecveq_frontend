@@ -59,8 +59,8 @@ const QuizAssignmentRow = (props) => {
 
     useEffect(() => {
 
-        props?.alldata?.submissions?.map((item) =>{
-            if(item.studentID == userData._id){
+        props?.alldata?.submissions?.map((item) => {
+            if (item?.studentID === userData?._id) {
                 setIsUploadded(true);
             }
         })
@@ -119,7 +119,7 @@ const QuizAssignmentRow = (props) => {
                             </div>
                         ) : (
                             <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
-                                <div className='bg-[#91919133] rounded-xl flex items-center justify-center py-1 text-black md:text-[14px]  text-[11px]'>
+                                <div className='bg-[#91919133] rounded-3xl flex items-center justify-center py-2 px-3 text-black md:text-[14px]  text-[11px]'>
                                     Uploaded
                                 </div>
                             </div>

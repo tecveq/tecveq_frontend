@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import IMAGES from "../../../assets/images";
 import Card from "../../../components/Parent/Reports/Card";
@@ -8,6 +8,7 @@ const AssignmentReport = () => {
   const { subject, title } = useParams();
   const navigate = useNavigate();
 
+  useEffect(()=>{},[])
   return (
     <div className="flex flex-1 bg-[#F9F9F9] h-screen font-poppins overflow-auto ">
       <div className="flex flex-1 ">

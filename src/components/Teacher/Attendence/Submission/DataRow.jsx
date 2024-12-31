@@ -40,6 +40,7 @@ const DataRow = (props) => {
     setPresent(true);
     setAbsent(false);
     setLeave(false);
+    setLate(false);
   }
 
   const onAbsentClick = () => {
@@ -49,6 +50,7 @@ const DataRow = (props) => {
     setPresent(false);
     setAbsent(true);
     setLeave(false);
+    setLate(false)
   }
 
   const onLateClick = () => {
@@ -115,7 +117,7 @@ const DataRow = (props) => {
                     </div>
                     Absent
                   </div>
-                  {/* <div
+                  <div
                     className={`w-full flex gap-2 items-center md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
                       }`}
                   >
@@ -123,7 +125,7 @@ const DataRow = (props) => {
                       {late ? <IoMdRadioButtonOn className="text-maroon" /> : <IoMdRadioButtonOff className="text-maroon" />}
                     </div>
                     Late
-                  </div> */}
+                  </div>
                 </div>
               </>
               : <>
