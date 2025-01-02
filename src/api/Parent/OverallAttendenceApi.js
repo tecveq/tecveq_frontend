@@ -14,7 +14,7 @@ export const useGetAllSubjectAttendence = (studentId) => {
 
         // Note: Axios does not use response.ok, so check the status code directly
         if (response.status !== 200) {
-            throw new Error('Failed to get user');
+            throw new Error('Failed to get all subject attendence');
         }
 
         return response.data; // Axios automatically parses the JSON response

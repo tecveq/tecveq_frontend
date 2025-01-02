@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 import Notifications from "./Notifications";
 import ProfileDetails from "./ProfileDetails";
-import profile from "../../../assets/profile.png";
+import IMAGES from "../../../assets/images";
 
 import { CiBellOn } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa6";
@@ -95,17 +95,17 @@ const Navbar = ({ heading }) => {
   const { userData } = useUser();
 
   return (
-    <div className="flex flex-1 h-20">
-      <div className={`flex justify-between flex-1 py-5 ${isBlurred ? "blur" : ""}`}>
+    <div className="flex flex-1 items-center justify-center h-20">
+      <div className={`flex justify-end gap-2  md:justify-between flex-1 py-3 md:py-5 ${isBlurred ? "blur" : ""}`}>
         {heading ?
-          <div className="flex text-3xl font-semibold">{heading}</div>
+          <div className="flex justify-start items-center text-xl md:text-3xl font-semibold">{heading}</div>
           :
           <div className=" flex-col hidden md:flex">
-            <p className="text-xl font-semibold">Hello {userData.name} </p>
+            <p className="text-xl font-semibold ">Hello {userData.name} </p>
             <p className="">Welcome to your learning space!</p>
           </div>
         }
-        <div className="flex items-center gap-2">
+        <div className="flex items-center  gap-2">
           <div className="flex gap-4">
             <div
               className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-maroon text-white" : ""
@@ -130,10 +130,10 @@ const Navbar = ({ heading }) => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <p className="font-medium">M. {userData.name} </p>
+            <p className="font-medium hidden md:block">M. {userData.name} </p>
             <img
-              alt=""
-              src={profile}
+              alt="profile"
+              src={IMAGES.Profile}
               onClick={toggleProfielMenu}
               className="w-12 h-12 cursor-pointer"
             />

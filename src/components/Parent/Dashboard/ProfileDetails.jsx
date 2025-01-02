@@ -1,28 +1,34 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
-import profile from "../../../assets/profile.png";
+import IMAGES from "../../../assets/images";
 import { GoPerson } from "react-icons/go";
+import { useParent } from "../../../context/ParentContext";
 
 const ProfileDetails = ({ onclose }) => {
   const [allowedEdit, setAllowedEdit] = useState(false);
+  // const { isBlurred, toggleBlur } = useBlur();
+  const { allSubjects, setAllSubjects, selectedChild } = useParent();
+
+
+  console.log(selectedChild, "curent children object");
+
 
   const handleEditClick = () => {
     setAllowedEdit(true);
   };
 
-  const handleSaveDetails = () =>{
+  const handleSaveDetails = () => {
   }
-  
+
   const CusotmInput = ({ label, value, status, icon }) => {
     return (
       <div className="text-sm">
         <div className="flex flex-col ">
-          <p className="">Name</p>
+          <p className="">{label}</p>
           <div
-            className={`flex px-2 py-1 border justify-between rounded-md items-center border-grey/70 ${
-              status ? "text-black" : "text-grey"
-            }`}
+            className={`flex px-2 py-1 border justify-between rounded-md items-center border-grey/70 ${status ? "text-black" : "text-grey"
+              }`}
           >
             <input
               type="text"
@@ -52,8 +58,8 @@ const ProfileDetails = ({ onclose }) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center text-center">
-              <img src={profile} alt="" className="w-28 h-28" />
-              <p>M. Haseeb</p>
+              <img src={IMAGES.Profile} alt="" className="w-28 h-28" />
+              <p>{selectedChild.name}</p>
               <p>Bio</p>
               <p>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -69,49 +75,49 @@ const ProfileDetails = ({ onclose }) => {
               />
               <CusotmInput
                 label={"Name"}
-                value={"Muneeb"}
+                value={selectedChild.name}
                 status={allowedEdit}
                 icon={"person"}
               />
               <CusotmInput
                 label={"Email"}
-                value={"muneebjutt026@gmail.com"}
+                value={selectedChild.email}
                 status={allowedEdit}
                 icon={"mail"}
               />
               <CusotmInput
                 label={"Phone No."}
-                value={"+92 313 7034670"}
+                value={selectedChild.phoneNumber}
                 status={allowedEdit}
                 icon={"phone"}
               />
-              <CusotmInput
+              {/* <CusotmInput
                 label={"Class"}
                 value={"IG Basics"}
                 status={allowedEdit}
                 icon={"cap"}
-              />
+              /> */}
               <CusotmInput
                 label={"Parent Name"}
-                value={"Farooq Ahmed"}
+                value={selectedChild.guardianName}
                 status={allowedEdit}
                 icon={"person"}
               />
               <CusotmInput
                 label={"Parent Email"}
-                value={"farooq@gmail.com"}
+                value={selectedChild.guardianEmail}
                 status={allowedEdit}
                 icon={"mail"}
               />
               <CusotmInput
                 label={"Parent Phone No."}
-                value={"+92 313 7034670"}
+                value={selectedChild.guardianPhoneNumber}
                 status={allowedEdit}
                 icon={"phone"}
               />
-              {allowedEdit? <div className="flex justify-center my-4">
+              {allowedEdit ? <div className="flex justify-center my-4">
                 <p onClick={handleSaveDetails} className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon">Save</p>
-              </div> :""}
+              </div> : ""}
             </div>
           </div>
         </div>

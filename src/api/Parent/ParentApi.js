@@ -17,6 +17,12 @@ export const getChildReport = apiRequest(async (sid, cid, subid, tid) => {
     return response;
 })
 
+export const getChildLastDeliveredAssignmentReport = apiRequest(async (sid) => {
+    const url = `${BACKEND_URL}/parent/student-last-delivered-assignment-report/${sid}`;
+    const response = await axios.get(url);
+    return response;
+})
+
 export const getAllChildren = apiRequest(async (mail) => {
     const url = `${BACKEND_URL}/parent/children/${mail}`;
     const response = await axios.get(url);
