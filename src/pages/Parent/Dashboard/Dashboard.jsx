@@ -9,6 +9,9 @@ import { useBlur } from "../../../context/BlurContext";
 
 const Dashboard = () => {
   const { isBlurred } = useBlur();
+
+
+  
   return (
     <div className="flex flex-1 bg-[#f9f9f9]/50 font-poppins">
       <div className="flex flex-1 gap-4">

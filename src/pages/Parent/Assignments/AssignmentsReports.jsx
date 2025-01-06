@@ -16,13 +16,25 @@ const AssignmentsReports = () => {
   const { selectedChild } = useParent();
 
   const reportQuery = useQuery({
-    queryKey: ["report"], queryFn: async () => {
+    queryKey: ["report", selectedChild._id, location?.state?.classroom?._id, location?.state?.subject?._id, location?.state?.teacher?._id], // Add dependencies
+    queryFn: async () => {
       console.log("selected child is : ", selectedChild);
-      let results = await getChildReport(selectedChild._id, location?.state?.classroom?._id, location?.state?.subject?._id, location?.state?.teacher?._id);
+      let results = await getChildReport(
+        selectedChild._id,
+        location?.state?.classroom?._id,
+        location?.state?.subject?._id,
+        location?.state?.teacher?._id
+      );
       console.log(" report result is : ", results);
       return results;
-    }, staleTime: 30000, enabled: location?.state ? true : false
+    },
+    staleTime: 0,
+    cacheTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    enabled: !!location?.state,
   });
+
 
 
 
@@ -48,7 +60,7 @@ const AssignmentsReports = () => {
     <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
       <div className="flex flex-1">
         <div className="flex-grow w-full px-5 lg:px-20 sm:px-10 lg:ml-72">
-          <div className="pt-16 ">
+          <div className="h-screen ">
             <Navbar heading={"Assignment"} />
             <div className="mt-7">
               <div className="flex flex-col gap-2">

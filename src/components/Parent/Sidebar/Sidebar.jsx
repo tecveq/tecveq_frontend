@@ -30,6 +30,7 @@ const Sidebar = () => {
     setReports(false);
     setAssignments(false);
     setTimetable(false);
+    setIsopen(!isopen);
     navigate("/parent/dashboard");
   };
 
@@ -39,6 +40,7 @@ const Sidebar = () => {
     setReports(true);
     setAssignments(false);
     setTimetable(false);
+    setIsopen(!isopen);
     navigate("/parent/reports");
   };
 
@@ -48,6 +50,7 @@ const Sidebar = () => {
     setReports(false);
     setAssignments(false);
     setTimetable(false);
+    setIsopen(!isopen);
     navigate("/parent/quizzes");
   };
 
@@ -57,6 +60,7 @@ const Sidebar = () => {
     setReports(false);
     setAssignments(true);
     setTimetable(false);
+    setIsopen(!isopen);
     navigate("/parent/assignments");
   };
 
@@ -77,9 +81,9 @@ const Sidebar = () => {
 
   const Menubar = () => (
     <div
-      className={`w-72 h-lvh shadow-lg bg-white  px-8 py-5 flex flex-col justify-between`}
+      className={`w-72 h-lvh shadow-lg bg-white  px-8 py-5 flex flex-col justify-between z-50`}
     >
-      <div className="">
+      <div className="z-50">
         <div className="flex justify-center">
           <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
         </div>
@@ -126,7 +130,7 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col">
       <div
-        className="px-3 py-3 cursor-pointer lg:hidden h-20"
+        className="px-3 py-3 flex justify-center items-center cursor-pointer lg:hidden h-20"
         onClick={toggleSidebar}
       >
         <div className="flex justify-center bg-maroon w-9">

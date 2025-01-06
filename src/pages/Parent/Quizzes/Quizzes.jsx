@@ -122,13 +122,15 @@ const Quizzes = () => {
     return (
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
             <div className="flex flex-1">
-                <div className={`w-full ${isBlurred ? "blur" : ""} h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}>
+                <div className='w-full  h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72'>
                     <Navbar heading={"Quizzes"} />
-                    <div className='mt-8 h-[80%] overflow-auto'>
-                        <DataRows index={"Sr. No"} subject={"Subject"} instructor={"Instructor"} attendance={"Attendance"} bgColor={"#F9F9F9"} header={true} />
-                        {allSubjects?.subjects?.map((report, index) => (
-                            <DataRows key={index} index={index + 1} subject={report.subject.name} instructor={report.teacher.name} attendance={report?.avgAttendancePer} bgColor={"#FFFFFF"} header={false} onClickFunction={() => handleFunctionClick(report)} />
-                        ))}
+                    <div className={`w-full ${isBlurred ? "blur" : ""} h-screen px-3 flex-grow`}>
+                        <div className='mt-8 h-[80%] overflow-auto'>
+                            <DataRows index={"Sr. No"} subject={"Subject"} instructor={"Instructor"} attendance={"Attendance"} bgColor={"#F9F9F9"} header={true} />
+                            {allSubjects?.subjects?.map((report, index) => (
+                                <DataRows key={index} index={index + 1} subject={report.subject.name} instructor={report.teacher.name} attendance={report?.avgAttendancePer} bgColor={"#FFFFFF"} header={false} onClickFunction={() => handleFunctionClick(report)} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

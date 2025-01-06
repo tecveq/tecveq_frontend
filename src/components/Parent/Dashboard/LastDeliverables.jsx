@@ -2,7 +2,7 @@ import { Circle } from "rc-progress";
 import React, { useEffect, useState } from "react";
 import { useParent } from "../../../context/ParentContext";
 import { useQuery } from "@tanstack/react-query";
-import { getAllSubjects } from "../../../api/Parent/ParentApi";
+import { getAllSubjects, getChildLastDeliveredAssignmentReport, getChildReport } from "../../../api/Parent/ParentApi";
 
 const LastDeliverables = () => {
 
@@ -10,6 +10,10 @@ const LastDeliverables = () => {
   const [enableQuery, setEnableQuery] = useState(false);
 
   const { allSubjects, setAllSubjects, selectedChild } = useParent();
+
+
+  console.log(selectedChild, "current selected child: ", allSubjects, "all subject of selected child: ");
+
 
   const subjectQuery = useQuery({
     queryKey: ["subjects"], queryFn: async () => {
@@ -20,11 +24,43 @@ const LastDeliverables = () => {
     }, staleTime: 300000, enabled: enableQuery
   });
 
+  console.log(subjectQuery, "subject query");
+
   useEffect(() => {
     if (allSubjects.length == 0) {
       setEnableQuery(true);
     }
   }, []);
+
+  const lastDeliveredAssignmentreportQuery = useQuery({
+    queryKey: ["report", selectedChild?._id],
+    queryFn: async () => {
+      console.log("selected child is : ", selectedChild);
+      const results = await getChildLastDeliveredAssignmentReport(
+        selectedChild?._id,
+      );
+      console.log("report result is : ", results);
+      return results;
+    },
+    enabled: !!selectedChild?._id,
+    staleTime: 30000, // Cache for 30 seconds
+  });
+
+  // Check if data is available or fallback to default values
+  const lastAssignment = lastDeliveredAssignmentreportQuery?.data?.lastAssignment || {};
+  const percentage = parseFloat(lastAssignment.percentage) || 0; // Fallback to 0 if undefined
+  const grade = lastAssignment.grade ? `${lastAssignment.grade}` : "N/A";
+  const title = lastAssignment.title ? `${lastAssignment.title}` : "N/A"
+
+  // Stats object
+  const stats = {
+    type: "Assignments",
+    title,
+    percentage,
+    grade,
+  };
+
+
 
 
   const DeliverableComponent = ({ subjectQuery }) => {
@@ -41,23 +77,23 @@ const LastDeliverables = () => {
             <div className="text-sm text-gray-500"></div>
           )}
 
-          
+
           <Circle
-            percent={40}
+            percent={stats.percentage}
             strokeColor="#A41D30"
             strokeWidth={12}
             trailColor="#EAECF0"
             trailWidth={12}
           />
           <div className="absolute flex flex-col items-center">
-            <span className="text-[7px] md:text-[10px]">Submission</span>
+            <span className="text-[7px] md:text-[10px]">Percentage</span>
             <div className="flex">
-              <span className="text-[7px] md:text-base font-semibold">40 %</span>
+              <span className="text-[7px] md:text-base font-semibold">{stats.percentage} %</span>
             </div>
           </div>
 
         </div>
-        <p className="text-xs text-center">Submissions: 40/100</p>
+        {/* <p className="text-xs text-center">Submissions: 40/100</p> */}
       </div>
     );
   }
@@ -68,11 +104,11 @@ const LastDeliverables = () => {
           <div className=" flex flex-col items-center ">
             <span className="text-[7px] md:text-[10px]">Average Grade</span>
             <div className="flex">
-              <span className="text-3xl  font-semibold">B</span>
+              <span className="text-3xl  font-semibold">{stats.grade}</span>
             </div>
           </div>
         </div>
-        <p className="text-xs text-center">Grade: B</p>
+        <p className="text-xs text-center">Grade: {stats.grade}</p>
       </div>
     );
   };
@@ -86,7 +122,7 @@ const LastDeliverables = () => {
         <div className="flex flex-col gap-1 px-3 py-5 bg-white rounded-lg custom-shadow">
           <div className="flex px-5 text-sm ">
             <div className="flex justify-center flex-1">
-              <p>Assignment 3</p>
+              <p>{stats.type} : {stats.title}</p>
             </div>
           </div>
           <div className="flex flex-1 gap-2 p-2">

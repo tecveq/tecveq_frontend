@@ -42,7 +42,11 @@ const SubjectsEnrolled = () => {
     }
   }, [allSubjects, selectedChild]);
 
-  console.log(subjectQuery.data);
+  console.log(subjectQuery.data ,"subject query data");
+
+
+  console.log(allSubjects ,"all Subjects Of Parent ");
+  
 
   return (
     <div className="flex flex-1">

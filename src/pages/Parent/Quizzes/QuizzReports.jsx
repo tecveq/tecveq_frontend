@@ -22,9 +22,15 @@ const QuizzReports = () => {
       let results = await getChildReport(selectedChild._id, location?.state?.classroom?._id, location?.state?.subject?._id, location?.state?.teacher?._id);
       console.log(" report result is : ", results);
       return results;
-    }, staleTime: 30000, enabled: location?.state ? true : false
+    },
+    staleTime: 0,
+    cacheTime: 0,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    enabled: location?.state ? true : false,
+
   })
-  
+
   const stats = [
     {
       type: "Assignments",
@@ -45,40 +51,40 @@ const QuizzReports = () => {
 
   return (
     reportQuery.isPending ? <div className="flex"><Loader /></div> :
-    <>
-      <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
-        <div className="flex flex-1">
-          <div className="flex-grow w-full px-5 lg:px-20 sm:px-10 lg:ml-72">
-            <div className="pt-16">
-              <Navbar heading={"Assignments"} />
-              <div className="mt-7">
-                <div className="flex flex-col gap-2">
-                  <p className="md:text-[20px]">Overview</p>
-                  <div className="flex flex-col items-center flex-1 gap-2 sm:flex-row">
-                    {stats.map((data) => (
-                      <Card
-                        percentage={data.percentage}
-                        data={data.type}
-                        grade={data.grade}
-                        type={"Percentage"}
-                      />
-                    ))}
+      <>
+        <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
+          <div className="flex flex-1">
+            <div className="flex-grow w-full px-5 lg:px-20 sm:px-10 lg:ml-72">
+              <div className="pt-16">
+                <Navbar heading={"Assignments"} />
+                <div className="mt-7">
+                  <div className="flex flex-col gap-2">
+                    <p className="md:text-[20px]">Overview</p>
+                    <div className="flex flex-col items-center flex-1 gap-2 sm:flex-row">
+                      {stats.map((data) => (
+                        <Card
+                          percentage={data.percentage}
+                          data={data.type}
+                          grade={data.grade}
+                          type={"Percentage"}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="mt-7">
-                <div className="flex flex-col gap-2">
-                  <p className="md:text-[20px]">Quizzes</p>
-                  <div className="flex flex-row items-center gap-2">
-                    <QuizAssignmentsTable data={reportQuery?.data?.quizes} />
+                <div className="mt-7">
+                  <div className="flex flex-col gap-2">
+                    <p className="md:text-[20px]">Quizzes</p>
+                    <div className="flex flex-row items-center gap-2">
+                      <QuizAssignmentsTable data={reportQuery?.data?.quizes} />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </>
   );
 }
 
