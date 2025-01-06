@@ -28,7 +28,7 @@ const MyCalendar = () => {
       culture
     );
 
-  const [events, setevents] = useState([]);
+  const [events, setEvents] = useState([]);
 
   const [currentWeek, setCurrentWeek] = useState({
     start: moment().startOf("day").toDate(),
@@ -64,7 +64,7 @@ const MyCalendar = () => {
       })
 
       console.log("all class filter is : ", allclassfilter);
-      setevents(allclassfilter);
+      setEvents(allclassfilter);
     }
   }, [currentWeek, isSuccess, isPending, data]);
 
@@ -97,7 +97,7 @@ const MyCalendar = () => {
                 activeFilteredField={activeFilteredField}
                 setactiveFilteredField={setactiveFilteredField}
                 events={data}
-                setevents={setevents}
+                setevents={setEvents}
                 addModalOpen={addModalOpen}
                 setaddModalOpen={setaddModalOpen}
                 toolbar={toolbar}
@@ -105,7 +105,7 @@ const MyCalendar = () => {
             ),
             event: (e) => {
               console.log("event is : ", e);
-              return <CustomEvent setevents={setevents} event={e.event} />;
+              return <CustomEvent setevents={setEvents} event={e.event} />;
             },
             timeGutterHeader: SideTimeHeader,
             timeGutterWrapper: SideTime,

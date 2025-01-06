@@ -86,21 +86,9 @@ const Attendence = () => {
                 <Navbar heading={"Attendence"} />
                 <div className={`px-3 lg:px-10 sm:px-10 ${isBlurred ? "blur" : ""}`}>
                   <div className="py-4">
-                    <div className={`flex w-full justify-between`}>
+                    <div className={`flex flex-col md:flex-row  gap-4 w-full justify-between`}>
 
-                      {
-                        head ? (<>
-                          <div
-                            className={`cursor-pointer bg-maroon rounded-3xl`}
-                            onClick={() => {
 
-                              navigate("/teacher/classroom/head-attendence", { state: data });
-
-                            }}
-                          >
-                            <p className="px-4 py-2 text-white">Classroom Attendance +</p>
-                          </div></>) : (<><div></div></>)
-                      }
 
                       <div className="flex gap-2">
                         <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
@@ -117,7 +105,24 @@ const Attendence = () => {
                           Add Class
                         </p> */}
                       </div>
+                      <div>
+                        {
+                          head ? (<>
+                            <div
+                              className={`cursor-pointer bg-maroon rounded-3xl`}
+                              onClick={() => {
+
+                                navigate("/teacher/classroom/head-attendence", { state: data });
+
+                              }}
+                            >
+                              <p className="px-4 py-2 text-white text-center">Classroom Attendance +</p>
+                            </div></>) : (<><div></div></>)
+                        }
+                      </div>
+
                     </div>
+
                   </div>
                   <div className="mt-8 h-[80%] overflow-auto">
                     <DataRow
@@ -127,7 +132,7 @@ const Attendence = () => {
                       subject={"Subject"}
                       students={"Students"}
                       teachers={"Teachers"}
-                      startDate={"Start Date"}
+                      startDate={null}
                       bgColor={"#F9F9F9"}
                       header={true}
                       threeDots={true}

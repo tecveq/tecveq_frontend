@@ -8,7 +8,7 @@ const DataRow = (props) => {
   const navigate = useNavigate();
 
   console.log(props?.allData, "all data of props");
-  
+
 
   return (
     <div className="min-w-full cursor-pointer" onClick={() => { !props.header && navigate("/teacher/attendence/submission", { state: props?.allData }) }}>
@@ -58,7 +58,7 @@ const DataRow = (props) => {
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
               }`}
           >
-            {props.startDate
+            {props?.startDate && !isNaN(new Date(props.startDate))
               ? new Date(props.startDate).toLocaleString("en-US", {
                 month: "2-digit",
                 day: "2-digit",

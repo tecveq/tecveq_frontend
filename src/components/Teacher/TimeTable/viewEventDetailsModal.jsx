@@ -61,8 +61,8 @@ export default function ViewEventDetailsModal({
     moment.utc(event.startTime).format("YYYY-MM-DD") // Format for <input type="date">
   );
 
-  let prevStartTime = moment.utc(event.startTime).format("HH:mm")
-  let prevEndTime = moment.utc(event.endTime).format("HH:mm")
+  let prevStartTime = moment.utc(event.startTime).tz('Asia/Karachi').format('HH:mm');
+  let prevEndTime = moment.utc(event.endTime).tz('Asia/Karachi').format('HH:mm');
 
   const [classObj, setClassObj] = useState({
     title: event.title,

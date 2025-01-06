@@ -37,7 +37,7 @@ const SchedualClasses = ({ refetch }) => {
 
 
 
-    const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassroom });
+    const { data, isPending, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassroom });
 
     useEffect(() => {
       if (!isPending) {
@@ -74,7 +74,7 @@ const SchedualClasses = ({ refetch }) => {
       endEventDate: "",
       classroomID: "",
       subjectID: "",
-      teacher: ""
+      teacher: { teacherID: userData._id, status: "absent" }
     })
 
     const handleSaveDetails = () => { };
@@ -85,7 +85,6 @@ const SchedualClasses = ({ refetch }) => {
 
       let myobj = {
         ...classObj,
-        teacher: { teacherID: JSON.parse(selectedTeacher)._id, status: "absent" },
         subjectID: JSON.parse(selectedSubject)._id,
         classroomID: JSON.parse(selectedClassroom)._id,
         startTime: isoFormattedStringStartTime,
@@ -93,7 +92,6 @@ const SchedualClasses = ({ refetch }) => {
         selectedDays
       };
 
-      console.log(new Date());
 
       console.log("my obj is : ", myobj);
       classCreateMutate.mutate(myobj);

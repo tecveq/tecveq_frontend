@@ -58,7 +58,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("object is : ",{role: e.target[0].value, email: e.target[1].value, password: e.target[2].value} )
+        console.log("object is : ", { role: e.target[0].value, email: e.target[1].value, password: e.target[2].value })
         setLoading(true);
         try {
             const dataBody = {
@@ -68,9 +68,9 @@ const Login = () => {
             if (response !== "error") {
                 setUserData(response);
                 if (response.userType == "student") {
-                    if(response.isBlocked == true){
+                    if (response.isBlocked == true) {
                         toast.error("Access Denied! Please contact Admin support.");
-                    }else{
+                    } else {
                         const con = io(`${BACKEND_URL_SOCKET}`)
                         setSocketContext(con);
                         localStorage.setItem("tcauser", JSON.stringify(response));
@@ -90,7 +90,7 @@ const Login = () => {
             }
         } catch (error) {
             console.log("error in student login UI screen is : ", error);
-            toast.error(error.message);
+            toast.error(error?.response?.data?.message);
         }
         setLoading(false);
     }
