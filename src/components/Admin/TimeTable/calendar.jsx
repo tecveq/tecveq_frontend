@@ -14,41 +14,48 @@ const localizer = momentLocalizer(moment);
 const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
+
+
+  // Current date range state
+  const dayRangeHeaderFormat = ({ start, end }, culture, local) =>
+    local.format(start, "MMMM DD", culture) +
+    " – " +
+    local.format(
+      end,
+      local.eq(start, end, "month") ? "DD YYYY" : "MMMM DD YYYY",
+      culture
+    );
   const [currentWeek, setCurrentWeek] = useState({
     start: moment().startOf("day").toDate(),
     end: moment().endOf("day").toDate(),
   });
 
-  const dayRangeHeaderFormat = ({ start, end }, culture, local) =>
-    `${local.format(start, "MMMM DD", culture)} – ${local.format(
-      end,
-      local.eq(start, end, "month") ? "DD YYYY" : "MMMM DD YYYY",
-      culture
-    )}`;
-
-  // Handle calendar navigation
   const handleNavigate = (newDate) => {
     const startOfWeek = moment(newDate).startOf("day").toDate();
     const endOfWeek = moment(newDate).endOf("day").toDate();
 
-    setCurrentWeek({ start: startOfWeek, end: endOfWeek });
+    setCurrentWeek({
+      start: startOfWeek,
+      end: endOfWeek,
+    });
   };
 
-  // Update events based on data or loading state
   useEffect(() => {
-    if (!isPending && data) {
-      const formattedEvents = data.map(({ startTime, endTime, ...item }) => ({
-        ...item,
-        // Convert UTC times to Karachi time using moment-timezone and subtract 5 hours
-        start: moment.tz(startTime, "Asia/Karachi").subtract(5, "hours").toDate(),
-        end: moment.tz(endTime, "Asia/Karachi").subtract(5, "hours").toDate(),
-      }));
+    if (!isPending) {
 
-      console.log(formattedEvents, "Formatted events");
+      let allclassfilter = data?.map((item) => {
+        let newdate = new Date(item?.startTime);
+        // newdate.setHours(newdate.getHours() - 5); // Subtract 5 hours
+        let end = new Date(item.endTime);
+        // end.setHours(end.getHours() - 5);
+        let returnobj = { ...item, end: end, start: newdate }
+        return returnobj
+      })
 
-      setEvents(formattedEvents);
+      console.log("all class filter is : ", allclassfilter);
+      setEvents(allclassfilter);
     }
-  }, [data, isPending, currentWeek]);
+  }, [currentWeek, isPending, data]);
 
   // Custom event renderer
   const renderCustomEvent = (e) => (

@@ -21,7 +21,7 @@ const AssignmentMenu = ({
     <>
       <div
         ref={ref}
-        className={`fixed z-10 bg-white right-0 mr-32 top-80 shadow-lg border border-[#00000010] rounded-xl ${
+        className={`fixed z-10 bg-white right-0 mr-20 top-64 shadow-lg border border-[#00000010] rounded-xl ${
           isopen ? "" : "hidden"
         }`}
       >

@@ -56,11 +56,11 @@ const DataRow = (props) => {
           >
             {props.createdBy}
           </p>
-          <p
+          {/* <p
             className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px] text-[11px] ${props.header ? "font-semibold" : ""}`}
           >
             {props.header ? props.status : props.status ? "Attendance Submitted" : "Not Submitted"}
-          </p>
+          </p> */}
         </div>
         <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
           <p

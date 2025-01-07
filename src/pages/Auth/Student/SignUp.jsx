@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useUser } from '../../../context/UserContext';
 import { getAllLevels } from '../../../api/Admin/LevelsApi';
 import { registerStudent } from '../../../api/Student/StudentApis';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
   const CustomInput = ({ label, placeholder, type }) => {
@@ -113,7 +114,13 @@ const SignUp = () => {
       }
 
       const response = await registerStudent(dataBody);
+
       setUserData(response);
+      if (response.userType === "student") {
+        toast.success("Student registered successfully!")
+      } else if (response.userType === "teacher") {
+        toast.success("Teacher registered successfully!")
+      }
       navigate('/routes');
     } catch (error) {
       console.log('error in student login UI screen is : ', error);
@@ -126,7 +133,7 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const handleGoToLogIn = () => {
-    navigate('/login');
+    navigate('/routes');
   };
 
   const { data, isPending } = useQuery({ queryKey: ['loginlevels'], queryFn: getAllLevels });

@@ -184,13 +184,25 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
 
   const createClassroomMutation = useMutation({
-    mutationKey: ["addclassroom"], mutationFn: async (data) => {
+    mutationKey: ["addclassroom"],
+    mutationFn: async (data) => {
       const result = await createClassroom(data);
-      await refetch()
+      return result;
+    },
+    onSuccess: async (result) => {
+
+      await refetch();
       await setopen(false);
       await toggleBlur();
-      console.log("result of classroom creation is : ", result);
-      return result;
+
+      // Show success message
+      toast.success("Classroom created successfully!");
+      console.log("Result of classroom creation is: ", result);
+    },
+    onError: (error) => {
+      // Handle error scenario
+      toast.error("Failed to create classroom. Please try again.");
+      console.error("Error creating classroom: ", error);
     }
   });
 

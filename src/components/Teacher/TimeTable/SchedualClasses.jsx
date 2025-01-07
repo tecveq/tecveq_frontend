@@ -90,6 +90,10 @@ const SchedualClasses = ({ refetch, data, isPending }) => {
           toast.success("Class created successfully");
           refetch();
           setaddEventModalOpen(false);
+        } else {
+          console.log("error: " + error);
+
+          toast.error(error?.response?.data?.error);
         }
       }
     });
