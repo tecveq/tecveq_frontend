@@ -6,7 +6,8 @@ import useClickOutside from "../../../hooks/useClickOutlise";
 const ClassMenu = ({
   isopen,
   setIsOpen,
-  deleteClassRoom, editClassRoom
+  deleteClassRoom,
+  editClassRoom
 }) => {
   const ref = useRef(null);
   useClickOutside(ref, () => {
@@ -17,14 +18,13 @@ const ClassMenu = ({
     <>
       <div
         ref={ref}
-        className={`fixed z-10 bg-white right-0 mr-32 top-80 shadow-lg border border-[#00000010] rounded-xl ${
-          isopen ? "" : "hidden"
-        }`}
+        className={`fixed z-10 bg-white right-0 mr-32 top-80 shadow-lg border border-[#00000010] rounded-xl ${isopen ? "" : "hidden"
+          }`}
       >
         <div className="flex p-6">
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2 cursor-pointer " onClick={editClassRoom}>
-              <FaRegEdit/>
+              <FaRegEdit />
               <p>Edit</p>
             </div>
             <div className="flex items-center gap-2 cursor-pointer text-maroon " onClick={deleteClassRoom}>

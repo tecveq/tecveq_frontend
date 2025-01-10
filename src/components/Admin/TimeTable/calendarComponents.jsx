@@ -9,7 +9,6 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
   const [detailsModalOpen, setdetailsModalOpen] = useState(false);
-
   return (
     <div className="relative flex flex-1 w-full overflow-visible">
       <ViewEventDetailsModal
@@ -111,10 +110,14 @@ export const Header = (props) => {
 export const CustomToolbar = ({
   toolbar,
   loading,
+  onTeacherSelect
 }) => {
   //   const { currentUser } = useContext(AuthContext);
 
   const [fields, setfields] = useState([]);
+  const [teacherID, setTeacherID] = useState("")
+
+
 
   const goToBack = () => {
     toolbar.onNavigate("PREV");
@@ -142,10 +145,11 @@ export const CustomToolbar = ({
   //   };
   const { adminUsersData } = useAdmin();
 
-  useEffect(() => {
-    // handleGetFields();
-    console.log(" admin user data in timetable toolbaar is : ", adminUsersData);
-  }, []);
+  const handleTeacherChange = (e) => {
+    const id = e.target.value;
+    setTeacherID(id);
+    onTeacherSelect(id); // Send to parent component
+  };
 
 
   return (
@@ -185,12 +189,15 @@ export const CustomToolbar = ({
           </div> */}
           <div>
             <div className="flex items-center gap-1 justify-between cursor-pointer py-2 text-sm px-4 w-48 border-[1.5px] border-[#00000020] rounded-xl ">
-              <select className="outline-none w-full h-full cursor-pointer">
+              <select className="outline-none w-full h-full cursor-pointer"
+                onChange={handleTeacherChange}
+              >
                 <option value={""}>
                   Search Teacher
                 </option>
+
                 {adminUsersData?.allTeachers?.map((item) => (
-                  <option key={JSON.stringify(item)} className="p-2" value="">{item?.name}</option>
+                  <option key={JSON.stringify(item)} className="p-2" value={item._id}>{item?.name}</option>
                 ))}
               </select>
             </div>

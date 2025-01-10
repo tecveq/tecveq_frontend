@@ -4,6 +4,7 @@ import Navbar from "../../../components/Admin/Navbar";
 import DataRow from "../../../components/Admin/Classrooms/DataRow";
 import ClassMenu from "../../../components/Admin/Classrooms/ClassMenu";
 import ClassModal from "../../../components/Admin/Classrooms/ClassModal";
+import EditClassModel from "../../../components/Admin/Classrooms/EditClassModel"
 
 import { BiSearch } from "react-icons/bi";
 import { useBlur } from "../../../context/BlurContext";
@@ -23,12 +24,14 @@ const Classroom = () => {
   const toggleClassMenuOpen = (data) => {
     console.log("data on opening class menu si : ", data);
     setEditClassData(data);
+    console.log("single data of classroom", data);
+
     setIsClassMenuOpen(!isClassMenuOpen);
   };
 
   const handleEditClass = () => {
     // TODO: Pending this function
-    console.log("data on edit clas is : ", editClassData);
+    setEditModal(true)
   }
 
   const handleDeleteClass = async () => {
@@ -111,7 +114,7 @@ const Classroom = () => {
                         teachers={cls.teachers.length}
                         createdBy={cls.createdBy.userType}
                         toggleClassMenu={toggleClassMenuOpen}
-                        classesSchedualled={cls.classes.length}
+                        classesSchedualled={cls?.classes?.length}
                       />
                     ))}
 
@@ -152,7 +155,7 @@ const Classroom = () => {
         }
 
         {editModal &&
-          <ClassModal
+          <EditClassModel
             open={editModal}
             refetch={refetch}
             isEditTrue={true}

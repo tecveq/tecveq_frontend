@@ -3,6 +3,7 @@ import ProfileMenu from "./ProfileMenu";
 import Notifications from "./Notifications";
 import ProfileDetails from "./ProfileDetails";
 import IMAGES from "../../../assets/images";
+import { logout } from "../../../api/User/UserApi";
 
 import { CiBellOn } from "react-icons/ci";
 import { FaChevronDown } from "react-icons/fa6";
@@ -14,6 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllNotifications } from "../../../api/Admin/NotificationApi";
 import moment from "moment";
 import { Dot } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 
 const Navbar = ({ heading }) => {
@@ -23,6 +25,7 @@ const Navbar = ({ heading }) => {
   const [isProfileMenu, setIsProfileMenu] = useState(false);
   const [isProfileDetails, setIsProfileDetails] = useState(false);
   const [hasNewNotifications, setHasNewNotifications] = useState(false);
+  const navigate = useNavigate()
 
 
   const { isBlurred, toggleBlur } = useBlur();
@@ -90,7 +93,24 @@ const Navbar = ({ heading }) => {
     toggleProfileDetails();
   };
   const onSettingsClick = () => { };
-  const onLogoutClick = () => { };
+
+
+
+
+  const onLogoutClick = async () => {
+    // setLoading(true);
+    localStorage.clear();
+    const response = await logout();
+    if (response == "error") {
+      console.log("error loggin out")
+      navigate("/login")
+    } else {
+      localStorage.clear()
+      navigate("/routes")
+    }
+    // setLoading(false);
+  };
+
 
   const { userData } = useUser();
 

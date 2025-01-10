@@ -70,6 +70,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LandingPage from "./pages/Auth/LandingPage";
 import HeadAttendence from "./pages/Teacher/Attendence/HeadAttendence";
 import Settings from "./pages/Admin/Settings/Settings";
+import { TeacherProvider } from "./utils/TeacherProvider";
 
 function App() {
   return (
@@ -112,7 +113,9 @@ function App() {
             path="/admin/timetable"
             element={
               <AdminLayout>
-                <ATimeTable />
+                <TeacherProvider>
+                  <ATimeTable />
+                </TeacherProvider>
               </AdminLayout>
             }
           />
@@ -269,7 +272,9 @@ function App() {
             path="/teacher/timetable"
             element={
               <TeacherLayout>
-                <TTimeTable />
+                <TeacherProvider>
+                  <TTimeTable />
+                </TeacherProvider>
               </TeacherLayout>
             }
           />

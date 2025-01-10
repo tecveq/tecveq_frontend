@@ -8,12 +8,15 @@ import {
 } from "./calendarComponents";
 import { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
+import { useTeacher } from "../../../utils/TeacherProvider";
 
 const localizer = momentLocalizer(moment);
 
-const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
+const MyCalendar = ({ data, isPending, refetch, isRefetching}) => {
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
+
+  const { teacherID, updateTeacherID } = useTeacher();
 
 
   // Current date range state
@@ -67,10 +70,14 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
     />
   );
 
+  const handleTeacherID = (id) => {
+    updateTeacherID(id); // Update teacherID globally
+  };
+
   // Custom toolbar renderer
-  const renderCustomToolbar = (toolbar) => (
-    <CustomToolbar loading={loading} toolbar={toolbar} />
-  );
+  // const renderCustomToolbar = (toolbar) => (
+  //   <CustomToolbar loading={loading} toolbar={toolbar} onTeacherSelect={handleTeacherID} />
+  // );
 
   return (
     <div className="flex">
@@ -89,7 +96,9 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
           endAccessor="end"
           className="w-[100%] h-[80vh]"
           components={{
-            toolbar: renderCustomToolbar,
+            toolbar: (props) => (
+              <CustomToolbar {...props} onTeacherSelect={handleTeacherID} />
+            ),
             event: renderCustomEvent,
             timeGutterHeader: SideTimeHeader,
             timeGutterWrapper: SideTime,
