@@ -6,10 +6,12 @@ import { GoDotFill } from "react-icons/go";
 import { useQuery } from "@tanstack/react-query";
 import { getAllNotifications } from "../../../api/Admin/NotificationApi";
 import moment from "moment";
+import { useGetAnnoucementByUserType } from "../../../api/Teacher/Annoucement";
 
 const Notifications = ({ onclose, dashboard, item }) => {
   const { data } = useQuery({ queryKey: ["chat"], queryFn: getAllNotifications });
-  console.log("notificationas in parent are : ", data);
+  const [activeTab, setActiveTab] = useState("notification");
+
 
 
   const Notification = ({ item }) => {
@@ -44,17 +46,90 @@ const Notifications = ({ onclose, dashboard, item }) => {
     );
   };
 
+
+  const Announcement = () => {
+
+    const { announcementByUsertype, isLoading } = useGetAnnoucementByUserType()
+
+    const [activeAnnouncement, setActiveAnnouncement] = useState(null); // Track the active announcement ID
+
+    const handleToggleDetails = (id) => {
+      setActiveAnnouncement((prevId) => (prevId === id ? null : id)); // Toggle between opening and closing
+    };
+
+    return (
+      <div className={`py-2 w-full h-full`}>
+        <div className=" w-full ">
+          <div className="space-y-6 p-3 bg-gray-50 rounded-lg shadow-lg max-w-4xl mx-auto"> {/* Container styles */}
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">📢 Announcements</h2>
+            {announcementByUsertype?.map((announcement) => (
+              <div
+                key={announcement._id}
+                className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300" // Card styles
+              >
+                {/* Announcement Header */}
+                <div
+                  className="p-5 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors duration-200" // Header styles
+                  onClick={() => handleToggleDetails(announcement._id)}
+                >
+                  <div>
+                    <p className="text-xs font-medium text-indigo-600 uppercase tracking-wide">{announcement.type}</p>
+                    <h3 className="text-xl font-semibold text-gray-900 mt-1">{announcement.title}</h3>
+                  </div>
+                  <p className="text-sm text-gray-500 whitespace-nowrap">{new Date(announcement.date).toLocaleString()}</p>
+                </div>
+
+                {/* Announcement Details */}
+                {activeAnnouncement === announcement._id && (
+                  <div className="p-5 bg-gray-50 border-t border-gray-200"> {/* Details styles */}
+                    <p className="text-sm text-gray-700 leading-relaxed">{announcement.description}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    );
+  };
+
+
+
   return (
-    <div className={` ${!dashboard ? "mt-10" : "mt-0"} z-10 fixed flex h-screen px-5 md:overflow-auto bg-white shadow-xl top-20 right-0 md:right-2 w-80 md:w-96`}>
+    <div className={` ${!dashboard ? "mt-10" : "mt-0"} z-10 fixed flex h-full px-5 md:overflow-auto custom-scrollbar bg-white shadow-xl top-0 right-0 md:right-2 w-80 md:w-96`}>
       <div className="flex flex-col w-full font-poppins">
         <div className="flex justify-between py-5 ">
-          <p className="text-lg font-semibold">Announcements</p>
+          {/* Toggle Buttons */}
+          <div className="p-3 border-2 border-black/10 rounded-2xl">
+            <button
+              className={`px-3 py-1 ${activeTab === "notification" ? "bg-maroon text-white rounded-3xl" : "bg-gray-200"
+                }`}
+              onClick={() => setActiveTab("notification")}
+            >
+              Notification
+            </button>
+            <button
+              className={`px-3 py-1 ${activeTab === "announcement" ? "bg-maroon text-white rounded-3xl" : "bg-gray-200"
+                }`}
+              onClick={() => setActiveTab("announcement")}
+            >
+              Announcement
+            </button>
+          </div>
           <IoClose onClick={onclose} className="cursor-pointer" />
         </div>
         <div className="w-full">
-          {data && data?.map((item) => {
-            return <Notification item={item} />;
-          })}
+          {activeTab === "notification" ? (
+            data && data.length > 0 ? (
+              data.map((item) => <Notification key={item.id} item={item} />)
+            ) : (
+              <p>No notifications are present</p>
+            )
+          ) : (
+            <Announcement />
+          )}
+
         </div>
       </div>
     </div>
