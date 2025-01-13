@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { useAdmin } from "../../../context/AdminContext";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-
 export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
   const [detailsModalOpen, setdetailsModalOpen] = useState(false);
   return (
@@ -107,11 +106,9 @@ export const Header = (props) => {
   );
 };
 
-export const CustomToolbar = ({
-  toolbar,
-  loading,
-  onTeacherSelect
-}) => {
+export const CustomToolbar = (props) => {
+
+  const { onTeacherSelect } = props;
   //   const { currentUser } = useContext(AuthContext);
 
   const [fields, setfields] = useState([]);
@@ -119,11 +116,12 @@ export const CustomToolbar = ({
 
 
 
+
   const goToBack = () => {
-    toolbar.onNavigate("PREV");
+    props.onNavigate("PREV");
   };
   const goToNext = () => {
-    toolbar.onNavigate("NEXT");
+    props.onNavigate("NEXT");
   };
   const goToCurrent = () => {
     toolbar.onNavigate("TODAY");

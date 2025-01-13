@@ -96,10 +96,7 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching}) => {
           endAccessor="end"
           className="w-[100%] h-[80vh]"
           components={{
-            toolbar: (props) => (
-              <CustomToolbar {...props} onTeacherSelect={handleTeacherID} />
-            ),
-            event: renderCustomEvent,
+            toolbar: (props) => <CustomToolbar {...props} onTeacherSelect={handleTeacherID} />, event: renderCustomEvent,
             timeGutterHeader: SideTimeHeader,
             timeGutterWrapper: SideTime,
             header: Header,
