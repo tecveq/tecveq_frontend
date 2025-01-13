@@ -16,6 +16,7 @@ import { getAllClassroom } from "../../../api/Admin/classroomApi";
 import { convertToISOWithTimezoneOffset } from "../../../utils/ConvertTimeZone";
 import CustomSelectableField from "../../../commonComponents/CustomSelectableField";
 import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
+import { useGetTeacherSubject } from "../../../api/Admin/SubjectsApi";
 
 const SchedualClasses = ({ refetch }) => {
 
@@ -109,6 +110,17 @@ const SchedualClasses = ({ refetch }) => {
     });
 
 
+
+
+    const parsedTeacher = selectedTeacher ? JSON.parse(selectedTeacher) : null;
+
+    const { teacherSubject, isLoading, error } = useGetTeacherSubject(parsedTeacher?._id);
+
+
+
+
+    console.log(allSubjects, "Subject OF");
+
     return (
       <div
         className={`absolute top-0 right-0 flex-1 z-10 flex bg-white rounded-md shadow-lg w-96 ${isOpen ? "" : "hidden"
@@ -143,7 +155,7 @@ const SchedualClasses = ({ refetch }) => {
                 />
 
                 <CustomSelectableField
-                  options={allSubjects}
+                  options={teacherSubject || allSubjects}
                   label={"Select Subject"}
                   selectedOption={selectedSubject}
                   setSelectedOption={setSelctedSubject}

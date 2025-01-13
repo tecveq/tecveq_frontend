@@ -155,11 +155,15 @@ export default function ViewEventDetailsModal({
   //   return dateTimeString;
   // }
 
+  const convertToISOWithTimezoneOffsetEnd = (startEventDate, startTime) => {
+    const dateTimeString = `${startEventDate}T${startTime}:00.000Z`;
+    return dateTimeString;
+  }
 
 
   const handleUpdateClass = () => {
     // Convert start and end times to ISO format
-    const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(startDate, classObj.startTime));
+    const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffsetEnd(startDate, classObj.endTime));
     const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(startDate, classObj.startTime));
 
     const endEventDate = new Date(classObj.endEventDate).toISOString().split('T')[0];

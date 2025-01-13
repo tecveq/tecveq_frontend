@@ -8,4 +8,8 @@ export const getAllClassroom = apiRequest(async () => await axios.get(`${BACKEND
 
 export const createClassroom = apiRequest(async (data) => await axios.post(`${BACKEND_URL}/classroom/`, data))
 
+export const updateClassroom = apiRequest(async ({ data, id }) =>
+    await axios.put(`${BACKEND_URL}/classroom/${id}`, data)
+);
+
 export const deleteClassroom = apiRequest(async (id) => await axios.delete(`${BACKEND_URL}/classroom/${id}`)) 

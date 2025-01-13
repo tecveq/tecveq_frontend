@@ -6,13 +6,18 @@ import SchedualClasses from "../../../components/Teacher/TimeTable/SchedualClass
 import { useQuery } from "@tanstack/react-query";
 import { useBlur } from "../../../context/BlurContext";
 import { getAllClasses } from "../../../api/ForAllAPIs";
+import { useTeacher } from "../../../utils/TeacherProvider";
 
 const TimeTable = () => {
+  
   const { isBlurred } = useBlur();
 
-  const { data, isPending, refetch } = useQuery({
-    queryKey: ["timetable"],
-    queryFn: getAllClasses,
+  const { teacherID, updateTeacherID } = useTeacher();
+
+  const { data, isPending, refetch, isRefetching } = useQuery({
+    queryKey: ["timetable", teacherID], // Use teacherID in query key to avoid unnecessary refetches
+    queryFn: () => getAllClasses(teacherID), // Fetch classes based on teacherID
+    enabled: teacherID !== undefined, // Only fetch if teacherID is neither undefined nor null
   });
 
 

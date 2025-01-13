@@ -331,6 +331,11 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               )
             }
 
+            {
+              console.log(newSelectedTeachers, "new selected teacher")
+              
+            }
+
             {newSelectedTeachers && newSelectedTeachers.map((item) => (
               selectedLevel && (
                 <div key={item._id} className="flex items-center gap-3">

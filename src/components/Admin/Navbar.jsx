@@ -31,14 +31,37 @@ const Navbar = ({ heading }) => {
 
   const { data } = useQuery({ queryKey: ["chat"], queryFn: getAllNotifications });
 
+
   useEffect(() => {
-    if (data) {
-      // Check if there's a new notification (received within the last 5 minutes)
-      const isNewNotification = data.some((item) => moment().diff(moment(item.createdAt), 'minutes') < 2);
-      setHasNewNotifications(isNewNotification);
+    const storedNotificationId = localStorage.getItem("lastNotificationId");
+
+    if (data && data.length > 0) {
+      // Get the latest notification ID
+      const latestNotificationId = data[0].id; // Assuming latest notification is first in the list
+
+      // Compare with stored ID
+      if (storedNotificationId !== latestNotificationId) {
+        // New notification found
+        setHasNewNotifications(true);
+        localStorage.setItem("lastNotificationId", latestNotificationId); // Update storage
+      }
     }
   }, [data]);
 
+  // Handle bell click
+  const handleBellClick = () => {
+    setHasNewNotifications(false); // Hide notification
+    localStorage.setItem("notificationChecked", "true"); // Persist user check
+    togglebell(); // Call the toggle function
+  };
+
+  // Restore notification visibility on refresh
+  useEffect(() => {
+    const isChecked = localStorage.getItem("notificationChecked") === "true";
+    if (isChecked) {
+      setHasNewNotifications(false); // Don't show notification if already checked
+    }
+  }, []);
   const toggleProfielMenu = () => {
     setIsProfileMenu(!isProfileMenu);
     setmail(false);
@@ -96,7 +119,7 @@ const Navbar = ({ heading }) => {
               <div className="relative">
                 <div
                   className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 `}
-                  onClick={togglebell}
+                  onClick={handleBellClick}
                 >
                   <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""}`}>
                     <CiBellOn />

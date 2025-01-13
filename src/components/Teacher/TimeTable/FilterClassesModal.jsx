@@ -11,7 +11,7 @@ import { useTeacher } from "../../../context/TeacherContext";
 import moment from "moment";
 
 
-const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPending }) => {
+const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPending, }) => {
 
   const { allClasses } = useTeacher();
 
@@ -65,7 +65,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
     );
   };
 
-  const CustomCalender = ({ setSelectedDateFromChild, selectedDateFromChild, }) => {
+  const CustomCalender = ({ setSelectedDateFromChild, selectedDateFromChild, classesArray }) => {
     const [selectedDate, setSelectedDate] = useState(dayjs());
 
     const [dateForEvent, setDateForEvent] = useState("");
@@ -75,59 +75,60 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
       const endOfMonth = selectedDate.endOf("month");
 
       const days = [];
-      let currentDay = startOfMonth;
-      // console.log("start of moth is : ", currentDay.format("d"));
-      if (currentDay.format("d") > 3) {
-        let iter = currentDay.format("d");
-        let prevmonth = currentDay.subtract(iter, "day");
-        console.log(iter);
-        for (let i = 0; i < iter; i++) {
-          prevmonth = prevmonth.add(1, "day");
-          days.push(prevmonth);
-        }
-      }
-      currentDay = currentDay.add(1, "day");
 
-      while (currentDay.isBefore(endOfMonth, "day")) {
+      // Calculate the starting day of the week (0 = Sunday, 1 = Monday)
+      let currentDay = startOfMonth.startOf("week");
+
+      // Fill days for a complete 6-week grid (42 days)
+      for (let i = 0; i < 42; i++) {
         days.push(currentDay);
         currentDay = currentDay.add(1, "day");
       }
 
+      // Render days
       return days.map((day) => {
-        const formattedDate = day.format("YYYY MMMM DD");
+        const formattedDate = day.format("YYYY-MM-DD");
+        const isCurrentMonth = day.month() === selectedDate.month();
+        const isToday = day.isSame(new Date(), "day");
 
-        const eventsForDay = allClasses
-          ? allClasses.filter((event) => new Date(event.startTime).toDateString() === new Date(formattedDate).toDateString())
+        const eventsForDay = classesArray
+          ? classesArray.filter(
+            (event) =>
+              new Date(event.startTime).toDateString() ===
+              new Date(formattedDate).toDateString()
+          )
           : [];
 
         return (
           <div
             key={formattedDate}
-            className={`text-center text-[12px] text-black cursor-pointer hover:bg-gray-200 `}
+            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-blue-500 text-white" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
             onClick={() => {
               setSelectedDate(day);
               setDateForEvent(formattedDate);
               setSelectedDateFromChild(formattedDate);
             }}
           >
-            {/* <div
-              className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${selectedDateFromChild == formattedDate ? "bg-maroon text-white" : ""
-                } text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}
-            > */}
             <div
-              className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${!filterActive && selectedDateFromChild == formattedDate ? "bg-maroon text-white" : ""
-                } ${filterActive && new Date(formattedDate).toDateString() == new Date(filterStartDate).toDateString() ? "bg-maroon text-white" : ""}
-                ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-maroon text-white" : ""}
-                 text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}
+              className={`flex flex-col w-10 h-10 items-center px-5 py-1 rounded-full ${!filterActive && selectedDateFromChild == formattedDate
+                ? "bg-maroon text-white"
+                : ""
+                } ${filterActive &&
+                  (new Date(formattedDate).toDateString() ===
+                    new Date(filterStartDate).toDateString() ||
+                    new Date(formattedDate).toDateString() ===
+                    new Date(filterEndDate).toDateString())
+                  ? "bg-maroon text-white"
+                  : ""
+                } group hover:bg-maroon hover:text-white`}
             >
-              <div className="text-sm text-black group-hover:text-white">
-                {day.format("D")}
-              </div>
+              <div className="text-sm">{day.format("D")}</div>
 
-              {eventsForDay && eventsForDay?.length > 0 ? (
-                <GoDotFill size={10} className=" group-hover:text-white" />
-              ) : (
-                ""
+              {eventsForDay.length > 0 && (
+                <GoDotFill
+                  size={10}
+                  className="text-maroon group-hover:text-white"
+                />
               )}
             </div>
           </div>
@@ -163,15 +164,12 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
             </div>
           </div>
         </div>
-
-        <div className="relative grid grid-cols-7 gap-2 ">
-          <div className="px-3 font-semibold text-[10px] ">Mon</div>
-          <div className="px-3 font-semibold text-[10px] ">Tue</div>
-          <div className="px-3 font-semibold text-[10px] ">Wed</div>
-          <div className="px-3 font-semibold text-[10px] ">Thu</div>
-          <div className="px-3 font-semibold text-[10px] ">Fri</div>
-          <div className="px-3 font-semibold text-[10px] ">Sat</div>
-          <div className="px-3 font-semibold text-[10px] ">Sun</div>
+        <div className="relative grid grid-cols-7 gap-2">
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+            <div key={day} className="px-3 font-semibold text-[10px]">
+              {day}
+            </div>
+          ))}
           {renderDays()}
         </div>
       </div>
@@ -210,9 +208,9 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
         <div className="flex flex-col gap-1 p-3 bg-white rounded-lg">
           <div className="flex-1 p-2 ">
             <CustomCalender
+              classesArray={classData}
               selectedDateFromChild={selectedDate}
               setSelectedDateFromChild={setSelectedDate}
-            // classesArray={data}
             />
           </div>
           <div className="flex flex-1 gap-4 py-4 border-t border-b border-t-grey/50 border-b-grey/50">

@@ -18,14 +18,14 @@ export const userLogout = apiRequest(async () => {
 });
 
 
-export const getAllClasses = apiRequest(async () => {
+export const getAllClasses = apiRequest(async (teacherID) => {
 
     let endDate = new Date(Date.now());
     endDate.setDate(endDate.getDate() - 15);
     let startDate = new Date(Date.now());
     startDate.setDate(startDate.getDate() + 15);
 
-    const url = `${BACKEND_URL}/class?startDate=${endDate}&endDate=${startDate}`;
+    const url = `${BACKEND_URL}/class?startDate=${endDate}&endDate=${startDate}${teacherID ? `&teacherID=${teacherID}` : ''}`;
     const response = await axios.get(url);
     return response
 

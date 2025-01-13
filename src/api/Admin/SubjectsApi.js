@@ -65,3 +65,29 @@ export const deleteSubject = apiRequest(async (id) => {
   const response = await axios.delete(url);
   return response;
 });
+
+
+export const useGetTeacherSubject = (teacherId) => {
+  const getMyTeacherSubjectRequest = async () => {
+    const url = `${BACKEND_URL}/subject/teacher-subject/${teacherId}`;
+    const response = await axios.get(url);
+
+    if (response.status !== 200) {
+      throw new Error('Failed to get teacher subject');
+    }
+
+    return response.data;
+  };
+
+  const { data: teacherSubject, isLoading, error } = useQuery({
+    queryKey: ['fetchTeacherSubject', teacherId],
+    queryFn: getMyTeacherSubjectRequest,
+    enabled: Boolean(teacherId), // Only trigger if teacherId is truthy
+  });
+
+  return {
+    isLoading,
+    teacherSubject,
+    error,
+  };
+};
