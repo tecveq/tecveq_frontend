@@ -4,45 +4,45 @@ import { useStudent } from "../../../context/StudentContext";
 import { getAllAnnouncements } from "../../../api/ForAllAPIs";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../../utils/Loader";
+import { useGetAnnoucementByUserType } from "../../../api/Teacher/Annoucement";
 
 const Announcements = () => {
 
   const { setAllAnnouncements, studentLogedIn } = useStudent();
+  const { announcementByUsertype, isLoading } = useGetAnnoucementByUserType()
 
-  const announcementQuery = useQuery({
-    queryKey: ["announcements"], queryFn: async () => {
-      const results = await getAllAnnouncements();
-      setAllAnnouncements(results.filter((item) => item.visibility == "student" || item.visibility == "all"));
-      return results
-    }, staleTime: 300000, enabled: studentLogedIn
-  });
 
   const Announcement = ({ item }) => {
     return (
-      <div className="flex px-2 py-1 text-xs">
-        <div className="flex gap-2">
-          <RxDotFilled />
-          <p> <span className="font-bold">{item.title} : </span> {item.description}</p>
+      <div className="flex px-2 py-1 text-xs w-full ">
+
+        <div className="flex flex-col gap-3 bg-grey_600/10 w-full p-4 rounded-2xl">
+          {/* <RxDotFilled /> */}
+          <div className="flex justify-between items-center w-full">
+            <div className="font-bold">{item.title}  </div>
+            <div>{new Date(item.date).toLocaleString()}</div>
+          </div>
+          <p>
+            {item.description}
+
+          </p>
         </div>
+
       </div>
     );
   };
 
   return (
     <div className="flex flex-col flex-1 gap-2">
-      <div className="flex">
-        <p className="flex text-lg font-medium">Announcemnets</p>
+      <div className="flex w-full">
+        <p className="flex text-lg font-medium">📢Announcemnets</p>
       </div>
-      {announcementQuery.isPending && <div className="flex flex-1"> <Loader /> </div>}
-      {!announcementQuery.isPending &&
-        <div className="flex flex-col flex-1 px-6 py-4 bg-white border-t-4 rounded-lg border-t-maroon">
-          {announcementQuery?.data?.map((item, index) => {
-            return (
-              <Announcement key={index} item={item} />
-            )
-          })}
-        </div>
-      }
+      <div className="flex flex-col w-full px-6 bg-white h-80 overflow-y-auto register-scrollbar border-t-4 rounded-lg md:py-4 border-t-maroon">
+
+        {announcementByUsertype?.map((item) => <Announcement item={item} />)}
+        {announcementByUsertype?.length == 0 && <div>No Announcements to display</div>}
+
+      </div>
     </div>
   );
 };
