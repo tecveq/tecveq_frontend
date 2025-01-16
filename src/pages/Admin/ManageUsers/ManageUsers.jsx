@@ -141,7 +141,7 @@ const ManageUsers = () => {
                     <DataRows
                       header={true}
                       role={"Role"}
-                      userId={"ID"}
+                      userId={"Roll No"}
                       index={"Sr No"}
                       userName={"Name"}
                       userclass={"Class"}
@@ -160,7 +160,7 @@ const ManageUsers = () => {
                         bgColor={"#FFFFFF"}
                         userclass={usr?.class}
                         contact={usr.phoneNumber}
-                        userId={usr._id.slice(-4)}
+                        userId={usr?.rollNo || "00"}
                         toggleClassMenu={(e) => toggleMenu(e)}
                         onClickFunction={handleFunctionClick(usr)}
                       />
