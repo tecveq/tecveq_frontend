@@ -151,7 +151,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
             // Validation patterns
             const emailPattern = /^[a-zA-Z][\w.-]*@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
             const namePattern = /^[a-zA-Z\s]+$/;
-            const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
+            const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{15,}$/;
 
             if (role === "parent") {
                 dataBody = {
@@ -173,7 +173,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                 if (!isValidEmail) return toast.error("Invalid Email!");
                 if (!isValidGuardianName) return toast.error("Guardian Name cannot have digits or special characters.");
                 if (!isValidGuardianEmail) return toast.error("Invalid Guardian Email!");
-                if (e.target[8].value.length < 6) return toast.error("Password should be at least 6 characters.");
+                if (e.target[8].value.length < 15) return toast.error("Password should be at least 15 characters.");
                 if (e.target[13].value !== e.target[12].value) return toast.error("Password and Confirm Password do not match!");
 
                 dataBody = {
