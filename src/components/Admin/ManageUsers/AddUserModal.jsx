@@ -10,6 +10,7 @@ import { default_profile } from '../../../constants/api';
 import { useAdmin } from '../../../context/AdminContext';
 import { registerStudent } from '../../../api/Student/StudentApis';
 import { experience, qualification } from '../../../constants/teacher';
+import { emailPattern, namePattern, passwordPattern } from '../../../constants/pattern';
 
 const AddUserModal = ({ closeModal, refetch }) => {
 
@@ -149,9 +150,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
             console.log("After form submit: ", e);
 
             // Validation patterns
-            const emailPattern = /^[a-zA-Z][\w.-]*@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
-            const namePattern = /^[a-zA-Z\s]+$/;
-            const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{15,}$/;
+           
 
             if (role === "parent") {
                 dataBody = {

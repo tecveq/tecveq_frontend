@@ -22,7 +22,7 @@ const ManageUsers = () => {
   const [editData, setEditData] = useState({});
   const [requestCount, setReqCount] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [selectText, setSelectText] = useState("");
+  const [selectText, setSelectText] = useState("student");
   const [requestsModal, setRequestsModal] = useState(false);
   const [isAddUserModal, setIsAddUserModal] = useState(false);
   const [isEditUserModal, setIsEditUserModal] = useState(false);
@@ -203,7 +203,7 @@ const ManageUsers = () => {
                           role={usr.userType}
                           userclass={usr?.class}
                           contact={usr.phoneNumber}
-                          userId={usr?.userType === "teacher" || usr?.userType === "parent" ? "Oops" : usr?.rollNo || "00"}
+                          userId={usr?.userType === "teacher" || usr?.userType === "parent" ? `${usr._id.slice(0, 4)}` : usr?.rollNo || "not assign"}
                           toggleClassMenu={(e) => toggleMenu(e)}
                           onClickFunction={handleFunctionClick(usr)}
                         />
