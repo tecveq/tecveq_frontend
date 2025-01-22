@@ -91,7 +91,7 @@ const Reports = () => {
 
   const handleFunctionClick = (report) => {
     console.log("selected report is : ", report);
-      navigate(`/parent/reports/${report.subject.name}`, { state: report });
+    navigate(`/parent/reports/${report.subject.name}`, { state: report });
   };
 
   const [enableQuery, setEnableQuery] = useState(false);
@@ -125,10 +125,26 @@ const Reports = () => {
               <div className=' mt-8 h-[80%] overflow-auto'>
                 <DataRows index={"Sr. No"} subject={"Subject"} instructor={"Instructor"} attendance={"Attendance"} bgColor={"#F9F9F9"} header={true} />
                 {
-                  allSubjects?.subjects?.map((report, index) => (
-                    <DataRows key={index} index={index + 1} subject={report?.subject.name} instructor={report?.teacher.name} attendance={report?.avgAttendancePer} bgColor={"#FFFFFF"} header={false} onClickFunction={() => handleFunctionClick(report)} />
-                  ))
+                  allSubjects?.subjects && allSubjects?.subjects.length > 0 ? (
+                    allSubjects.subjects.map((report, index) => (
+                      <DataRows
+                        key={index}
+                        index={index + 1}
+                        subject={report?.subject?.name}
+                        instructor={report?.teacher?.name}
+                        attendance={report?.avgAttendancePer}
+                        bgColor={"#FFFFFF"}
+                        header={false}
+                        onClickFunction={() => handleFunctionClick(report)}
+                      />
+                    ))
+                  ) : (
+                    <div className="text-center text-2xl font-semibold text-gray-500 py-4">
+                      No Reports Found
+                    </div>
+                  )
                 }
+
               </div>
             </div>
           </div>

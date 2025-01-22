@@ -10,34 +10,35 @@ import { default_profile } from '../../../constants/api';
 import { useAdmin } from '../../../context/AdminContext';
 import { registerStudent } from '../../../api/Student/StudentApis';
 import { experience, qualification } from '../../../constants/teacher';
-
+import { emailPattern, namePattern, passwordPattern } from '../../../constants/pattern';
 
 const AddUserModal = ({ closeModal, refetch }) => {
 
-    const CustomInput = ({ label, placeholder, type }) => {
+    const CustomInput = ({ label, placeholder, type, required = false }) => {
         return (
-            <div className='flex flex-col text-start py-1'>
-                <div className='flex flex-col gap-1'>
-                    <div className='font-medium flex gap-1'>
-                        <p>
-                            {label}
-                        </p>
-                        <p className='font-normal'>
-                            <FaAsterisk size={6} color='red' className='mt-1' />
-                        </p>
+            <div className="flex flex-col text-start py-1">
+                <div className="flex flex-col gap-1">
+                    <div className="font-medium flex gap-1">
+                        <p>{label}</p>
+                        {required && (
+                            <p className="font-normal">
+                                <FaAsterisk size={6} color="red" className="mt-1" />
+                            </p>
+                        )}
                     </div>
                     <div>
                         <input
-                            className={`border outline-none rounded-md border-black/20 px-4 w-full py-[8px] `}
-                            required
+                            className="border outline-none rounded-md border-black/20 px-4 w-full py-[8px]"
+                            required={required}
                             type={type}
                             placeholder={placeholder}
                         />
                     </div>
                 </div>
             </div>
-        )
-    }
+        );
+    };
+
 
     const Selectable = ({ label }) => {
         return (
@@ -48,7 +49,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     </div>
                     <div>
                         <select value={role} onChange={(e) => { setRole(e.target.value) }} className='border outline-none rounded-md border-black/20 px-4 w-full py-[8px]'>
-                            <option value="student">Studnet</option>
+                            <option value="student">Student</option>
                             {/* <option value="parent">Parent</option> */}
                             <option value="teacher">Teacher</option>
                         </select>
@@ -143,131 +144,110 @@ const AddUserModal = ({ closeModal, refetch }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
         try {
             let dataBody = {};
-            console.log("after form submit here : ", e);
+            console.log("After form submit: ", e);
 
-            if (role == "parent") {
+            // Validation patterns
+           
+
+            if (role === "parent") {
                 dataBody = {
                     role,
                     sName: e.target[1].value,
                     sID: e.target[2].value,
                     password: e.target[3].value,
-                    profilePic: default_profile
-                }
-            } else if (role == "student") {
-                // valid email
-                const emailPattern = /^[a-zA-Z][\w\.-]*@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
-                // only string
-                const namePattern = /^[a-zA-Z\s]+$/;
-                // password should have atleast one digit, one special character, and one upper case letter
-                const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
-
+                    profilePic: default_profile,
+                };
+            } else if (role === "student") {
+                // Validate fields
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
-                const isValidGuardainName = namePattern.test(e.target[6].value);
+                const isValidGuardianName = namePattern.test(e.target[9].value);
+                const isValidGuardianEmail = emailPattern.test(e.target[10].value);
                 const isValidPassword = passwordPattern.test(e.target[8].value);
-                const isValidGuardianEmail = emailPattern.test(e.target[7].value);
-                // const isValidName = namePattern.test(e.target[1].value);
-                // const isValidEmail = emailPattern.test(e.target[2].value);
-                // const isValidGuardainName = namePattern.test(e.target[6].value);
-                // const isValidPassword = passwordPattern.test(e.target[8].value);
-                // const isValidGuardianEmail = emailPattern.test(e.target[7].value);
 
-                if (isValidEmail && isValidGuardianEmail) {
-                    if (isValidName && isValidGuardainName) {
-                        if (e.target[8].value.length >= 6) {
-                            if (e.target[10].value == e.target[9].value) {
-                                dataBody = {
-                                    userType: role,
-                                    name: e.target[1].value,
-                                    email: e.target[2].value,
-                                    bio: e.target[3].value,
-                                    phoneNumber: e.target[4].value,
-                                    levelID: JSON.parse(e.target[5].value)._id,
-                                    isAccepted: true,
-                                    guardianName: e.target[6].value,
-                                    guardianEmail: e.target[7].value,
-                                    guardianPhoneNumber: e.target[8].value,
-                                    password: e.target[9].value,
-                                    profilePic: default_profile
-                                }
-                                const response = await registerStudent(dataBody);
-                                console.log("after register user is : ", response);
-                                toast.success("User added successfully!");
-                                await refetch();
-                                closeModal();
-                            } else {
-                                toast.error("Password and confirm password should be equal!");
-                            }
-                        } else {
-                            toast.error("Password should be atleast 6 characters!")
-                        }
-                    } else {
-                        toast.error("Name cannot have digits or special characters");
-                    }
+                if (!isValidName) return toast.error("Name cannot have digits or special characters.");
+                if (!isValidEmail) return toast.error("Invalid Email!");
+                if (!isValidGuardianName) return toast.error("Guardian Name cannot have digits or special characters.");
+                if (!isValidGuardianEmail) return toast.error("Invalid Guardian Email!");
+                if (e.target[8].value.length < 15) return toast.error("Password should be at least 15 characters.");
+                if (e.target[13].value !== e.target[12].value) return toast.error("Password and Confirm Password do not match!");
+
+                dataBody = {
+                    userType: role,
+                    name: e.target[1].value,
+                    email: e.target[2].value,
+                    rollNo: e.target[3].value,
+                    referenceNo: e.target[4].value,
+                    gender: e.target[5].value,
+                    bio: e.target[6].value,
+                    phoneNumber: e.target[7].value,
+                    levelID: JSON.parse(e.target[8].value)._id,
+                    isAccepted: true,
+                    guardianName: e.target[9].value,
+                    guardianEmail: e.target[10].value,
+                    guardianPhoneNumber: e.target[11].value,
+                    password: e.target[12].value,
+                    profilePic: default_profile,
+                };
+
+                // Call backend to register student
+                const response = await registerStudent(dataBody);
+                console.log(response, "user response data");
+
+                if (response?._id) {
+                    toast.success("User added successfully!");
+                    await refetch();
+                    closeModal();
                 } else {
-                    toast.error("Invalid Email!");
+                    throw new Error("Failed to register user.");
                 }
-            } else {
-                console.log("teacher form is : ", e);
-
-                // valid email
-                const emailPattern = /^[a-zA-Z][\w\.-]*@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/;
-                // only string
-                const namePattern = /^[a-zA-Z\s]+$/;
-                // password should have atleast one digit, one special character, and one upper case letter
-                const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
-
-
+            } else if (role === "teacher") {
+                // Validate fields
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
-                const isValidPassword = passwordPattern.test(e.target[7].value);
+                const isValidPassword = passwordPattern.test(e.target[8].value);
 
+                if (!isValidName) return toast.error("Name cannot have digits or special characters.");
+                if (!isValidEmail) return toast.error("Invalid Email!");
+                if (e.target[8].value.length < 6) return toast.error("Password should be at least 6 characters.");
 
-                let cvurl = "cv url here";
-                if (isValidEmail) {
-                    if (isValidName) {
-                        if (e.target[7].value.length >= 6) {
-                            dataBody = {
-                                userType: role,
-                                name: e.target[1].value,
-                                email: e.target[2].value,
-                                bio: e.target[3].value,
-                                phoneNumber: e.target[4].value,
-                                qualification: e.target[5].value,
-                                cv: cvurl,
-                                isAccepted: true,
-                                experience: e.target[7].value,
-                                password: e.target[8].value,
-                                profilePic: default_profile
-                            }
-                            cvurl = await uploadFile(e.target[6].files[0], "CV");
-                            dataBody.cv = cvurl;
-                            const response = await registerStudent(dataBody);
-                            console.log("after register user is : ", response);
+                let cvurl = await uploadFile(e.target[6].files[0], "CV");
 
-                            toast.success("User added successfully!");
-                            await refetch();
-                            closeModal();
-                        } else {
-                            toast.error("Password should be atleast 6 characters!")
-                        }
-                    } else {
-                        toast.error("Name cannot have digits or special characters");
-                    }
+                dataBody = {
+                    userType: role,
+                    name: e.target[1].value,
+                    email: e.target[2].value,
+                    bio: e.target[3].value,
+                    phoneNumber: e.target[4].value,
+                    qualification: e.target[5].value,
+                    cv: cvurl,
+                    isAccepted: true,
+                    experience: e.target[7].value,
+                    password: e.target[8].value,
+                    profilePic: default_profile,
+                };
+
+                // Call backend to register teacher
+                const response = await registerStudent(dataBody);
+                if (response?._id) {
+                    toast.success("User added successfully!");
+                    await refetch();
+                    closeModal();
                 } else {
-                    toast.error("Invalid Email!");
+                    throw new Error("Failed to register user.");
                 }
             }
-
-
         } catch (error) {
-            console.log("error in student login UI screen is : ", error);
-            toast.error("Cannot add the user!");
+            console.error("Error during form submission:", error);
+            toast.error(error.message || "Cannot add the user!");
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
-    }
+    };
+
 
     return (
         <div className='absolute w-96 border h-screen border-black/20 z-10 bg-white right-0 top-0'>
@@ -286,33 +266,38 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                 <Selectable label={"Occupation"} />
                                 {role == "student" ?
                                     <>
-                                        <CustomInput label={"Name"} type="text" placeholder={"Enter your Name"} />
-                                        <CustomInput label={"Email"} type="email" placeholder={"Enter your Email"} />
+                                        <CustomInput label={"Name"} type="text" placeholder={"Enter your Name"} required />
+                                        <CustomInput label={"Email"} type="email" placeholder={"Enter your Email"} required />
+                                        <CustomInput label={"Roll No"} type="text" placeholder={"Enter your Roll No"} required />
+                                        <CustomInput label={"Reference No"} type="text" placeholder={"Enter your Reference No"} />
+
+                                        <CustomInput label={"Gender"} type="text" placeholder={"Enter your gender (e.g., Male or Female)"} required />
+
                                         <CustomInput label={"Bio"} type="text" placeholder={"Enter your Bio"} />
-                                        <CustomInput label={"Phone no."} type="text" placeholder={"Enter your Phone Number"} />
+                                        <CustomInput label={"Phone no."} type="text" placeholder={"Enter your Phone Number"} required />
                                         <LevelSelectable label={"Enroll in"} alllevels={allLevels} />
-                                        <CustomInput label={"Guardian Name"} type="text" placeholder={"Enter Guardian Name"} />
-                                        <CustomInput label={"Guardian Email"} type="email" placeholder={"Enter Guardian Email"} />
-                                        <CustomInput label={"Guardian Phone no."} type="text" placeholder={"Enter Guardian Phone no."} />
-                                        <CustomInput label={"Password"} type="password" placeholder={"Enter your Password"} />
-                                        <CustomInput label={"Confirm Password"} type="password" placeholder={"Confirm your Password"} />
+                                        <CustomInput label={"Guardian Name"} type="text" placeholder={"Enter Guardian Name"} required />
+                                        <CustomInput label={"Guardian Email"} type="email" placeholder={"Enter Guardian Email"} required />
+                                        <CustomInput label={"Guardian Phone no."} type="text" placeholder={"Enter Guardian Phone no."} required />
+                                        <CustomInput label={"Password"} type="password" placeholder={"Enter your Password"} required />
+                                        <CustomInput label={"Confirm Password"} type="password" placeholder={"Confirm your Password"} required />
                                     </>
                                     : role == "parent" ? <>
-                                        <CustomInput label={"Student Name"} type="text" placeholder={"Enter student Name"} />
-                                        <CustomInput label={"Student ID"} type="text" placeholder={"Enter student ID"} />
-                                        <CustomInput label={"Password"} type="password" placeholder={"Enter your Password"} />
-                                        <CustomInput label={"Confirm Password"} type="password" placeholder={"Confirm your Password"} />
+                                        <CustomInput label={"Student Name"} type="text" placeholder={"Enter student Name"} required />
+                                        <CustomInput label={"Student ID"} type="text" placeholder={"Enter student ID"} required />
+                                        <CustomInput label={"Password"} type="password" placeholder={"Enter your Password"} required />
+                                        <CustomInput label={"Confirm Password"} type="password" placeholder={"Confirm your Password"} required />
                                     </> :
                                         <>
-                                            <CustomInput label={"Name"} type="text" placeholder={"Enter your Name"} />
-                                            <CustomInput label={"Email"} type="email" placeholder={"Enter your email"} />
-                                        <CustomInput label={"Bio"} type="text" placeholder={"Enter your Bio"} />
-                                            <CustomInput label={"Phone"} type="text" placeholder={"Enter your phone no."} />
+                                            <CustomInput label={"Name"} type="text" placeholder={"Enter your Name"} required />
+                                            <CustomInput label={"Email"} type="email" placeholder={"Enter your email"} required />
+                                            <CustomInput label={"Bio"} type="text" placeholder={"Enter your Bio"} />
+                                            <CustomInput label={"Phone"} type="text" placeholder={"Enter your phone no."} required />
                                             <CustomSelectable label={"Qualification"} options={qualification} />
                                             <CustomFileSelector label={"CV"} />
                                             <CustomSelectable label={"Experience"} options={experience} />
-                                            <CustomInput label={"Password"} type="password" placeholder={"Enter your Password"} />
-                                            <CustomInput label={"Confirm Password"} type="password" placeholder={"Confirm your Password"} />
+                                            <CustomInput label={"Password"} type="password" placeholder={"Enter your Password"} required />
+                                            <CustomInput label={"Confirm Password"} type="password" placeholder={"Confirm your Password"} required />
                                         </>}
                             </div>
                             <div className='py-4 flex flex-col gap-2'>

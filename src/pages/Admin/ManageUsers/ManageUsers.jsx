@@ -22,6 +22,7 @@ const ManageUsers = () => {
   const [editData, setEditData] = useState({});
   const [requestCount, setReqCount] = useState(0);
   const [searchText, setSearchText] = useState("");
+  const [selectText, setSelectText] = useState("student");
   const [requestsModal, setRequestsModal] = useState(false);
   const [isAddUserModal, setIsAddUserModal] = useState(false);
   const [isEditUserModal, setIsEditUserModal] = useState(false);
@@ -54,9 +55,9 @@ const ManageUsers = () => {
       await adminUsersRefecth();
       return result;
     },
-    onSettled: async(data, error) =>{
+    onSettled: async (data, error) => {
       setIsMenu(false);
-      if(error){
+      if (error) {
         console.log("error in toggle access : ", error)
         return;
       }
@@ -125,6 +126,19 @@ const ManageUsers = () => {
                         />
                       </div>
 
+                      <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-xl">
+                        <select name="" id="" className="px-2 " onChange={(e) => setSelectText(e.target.value)}  >
+                          <option value="student" className="px-2 py-1">Student</option>
+                          <option value="teacher" className="px-2 py-1">Teacher</option>
+                          <option value="parent" className="px-2 py-1">Parent</option>
+                        </select>
+                      </div>
+
+                      {
+                        console.log(selectText, "selected Text")
+
+                      }
+
                       <div>
                         {requestsModal && <RequestModal onclose={() => setRequestsModal(false)} refetch={adminUsersRefecth} data={adminUsersData.allUsers} />}
                       </div>
@@ -141,7 +155,7 @@ const ManageUsers = () => {
                     <DataRows
                       header={true}
                       role={"Role"}
-                      userId={"ID"}
+                      userId={"Roll No"}
                       index={"Sr No"}
                       userName={"Name"}
                       userclass={"Class"}
@@ -149,27 +163,37 @@ const ManageUsers = () => {
                       bgColor={"#F9F9F9"}
                     />
 
-                    {searchText == "" && adminUsersData?.allUsers?.map((usr, index) => (
-                      <DataRows
-                        data={usr}
-                        key={usr._id}
-                        header={false}
-                        index={index + 1}
-                        userName={usr.name}
-                        role={usr.userType}
-                        bgColor={"#FFFFFF"}
-                        userclass={usr?.class}
-                        contact={usr.phoneNumber}
-                        userId={usr._id.slice(-4)}
-                        toggleClassMenu={(e) => toggleMenu(e)}
-                        onClickFunction={handleFunctionClick(usr)}
-                      />
-                    ))}
+                    {adminUsersData?.allUsers
+                      ?.filter((usr) => {
+                        // Always consider both `searchText` and `selectText` dynamically
+                        const matchesName =
+                          searchText && usr.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase());
+                        const matchesRollNo =
+                          searchText && usr.rollNo && usr.rollNo.includes(searchText);
+                        const matchesUserType =
+                          selectText && usr.userType.toLocaleLowerCase() === selectText.toLocaleLowerCase();
 
-                    {searchText && adminUsersData?.allUsers?.map((usr, index) => {
-                      // CAN ADD MORE FIELDS IN IF STATEMENT
-                      if ((usr.name.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase()) || (usr.userType.toLocaleLowerCase()).includes(searchText.toLocaleLowerCase())) {
-                        return <DataRows
+                        // Apply combined logic:
+                        // If only `selectText` is provided, filter by userType
+                        if (!searchText && selectText) {
+                          return matchesUserType;
+                        }
+
+                        // If only `searchText` is provided, filter by name or rollNo
+                        if (searchText && !selectText) {
+                          return matchesName || matchesRollNo;
+                        }
+
+                        // If both are provided, apply all filters
+                        if (searchText && selectText) {
+                          return matchesUserType && (matchesName || matchesRollNo);
+                        }
+
+                        // Default to showing all users when no filters are applied
+                        return true;
+                      })
+                      .map((usr, index) => (
+                        <DataRows
                           data={usr}
                           key={usr._id}
                           header={false}
@@ -179,12 +203,14 @@ const ManageUsers = () => {
                           role={usr.userType}
                           userclass={usr?.class}
                           contact={usr.phoneNumber}
-                          userId={usr._id.slice(-4)}
+                          userId={usr?.userType === "teacher" || usr?.userType === "parent" ? `${usr._id.slice(0, 4)}` : usr?.rollNo || "not assign"}
                           toggleClassMenu={(e) => toggleMenu(e)}
                           onClickFunction={handleFunctionClick(usr)}
                         />
-                      }
-                    })}
+                      ))}
+
+
+
 
                     {adminUsersData.allUsers.length == 0 && <div className="text-center py-4 text-3xl font-medium">No users to display!</div>}
 

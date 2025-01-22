@@ -58,7 +58,9 @@ export const CustomEvent = ({ event, setevents }) => {
 };
 
 export const SideTime = (props) => {
+
   const times = props.slotMetrics.groups;
+
   return (
     <>
       <div className="flex flex-col w-[130px]">
@@ -68,12 +70,13 @@ export const SideTime = (props) => {
             className="flex w-[110px] h-10 justify-center items-center"
           >
             <p className="text-[10px] text-grey">
-              {moment.utc(time[0]).format("h:mm a")}
+              {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
             </p>
             <p className="text-[10px] text-grey">-</p>
             <p className="text-[10px] text-grey">
               {moment.utc(time[0])
                 .add(1, "hour")
+                .tz("Asia/Karachi") // Convert to PKT
                 .format("h:mm a")}
             </p>
           </div>

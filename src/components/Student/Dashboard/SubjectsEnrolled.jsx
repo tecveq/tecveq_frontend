@@ -60,28 +60,45 @@ const SubjectsEnrolled = () => {
               <tbody className="flex flex-col overflow-y-auto h-60 register-scrollbar">
 
                 {
-                  subjectQuery.isPending ? <div className="flex flex-1"> <Loader /> </div> :
-
-                    subjectQuery.data?.subjects?.map((item, index) => {
+                  subjectQuery.isPending ? (
+                    <div className="flex flex-1">
+                      <Loader />
+                    </div>
+                  ) : subjectQuery.data?.subjects?.length > 0 ? (
+                    subjectQuery.data.subjects.map((item, index) => {
                       return (
                         <tr className="flex text-xs border-t border-t-black/10" key={index + 1}>
                           <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}.</td>
                           <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
                             {item?.subject?.name}
                           </td>
-                          <td onClick={() => toggleClickTeacher(item)} style={{ cursor: "pointer" }} className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
+                          <td
+                            onClick={() => toggleClickTeacher(item)}
+                            style={{ cursor: "pointer" }}
+                            className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center"
+                          >
                             {item.teacher}
                           </td>
                           <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex w-full justify-center">
                             <div className="flex w-[90%] h-4 bg-grey/50 rounded-3xl">
-                              <div style={{width: `${item.avgAttendancePer}%` }} className={`text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}>
+                              <div
+                                style={{ width: `${item.avgAttendancePer}%` }}
+                                className={`text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white`}
+                              >
                                 {item.avgAttendancePer} %
                               </div>
                             </div>
                           </td>
                         </tr>
                       );
-                    })}
+                    })
+                  ) : (
+                    <div className="flex flex-1 justify-center items-center">
+                      <p className="text-lg text-gray-500">Admin has not enrolled subjects yet.</p>
+                    </div>
+                  )
+                }
+
 
                 {/* {popup && <TeacherMessageDialog handleFeedback={handleFeedback} item={clickedItem} />} */}
 

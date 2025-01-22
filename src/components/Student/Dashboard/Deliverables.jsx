@@ -69,12 +69,25 @@ const Deliverables = () => {
         <div className="flex flex-col">
           <p className="text-lg font-medium">Deliverables</p>
         </div>
-        {(quizIsPending || assignmentIsPending) && <div className="flex flex-1"> <Loader /> </div>}
-        {(!quizIsPending && !assignmentIsPending) &&
-          <div className="flex flex-col gap-1 px-4 py-4 bg-white overflow-y-auto register-scrollbar border-t-4 h-72 rounded-xl border-t-maroon">
-            {allDeliverables.map((item) => <Deliverable item={item} key={item._id} />)}
+        {(quizIsPending || assignmentIsPending) && (
+          <div className="flex flex-1">
+            <Loader />
           </div>
-        }
+        )}
+        {(!quizIsPending && !assignmentIsPending) && (
+          <div className="flex flex-col gap-1 px-4 py-4 bg-white overflow-y-auto register-scrollbar border-t-4 h-72 rounded-xl border-t-maroon">
+            {allDeliverables.length > 0 ? (
+              allDeliverables.map((item) => <Deliverable item={item} key={item._id} />)
+            ) : (
+              <div className="flex flex-1 justify-center items-center">
+                <p className="text-sm text-gray-500">
+                  No deliverables have been assigned yet.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
       </div>
     </div>
   );

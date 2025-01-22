@@ -97,11 +97,12 @@ const SignUp = () => {
           name: e.target[1].value,
           email: e.target[2].value,
           phoneNumber: e.target[3].value,
-          levelID: JSON.parse(e.target[4].value)._id,
-          guardianName: e.target[5].value,
-          guardianEmail: e.target[6].value,
-          guardianPhoneNumber: e.target[7].value,
-          password: e.target[8].value,
+          gender: e.target[4].value,
+          levelID: JSON.parse(e.target[5].value)._id,
+          guardianName: e.target[6].value,
+          guardianEmail: e.target[7].value,
+          guardianPhoneNumber: e.target[8].value,
+          password: e.target[9].value,
         };
       } else if (role === 'teacher') {
         dataBody = {
@@ -173,6 +174,8 @@ const SignUp = () => {
                       <CustomInput label={'Name'} type="text" placeholder={'Enter your Name'} />
                       <CustomInput label={'Email'} type="email" placeholder={'Enter your Email'} />
                       <CustomInput label={'Phone no.'} type="text" placeholder={'Enter your Phone Number'} />
+                      <CustomInput label={'Gender'} type="text" placeholder={"Enter your gender (e.g., Male or Female)"} />
+
                       {!isPending && <CustomSelectable label={'Enroll In'} options={data} />}
                       <CustomInput label={'Guardian Name'} type="text" placeholder={'Enter Guardian Name'} />
                       <CustomInput label={'Guardian Email'} type="email" placeholder={'Enter Guardian Email'} />

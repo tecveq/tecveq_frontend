@@ -71,6 +71,7 @@ import LandingPage from "./pages/Auth/LandingPage";
 import HeadAttendence from "./pages/Teacher/Attendence/HeadAttendence";
 import Settings from "./pages/Admin/Settings/Settings";
 import { TeacherProvider } from "./utils/TeacherProvider";
+import ChangePassword from "./commonComponents/ChangePassword";
 
 function App() {
   return (
@@ -86,6 +87,12 @@ function App() {
           path="/login"
           element={
             <Login />
+          }
+        />
+        <Route
+          path="/change-password"
+          element={
+            <ChangePassword />
           }
         />
         <Route

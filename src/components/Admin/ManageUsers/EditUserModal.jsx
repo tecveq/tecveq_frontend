@@ -39,7 +39,9 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
     const [userObj, setUsrObj] = useState({
         name: data.name,
         email: data.email,
+        rollNo: data.rollNo,
         phone: data.phoneNumber,
+        gender: data.gender,
         gPhone: data.guardianPhoneNumber,
         gEmail: data.guardianEmail,
         gName: data.guardianName,
@@ -77,7 +79,11 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
                     <InputFiled label={"Occupation"} req={false} val={data.userType} dataObj={userObj} name={"occupation"} />
                     <InputFiled label={"Name"} req={false} val={userObj.name} dataObj={userObj} name={"name"} setDataObj={setUsrObj} />
                     <InputFiled label={"Email"} req={false} val={userObj.email} name={"email"} setDataObj={setUsrObj} />
+                    <InputFiled label={"Roll No"} req={false} val={userObj.rollNo} name={"rollNo"} setDataObj={setUsrObj} />
+
                     <InputFiled label={"Phone No."} req={false} val={userObj.phone} name={"phoneNumber"} setDataObj={setUsrObj} />
+                    <InputFiled label={"Gender"} req={false} val={userObj.gender} name={"gender"} setDataObj={setUsrObj} />
+
                     {data.userType == "student" &&
                         <>
                             <InputFiled label={"Enroll In."} req={false} val={data.levelID} />
