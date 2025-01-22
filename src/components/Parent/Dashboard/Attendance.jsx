@@ -1,39 +1,50 @@
-import React from 'react'
-import { Doughnut } from 'react-chartjs-2';
+import React, { useState, useEffect } from "react";
+import { Doughnut } from "react-chartjs-2";
 import { FaAngleDown } from "react-icons/fa6";
-import { useParent } from '../../../context/ParentContext';
-import { useGetAllSubjectAttendence } from '../../../api/Parent/OverallAttendenceApi';
+import { useParent } from "../../../context/ParentContext";
+import { useGetAllSubjectAttendence } from "../../../api/Parent/OverallAttendenceApi";
 
 const Attendance = () => {
-
-
     const { selectedChild } = useParent();
+    const { studentAllSubjectsAttendence } = useGetAllSubjectAttendence(selectedChild?._id);
 
+    // Loading state to ensure the component waits for data
+    const [isLoading, setIsLoading] = useState(true);
 
-    const { studentAllSubjectsAttendence } = useGetAllSubjectAttendence(selectedChild?._id)
+    useEffect(() => {
+        if (studentAllSubjectsAttendence) {
+            setIsLoading(false);
+        }
+    }, [studentAllSubjectsAttendence]);
 
-
-    console.log(studentAllSubjectsAttendence, "attendance of all subjects");
-
-
-
-
-
+    // Dummy chart data for initial display
     const chartData = [
-        {
-            label: "Present",
-            value: 20,
-        },
-        {
-            label: "Absent",
-            value: 30,
-        },
-        {
-            label: "Leave",
-            value: 50,
-        },
+        { label: "Present", value: 1 },
+        { label: "Absent", value: 1 },
+        { label: "Leave", value: 1 },
     ];
 
+    // Check if data exists and contains non-zero values
+    const hasData =
+        studentAllSubjectsAttendence &&
+        studentAllSubjectsAttendence.length > 0 &&
+        studentAllSubjectsAttendence.some((data) => data.value > 0);
+
+    const doughnutData = {
+        labels: hasData
+            ? studentAllSubjectsAttendence.map((data) => data.label)
+            : chartData.map((data) => data.label),
+        datasets: [
+            {
+                label: "Count",
+                data: hasData
+                    ? studentAllSubjectsAttendence.map((data) => data.value)
+                    : chartData.map((data) => data.value),
+                backgroundColor: ["#11AF03", "#C53F3F", "#EAECF0"],
+                borderColor: ["#11AF03", "#C53F3F", "#EAECF0"],
+            },
+        ],
+    };
 
     return (
         <div className="flex flex-1">
@@ -51,24 +62,17 @@ const Attendance = () => {
                         <div className="flex items-center flex-1">
                             <div className="flex gap-2 flex-1 justify-between">
                                 <div className="flex w-[210px] h-[210px] flex-1">
-                                    <Doughnut
-                                        className='!flex'
-                                        data={{
-                                            labels: studentAllSubjectsAttendence?.map((data) => data.label),
-                                            datasets: [
-                                                {
-                                                    label: "Count",
-                                                    data: studentAllSubjectsAttendence?.map((data) => data.value),
-                                                    backgroundColor: ["#11AF03", "#C53F3F", "#EAECF0"],
-                                                    borderColor: ["#11AF03", "#C53F3F", "#EAECF0"],
-                                                },
-                                            ],
-                                        }}
-                                    />
+                                    {isLoading ? (
+                                        <p>Loading...</p> // Show a loader while data is being fetched
+                                    ) : (
+                                        <Doughnut className="!flex" data={doughnutData} />
+                                    )}
                                 </div>
-                                <div className='flex flex-1 justify-end items-start'>
-                                    <div className='flex justify-end items-center'>
-                                        <p className='px-5 py-2 border border-[#00000020] rounded-md cursor-pointer text-[#101828]/60 flex items-center justify-between gap-4'>Overall <FaAngleDown className='text-[#101828]/60' /> </p>
+                                <div className="flex flex-1 justify-end items-start">
+                                    <div className="flex justify-end items-center">
+                                        <p className="px-5 py-2 border border-[#00000020] rounded-md cursor-pointer text-[#101828]/60 flex items-center justify-between gap-4">
+                                            Overall <FaAngleDown className="text-[#101828]/60" />
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -78,6 +82,6 @@ const Attendance = () => {
             </div>
         </div>
     );
-}
+};
 
-export default Attendance
+export default Attendance;
