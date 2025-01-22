@@ -16,7 +16,7 @@ const Reports = () => {
   const { isBlurred } = useBlur();
   const { allSubjects, setAllSubjects } = useStudent();
 
-  const {userData} = useUser();
+  const { userData } = useUser();
 
   const handleFunctionClick = (report) => {
     return () => {
@@ -24,21 +24,22 @@ const Reports = () => {
     };
   };
 
-    const subjectQuery = useQuery({
-      queryKey: ["subjects"], queryFn: async () => {
-        const results = await getAllSubjects(userData._id);
-        console.log("inside reports")
-        setAllSubjects(results);
-        return results
-      }, staleTime: 300000, enabled: allSubjects.length == 0
-    });
+  const subjectQuery = useQuery({
+    queryKey: ["subjects"], queryFn: async () => {
+      const results = await getAllSubjects(userData._id);
+      console.log("inside reports")
+      setAllSubjects(results);
+      return results
+    }, staleTime: 300000, enabled: allSubjects.length == 0
+  });
   return (
     <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
       <div className="flex flex-1">
-        <div className={`w-full h-screen flex-grow lg:ml-72`}>
+        <div className={`w-full h-screen px-3 lg:px-20 sm:px-10  flex-grow lg:ml-72`}
+        >
           <div className='h-screen pt-1'>
             <Navbar heading={"Reports"} />
-            <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
+            <div className={` ${isBlurred ? "blur" : ""}`}>
               <div className='mt-8 h-[80%] overflow-auto'>
                 <DataRows index={"Sr. No"}
                   subject={"Subject"}

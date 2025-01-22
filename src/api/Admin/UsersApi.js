@@ -21,13 +21,13 @@ export const acceptUser = apiRequest(async (id) => {
     const url = `${BACKEND_URL}/user/accept/${id}`
     const response = await axios.put(url);
     return response;
-}) 
+})
 
 export const rejectUser = apiRequest(async (id) => {
     const url = `${BACKEND_URL}/user/reject/${id}`
     const response = await axios.delete(url);
     return response;
-}) 
+})
 
 // export const rejectUser = async (id) => {
 //     const url = `${BACKEND_URL}/user/reject/${id}`
@@ -46,13 +46,20 @@ export const updateUser = apiRequest(async (data, id) => {
     console.log("data for updating usr for admin is : ", data);
     const response = await axios.put(url, data);
     return response;
-}) 
+})
+
+export const updatePassword = apiRequest(async (data) => {
+    const url = `${BACKEND_URL}/user/update-password`
+    console.log("data for updating usr for admin is : ", data);
+    const response = await axios.put(url, data);
+    return response;
+})
 
 export const deleteUser = apiRequest(async (id) => {
     const url = `${BACKEND_URL}/user/admin/user/${id}`
     const response = await axios.delete(url);
     return response;
-}) 
+})
 
 export const getStudentSubjectsForAdmin = apiRequest(async (id) => {
     const url = `${BACKEND_URL}/user/student-subjects/${id}`

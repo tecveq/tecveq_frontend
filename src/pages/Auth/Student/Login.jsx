@@ -73,9 +73,14 @@ const Login = () => {
                     } else {
                         const con = io(`${BACKEND_URL_SOCKET}`)
                         setSocketContext(con);
-                        localStorage.setItem("tcauser", JSON.stringify(response));
                         toast.success("Login successful");
-                        navigate("/");
+                        if (response?.isFirstLogin == true) {
+                            navigate("/change-password")
+                        } else {
+                            localStorage.setItem("tcauser", JSON.stringify(response));
+                            navigate("/");
+                        }
+
                         setStudentLogedIn(true);
                     }
                 } else if (response.userType == "parent") {
