@@ -417,7 +417,7 @@ function App() {
             }
           />
           <Route
-            path="/parent/quizzes/reports"
+            path="/parent/:quizes/reports"
             element={
               <ParentLayout>
                 <PQuizzesReports />
@@ -425,7 +425,7 @@ function App() {
             }
           />
           <Route
-            path="/parent/quizzes/:details"
+            path="/parent/quizes/:details"
             element={
               <ParentLayout>
                 <PQuizzesDetails />
@@ -433,7 +433,7 @@ function App() {
             }
           />
           <Route
-            path="/parent/assignments/reports"
+            path="/parent/:assignments/reports"
             element={
               <ParentLayout>
                 <PAssignmentsReports />

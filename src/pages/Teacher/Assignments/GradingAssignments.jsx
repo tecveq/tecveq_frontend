@@ -131,10 +131,10 @@ const GradingAssignments = () => {
           className={`w-full ${isBlurred ? "blur" : ""
             } h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
         >
-          <div className="h-screen pt-8 lg:pt-0">
+          <div className="h-screen pt-8 ">
             <div className="flex flex-row items-center justify-between flex-grow">
               <div className="flex items-center gap-4">
-                <p className="font-semibold text-[20px] md:text-[30px]">
+                <p className="font-semibold text-[20px] md:text-[24px]">
                   Grading Assignments
                 </p>
                 <div className="flex items-center gap-1 text-xs">
@@ -219,7 +219,7 @@ const GradingAssignments = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-0 h-[80%] overflow-auto">
+            <div className="mt-0 h-[80%] overflow-auto custom-scrollbar">
               <GradeQuizAssignmentRow
                 isQuiz={false}
                 header={true}

@@ -7,7 +7,7 @@ const QuizAssignmentRow = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="min-w-full overflow-auto">
+    <div className="min-w-full overflow-auto ">
       <div
         style={{ backgroundColor: props.bgColor }}
         className={`min-w-full border-b flex border-grey items-center`}
