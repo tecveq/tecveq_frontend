@@ -4,7 +4,7 @@ import Card from "../../../components/Parent/Reports/Card";
 import Navbar from "../../../components/Parent/Dashboard/Navbar";
 import QuizAssignmentsTable from "../../../components/Parent/QuizAssignment/QuizAssignmentsTable";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useParent } from "../../../context/ParentContext";
 import { getChildReport } from "../../../api/Parent/ParentApi";
@@ -13,6 +13,10 @@ import { getChildReport } from "../../../api/Parent/ParentApi";
 const QuizzReports = () => {
 
   const location = useLocation();
+
+  const { quizes } = useParams();
+  console.log(quizes ,"quizes is");
+  
 
   const { selectedChild } = useParent();
 
@@ -76,7 +80,7 @@ const QuizzReports = () => {
                   <div className="flex flex-col gap-2">
                     <p className="md:text-[20px]">Quizzes</p>
                     <div className="flex flex-row items-center gap-2">
-                      <QuizAssignmentsTable data={reportQuery?.data?.quizes} />
+                      <QuizAssignmentsTable data={reportQuery?.data} type={quizes} />
                     </div>
                   </div>
                 </div>

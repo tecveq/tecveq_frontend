@@ -98,6 +98,20 @@ const Submissions = () => {
 
   console.log("all quiz submissions are : ", data);
 
+  const handleDownloadAll = async () => {
+    if (data?.submissions) {
+      for (const submission of data.submissions) {
+        if (submission?.submission?.file) {
+          console.log("Opening file URL:", submission.submission.file);
+          await new Promise((resolve) => {
+            window.open(submission.submission.file, "_blank");
+            setTimeout(resolve, 500); // Wait 500ms before opening the next file
+          });
+        }
+      }
+    }
+  };
+
   return (
     isPending ? <div className="flex justify-center flex-1"> <LargeLoader />  </div> :
       <>
@@ -107,10 +121,10 @@ const Submissions = () => {
               className={`w-full ${isBlurred ? "blur" : ""
                 } h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
             >
-              <div className="h-screen pt-8 lg:pt-0">
+              <div className="h-screen pt-8 ">
                 <div className="flex flex-row items-center justify-between flex-grow">
                   <div className="flex items-center gap-4">
-                    <p className="font-semibold text-[20px] md:text-[30px]">
+                    <p className="font-semibold text-[20px] md:text-[24px]">
                       Submissions
                     </p>
                     <div className="flex items-center gap-1 text-xs">
@@ -133,6 +147,7 @@ const Submissions = () => {
                         alt=""
                         className="md:w-[22px] md:h-[22px] w-[13px] h-[13px]"
                       />
+            
                     </div>
                     <div className="p-1 bg-white rounded-sm cursor-pointer border-1 border-grey">
                       <img
@@ -194,7 +209,7 @@ const Submissions = () => {
                           placeholder="Search"
                         />
                       </div>
-                      <p className="flex items-center justify-center px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                      <p className="flex items-center justify-center px-4 py-2 text-sm text-white bg-maroon rounded-3xl cursor-pointer" onClick={handleDownloadAll}>
                         Download All
                       </p>
                     </div>
@@ -211,19 +226,27 @@ const Submissions = () => {
                     submission={"Submission"}
                   />
 
-                  {data?.submissions?.length !== 0 && isSuccess && searchText == "" && data?.submission?.map((submission, index) => (
-                    <SubmissionRow
-                      isQuiz={true}
-                      key={data._id}
-                      header={false}
-                      index={index + 1}
-                      bgColor={"#FFFFFF"}
-                      name={submission.studentID.name}
-                      submissionData={submission.submissions}
-                      submission={submission?.submission.submittedAt}
-                      profileLink={submission?.studentID?.profilePic || submission?.profilePic}
-                    />
+                  {/* {console.log(data, "quizese data")} */}
+
+
+                  {data?.submissions?.length !== 0 && isSuccess && searchText === "" && data?.submissions?.map((submission, index) => (
+                    <>
+                      {console.log(data?.submissions, "submission?.submissions")
+                      }
+                      <SubmissionRow
+                        isQuiz={true}
+                        key={submission._id || index} // Use a unique key
+                        header={false}
+                        index={index + 1}
+                        bgColor={"#FFFFFF"}
+                        name={submission?.studentID?.name}
+                        submissionData={submission?.submission}
+                        submission={submission?.submission?.submittedAt}
+                        profileLink={submission?.studentID?.profilePic || submission?.profilePic || "http://bit.ly/4gcOBHl"}
+                      />
+                    </>
                   ))}
+
 
                   {data?.submissions?.length !== 0 && isSuccess && searchText !== "" && data?.submissions.map((submission, index) => {
                     if (submission?.studentID?.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {

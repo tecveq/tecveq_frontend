@@ -29,7 +29,10 @@ const QuizAssignmentRow = (props) => {
             }
             return results;
         }, onSettled: (data, error) => {
-            !error && toast.success("Uploaded successfully!");
+            if (!error) {
+                toast.success("Uploaded successfully!");
+                setIsUploadded(true);
+            }
         }
     })
 

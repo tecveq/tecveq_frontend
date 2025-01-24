@@ -13,6 +13,11 @@ const AssignmentsReports = () => {
 
   const location = useLocation();
 
+  const { assignments } = useParams();
+
+  console.log(assignments, "assignments is");
+
+
   const { selectedChild } = useParent();
 
   const reportQuery = useQuery({
@@ -35,6 +40,8 @@ const AssignmentsReports = () => {
     enabled: !!location?.state,
   });
 
+
+  console.log(reportQuery?.data, "reportQuery data is ");
 
 
 
@@ -81,7 +88,7 @@ const AssignmentsReports = () => {
               <div className="flex flex-col gap-2">
                 <p className="md:text-[20px]">Assignments</p>
                 <div className="flex flex-row items-center gap-2">
-                  <QuizAssignmentsTable data={reportQuery?.data?.assignments} />
+                  <QuizAssignmentsTable data={reportQuery?.data} type={assignments} />
                 </div>
               </div>
             </div>

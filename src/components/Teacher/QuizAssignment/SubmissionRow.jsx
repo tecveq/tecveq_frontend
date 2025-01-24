@@ -49,15 +49,17 @@ const SubmissionRow = (props) => {
             className={`w-full my-1 md:my-0 text-center md:text-center md:text-[14px] text-[14px] ${props.header ? "text-start mr-10 font-semibold" : ""
               }`}
           >
+            {/* {console.log(props?.submissionData)
+            } */}
             {!props.header ?
-              props?.submissionData?.file ? 
-              <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
-                <a href={props?.submissionData?.file} download={`${props?.name}.pdf`} target="_blank" > Download</a>
-              </p>
-              : 
-              <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
-                Pending
-              </p>
+              props?.submissionData?.file ?
+                <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                  <a href={props?.submissionData?.file} download={`${props?.name}.pdf`} target="_blank" > Download</a>
+                </p>
+                :
+                <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                  Pending
+                </p>
               : "Files"}
           </p>
         </div>

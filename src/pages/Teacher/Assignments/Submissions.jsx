@@ -76,6 +76,24 @@ const Submissions = () => {
 
   console.log("all submissions are are : ", data);
 
+
+  const handleDownloadAll = async () => {
+    if (data?.submissions) {
+      for (const submission of data.submissions) {
+        if (submission?.submission?.file) {
+          console.log("Opening file URL:", submission.submission.file);
+          await new Promise((resolve) => {
+            window.open(submission.submission.file, "_blank");
+            setTimeout(resolve, 500); // Wait 500ms before opening the next file
+          });
+        }
+      }
+    }
+  };
+
+
+
+
   return (
     isPending || isRefetching ? <div className="flex flex-1"> <Loader /> </div> :
       <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
@@ -84,10 +102,10 @@ const Submissions = () => {
             className={`w-full ${isBlurred ? "blur" : ""
               } h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
           >
-            <div className="h-screen pt-8 lg:pt-0">
+            <div className="h-screen pt-8 ">
               <div className="flex flex-row items-center justify-between flex-grow">
                 <div className="flex items-center gap-4">
-                  <p className="font-semibold text-[20px] md:text-[30px]">
+                  <p className="font-semibold text-[20px] md:text-[24px]">
                     Submissions
                   </p>
                   <div className="flex items-center gap-1 text-xs">
@@ -171,7 +189,7 @@ const Submissions = () => {
                         placeholder="Search"
                       />
                     </div>
-                    <p className="flex cursor pointer items-center justify-center px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                    <p className="flex cursor pointer items-center justify-center px-4 py-2 text-sm text-white bg-maroon rounded-3xl" onClick={handleDownloadAll}>
                       Download All
                     </p>
                   </div>

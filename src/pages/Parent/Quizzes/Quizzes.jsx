@@ -98,7 +98,7 @@ const Quizzes = () => {
     ];
 
     const handleFunctionClick = (report) => {
-        navigate(`/parent/quizzes/reports`, { state: report });
+        navigate(`/parent/quizes/reports`, { state: report });
     };
 
     const [enableQuery, setEnableQuery] = useState(false);

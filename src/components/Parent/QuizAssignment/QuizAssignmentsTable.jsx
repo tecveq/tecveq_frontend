@@ -2,9 +2,11 @@ import React from 'react'
 import IMAGES from '../../../assets/images';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const QuizAssignmentsTable = ({ data }) => {
+const QuizAssignmentsTable = ({ data, type }) => {
     const params = useParams()
     const navigate = useNavigate()
+    console.log(data, "data is detailed");
+
     return (
         <div className="flex flex-1">
             <div className="flex flex-col flex-1 gap-2">
@@ -23,9 +25,9 @@ const QuizAssignmentsTable = ({ data }) => {
                         </thead>
 
                         <tbody className="flex flex-col">
-                            {data?.map((item, index) => {
+                            {data?.[type]?.map((item, index) => {
                                 return (
-                                    <tr style={{ cursor: "pointer" }} onClick={() => navigate(`/parent/assignments/${item.title}`,{state: item})} className="flex flex-1 text-xs border-t border-t-black/10">
+                                    <tr style={{ cursor: "pointer" }} onClick={() => navigate(`/parent/${type}/${item.title}`, { state: data })} className="flex flex-1 text-xs border-t border-t-black/10">
                                         <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}</td>
                                         <td className="flex-[3] py-2 lg:py-3 border-l border-l-black/10 flex justify-center">
                                             {item.title}
