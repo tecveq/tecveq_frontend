@@ -21,7 +21,7 @@ const GradingAssignments = () => {
   const [bell, setBell] = useState(false);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
   const [isProfileDetails, setIsProfileDetails] = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
   const { isBlurred, toggleBlur } = useBlur();
   const { userData } = useUser();
 
@@ -112,10 +112,11 @@ const GradingAssignments = () => {
     }, staleTime: 300000 // 5 minutes
   });
 
+
   useEffect(() => {
     let myobj = {};
     if (allAssignmentsQuery.isSuccess) {
-      console.log("all Query data ", allAssignmentsQuery.data);
+      console.log("all Query data ", allAssignmentsQuery?.data);
       let dataObjArr = allAssignmentsQuery?.data?.submissions.map(item => {
         return myobj = { ...item, grade: "", feedback: "", marks: "" }
       })
@@ -123,6 +124,13 @@ const GradingAssignments = () => {
       setGradingData(dataObjArr)
     }
   }, [allAssignmentsQuery.data, allAssignmentsQuery.isSuccess]);
+
+
+  const filteredData = gradingData?.filter((submission) =>
+    submission?.studentID?.name
+      ?.toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
@@ -211,9 +219,11 @@ const GradingAssignments = () => {
                   <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                     <BiSearch />
                     <input
-                      className="outline-none b"
+                      className="outline-none"
                       type="text"
                       placeholder="Search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery on input change
                     />
                   </div>
                 </div>
@@ -230,7 +240,7 @@ const GradingAssignments = () => {
                 marksObtained={"Marks Obtained"}
                 grade={"Grade"}
               />
-              {gradingData?.map((submission, index) => (
+              {filteredData?.map((submission, index) => (
                 <GradeQuizAssignmentRow
                   isQuiz={false}
                   header={false}
@@ -238,7 +248,7 @@ const GradingAssignments = () => {
                   bgColor={"#FFFFFF"}
                   grade={submission?.grade}
                   marks={submission?.marks}
-                  profileLink={submission.studentID.profilePic || IMAGES.Profile}
+                  profileLink={submission.studentID.profilePic || IMAGES.Profile || "http://bit.ly/4gcOBHl"}
                   setInputField={setInputField}
                   id={submission?.studentID?._id}
                   feedback={submission?.feedback}

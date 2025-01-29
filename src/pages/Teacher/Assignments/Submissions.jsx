@@ -93,6 +93,9 @@ const Submissions = () => {
 
 
 
+  console.log(data?.submissions ,"data submissions row");
+  
+
 
   return (
     isPending || isRefetching ? <div className="flex flex-1"> <Loader /> </div> :
@@ -219,7 +222,7 @@ const Submissions = () => {
                   />
                 })}
 
-                {isSuccess && searchText !== "" && data?.submissions.map((submission, index) => {
+                {isSuccess && searchText !== "" && data?.submissions?.map((submission, index) => {
                   if (submission.studentID.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                     return <SubmissionRow
                       isQuiz={false}
@@ -227,7 +230,7 @@ const Submissions = () => {
                       index={index + 1}
                       bgColor={"#FFFFFF"}
                       key={JSON.stringify(submission)}
-                      profileLink={submission?.studentID?.profilePic || IMAGES.ProfilePic}
+                      profileLink={submission?.studentID?.profilePic || IMAGES.ProfilePic || "http://bit.ly/4gcOBHl"}
                       submission={submission?.submission?.submittedAt}
                       name={submission?.studentID?.name}
                       submissionData={submission?.submission}

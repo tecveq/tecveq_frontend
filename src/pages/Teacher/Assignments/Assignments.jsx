@@ -4,15 +4,18 @@ import Navbar from "../../../components/Teacher/Navbar";
 import AssignmentMenu from "../../../components/Teacher/QuizAssignment/AssignmentMenu";
 import QuizAssignmentRow from "../../../components/Teacher/QuizAssignment/QuizAssignmentRow";
 import CreateQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/CreateQuizAssignmentModal";
+import EditQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/EditQuizAssignmentModal";
 
 import { useNavigate } from "react-router-dom";
 import { useBlur } from "../../../context/BlurContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteAssignments, getAllAssignments } from "../../../api/Teacher/Assignments";
+import { MdDelete, MdEdit } from "react-icons/md";
 
 const Assignments = () => {
   const [isAssignmentMenuOpen, setIsAssignmentMenuOpen] = useState(false);
-
+  const [isEdit, setIsEdit] = useState(false);
+  const [selectedAssignments, setSelectedAssignments] = useState(null);
   const navigate = useNavigate();
   const [assignmentdata, setAssignmentData] = useState({});
 
@@ -53,6 +56,8 @@ const Assignments = () => {
 
   console.log("all assignemtns are : ", data);
 
+
+
   return (
     isPending || isRefetching ? <div className="flex justify-start flex-1"> <Loader /> </div> :
       <>
@@ -86,7 +91,8 @@ const Assignments = () => {
                       bgColor={"#F9F9F9"}
                       header={true}
                       submissions={"Submissions"}
-                      
+                      actions={"Actions"}
+
                     />
 
                     {isSuccess && data.map((assignment, index) => (
@@ -104,6 +110,18 @@ const Assignments = () => {
                         bgColor={"#FFFFFF"}
                         header={false}
                         submissions={assignment.submissions.length}
+                        actions={
+                          <div className="flex gap-3 justify-center items-center">
+                            <span className="text-[blue] cursor-pointer" onClick={() => {
+                              setSelectedAssignments(assignment);
+                              setIsEdit(true)
+                              toggleBlur();
+                            }}><MdEdit className="w-6 h-6" /></span>
+                            <span className="text-red cursor-pointer " onClick={() => {
+                              assignmentDellMutate.mutate(assignment?._id);
+                            }}><MdDelete className="w-6 h-6" /></span>
+                          </div>
+                        }
                       />
                     ))}
 
@@ -137,6 +155,16 @@ const Assignments = () => {
           onChangeDeadlineClick={onChangeDeadline}
           onGradeAssignemntClick={onGradingAssignment}
         />
+
+        {isEdit && selectedAssignments && (
+          <EditQuizAssignmentModal
+            data={selectedAssignments}
+            isEditTrue={true}
+            refetch={refetch}
+            isQuiz={false}
+            setIsEdit={setIsEdit}
+          />
+        )}
       </>
   );
 };

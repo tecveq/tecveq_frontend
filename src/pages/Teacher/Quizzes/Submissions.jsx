@@ -259,7 +259,7 @@ const Submissions = () => {
                         name={submission?.studentID?.name}
                         submissionData={submission?.submission}
                         submission={submission?.submission?.submittedAt}
-                        profileLink={submission?.studentID?.profilePic || submission?.profilePic}
+                        profileLink={submission?.studentID?.profilePic || submission?.profilePic || "http://bit.ly/4gcOBHl"}
                       />
                     }
                   })}

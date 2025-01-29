@@ -54,6 +54,19 @@ const QuizAssignmentRow = (props) => {
               {props.submissions}
             </p>
           </p>
+          <p
+            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header
+              ? "font-semibold"
+              : "justify-center items-center flex"
+              }`}
+          >
+            <p
+              className={`${props.header ? "" : " w-2/5 py-2 flex justify-cente"
+                }`}
+            >
+              {props.actions}
+            </p>
+          </p>
         </div>
         <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
           <p
