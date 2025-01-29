@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/Teacher/Navbar";
 import AssignmentMenu from "../../../components/Teacher/QuizAssignment/AssignmentMenu";
 import QuizAssignmentRow from "../../../components/Teacher/QuizAssignment/QuizAssignmentRow";
@@ -9,10 +9,13 @@ import { useQuery } from "@tanstack/react-query";
 import { useBlur } from "../../../context/BlurContext";
 import { getAllQuizes } from "../../../api/Teacher/Quiz";
 import LargeLoader from "../../../utils/LargeLoader";
+import { MdDelete, MdEdit } from "react-icons/md";
+import EditQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/EditQuizAssignmentModal";
 
 const Quizzes = () => {
   const [isAssignmentMenuOpen, setIsAssignmentMenuOpen] = useState(false);
-
+  const [isEdit, setIsEdit] = useState(false);
+  const [selectedAssignments, setSelectedAssignments] = useState(null);
   const navigate = useNavigate();
   const [quizdata, setQuizdata] = useState({});
 
@@ -87,6 +90,7 @@ const Quizzes = () => {
   //   navigate("/teacher/quizzes")
   // }
 
+
   return (
     isPending || isRefetching ? <div className="flex justify-center flex-1"> <LargeLoader />  </div> :
       <>
@@ -120,6 +124,7 @@ const Quizzes = () => {
                       bgColor={"#F9F9F9"}
                       header={true}
                       submissions={"Submissions"}
+                      actions={"Actions"}
                     />
 
                     {data?.map((assignment, index) => (
@@ -135,6 +140,18 @@ const Quizzes = () => {
                         bgColor={"#FFFFFF"}
                         header={false}
                         submissions={assignment.submissions.length}
+                        actions={
+                          <div className="flex gap-3 justify-center items-center">
+                            <span className="text-[blue] cursor-pointer" onClick={() => {
+                              setSelectedAssignments(assignment);
+                              setIsEdit(true)
+                              toggleBlur();
+                            }}><MdEdit className="w-6 h-6" /></span>
+                            <span className="text-red cursor-pointer " onClick={() => {
+                              quizDellMutate.mutate(assignment?._id);
+                            }}><MdDelete className="w-6 h-6" /></span>
+                          </div>
+                        }
                       />
                     ))}
 
@@ -168,6 +185,15 @@ const Quizzes = () => {
           onChangeDeadlineClick={onChangeDeadline}
           onGradeAssignemntClick={onGradingAssignment}
         />
+        {isEdit && selectedAssignments && (
+          <EditQuizAssignmentModal
+            data={selectedAssignments}
+            refetch={refetch}
+            isEditTrue={true}
+            isQuiz={true}
+            setIsEdit={setIsEdit}
+          />
+        )}
       </>
   );
 };

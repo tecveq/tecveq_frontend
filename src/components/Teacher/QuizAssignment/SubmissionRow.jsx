@@ -8,6 +8,9 @@ const SubmissionRow = (props) => {
     alert("file downloading...");
   }
 
+
+  console.log(props, "hehehheeh");
+
   return (
     <div className="min-w-full">
       <div

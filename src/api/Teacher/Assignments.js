@@ -28,13 +28,13 @@ export const createAssignment = apiRequest(async (data) => {
 
 
 export const deleteAssignments = apiRequest(async (id) => {
-    const url = `${BACKEND_URL}/assignments/${id}`
+    const url = `${BACKEND_URL}/assignment/${id}`
     const response = await axios.delete(url);
     return response;
 });
 
 export const editAssignment = apiRequest(async (data, id) => {
-    const url = `${BACKEND_URL}/assignments/${id}`
+    const url = `${BACKEND_URL}/assignment/${id}`
     const response = await axios.put(url, data);
     return response;
 });
