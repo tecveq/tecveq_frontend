@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAddHeadSettings, useGetHeadSettings, useUpdateHeadSettings } from '../../../api/Admin/SettingsApi';
-import axios from 'axios';
-import { BACKEND_URL } from "../../../constants/api";
+import { Link, useNavigate } from 'react-router-dom';
 
 const AttandenceSetting = () => {
+
     const [isEnableHeadSetting, setIsEnableHeadSetting] = useState(false); // State for checkbox
     const [settingId, setSettingId] = useState(null); // State to store ID
 
@@ -38,36 +38,24 @@ const AttandenceSetting = () => {
 
 
 
-    const [file, setFile] = useState(null);
-
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('file', file);
-
-        console.log(formData ,"form data is saved");
-        
-
-        try {
-            await axios.post(`${BACKEND_URL}/upload`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            alert('File uploaded successfully.');
-        } catch (error) {
-            console.error('Error uploading file:', error);
-            alert('Error uploading file.');
-        }
-    };
+ 
 
     return (
         <>
             <div className='lg:ml-72 p-8 w-full'>
+
+                <div className='flex flex-col w-full justify-end items-end'>
+                    <Link to="/admin/add-csv-file">
+                        <button
+                            className="px-6 py-2 rounded-lg bg-red text-white"
+                        >
+                            Import CSV
+                        </button>
+                    </Link>
+
+
+
+                </div>
                 <div className='w-full'>
                     <span className='text-2xl font-bold'>Attendance Settings</span>
                 </div>
@@ -84,20 +72,7 @@ const AttandenceSetting = () => {
                         />
                     </span>
                 </div>
-
-                <div>
-
-
-
-                    <div>
-                        <h2>Upload CSV File</h2>
-                        <form onSubmit={handleSubmit}>
-                            <input type="file" accept=".csv" onChange={handleFileChange} />
-                            <button type="submit">Upload</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            </div >
         </>
     );
 };

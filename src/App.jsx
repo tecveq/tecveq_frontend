@@ -72,6 +72,7 @@ import HeadAttendence from "./pages/Teacher/Attendence/HeadAttendence";
 import Settings from "./pages/Admin/Settings/Settings";
 import { TeacherProvider } from "./utils/TeacherProvider";
 import ChangePassword from "./commonComponents/ChangePassword";
+import AddCSVFile from "./pages/Admin/AddCSVFile/AddCSVFile";
 
 function App() {
   return (
@@ -204,6 +205,14 @@ function App() {
             element={
               <AdminLayout>
                 <Settings />
+              </AdminLayout>
+            }
+          />
+          <Route
+            path="/admin/add-csv-file"
+            element={
+              <AdminLayout>
+                <AddCSVFile />
               </AdminLayout>
             }
           />
