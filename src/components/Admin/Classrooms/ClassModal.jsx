@@ -156,7 +156,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
 
   const handleCreateClass = async () => {
-    if (classroomName && selectedLevel && newSelectedStudents.length > 0 && newSelectedTeachers.length > 0 && headTeacher) {
+    if (classroomName && selectedLevel && newSelectedStudents.length > 0 && newSelectedTeachers.length > 0) {
 
       let tempstudents = newSelectedStudents.map((item) => item?._id);
 
@@ -168,7 +168,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
           levelID: selectedLevel._id,
           students: tempstudents,
           teachers: teacherArr,
-          headTeacher: headTeacher._id,  // Pass the head teacher ID
+          headTeacher: headTeacher?._id || "",  // Pass the head teacher ID
         };
 
         console.log("data sending to backend is : ", data);
@@ -295,15 +295,19 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               selectedLevel && (
                 <div className="flex flex-col">
                   <div className="flex flex-col flex-1 gap-1">
-                    <p className="text-xs font-semibold text-grey_700">Select Head Teacher</p>
+                    <p className="text-xs font-semibold text-grey_700">
+                      Select Head Teacher <span className="text-grey_600">(Optional)</span>
+                    </p>
                     <Selectable
-                      options={adminUsersData.allTeachers}  // Assuming the teachers are in this array
-                      setSelectedOption={setHeadTeacher}    // setHeadTeacher will be the state for the selected head teacher
+                      options={adminUsersData.allTeachers} // Assuming the teachers are in this array
+                      setSelectedOption={setHeadTeacher || ""} // setHeadTeacher will be the state for the selected head teacher
                       selectedOption={headTeacher}
                     />
                   </div>
                 </div>
-              )}
+              )
+            }
+
 
 
             {
@@ -331,10 +335,6 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               )
             }
 
-            {
-              console.log(newSelectedTeachers, "new selected teacher")
-              
-            }
 
             {newSelectedTeachers && newSelectedTeachers.map((item) => (
               selectedLevel && (
