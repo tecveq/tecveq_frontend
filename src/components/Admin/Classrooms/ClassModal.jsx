@@ -296,7 +296,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
                 <div className="flex flex-col">
                   <div className="flex flex-col flex-1 gap-1">
                     <p className="text-xs font-semibold text-grey_700">
-                      Select Head Teacher <span className="text-grey_600">(Optional)</span>
+                      Select Head Teacher <span className="text-grey_500">(Optional)</span>
                     </p>
                     <Selectable
                       options={adminUsersData.allTeachers} // Assuming the teachers are in this array
