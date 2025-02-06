@@ -7,10 +7,20 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllNotifications } from "../../../api/Admin/NotificationApi";
 import moment from "moment";
 import { useGetAnnoucementByUserType } from "../../../api/Teacher/Annoucement";
-
-const Notifications = ({ onclose, dashboard, item }) => {
+import { useParent } from "../../../context/ParentContext";
+const Notifications = ({ onclose, dashboard }) => {
   const { data } = useQuery({ queryKey: ["chat"], queryFn: getAllNotifications });
   const [activeTab, setActiveTab] = useState("notification");
+
+
+  const { selectedChild } = useParent();
+
+  console.log(data, "active tab data ");
+  console.log(selectedChild, "selected child data is  ");
+
+  const matchedData = data.filter(item => item.userID === selectedChild?._id);
+
+
 
 
 
@@ -121,8 +131,8 @@ const Notifications = ({ onclose, dashboard, item }) => {
         </div>
         <div className="w-full">
           {activeTab === "notification" ? (
-            data && data.length > 0 ? (
-              data.map((item) => <Notification key={item.id} item={item} />)
+            matchedData && matchedData.length > 0 ? (
+              matchedData?.map((item) => <Notification key={item.id} item={item} />)
             ) : (
               <p>No notifications are present</p>
             )

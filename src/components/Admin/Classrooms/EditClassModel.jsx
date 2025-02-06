@@ -147,7 +147,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
   });
 
   const handleCreateClass = useCallback(() => {
-    if (classroomName && selectedLevel && newSelectedStudents.length && newSelectedTeachers.length && headTeacher) {
+    if (classroomName && selectedLevel && newSelectedStudents.length && newSelectedTeachers.length) {
       const classroomnameregex = /^[a-zA-Z0-9\s]+$/;
 
       if (!classroomnameregex.test(classroomName)) {
@@ -160,7 +160,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
         levelID: selectedLevel._id,
         students: newSelectedStudents.map(item => item._id),
         teachers: teacherArr,
-        headTeacher: headTeacher._id,
+        headTeacher: headTeacher?._id || "",
       };
 
       updateClassroomMutation.mutate({ data, id: editData?._id });
@@ -227,14 +227,21 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
         </div>
 
         {selectedLevel && (
-          <div>
-            <p className="text-xs font-semibold text-grey_700">Select Head Teacher</p>
-            <Selectable
-              options={adminUsersData?.allTeachers}
-              setSelectedOption={setHeadTeacher}
-              selectedOption={headTeacher}
-            />
+
+
+          <div className="flex flex-col">
+            <div className="flex flex-col flex-1 gap-1">
+              <p className="text-xs font-semibold text-grey_700">
+                Select Head Teacher <span className="text-grey_500">(Optional)</span>
+              </p>
+              <Selectable
+                options={adminUsersData?.allTeachers}
+                setSelectedOption={setHeadTeacher}
+                selectedOption={headTeacher}
+              />
+            </div>
           </div>
+
         )}
 
         {selectedLevel && (

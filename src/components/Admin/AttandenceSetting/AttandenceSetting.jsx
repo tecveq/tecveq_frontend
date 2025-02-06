@@ -38,7 +38,7 @@ const AttandenceSetting = () => {
 
 
 
- 
+
 
     return (
         <>
@@ -56,7 +56,7 @@ const AttandenceSetting = () => {
 
 
                 </div>
-                <div className='w-full'>
+                {/* <div className='w-full'>
                     <span className='text-2xl font-bold'>Attendance Settings</span>
                 </div>
                 <div className='w-full shadow-sm rounded-2xl shadow-grey_700 flex flex-row items-center p-6 mt-6 justify-between'>
@@ -71,7 +71,7 @@ const AttandenceSetting = () => {
                             checked={isEnableHeadSetting} // Bind checkbox to state
                         />
                     </span>
-                </div>
+                </div> */}
             </div >
         </>
     );
