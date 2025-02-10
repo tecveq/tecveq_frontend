@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAddHeadSettings, useGetHeadSettings, useUpdateHeadSettings } from '../../../api/Admin/SettingsApi';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AttandenceSetting = () => {
+
     const [isEnableHeadSetting, setIsEnableHeadSetting] = useState(false); // State for checkbox
     const [settingId, setSettingId] = useState(null); // State to store ID
 
@@ -34,10 +36,27 @@ const AttandenceSetting = () => {
         }
     }, [headSettings, isGetHeadSettingLoading]); // Watch for changes
 
+
+
+
+
     return (
         <>
             <div className='lg:ml-72 p-8 w-full'>
-                <div className='w-full'>
+
+                <div className='flex flex-col w-full justify-end items-end'>
+                    <Link to="/admin/add-csv-file">
+                        <button
+                            className="px-6 py-2 rounded-lg bg-red text-white"
+                        >
+                            Import CSV
+                        </button>
+                    </Link>
+
+
+
+                </div>
+                {/* <div className='w-full'>
                     <span className='text-2xl font-bold'>Attendance Settings</span>
                 </div>
                 <div className='w-full shadow-sm rounded-2xl shadow-grey_700 flex flex-row items-center p-6 mt-6 justify-between'>
@@ -52,8 +71,8 @@ const AttandenceSetting = () => {
                             checked={isEnableHeadSetting} // Bind checkbox to state
                         />
                     </span>
-                </div>
-            </div>
+                </div> */}
+            </div >
         </>
     );
 };
