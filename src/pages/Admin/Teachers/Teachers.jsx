@@ -116,7 +116,7 @@ const Teachers = () => {
                   {searchText &&
                     teacherData.map((thr, index) => {
                       return thr.map((item) => {
-                        if (item.teacher.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
+                        if (item?.teacher?.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                           return (
                             <DataRows
                               key={JSON.stringify(item)}
