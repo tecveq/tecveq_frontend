@@ -1,177 +1,112 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../../utils/Loader";
-import profile from "../../assets/profile.png";
-
 import { toast } from "react-toastify";
-import { BsCake } from "react-icons/bs";
 import { FiEdit } from "react-icons/fi";
-import { FiPhone } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
+import { IoClose, IoMailOutline, IoCalendarOutline } from "react-icons/io5";
 import { GoPerson } from "react-icons/go";
-import { IoMailOutline } from "react-icons/io5";
-import { IoCalendarOutline } from "react-icons/io5";
+import { FiPhone } from "react-icons/fi";
+import { RiGraduationCapLine } from "react-icons/ri";
 import { useUser } from "../../context/UserContext";
 import { useMutation } from "@tanstack/react-query";
-import { RiGraduationCapLine } from "react-icons/ri";
 import { updateUser } from "../../api/Admin/UsersApi";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
-const CusotmInput = ({ label, value, status, icon, name, valuesObj, setValuesObj, isEmail }) => {
-  return (
-    <div className="my-1 text-sm">
-      <div className="flex items-center gap-4">
-        <div className="p-3 bg-white rounded-md border-1 border border-[#00000030]">
-          {icon == "person" ?
-            <GoPerson />
-            : icon == "mail" ? <IoMailOutline /> : icon == "phone" ? <FiPhone /> : icon == "cap" ? <RiGraduationCapLine /> : icon == "calendar" ? <IoCalendarOutline /> : <BsCake />}
-        </div>
-        <div
-          className={`flex px-2 py-1 border justify-between rounded-md items-center border-grey/70 ${status ? "text-black" : "text-grey"
-            }`}
-        >
-          <input
-            type="text"
-            value={value}
-            readOnly={!status}
-            disabled={isEmail}
-            placeholder={value}
-            className={`flex flex-1 w-full py-1 outline-none ${isEmail ? 'opacity-50 cursor-not-allowed' : ''}`}
-            onChange={(e) => { setValuesObj({ ...valuesObj, [name]: e.target.value }) }}
-          />
-        </div>
+const CustomInput = ({ label, value, status, icon, name, valuesObj, setValuesObj, isEmail }) => (
+  <div className="my-1 text-sm w-full">
+    <div className="flex items-center gap-4 w-full">
+      <div className="p-3 bg-white rounded-md border border-gray-300">
+        {icon}
       </div>
+      <input
+        type="text"
+        value={value}
+        readOnly={!status}
+        disabled={isEmail}
+        placeholder={label}
+        className={`flex-1 px-2 py-2 border rounded-md outline-none w-full ${isEmail ? 'opacity-50 cursor-not-allowed' : ''}`}
+        onChange={(e) => setValuesObj({ ...valuesObj, [name]: e.target.value })}
+      />
     </div>
-  );
-};
+  </div>
+);
 
 
-const ProfileDetails = ({ onclose }) => {
-
+const ProfileDetails = ({ onClose }) => {
   const { userData, setUserData } = useUser();
-  const [allowedEdit, setAllowedEdit] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(userData.profilePic || "");
-
-  const [userDataObj, setUserDataOjb] = useState({
-    userType: "admin",
-    name: userData.name,
-    email: userData.email,
-    phoneNumber: userData.phoneNumber,
-    bio: userData.bio
-  })
-
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [userDataObj, setUserDataObj] = useState({
+    name: userData?.name || "",
+    email: userData?.email || "",
+    phoneNumber: userData?.phoneNumber || "",
+    bio: userData?.bio || "",
+  });
 
   const uploadFile = async (file) => {
-
+    if (!file) return null;
     const storage = getStorage();
-    const storageRef = ref(storage, file?.name);
-
+    const storageRef = ref(storage, `profile_pictures/${userData._id}/${file.name}`);
     const resp = await uploadBytes(storageRef, file);
-    let url = await getDownloadURL(resp.ref)
-
-    console.log("response is : ", url);
-    return url;
-  }
-
-  const handleEditClick = () => {
-    setAllowedEdit(true);
+    return getDownloadURL(resp.ref);
   };
 
-  const handleSaveDetails = async () => {
-    updateuserMutation.mutate(userDataObj);
-  };
-
-  const updateuserMutation = useMutation({
+  const updateUserMutation = useMutation({
     mutationFn: async (data) => {
-      let fileurl = await uploadFile(selectedFile);
-      console.log("uploaded file url is : ", fileurl);
-      data = { ...data, profilePic: fileurl };
-      const results = await updateUser(data, userData._id);
-      return results;
+      if (selectedFile) {
+        const fileUrl = await uploadFile(selectedFile);
+        data.profilePic = fileUrl;
+      }
+      return updateUser(data, userData._id);
     },
-
-    onError: (error, variables, context) => {
-      console.log("data after error on mutation method ", error, variables, context);
-      toast.error("Profile cannot be updated successfully!")
+    onSuccess: (data) => {
+      setUserData(data)
+      toast.success("Profile updated successfully!");
+      onClose();
     },
+    onError: () => toast.error("Failed to update profile"),
+  });
 
-    onSettled: (data, error, variables, context) => {
-      console.log("data setteled after on mutation method ", data, error, variables, "context : ", context);
-      setUserData({ ...data });
-      onclose();
-      toast.success("Profile Update successfully!")
+  useEffect(() => {
+    if (userData) {
+      localStorage.setItem("tcauser", JSON.stringify(userData));
     }
-
-  })
-
+  }, [userData]);
 
   return (
     <div className="absolute top-0 right-0 z-10 flex bg-white h-full rounded-md shadow-lg w-96">
-      <div className="flex flex-col">
-        <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
+      <div className="flex flex-col w-full p-5">
+        <div className="flex justify-between border-b pb-3">
           <p className="text-xl font-medium">My Profile</p>
-          <IoClose onClick={onclose} className="cursor-pointer" />
+          <IoClose onClick={() => onClose()} className="cursor-pointer" />
         </div>
-        <div className="flex flex-col">
-          <div className="flex flex-col justify-center px-8 ">
-            <div className="flex justify-end mt-3">
-              <div className="p-2 border-grey/10">
-                <FiEdit onClick={handleEditClick} className="cursor-pointer" />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-center text-center">
-              <label htmlFor="profile" className="cursor-pointer">
-                <img src={userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
-              </label>
-              <input id="profile" type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="hidden" />
-              <p>{userData.name}</p>
-              {/* <p>Bio</p> */}
-              <p className="text-xs">
-                {userData.bio ? userData.bio :
-                  `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, sint?`
-                }
-              </p>
-            </div>
-            <div className="flex flex-col gap-1 px-2 py-1 overflow-auto h-96 custom-scrollbar">
-              <CusotmInput
-                label={"Name"}
-                value={userDataObj.name}
-                name={"name"}
-                isEmail={false}
-                status={allowedEdit}
-                valuesObj={userDataObj}
-                setValuesObj={setUserDataOjb}
-                icon={"person"}
-              />
-              <CusotmInput
-                label={"Email"}
-                name="email"
-                value={userDataObj.email}
-                status={allowedEdit}
-                isEmail={true}
-                valuesObj={userDataObj}
-                setValuesObj={setUserDataOjb}
-                icon={"mail"}
-              />
-              <CusotmInput
-                label={"Phone No."}
-                name="phoneNumber"
-                isEmail={false}
-                value={userDataObj.phoneNumber}
-                status={allowedEdit}
-                valuesObj={userDataObj}
-                setValuesObj={setUserDataOjb}
-                icon={"phone"}
-              />
-              {updateuserMutation.isPending && <div> <Loader /> </div>}
-              {!updateuserMutation.isPending && allowedEdit && <div className="flex justify-center my-4">
-                <p
-                  onClick={handleSaveDetails}
-                  className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon"
-                > Save </p>
-              </div>
-              }
-            </div>
+
+        <div className="flex flex-col items-center py-4">
+          <label htmlFor="profile" className="cursor-pointer">
+            <img src={userData.profilePic || "../../assets/profile.png"} alt="Profile" className="w-28 h-28 rounded-full" />
+          </label>
+          <input id="profile" type="file" className="hidden" onChange={(e) => setSelectedFile(e.target.files[0])} />
+          <p className="mt-2 font-medium">{userData.name}</p>
+          <p className="text-sm text-gray-500">{userData.bio || "No bio available"}</p>
+        </div>
+
+        <div className="flex flex-col gap-2 overflow-auto py-6 h-auto">
+          <div className="w-full">
+            <CustomInput label="Name" name="name" value={userDataObj.name} status={isEditing} valuesObj={userDataObj} setValuesObj={setUserDataObj} icon={<GoPerson />} />
           </div>
+          <CustomInput label="Email" name="email" value={userDataObj.email} status={false} valuesObj={userDataObj} setValuesObj={setUserDataObj} icon={<IoMailOutline />} isEmail />
+          <CustomInput label="Phone No." name="phoneNumber" value={userDataObj.phoneNumber} status={isEditing} valuesObj={userDataObj} setValuesObj={setUserDataObj} icon={<FiPhone />} />
+        </div>
+
+        <div className="flex justify-between">
+          {!isEditing ? (
+            <div className="top-24 right-10 absolute">
+              <FiEdit className="cursor-pointer " onClick={() => setIsEditing(true)} />
+            </div>
+          ) : (
+            <button onClick={() => updateUserMutation.mutate(userDataObj)} className="px-8 py-2 text-white bg-maroon rounded-md">
+              {updateUserMutation.isPending ? <Loader /> : "Save"}
+            </button>
+          )}
         </div>
       </div>
     </div>

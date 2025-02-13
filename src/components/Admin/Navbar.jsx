@@ -157,7 +157,7 @@ const Navbar = ({ heading }) => {
         </div>
       </div>
       {mail && <RecentMessages dashboard={true} onclose={toggleMail} />}
-      {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
+      {isProfileDetails && <ProfileDetails onClose={toggleProfileDetails} />}
     </>
 
   );
