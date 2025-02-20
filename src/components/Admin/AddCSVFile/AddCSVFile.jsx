@@ -12,7 +12,8 @@ const AddCSVFileComponent = () => {
     const files = [
         "/formatCsvFiles/F1.csv",
         "/formatCsvFiles/F2.csv",
-        "/formatCsvFiles/F3.csv"
+        "/formatCsvFiles/F3.csv",
+        "/formatCsvFiles/F4.csv",
     ]; // Correct path inside the public folder
 
     const handleDownloadAll = () => {
