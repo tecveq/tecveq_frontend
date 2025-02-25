@@ -19,14 +19,14 @@ const DataRows = ({
         className={` py-[4px] md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey`}
       >
         <p
-          className={`w-full md:flex-[1] flex-[1] md:text-[16px] text-[14px] text-center md:text-left ${
+          className={`w-full md:flex-[1] flex-[1] md:text-[16px] lg:text-[14px] text-[14px] text-center md:text-left ${
             header ? "font-semibold" : ""
           }`}
         >
           {index + "."}
         </p>
         <p
-          className={`w-full md:flex-[1] flex-[1] md:text-[16px] text-[14px] text-center md:text-left ${
+          className={`w-full md:flex-[1] flex-[1] md:text-[16px] lg:text-[14px] text-[14px] text-center md:text-left ${
             header ? "hidden" : "flex"
           }`}
         >
@@ -37,21 +37,21 @@ const DataRows = ({
           />{" "}
         </p>
         <p
-          className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-[16px] text-[14px] md:text-left ${
+          className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-[16px] lg:text-[14px] text-[14px] md:text-left ${
             header ? "font-semibold md:ml-14 text-center" : ""
           }`}
         >
           {studentName}
         </p>
         <p
-          className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left md:text-[16px]  text-[14px] ${
+          className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left md:text-[16px] lg:text-[14px]  text-[14px] ${
             header ? "font-semibold" : ""
           }`}
         >
           {studentClass}
         </p>
         <p
-          className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-[16px] text-[14px] md:text-left ${
+          className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-[16px] text-[14px] lg:text-[14px] md:text-left ${
             header ? "font-semibold" : ""
           }`}
         >
@@ -59,7 +59,7 @@ const DataRows = ({
         </p>
         {header ? (
           <p
-            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left md:text-[16px] text-[14px] ${
+            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-left md:text-[16px] lg:text-[14px] text-[14px] ${
               header ? "font-semibold" : ""
             }`}
           >

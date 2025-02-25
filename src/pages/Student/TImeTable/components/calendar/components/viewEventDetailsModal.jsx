@@ -67,7 +67,7 @@ export default function ViewEventDetailsModal({
       if (eventTime.getDate() == nowTime.getDate()) {
         if (eventTime.getTime() < nowTime.getTime() && nowTime.getTime() < eventEndTime.getTime()) {
           setIsMeetingTime(true);
-          setMeetingStart({start: true, event: event})
+          setMeetingStart({ start: true, event: event })
         }
       }
     }
@@ -172,8 +172,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">Start Time</p>
               <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                 <p className="text-sm text-custom-gray-3">
-                  {moment.utc(event.start).format("hh:mm a")}
-                </p>
+                  {moment.utc(event.start).tz("Asia/Karachi").format("hh:mm a")}                </p>
                 <svg
                   width="15"
                   height="15"
@@ -199,7 +198,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">End Time </p>
               <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                 <p className="text-sm text-custom-gray-3">
-                  {moment.utc(event.end).format("hh:mm a")}
+                  {moment.utc(event.end).tz("Asia/Karachi").format("hh:mm a")}
                 </p>
                 <svg
                   width="15"
