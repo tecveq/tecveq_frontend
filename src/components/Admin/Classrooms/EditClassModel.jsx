@@ -76,7 +76,7 @@ const MultiSelectField = ({
               onChange={() => handleCheckboxChange(option)}
               className="form-checkbox"
             />
-            <p className="bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium ml-2">
+            <p className="bg-[#00000005] px-2 py-1 rounded-sm lg:text-xs flex items-center gap-1 font-medium ml-2">
               <img
                 src={option.profilePic || IMAGES.ProfilePic}
                 alt=""

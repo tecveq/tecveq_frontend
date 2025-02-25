@@ -82,7 +82,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
         }`}
     >
       <div className="flex flex-1 gap-2">
-        <div className="flex flex-col w-full gap-4">
+        <div className="flex flex-col w-full gap-4 max-h-[80vh] overflow-y-auto custom-scrollbar pr-2">
           <div className="flex items-center justify-between">
             <div className="flex justify-center flex-1 w-[fit] gap-2 items-center">
               <p className="text-2xl font-semibold cursor-text">
