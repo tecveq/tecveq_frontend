@@ -6,6 +6,7 @@ import { Upload, File, Info, Download } from "lucide-react";
 const AddCSVFileComponent = () => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -39,6 +40,7 @@ const AddCSVFileComponent = () => {
             alert("Please select a file before uploading.");
             return;
         }
+        setIsLoading(true);
 
         const formData = new FormData();
         formData.append("file", file);
@@ -49,6 +51,7 @@ const AddCSVFileComponent = () => {
                     "Content-Type": "multipart/form-data",
                 },
             });
+            setIsLoading(false);
             alert("File uploaded successfully.");
             setFile(null);
             setFileName("");
@@ -107,12 +110,21 @@ const AddCSVFileComponent = () => {
                         </div>
 
                         {/* Submit Button */}
-                        <button
-                            type="submit"
-                            className="w-full bg-red/70 hover:bg-red/30 text-white py-2 rounded-md font-medium transition"
-                        >
-                            Upload File
-                        </button>
+                        {
+                            isLoading ? (
+                                <button type="submit" disabled className="w-full flex items-center justify-center gap-2 bg-red/70 hover:bg-red/30 text-white py-2 rounded-md font-medium transition">
+                                    <span className="spinner-border spinner-border-sm text-white mr-2" role="status" aria-hidden="true" />
+                                    Uploading...
+                                </button>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    className="w-full bg-red/70 hover:bg-red/30 text-white py-2 rounded-md font-medium transition"
+                                >
+                                    Upload File
+                                </button>
+                            )
+                        }
                     </form>
                 </div>
             </div>
