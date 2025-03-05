@@ -20,6 +20,14 @@ const DotsMenu = ({
   });
 
   useEffect(() => { console.log("edit menu data i s: ", data) }, [isopen]);
+
+  const handleEditClick = () => {
+    window.scrollTo({
+      top: 0,  // Scrolls to the top
+      behavior: "smooth",  // Smooth scrolling effect
+    });
+
+  };
   return (
     <>
       <div
@@ -29,7 +37,10 @@ const DotsMenu = ({
       >
         <div className="flex p-6">
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2 cursor-pointer " onClick={editUser}>
+            <div className="flex items-center gap-2 cursor-pointer " onClick={() => {
+              editUser()
+              handleEditClick()
+            }}>
               <FaRegEdit />
               <p>Edit</p>
             </div>
@@ -38,12 +49,12 @@ const DotsMenu = ({
               <p>Delete</p>
             </div>
             {data.userType == "student" &&
-              <div className={`flex items-center gap-2 cursor-pointer ${(!data.isBlocked && data.feesPaid)? "text-maroon" : "text-green" } `} onClick={toggleAccess}>
+              <div className={`flex items-center gap-2 cursor-pointer ${(!data.isBlocked && data.feesPaid) ? "text-maroon" : "text-green"} `} onClick={toggleAccess}>
                 {(!data.isBlocked && data.feesPaid) ?
-                <GrSecure />
-              :
-                <GrInsecure />
-              }
+                  <GrSecure />
+                  :
+                  <GrInsecure />
+                }
                 <p>Mark {(!data.isBlocked && data.feesPaid) ? "Deactivate" : "Activate"} </p>
               </div>
             }

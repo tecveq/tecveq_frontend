@@ -13,7 +13,7 @@ import { GoMail, GoPencil, GoPerson } from "react-icons/go";
 import { MdPhone } from "react-icons/md";
 import { FaGraduationCap } from "react-icons/fa6";
 
-
+import profile from "../../../assets/images/profilepic.png"
 const ProfileDetails = ({ onclose }) => {
 
   const { userData, setUserData } = useUser();
@@ -95,7 +95,7 @@ const ProfileDetails = ({ onclose }) => {
               </div>
               <div className="flex flex-col items-center justify-center text-center">
                 <label htmlFor="profile" className="cursor-pointer">
-                  <img src={userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
+                  <img src={profile || userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
                 </label>
                 <input id="profile" type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="hidden" />
                 <p>{userData?.name}</p>

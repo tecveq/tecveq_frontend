@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import IMAGES from "../../assets/images";
-import profile from "../../assets/profile.png";
+import profile from "../../assets/images/profilepic.png";
 
 import { toast } from "react-toastify";
 import { BsCake } from "react-icons/bs";

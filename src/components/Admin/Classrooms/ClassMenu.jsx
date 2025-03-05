@@ -23,11 +23,17 @@ const ClassMenu = ({
       >
         <div className="flex p-6">
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-2 cursor-pointer " onClick={editClassRoom}>
+            <div className="flex items-center gap-2 cursor-pointer " onClick={() => {
+              editClassRoom()
+              setIsOpen(false);
+            }}>
               <FaRegEdit />
               <p>Edit</p>
             </div>
-            <div className="flex items-center gap-2 cursor-pointer text-maroon " onClick={deleteClassRoom}>
+            <div className="flex items-center gap-2 cursor-pointer text-maroon " onClick={() => {
+              deleteClassRoom()
+              setIsOpen(false);
+            }}>
               <RiDeleteBin6Line />
               <p>Delete</p>
             </div>

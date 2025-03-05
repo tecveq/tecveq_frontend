@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import IMAGES from "../../../assets/images";
 import useClickOutside from "../../../hooks/useClickOutlise";
 
@@ -15,7 +15,10 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
   console.log("subject data is : ", subjectData);
 
   const [subjectValue, setSubjectValue] = useState(((isEditTrue && subjectData) && subjectData.subjectName) || "");
-  // const [levelValue, setLevelValue] = useState(((isEditTrue && levelData) && levelData.levelName) || "");
+  // const [levelValue, setLevelValue] = useState(
+  //   isEditTrue && subjectData ? subjectData.levelName : ""
+  // );
+
   const [levelValue, setLevelValue] = useState("");
   const [errormsg, setErrormsg] = useState(false);
 
@@ -70,6 +73,14 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
     }
   });
 
+  useEffect(() => {
+    if (isEditTrue && subjectData) {
+      // Find the matching level ID
+      const matchingLevel = allLevels?.find(item => item.name === subjectData.levelName);
+      setLevelValue(matchingLevel?._id || "");
+    }
+  }, [isEditTrue, subjectData, allLevels]);
+  console.log("hahhahahaha", levelValue);
 
   return (
     <div
@@ -117,11 +128,17 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
             <div className="flex flex-col flex-1 gap-1">
               <p className="text-xs font-semibold text-grey_700">Select Level</p>
               <div className="flex flex-col border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
-                <select value={levelValue} onChange={(e) => setLevelValue(e.target.value)} className="w-full text-sm outline-none text-custom-gray-3" >
+                <select
+                  value={levelValue}
+                  onChange={(e) => setLevelValue(e.target.value)}
+                  className="w-full text-sm outline-none text-custom-gray-3"
+                >
                   <option value="">Select Level</option>
-                  {allLevels.map((item) => {
-                    return <option value={item._id}>{item.name}</option>
-                  })}
+                  {allLevels?.map((item) => (
+                    <option key={item?._id} value={item?._id}>
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               {errormsg && <p className="text-maroon text-sm self-center">Level is required!</p>}

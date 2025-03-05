@@ -155,7 +155,7 @@ const ManageUsers = () => {
                     <DataRows
                       header={true}
                       role={"Role"}
-                      userId={"Roll No"}
+                      userId={selectText === "teacher" || selectText === "parent" ? "Reaference No" : "Roll No"}
                       index={"Sr No"}
                       userName={"Name"}
                       userclass={"Class"}
@@ -203,14 +203,17 @@ const ManageUsers = () => {
                           role={usr.userType}
                           userclass={usr?.class}
                           contact={usr.phoneNumber}
-                          userId={usr?.userType === "teacher" || usr?.userType === "parent" ? `${usr._id.slice(0, 4)}` : usr?.rollNo || "not assign"}
+                          userId={
+                            usr?.userType === "teacher"
+                              ? `${usr.referenceNo}`
+                              : usr?.userType === "parent"
+                                ? usr?._id.slice(0, 5)
+                                : usr?.rollNo || "not assign"
+                          }
                           toggleClassMenu={(e) => toggleMenu(e)}
                           onClickFunction={handleFunctionClick(usr)}
                         />
                       ))}
-
-
-
 
                     {adminUsersData.allUsers.length == 0 && <div className="text-center py-4 text-3xl font-medium">No users to display!</div>}
 

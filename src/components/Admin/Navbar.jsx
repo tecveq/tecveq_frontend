@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 import Notifications from "./Notifications";
 import ProfileDetails from "./ProfileDetails";
-import profile from "../../assets/profile.png";
+import profile from "../../assets/images/profilepic.png";
 import RecentMessages from "./Dashboard/RecentMessages";
 
 import { CiBellOn } from "react-icons/ci";
@@ -134,8 +134,8 @@ const Navbar = ({ heading }) => {
             <div className="flex items-center gap-2">
               <p className="font-medium hidden md:block">{userData.name}</p>
               <img
-                src={userData.profilePic || profile}
-                alt=""
+                src={profile || userData?.profilePic}
+                alt="Profile"
                 className="w-12 h-12 cursor-pointer rounded-full"
                 onClick={toggleProfielMenu}
               />

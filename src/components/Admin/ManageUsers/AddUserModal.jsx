@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Loader from '../../../utils/Loader';
 import IMAGES from '../../../assets/images';
 
@@ -11,8 +11,13 @@ import { useAdmin } from '../../../context/AdminContext';
 import { registerStudent } from '../../../api/Student/StudentApis';
 import { experience, qualification } from '../../../constants/teacher';
 import { emailPattern, namePattern, passwordPattern } from '../../../constants/pattern';
+import useClickOutside from '../../../hooks/useClickOutlise';
+import { useBlur } from '../../../context/BlurContext';
 
 const AddUserModal = ({ closeModal, refetch }) => {
+
+
+
 
     const CustomInput = ({ label, placeholder, type, required = false }) => {
         return (
@@ -141,6 +146,15 @@ const AddUserModal = ({ closeModal, refetch }) => {
     const [role, setRole] = useState("student");
     const [loading, setLoading] = useState(false);
 
+    const ref = useRef(null); // Reference to the modal container
+    const { toggleBlur } = useBlur(); // Access toggleBlur from the context
+
+    // Use the hook with the modal's reference and callback function
+    useClickOutside(ref, () => {
+        closeModal(); // Close the modal
+    });
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -148,9 +162,6 @@ const AddUserModal = ({ closeModal, refetch }) => {
         try {
             let dataBody = {};
             console.log("After form submit: ", e);
-
-            // Validation patterns
-           
 
             if (role === "parent") {
                 dataBody = {
@@ -161,7 +172,6 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     profilePic: default_profile,
                 };
             } else if (role === "student") {
-                // Validate fields
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
                 const isValidGuardianName = namePattern.test(e.target[9].value);
@@ -181,7 +191,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     email: e.target[2].value,
                     rollNo: e.target[3].value,
                     referenceNo: e.target[4].value,
-                    gender: e.target[5].value,
+                    gender: e.target.gender.value, // Capture gender from select dropdown
                     bio: e.target[6].value,
                     phoneNumber: e.target[7].value,
                     levelID: JSON.parse(e.target[8].value)._id,
@@ -193,7 +203,6 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     profilePic: default_profile,
                 };
 
-                // Call backend to register student
                 const response = await registerStudent(dataBody);
                 console.log(response, "user response data");
 
@@ -205,7 +214,6 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     throw new Error("Failed to register user.");
                 }
             } else if (role === "teacher") {
-                // Validate fields
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
                 const isValidPassword = passwordPattern.test(e.target[8].value);
@@ -230,7 +238,6 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     profilePic: default_profile,
                 };
 
-                // Call backend to register teacher
                 const response = await registerStudent(dataBody);
                 if (response?._id) {
                     toast.success("User added successfully!");
@@ -249,8 +256,9 @@ const AddUserModal = ({ closeModal, refetch }) => {
     };
 
 
+
     return (
-        <div className='absolute w-96 border h-screen border-black/20 z-10 bg-white right-0 top-0'>
+        <div className='absolute w-96 border h-screen border-black/20 z-10 bg-white right-0 top-0' ref={ref}>
             <div className='flex flex-col gap-2 h-full'>
                 <div className=' border-b border-b-black/20'>
                     <div className='flex justify-between py-4 px-8'>
@@ -271,8 +279,14 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                         <CustomInput label={"Roll No"} type="text" placeholder={"Enter your Roll No"} required />
                                         <CustomInput label={"Reference No"} type="text" placeholder={"Enter your Reference No"} />
 
-                                        <CustomInput label={"Gender"} type="text" placeholder={"Enter your gender (e.g., Male or Female)"} required />
-
+                                        <div className="flex flex-col">
+                                            <label className="text-gray-700 font-medium">Gender</label>
+                                            <select name="gender" className="border p-2 rounded-md" required>
+                                                <option value="">Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
                                         <CustomInput label={"Bio"} type="text" placeholder={"Enter your Bio"} />
                                         <CustomInput label={"Phone no."} type="text" placeholder={"Enter your Phone Number"} required />
                                         <LevelSelectable label={"Enroll in"} alllevels={allLevels} />

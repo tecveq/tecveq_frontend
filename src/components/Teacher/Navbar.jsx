@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import ProfileMenu from "./ProfileMenu";
 import Notifications from "./Notifications";
 import ProfileDetails from "./ProfileDetails";
-import profile from "../../assets/profile.png";
+import profile from "../../assets/images/profilepic.png";
+
 import RecentMessages from "./Dashboard/RecentMessages";
 
 import { CiBellOn } from "react-icons/ci";
@@ -82,21 +83,21 @@ const Navbar = ({ heading }) => {
                   }`}
                 onClick={toggleMail}
               >
-                <IoMailOutline  />
+                <IoMailOutline />
               </div>
               <div
                 className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${bell ? "bg-maroon text-white" : ""
                   }`}
                 onClick={togglebell}
               >
-                <CiBellOn  />
+                <CiBellOn />
               </div>
             </div>
             <div className="flex items-center gap-2">
               <p className="font-medium">M. {userData.name}</p>
               <img
-                src={userData.profilePic || profile}
-                alt=""
+                src={profile || userData?.profilePic}
+                alt="profile"
                 className="w-12 h-12 cursor-pointer rounded-full"
                 onClick={toggleProfielMenu}
               />

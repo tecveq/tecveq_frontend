@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Loader from '../../../utils/Loader';
 
 import { toast } from 'react-toastify';
@@ -6,9 +6,13 @@ import { LuAsterisk } from "react-icons/lu";
 import { IoCloseSharp } from "react-icons/io5";
 import { useMutation } from '@tanstack/react-query';
 import { updateUser } from '../../../api/Admin/UsersApi';
+import useClickOutside from '../../../hooks/useClickOutlise';
+import { useBlur } from '../../../context/BlurContext';
 
 
 const InputFiled = ({ label, req, val, name, dataObj, setDataObj }) => {
+
+
     return (
         <div className='flex flex-1'>
             <div className='flex flex-col gap-2 flex-1'>
@@ -24,7 +28,20 @@ const InputFiled = ({ label, req, val, name, dataObj, setDataObj }) => {
     )
 }
 
+
+
+
 const EditUserModal = ({ closeModal, refetch, data }) => {
+
+
+    const ref = useRef(null); // Reference to the modal container
+    const { toggleBlur } = useBlur(); // Access toggleBlur from the context
+
+    // Use the hook with the modal's reference and callback function
+    useClickOutside(ref, () => {
+        closeModal(); // Close the modal
+    });
+
     const CustomButton = ({ label, btnClick }) => {
         return (
             <div className='flex justify-center mt-2'>
@@ -67,7 +84,7 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
     if (mutation.error) return <div className='ml-72 px-10 py-10 text-3xl'>Error Occured</div>
 
     return (
-        <div className='absolute w-96 border overflow-y-auto h-screen border-black/20 z-10 bg-white right-0 top-0'>
+        <div className='absolute w-96 border overflow-y-auto h-screen border-black/20 z-10 bg-white right-0 top-0' ref={ref}>
             <div className='flex flex-col gap-2'>
                 <div className=' border-b border-b-black/20'>
                     <div className='flex justify-between py-4 px-8 '>

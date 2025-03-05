@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { useGetAllStudentsWithLevel } from '../../../api/Admin/AdminApi';
 import { useGetAllSubjectsWithLevel } from '../../../api/Admin/SubjectsApi';
 import MultiSelectField from '../../../commonComponents/MultiSelectField';
+import useClickOutside from '../../../hooks/useClickOutlise';
 
 
 const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
@@ -114,7 +115,6 @@ const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
 const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
   const ref = useRef(null);
-  const { toggleBlur } = useBlur();
   const [headTeacher, setHeadTeacher] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [selectedSubjects, setSelectedSubjects] = useState({});
@@ -130,6 +130,15 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
   const [newSelectedStudents, setNewSelectedStudents] = useState([]);
 
 
+
+  const { toggleBlur } = useBlur(); // Using toggleBlur for blur control
+
+
+
+  useClickOutside(ref, () => {
+    setopen(false)
+    toggleBlur();
+  });
 
 
 
