@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import IMAGES from "../../assets/images";
 import profile from "../../assets/images/profilepic.png";
 
@@ -18,6 +18,8 @@ import { RiGraduationCapLine } from "react-icons/ri";
 import { updateTeacher } from "../../api/Teacher/TeacherApi";
 import { uploadFile } from "../../utils/FileUpload";
 import Loader from "../../utils/Loader";
+import { useBlur } from "../../context/BlurContext";
+import useClickOutside from "../../hooks/useClickOutlise";
 
 
 const CusotmInput = ({ value, type, status, icon, name, valuesObj, setValuesObj }) => {
@@ -52,6 +54,18 @@ const ProfileDetails = ({ onclose }) => {
   const [allowedEdit, setAllowedEdit] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState(userData.cv || "");
   const [selectedProfile, setSelectedProfile] = useState(userData.profilePic || "");
+
+
+
+  const ref = useRef(null);
+
+  const { toggleBlur } = useBlur(); // Using toggleBlur for blur control
+
+
+
+  useClickOutside(ref, () => {
+    onclose()
+  });
 
   const [userDataObj, setUserDataOjb] = useState({
     bio: userData.bio,
@@ -96,7 +110,7 @@ const ProfileDetails = ({ onclose }) => {
   })
 
   return (
-    <div className=" relative w-full justify-end items-end">
+    <div className=" relative w-full justify-end items-end" ref={ref}>
       <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 md:w-full">
         <div className="flex flex-col flex-1 w-full my-5">
           <div className="flex justify-between px-5 py-5 border-b border-b-black/10">

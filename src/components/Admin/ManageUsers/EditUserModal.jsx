@@ -99,7 +99,17 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
                     <InputFiled label={"Roll No"} req={false} val={userObj.rollNo} name={"rollNo"} setDataObj={setUsrObj} />
 
                     <InputFiled label={"Phone No."} req={false} val={userObj.phone} name={"phoneNumber"} setDataObj={setUsrObj} />
-                    <InputFiled label={"Gender"} req={false} val={userObj.gender} name={"gender"} setDataObj={setUsrObj} />
+                    <label htmlFor="">Gender</label>
+                    <select
+                        name="gender"
+                        value={userObj.gender || ""}
+                        onChange={(e) => setUsrObj({ ...userObj, gender: e.target.value })}
+                        className="border rounded px-3 py-2 w-full"
+                    >
+                        <option value="">Select Gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
 
                     {data.userType == "student" &&
                         <>

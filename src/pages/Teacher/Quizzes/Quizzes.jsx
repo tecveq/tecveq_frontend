@@ -25,7 +25,6 @@ const Quizzes = () => {
     setIsAssignmentMenuOpen(!isAssignmentMenuOpen);
   }
 
-  const { isBlurred, toggleBlur } = useBlur();
 
   const onViewSubmission = () => {
     navigate(`/teacher/quizzes/submissions`, { state: quizdata })
@@ -35,44 +34,7 @@ const Quizzes = () => {
     navigate(`/teacher/quizzes/GradingQuizzes`, { state: quizdata })
   }
 
-  const assignments = [
-    {
-      title: "Quizz 1",
-      deadline: "22nd Jan, 2022 8:30PM",
-      assignedOn: "20nd Jan, 2022 8:30PM",
-      submissions: "30/40",
-      total_marks: 20,
-      download: "Download",
-      upload: true,
-    },
-    {
-      title: "Quizz 2",
-      deadline: "22nd Jan, 2023 12:30PM",
-      assignedOn: "20nd Jan, 2022 8:30PM",
-      submissions: "30/40",
-      total_marks: 10,
-      download: "Download",
-      upload: false,
-    },
-    {
-      title: "Quizz 3",
-      deadline: "22nd Jan, 2022 8:30PM",
-      assignedOn: "20nd Jan, 2022 8:30PM",
-      submissions: "30/40",
-      total_marks: 20,
-      download: "Download",
-      upload: true,
-    },
-    {
-      title: "Quizz 4",
-      deadline: "22nd Jan, 2022 8:30PM",
-      assignedOn: "20nd Jan, 2022 8:30PM",
-      submissions: "30/40",
-      total_marks: 20,
-      download: "Download",
-      upload: true,
-    },
-  ];
+ 
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
@@ -80,7 +42,6 @@ const Quizzes = () => {
 
   const onChangeDeadline = () => {
     setChangeDeadlineClick(!changeDeadlineClick);
-    toggleBlur();
   }
 
   const { data, isPending, error, refetch, isRefetching } = useQuery({ queryKey: ["quizes"], queryFn: getAllQuizes });
@@ -101,7 +62,7 @@ const Quizzes = () => {
             >
               <div className="h-screen pt-1">
                 <Navbar heading={"Quizes"} />
-                <div className={`px-3 ${isBlurred ? "blur" : ""}`}>
+                <div className={`px-3 `}>
                   <div className="flex justify-end my-2">
                     <div
                       className="flex cursor-pointer bg-maroon rounded-3xl"

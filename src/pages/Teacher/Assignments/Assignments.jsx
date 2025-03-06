@@ -41,7 +41,6 @@ const Assignments = () => {
 
   const onChangeDeadline = () => {
     setChangeDeadlineClick(!changeDeadlineClick);
-    toggleBlur();
   }
 
   const assignmentDellMutate = useMutation({
@@ -68,13 +67,12 @@ const Assignments = () => {
             >
               <div className="h-screen pt-1">
                 <Navbar heading={"Assignment"} />
-                <div className={`px-3 ${isBlurred ? "blur" : ""}`}>
+                <div className={`px-3`}>
                   <div className="flex justify-end my-2">
                     <div
                       className="flex cursor-pointer bg-maroon rounded-3xl"
                       onClick={() => {
                         setCreateModalOpen(true);
-                        toggleBlur();
                       }}
                     >
                       <p className="px-4 py-2 text-white">Create new +</p>
