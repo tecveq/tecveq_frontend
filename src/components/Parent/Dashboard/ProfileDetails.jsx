@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import IMAGES from "../../../assets/images";
 import { GoPerson } from "react-icons/go";
 import { useParent } from "../../../context/ParentContext";
+import { useBlur } from "../../../context/BlurContext";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
 const ProfileDetails = ({ onclose }) => {
   const [allowedEdit, setAllowedEdit] = useState(false);
   // const { isBlurred, toggleBlur } = useBlur();
   const { allSubjects, setAllSubjects, selectedChild } = useParent();
+
+
+  const ref = useRef(null);
+
+  const { toggleBlur } = useBlur(); // Using toggleBlur for blur control
+
+
+
+  useClickOutside(ref, () => {
+    onclose()
+  });
+
+
 
 
   console.log(selectedChild, "curent children object");
@@ -44,7 +59,7 @@ const ProfileDetails = ({ onclose }) => {
   };
 
   return (
-    <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96">
+    <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96" ref={ref}>
       <div className="flex flex-col">
         <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
           <p className="text-xl font-medium">My Profile</p>

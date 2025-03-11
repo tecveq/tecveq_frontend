@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import moment from "moment/moment";
 import Loader from "../../../utils/Loader";
@@ -14,9 +14,22 @@ import { useQuery } from "@tanstack/react-query";
 import { useUser } from "../../../context/UserContext";
 import { BACKEND_URL_SOCKET } from "../../../constants/api";
 import { getChatsRoomData, getMyChats } from "../../../api/UserApis";
+import { useBlur } from "../../../context/BlurContext";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
 
 const RecentMessages = ({ onclose, dashboard }) => {
+
+
+  const ref = useRef(null);
+
+  const { toggleBlur } = useBlur(); // Using toggleBlur for blur control
+
+
+
+  useClickOutside(ref, () => {
+    onclose()
+  });
 
   const [loading, setLoading] = useState(false);
   const [queryData, setQueryData] = useState(null);
@@ -178,7 +191,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     }
 
     return <>
-      <div className="w-96 top-20 flex flex-col justify-between pb-10 right-0 absolute bg-white z-50 h-[90vh]">
+      <div className="w-96 top-20 flex flex-col justify-between pb-10 right-0 absolute bg-white z-50 h-[90vh]" >
 
         <div className="h-full">
           <div className="shadow-xl">
@@ -231,6 +244,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
       <div
         className={` ${!dashboard ? "mt-10" : "mt-0"
           } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20  shadow-xl top-20 ${showFullChat ? "right-96" : "right-0"} w-96`}
+        ref={ref}
       >
         <div className={`flex flex-col flex-1 font-poppins`}>
           <div className="flex justify-between py-5 ">

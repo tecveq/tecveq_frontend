@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { IoBookOutline, IoCalendarOutline } from "react-icons/io5";
 import useClickOutside from "../../../hooks/useClickOutlise";
+import { useBlur } from "../../../context/BlurContext";
 
 const AssignmentMenu = ({
   isopen,
@@ -12,18 +13,21 @@ const AssignmentMenu = ({
   onEditGradeClick,
 }) => {
   const ref = useRef(null);
+  const { toggleBlur } = useBlur()
   useClickOutside(ref, () => {
-    setIsOpen(false);
+    if (isopen) {
+      setIsOpen(false);
+      toggleBlur()
+    }
   });
 
-  useEffect(() => {}, [isopen]);
+  useEffect(() => { }, [isopen]);
   return (
     <>
       <div
         ref={ref}
-        className={`fixed z-10 bg-white right-0 mr-20 top-64 shadow-lg border border-[#00000010] rounded-xl ${
-          isopen ? "" : "hidden"
-        }`}
+        className={`fixed z-10 bg-white right-0 mr-20 top-64 shadow-lg border border-[#00000010] rounded-xl ${isopen ? "" : "hidden"
+          }`}
       >
         <div className="flex p-6">
           <div className="flex flex-col gap-4">
@@ -37,7 +41,7 @@ const AssignmentMenu = ({
             </div> */}
             <div className="flex items-center gap-2 cursor-pointer " onClick={onGradeAssignemntClick}>
               <IoBookOutline />
-              <p>Grade {isQuizz? "Quizz": "Assignment"}</p>
+              <p>Grade {isQuizz ? "Quizz" : "Assignment"}</p>
             </div>
             {/* <div className="flex items-center gap-2 cursor-pointer " onClick={onEditGradeClick}>
               <IoBookOutline />

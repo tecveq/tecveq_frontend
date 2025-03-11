@@ -112,8 +112,33 @@ const Selectable = ({ label, options, setSelectedOption, selectedOption }) => (
 
 const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
   const ref = useRef(null);
-  const { toggleBlur } = useBlur();
   const { adminUsersData, allLevels } = useAdmin();
+
+  const { isBlurred, toggleBlur } = useBlur(); // Using toggleBlur for blur control
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        // Close the dropdown and unblur the parent
+        if (open) {
+          setopen(false);
+          // toggleBlur(); // Unblur the parent
+        }
+      }
+    };
+    if (open) {
+      toggleBlur(); // Blur the parent when dropdown is opened
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup the event listener and ensure unblur when unmounting
+    return () => {
+      if (open) toggleBlur(); // Unblur if the dropdown was open
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open, setopen, toggleBlur]);
+
+
 
   const [classroomName, setClassroomName] = useState(editData?.name || "");
   const [selectedLevel, setSelectedLevel] = useState(() =>
@@ -200,8 +225,8 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
           src={IMAGES.CloseIcon}
           className="w-[15px] h-[15px] cursor-pointer"
           onClick={() => {
-            // toggleBlur();
             setopen(false);
+            // toggleBlur();
           }}
         />
       </div>
@@ -291,7 +316,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
           <button
             className="px-6 py-2 rounded-lg bg-red text-white"
             onClick={() => {
-              toggleBlur();
+              // toggleBlur();
               setopen(false);
             }}
           >

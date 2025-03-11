@@ -49,22 +49,24 @@ const Reports = () => {
                   header={true}
                 />
                 {
-                  allSubjects?.subjects?.map((report, index) => (
-                    <DataRows index={index + 1}
-                      key={index + 1}
-                      subject={report.subject.name}
-                      instructor={report.teacher}
-                      attendance={report.avgAttendancePer}
-                      bgColor={"#FFFFFF"}
-                      header={false}
-                      onClickFunction={handleFunctionClick(report)}
-                    />
-                  ))
-                }
-                {allSubjects.length == 0 &&
-                  <div className='flex w-full justify-center'>
-                    <p className='font-medium text-2xl py-4'>No subjects to display</p>
-                  </div>
+                  allSubjects?.subjects?.length > 0 ? (
+                    allSubjects.subjects.map((report, index) => (
+                      <DataRows
+                        index={index + 1}
+                        key={index + 1}
+                        subject={report.subject.name}
+                        instructor={report.teacher}
+                        attendance={report.avgAttendancePer}
+                        bgColor={"#FFFFFF"}
+                        header={false}
+                        onClickFunction={() => handleFunctionClick(report)}
+                      />
+                    ))
+                  ) : (
+                    <div className='flex w-full justify-center'>
+                      <p className='font-medium text-2xl py-4'>No subjects to display</p>
+                    </div>
+                  )
                 }
               </div>
             </div>

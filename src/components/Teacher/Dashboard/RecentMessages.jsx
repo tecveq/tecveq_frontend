@@ -15,6 +15,8 @@ import { useUser } from "../../../context/UserContext";
 import { BACKEND_URL_SOCKET } from "../../../constants/api";
 import { getChatsRoomData, getMyChats } from "../../../api/UserApis";
 import { getParentsForChat } from "../../../api/Teacher/chat";
+import useClickOutside from "../../../hooks/useClickOutlise";
+import { useBlur } from "../../../context/BlurContext";
 
 
 const RecentMessages = ({ onclose, dashboard }) => {
@@ -38,6 +40,14 @@ const RecentMessages = ({ onclose, dashboard }) => {
   const { socketContext, setSocketContext, userData } = useUser();
 
   const msgEndRef = useRef(null);
+
+  const { toggleBlur } = useBlur(); // Using toggleBlur for blur control
+
+
+
+  useClickOutside(msgEndRef, () => {
+    onclose()
+  });
 
   const scrolltobottom = () => {
     msgEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -368,6 +378,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
       <div
         className={` ${!dashboard ? "mt-10" : "mt-0"
           } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20  shadow-xl top-20 ${showFullChat || showParentChat ? "right-96" : "right-0"} w-96`}
+        ref={msgEndRef}
       >
         <div className={`flex flex-col flex-1 font-poppins`}>
           <div className="flex justify-between py-5 ">

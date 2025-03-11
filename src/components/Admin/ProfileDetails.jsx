@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Loader from "../../utils/Loader";
 import { toast } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
 import { IoClose, IoMailOutline, IoCalendarOutline } from "react-icons/io5";
 import { GoPerson } from "react-icons/go";
 import { FiPhone } from "react-icons/fi";
+import profile from "../../assets/images/profilepic.png"
 import { RiGraduationCapLine } from "react-icons/ri";
 import { useUser } from "../../context/UserContext";
 import { useMutation } from "@tanstack/react-query";
 import { updateUser } from "../../api/Admin/UsersApi";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { useBlur } from "../../context/BlurContext";
+import useClickOutside from "../../hooks/useClickOutlise";
 
 const CustomInput = ({ label, value, status, icon, name, valuesObj, setValuesObj, isEmail }) => (
   <div className="my-1 text-sm w-full">
@@ -50,6 +53,14 @@ const ProfileDetails = ({ onClose }) => {
     return getDownloadURL(resp.ref);
   };
 
+  const ref = useRef(null); // Reference to the modal container
+  const { toggleBlur } = useBlur(); // Access toggleBlur from the context
+
+  // Use the hook with the modal's reference and callback function
+  useClickOutside(ref, () => {
+    onClose()
+  });
+
   const updateUserMutation = useMutation({
     mutationFn: async (data) => {
       if (selectedFile) {
@@ -73,7 +84,7 @@ const ProfileDetails = ({ onClose }) => {
   }, [userData]);
 
   return (
-    <div className="absolute top-0 right-0 z-10 flex bg-white h-full rounded-md shadow-lg w-96">
+    <div className="absolute top-0 right-0 z-10 flex bg-white h-full rounded-md shadow-lg w-96" ref={ref}>
       <div className="flex flex-col w-full p-5">
         <div className="flex justify-between border-b pb-3">
           <p className="text-xl font-medium">My Profile</p>
@@ -82,7 +93,7 @@ const ProfileDetails = ({ onClose }) => {
 
         <div className="flex flex-col items-center py-4">
           <label htmlFor="profile" className="cursor-pointer">
-            <img src={userData.profilePic || "../../assets/profile.png"} alt="Profile" className="w-28 h-28 rounded-full" />
+            <img src={profile || userData.profilePic} alt="Profile" className="w-28 h-28 rounded-full" />
           </label>
           <input id="profile" type="file" className="hidden" onChange={(e) => setSelectedFile(e.target.files[0])} />
           <p className="mt-2 font-medium">{userData.name}</p>

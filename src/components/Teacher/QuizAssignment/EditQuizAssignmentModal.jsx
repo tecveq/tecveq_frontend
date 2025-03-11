@@ -8,6 +8,7 @@ import { useUser } from "../../../context/UserContext";
 import { editAssignment } from "../../../api/Teacher/Assignments";
 import { useTeacher } from "../../../context/TeacherContext";
 import { editQuiz } from "../../../api/Teacher/Quiz";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
 const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz, }) => {
   const { toggleBlur } = useBlur();
@@ -15,7 +16,9 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz,
   const { allClassrooms } = useTeacher();
 
   const ref = useRef(null);
-  console.log(data, "quiz data is blaw blaw");
+  useClickOutside(ref, () => {
+    setopen(false)
+  });
 
   // State Management
   const [QADate, setQADate] = useState("");

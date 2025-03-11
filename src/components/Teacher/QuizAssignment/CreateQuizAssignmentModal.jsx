@@ -12,6 +12,7 @@ import { useUser } from "../../../context/UserContext";
 import { useTeacher } from "../../../context/TeacherContext";
 import { createQuiz, editQuiz } from "../../../api/Teacher/Quiz";
 import { createAssignment, editAssignment } from "../../../api/Teacher/Assignments";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
 
 const CreateQuizAssignmentModal = ({
@@ -22,10 +23,13 @@ const CreateQuizAssignmentModal = ({
   refetch,
   data
 }) => {
-  const { toggleBlur } = useBlur();
   const { userData } = useUser();
   const { allClassrooms } = useTeacher();
   const ref = useRef(null);
+
+  useClickOutside(ref, () => {
+    setopen(false)
+  });
 
   const [QADate, setQADate] = useState("");
   const [QATime, setQATime] = useState("");
@@ -127,9 +131,7 @@ const CreateQuizAssignmentModal = ({
     setLoading(false);
   }
 
-  useEffect(() => {
-
-  }, [])
+  
 
 
   const assignmentUpdateMutate = useMutation({
@@ -189,9 +191,11 @@ const CreateQuizAssignmentModal = ({
 
   return (
     <div
-      ref={ref}
       className={`fixed z-10 mt-10 bg-white max-h-[85vh] overflow-y-auto custom-scrollbar  p-8 w-full md:w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
         }`}
+
+      ref={ref}
+
     >
       <div className="flex gap-2">
         <div className="flex flex-col w-full gap-4">
@@ -207,7 +211,6 @@ const CreateQuizAssignmentModal = ({
                 className="w-[15px] h-[15px]"
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleBlur();
                   setopen(false);
                 }}
               />

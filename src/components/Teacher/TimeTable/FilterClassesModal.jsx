@@ -102,7 +102,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
         return (
           <div
             key={formattedDate}
-            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-blue-500 text-white" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
+            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-yellow_green_light w-10 h-10 rounded-full text-white" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
             onClick={() => {
               setSelectedDate(day);
               setDateForEvent(formattedDate);

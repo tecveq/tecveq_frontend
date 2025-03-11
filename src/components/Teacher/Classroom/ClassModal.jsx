@@ -12,11 +12,22 @@ import { createClassroom } from '../../../api/Admin/classroomApi';
 import { CusotmInputField } from '../../../commonComponents/CusotmInputField';
 import CustomSelectableField from "../../../commonComponents/CustomSelectableField"
 import MultiSelectField from '../../../commonComponents/MultiSelectField';
+import useClickOutside from '../../../hooks/useClickOutlise';
 
 
 const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
 
   const ref = useRef(null);
+  const { toggleBlur } = useBlur()
+
+
+  useClickOutside(ref, () => {
+    if (open) {
+      setopen(false);
+      toggleBlur();
+    }
+
+  });
   const [classObj, setClassObj] = useState({
     title: "",
   })
@@ -27,7 +38,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
   const [allowedEdit, setAllowedEdit] = useState(false);
 
   const { userData } = useUser();
-  const { toggleBlur } = useBlur();
+
   const { allSubjects, teacherData, allLevels } = useTeacher();
 
   const handleMultiSelectStudentsChange = (options) => {

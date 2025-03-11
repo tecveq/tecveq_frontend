@@ -17,34 +17,42 @@ const CreateAnnouncementModal = ({
 
     const { toggleBlur } = useBlur();
 
-    const ref = useRef(null);
-      useClickOutside(ref, () => {setopen(false)});
 
-    const [announcemnetObj, setAnnouncementObj] = useState({
-        title: isEditTrue? announcementData?.title:"" ,
-        description: isEditTrue? announcementData?.description : "" ,
-        date: "" ,
-        time: "",
-        type: "annoouncement",
-        visibility: isEditTrue? announcementData?.visibility : "all" ,
+    const ref = useRef(null);
+
+
+    useClickOutside(ref, () => {
+        setopen(false)
+        toggleBlur();
     });
 
-    const mutation = useMutation({mutationFn: async() => {
-        let anntime = announcemnetObj.time;
-        let anndate = announcemnetObj.date;
-        let datetime = (anntime && anndate)? anndate + "T" + anntime + ":00.000Z" : new Date().toISOString();
-        toggleBlur();
-        setopen(false);
-        let results;
-        if(isEditTrue){
-            results = await editAnnouncements({...announcemnetObj, date:datetime}, announcementData._id);
-        }else{
-            results = await createAnnouncements({...announcemnetObj, date:datetime});
+    const [announcemnetObj, setAnnouncementObj] = useState({
+        title: isEditTrue ? announcementData?.title : "",
+        description: isEditTrue ? announcementData?.description : "",
+        date: "",
+        time: "",
+        type: "annoouncement",
+        visibility: isEditTrue ? announcementData?.visibility : "all",
+    });
+
+    const mutation = useMutation({
+        mutationFn: async () => {
+            let anntime = announcemnetObj.time;
+            let anndate = announcemnetObj.date;
+            let datetime = (anntime && anndate) ? anndate + "T" + anntime + ":00.000Z" : new Date().toISOString();
+            toggleBlur();
+            setopen(false);
+            let results;
+            if (isEditTrue) {
+                results = await editAnnouncements({ ...announcemnetObj, date: datetime }, announcementData._id);
+            } else {
+                results = await createAnnouncements({ ...announcemnetObj, date: datetime });
+            }
+            await refetch();
+            console.log("add or edit announcemnt : ", results)
+            return results
         }
-        await refetch();
-        console.log("add or edit announcemnt : ", results)
-        return results
-    }});
+    });
 
     return (
         <div
@@ -57,7 +65,7 @@ const CreateAnnouncementModal = ({
                     <div className="flex items-center justify-between">
                         <div className="flex justify-center flex-1 w-[fit] gap-2 items-center">
                             <p className="text-2xl font-semibold cursor-text">
-                                {isEditTrue? "Update Announcement" :  "Create new Announcement" }
+                                {isEditTrue ? "Update Announcement" : "Create new Announcement"}
                             </p>
                         </div>
                         <div className="flex items-center gap-2 cursor-pointer">
@@ -80,7 +88,7 @@ const CreateAnnouncementModal = ({
                                     className="text-sm outline-none text-custom-gray-3 w-full"
                                     placeholder="Enter title"
                                     value={announcemnetObj.title}
-                                    onChange={(e) => { setAnnouncementObj({ ...announcemnetObj,title: e.target.value }) }}
+                                    onChange={(e) => { setAnnouncementObj({ ...announcemnetObj, title: e.target.value }) }}
                                 />
                             </div>
                         </div>
@@ -97,7 +105,7 @@ const CreateAnnouncementModal = ({
                                         className="text-sm outline-none text-custom-gray-3 w-full"
                                         placeholder="Enter date"
                                         value={announcemnetObj.date}
-                                        onChange={(e) => { setAnnouncementObj({ ...announcemnetObj,date: e.target.value }) }}
+                                        onChange={(e) => { setAnnouncementObj({ ...announcemnetObj, date: e.target.value }) }}
                                     />
                                 </div>
                             </div>
@@ -109,7 +117,7 @@ const CreateAnnouncementModal = ({
                                         className="text-sm outline-none text-custom-gray-3 w-full"
                                         placeholder="Enter time"
                                         value={announcemnetObj.time}
-                                        onChange={(e) => { setAnnouncementObj({ ...announcemnetObj,time: e.target.value }) }}
+                                        onChange={(e) => { setAnnouncementObj({ ...announcemnetObj, time: e.target.value }) }}
                                     />
                                 </div>
                             </div>
@@ -138,7 +146,7 @@ const CreateAnnouncementModal = ({
                             rows="7"
                             placeholder="Announcement"
                             value={announcemnetObj.description}
-                            onChange={(e) => {setAnnouncementObj({...announcemnetObj, description:e.target.value})}}
+                            onChange={(e) => { setAnnouncementObj({ ...announcemnetObj, description: e.target.value }) }}
                         />
                     </div>
                     <div className="flex justify-center items-center gap-3">

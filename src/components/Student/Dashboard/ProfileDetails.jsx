@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Loader from "../../../utils/Loader";
 
 import { toast } from "react-toastify";
@@ -13,11 +13,24 @@ import { GoMail, GoPencil, GoPerson } from "react-icons/go";
 import { MdPhone } from "react-icons/md";
 import { FaGraduationCap } from "react-icons/fa6";
 
-
+import profile from "../../../assets/images/profilepic.png"
+import { useBlur } from "../../../context/BlurContext";
+import useClickOutside from "../../../hooks/useClickOutlise";
 const ProfileDetails = ({ onclose }) => {
 
   const { userData, setUserData } = useUser();
   console.log("user data is : ", userData);
+
+  const ref = useRef(null);
+
+  const { toggleBlur } = useBlur(); // Using toggleBlur for blur control
+
+
+
+  useClickOutside(ref, () => {
+    onclose()
+  });
+
 
   const [bio, setBio] = useState(userData?.bio);
   const [loading, setLoading] = useState(false);
@@ -79,7 +92,7 @@ const ProfileDetails = ({ onclose }) => {
   }
 
   return (
-    <div className="relative justify-end items-end">
+    <div className="relative justify-end items-end" ref={ref}>
       <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 ">
         <div className="flex flex-col w-full">
           <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
@@ -95,7 +108,7 @@ const ProfileDetails = ({ onclose }) => {
               </div>
               <div className="flex flex-col items-center justify-center text-center">
                 <label htmlFor="profile" className="cursor-pointer">
-                  <img src={userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
+                  <img src={profile || userData.profilePic} alt="" className="w-28 h-28 rounded-full" />
                 </label>
                 <input id="profile" type="file" onChange={(e) => setSelectedFile(e.target.files[0])} className="hidden" />
                 <p>{userData?.name}</p>

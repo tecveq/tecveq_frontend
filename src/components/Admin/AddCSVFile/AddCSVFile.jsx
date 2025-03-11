@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../../../constants/api";
 import { Upload, File, Info, Download } from "lucide-react";
+import { toast } from "react-toastify";
 
 const AddCSVFileComponent = () => {
     const [file, setFile] = useState(null);
@@ -45,20 +46,33 @@ const AddCSVFileComponent = () => {
         const formData = new FormData();
         formData.append("file", file);
 
+
+
         try {
-            await axios.post(`${BACKEND_URL}/upload/csv-file`, formData, {
+            const response = await axios.post(`${BACKEND_URL}/upload/csv-file`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
             setIsLoading(false);
-            alert("File uploaded successfully.");
+            toast.success("File uploaded successfully.");
             setFile(null);
             setFileName("");
         } catch (error) {
             console.error("Error uploading file:", error);
-            alert("Error uploading file.");
+            // Check if the backend sends an array of errors in the response
+            if (error.response && error.response.data && error.response.data.errors) {
+                error.response.data.errors.forEach(err => toast.error(err));
+                setFile(null);
+                setFileName("");
+            } else {
+                toast.error("Error uploading file.");
+                setFile(null);
+                setFileName("");
+            }
+            setIsLoading(false);
         }
+
     };
 
     return (
