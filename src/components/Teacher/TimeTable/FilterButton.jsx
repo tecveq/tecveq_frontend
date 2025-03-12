@@ -15,7 +15,7 @@ export default function FilterButton({
       disabled={disabled ? disabled : false}
     >
        {icon? 
-       <HiOutlineCalendarDays size={30} /> 
+       <HiOutlineCalendarDays size={25} /> 
       : <></>} 
       {text}
     </button>

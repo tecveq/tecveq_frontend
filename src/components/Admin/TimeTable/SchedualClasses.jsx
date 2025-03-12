@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import FilterButton from "./FilterButton";
 import Loader from "../../../utils/Loader";
 import IMAGES from "../../../assets/images";
@@ -17,8 +17,9 @@ import { convertToISOWithTimezoneOffset } from "../../../utils/ConvertTimeZone";
 import CustomSelectableField from "../../../commonComponents/CustomSelectableField";
 import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
 import { useGetTeacherSubject } from "../../../api/Admin/SubjectsApi";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
-const SchedualClasses = ({ refetch }) => {
+const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpen }) => {
 
   const SchedualClassesComponent = ({ onclose, isOpen, setIsOpen }) => {
     const [allowedEdit, setAllowedEdit] = useState(false);
@@ -104,6 +105,7 @@ const SchedualClasses = ({ refetch }) => {
         if (!error) {
           toast.success("Class created successfully");
           await refetch();
+          setAddScheduleModalOpen(false);
           setaddEventModalOpen(false);
         }
       }
@@ -111,6 +113,12 @@ const SchedualClasses = ({ refetch }) => {
 
 
 
+    const ref = useRef(null);
+
+    useClickOutside(ref, () => {
+      setAddScheduleModalOpen(false);
+
+    });
 
     const parsedTeacher = selectedTeacher ? JSON.parse(selectedTeacher) : null;
 
@@ -125,6 +133,7 @@ const SchedualClasses = ({ refetch }) => {
       <div
         className={`absolute top-0 right-0 flex-1 z-10 flex bg-white rounded-md shadow-lg w-96 ${isOpen ? "" : "hidden"
           } `}
+        ref={ref}
       >
         <div className="flex flex-col flex-1 w-full">
           <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
@@ -132,7 +141,7 @@ const SchedualClasses = ({ refetch }) => {
             <IoClose
               onClick={() => {
                 onclose();
-                setIsOpen(false);
+                setAddScheduleModalOpen(false);
               }}
               className="cursor-pointer"
             />
@@ -279,21 +288,14 @@ const SchedualClasses = ({ refetch }) => {
 
   const [addEventModalOpen, setaddEventModalOpen] = useState(false);
   const [classModal, setClassModal] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(addScheduleModalOpen);
   return (
     <div>
       <div>
         <div>
-          <FilterClassesModal
-            classData={data}
-            isPending={isPending}
-            addModalOpen={addEventModalOpen}
-            setaddModalOpen={setaddEventModalOpen}
-          />
           <SchedualClassesComponent
-            onclose={() => { }}
-            isOpen={addEventModalOpen}
-            setIsOpen={setaddEventModalOpen}
+            onclose={() => setAddScheduleModalOpen(false)} // Ensure parent state updates
+            isOpen={addScheduleModalOpen}
           />
         </div>
       </div>
