@@ -9,7 +9,7 @@ import { getAllClasses } from "../../../api/ForAllAPIs";
 import { useTeacher } from "../../../utils/TeacherProvider";
 
 const TimeTable = () => {
-  
+
   const { isBlurred } = useBlur();
 
   const { teacherID, updateTeacherID } = useTeacher();
@@ -30,20 +30,12 @@ const TimeTable = () => {
             <Navbar heading={"Time Table"} />
           </div>
           <div
-            className={`flex px-4 flex-col md:px-10 lg:px-0 lg:flex-row flex-1 gap-5 py-2 ${
-              isBlurred ? "blur" : ""
-            }`}
+            className={`flex px-4 flex-col md:px-10 lg:px-0 w-full   gap-5 py-2 ${isBlurred ? "blur" : ""
+              }`}
           >
-            <div className="flex flex-1 flex-col lg:flex-row gap-y-6 gap-1 bg-white">
-              <div className="flex-[3] border p-2 py-3 border-grey/30 rounded-md shadow-lg">
+            <div className="flex  flex-col  gap-y-6 gap-1 bg-white w-full">
+              <div className=" border px-4  py-3 border-grey/30 rounded-md shadow-lg w-full">
                 <MyCalendar
-                  data={data}
-                  isPending={isPending}
-                  refetch={refetch}
-                />
-              </div>
-              <div className="flex-1 p-5 border rounded-md shadow-lg border-grey/30">
-                <SchedualClasses
                   data={data}
                   isPending={isPending}
                   refetch={refetch}

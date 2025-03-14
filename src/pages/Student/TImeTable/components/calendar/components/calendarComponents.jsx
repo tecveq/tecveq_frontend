@@ -38,14 +38,14 @@ export const CustomEvent = ({ event, setevents }) => {
         }}
       >
         <div>
-          <img
+          {/* <img
             src={IMAGES.MathIcon}
             className="object-contain w-7 h-7"
             alt="subject img"
-          />
+          /> */}
         </div>
-        <div className="flex flex-col">
-          <p className="text-xs text-wrap">
+        <div className="flex flex-row justify-between gap-2">
+          <p className="text-xs text-wrap ">
             {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
           </p>
           <p className="text-xs text-wrap text-black/70">

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import FilterButton from "./FilterButton";
 import IMAGES from "../../../assets/images";
@@ -8,9 +8,11 @@ import { GoDotFill } from "react-icons/go";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import moment from "moment";
+import { IoClose } from "react-icons/io5";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
 
-const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPending }) => {
+const FilterClassesModal = ({ addModalOpen, setAddModalOpen, classData, isPending }) => {
 
   const [filterEndDate, setFilterEndDate] = useState();
   const [filterActive, setFilterActive] = useState(false);
@@ -107,8 +109,8 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
           >
             <div
               className={`flex flex-col w-10 h-10 items-center px-5 py-1 rounded-full ${!filterActive && selectedDateFromChild == formattedDate
-                  ? "bg-maroon text-white"
-                  : ""
+                ? "bg-maroon text-white"
+                : ""
                 } ${filterActive &&
                   (new Date(formattedDate).toDateString() ===
                     new Date(filterStartDate).toDateString() ||
@@ -196,10 +198,28 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
     setFilterActive(true);
   }
 
+
+
+  const ref = useRef(null);
+
+  useClickOutside(ref, () => {
+    setAddModalOpen(false);
+
+  });
+
   return (
-    <div className="flex flex-col flex-1 bg-white rounded-md lg:w-72">
-      <div className="flex justify-center w-full">
-        <FilterButton text={"Schedual Classes"} className={"px-4"} clickHandler={() => setaddModalOpen(true)} />
+    <div className="flex flex-col flex-1 bg-white rounded-md lg:w-96 px-4" ref={ref}>
+      {/* <div className="flex justify-center w-full">
+        <FilterButton text={"Schedual Classes"} className={"px-4"} clickHandler={() => setAddModalOpen(true)} />
+      </div> */}
+      <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
+        <p className="text-xl font-medium">Schedule Class</p>
+        <IoClose
+          onClick={() => {
+            setAddModalOpen(false);
+          }}
+          className="cursor-pointer"
+        />
       </div>
       <div className="flex flex-col flex-1 gap-2">
         <div className="flex flex-col gap-1 bg-white rounded-lg">
@@ -217,7 +237,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
               title={"Cancel"}
               clickHandler={() => {
                 setFilterActive(false);
-                setaddModalOpen(false);
+                setAddModalOpen(false);
               }}
             />
             <ButtonComponent

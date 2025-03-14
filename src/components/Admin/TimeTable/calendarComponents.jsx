@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { useAdmin } from "../../../context/AdminContext";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import FilterButton from "./FilterButton";
 export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
   const [detailsModalOpen, setdetailsModalOpen] = useState(false);
   return (
@@ -19,7 +20,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex  justify-center text-center items-center rounded-md h-9 md:h-10 w-full !overflow-hidden ${event.teacher.teacherID.name
+        className={`text-xs flex  justify-center text-center items-center rounded-md h-full w-[100px] !overflow-hidden ${event.teacher.teacherID.name
           ? "bg-maroon/10  text-black flex flex-col p-1"
           : "bg-green_dark/10  text-black"
           }`}
@@ -27,16 +28,16 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
         }}
       >
-        <img
+        {/* <img
           src={IMAGES.MathIcon}
           className="object-contain hidden md:block w-7 h-7 md:h-4 md:w-4"
           alt="subject img"
-        />
-        <div className="flex flex-col">
-          <p className="text-[10px] md:text-[7px] md:h-[10px] text-wrap">
-            {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
+        /> */}
+        <div className="flex flex-row justify-between gap-2">
+          <p className="text-[8px] text-wrap ml-1">
+            {event.teacher ? event.teacher.teacherID.name : ""}
           </p>
-          <p className="text-[7px] md:text-[7px] md:h-[10px] text-wrap text-black/70">
+          <p className="text-[8px] text-wrap text-black/70">
             {event.subjectID.name ? event.subjectID.name : ""}
           </p>
         </div>
@@ -108,7 +109,13 @@ export const Header = (props) => {
 
 export const CustomToolbar = (props) => {
 
-  const { onTeacherSelect } = props;
+  const {
+    onTeacherSelect,
+    setAddModalOpen,
+    addModalOpen,
+    addScheduleModalOpen,
+    setAddScheduleModalOpen
+  } = props;
   //   const { currentUser } = useContext(AuthContext);
 
   const [fields, setfields] = useState([]);
@@ -152,9 +159,9 @@ export const CustomToolbar = (props) => {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-6 mb-6">
-        <div>
-          <div className="flex items-center w-full gap-2 mt-4">
+      <div className="flex flex-col lg:flex-row flex-wrap w-full items-center justify-between gap-6 lg:gap-3 mb-4">
+        <div className="w-full flex flex-1 justify-center">
+          <div className="flex items-center justify-center w-full gap-2 mt-4">
             {/* <button
               className="px-3 py-1 rounded-md bg-custom-light-1"
               onClick={goToCurrent}
@@ -168,7 +175,7 @@ export const CustomToolbar = (props) => {
               <MdKeyboardArrowLeft />
             </button>
 
-            <p className="mx-4 text-xl font-semibold text-maroon">
+            <p className="mx-2 text-2xl lg:text-[16px] font-semibold text-maroon">
               {moment.utc(Date.now()).format("DD MMMM, YYYY")}
               <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>
@@ -181,12 +188,12 @@ export const CustomToolbar = (props) => {
             </button>
           </div>
         </div>
-        <div className="flex items-start gap-2">
+        <div className="flex flex-1 items-start gap-2 w-full justify-center">
           {/* <div className="flex justify-between text-sm py-2 cursor-pointer px-2 w-36 border-[1.5px] border-[#00000020] rounded-xl ">
             Teacher <FaChevronDown size={16} color="black" />
           </div> */}
-          <div>
-            <div className="flex items-center gap-1 justify-between cursor-pointer py-2 text-sm px-4 w-48 border-[1.5px] border-[#00000020] rounded-xl ">
+          <div className="">
+            <div className="flex items-center gap-1 justify-between cursor-pointer py-2 text-sm px-3 w-48 border-[1.5px] border-[#00000020] rounded-xl ">
               <select className="outline-none w-full h-full cursor-pointer"
                 onChange={handleTeacherChange}
               >
@@ -199,9 +206,33 @@ export const CustomToolbar = (props) => {
                 ))}
               </select>
             </div>
-            <div className="py-1 mt-3 text-xs text-black/70 flex-wrap">
+            <div className="py-1 mt-3 text-xs text-black/70 flex-wrap w-[75%]">
               <p>Selcet the time table you want to view</p>
             </div>
+          </div>
+
+        </div>
+        <div className="flex flex-2 flex-row flex-wrap items-center justify-center gap-6 lg:gap-2 mb-6 lg:mb-0">
+          <div>
+            <FilterButton
+              className={"px-4 py-1"}
+              icon={true}
+              text={"Filter Classes"}
+              clickHandler={() => {
+                setAddModalOpen(!addModalOpen);
+              }}
+            />
+
+          </div>
+          <div>
+            <FilterButton
+              className={"px-4 py-1"}
+              text={"Schedule Classes"}
+              clickHandler={() => {
+                setAddScheduleModalOpen(!addScheduleModalOpen);
+              }}
+            />
+
           </div>
         </div>
       </div>

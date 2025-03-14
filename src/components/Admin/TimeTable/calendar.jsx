@@ -9,12 +9,21 @@ import {
 import { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import { useTeacher } from "../../../utils/TeacherProvider";
+import FilterClassesModal from "./FilterClassesModal";
+import SchedualClasses from "./SchedualClasses";
+import { useQuery } from "@tanstack/react-query";
+import { getAllClasses } from "../../../api/ForAllAPIs";
+
+// import { useTeacher as useTeacherData } from "../../../utils/TeacherProvider";
+
 
 const localizer = momentLocalizer(moment);
 
-const MyCalendar = ({ data, isPending, refetch, isRefetching}) => {
+const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addScheduleModalOpen, setAddScheduleModalOpen] = useState(false);
 
   const { teacherID, updateTeacherID } = useTeacher();
 
@@ -44,21 +53,22 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching}) => {
   };
 
   useEffect(() => {
-    if (!isPending) {
+    if (!isPending && data) {
+      setEvents((prevEvents) => {
+        const newEvents = data.map((item) => ({
+          ...item,
+          start: new Date(item.startTime),
+          end: new Date(item.endTime),
+        }));
 
-      let allclassfilter = data?.map((item) => {
-        let newdate = new Date(item?.startTime);
-        // newdate.setHours(newdate.getHours() - 5); // Subtract 5 hours
-        let end = new Date(item.endTime);
-        // end.setHours(end.getHours() - 5);
-        let returnobj = { ...item, end: end, start: newdate }
-        return returnobj
-      })
-
-      console.log("all class filter is : ", allclassfilter);
-      setEvents(allclassfilter);
+        // Only update if events have changed to avoid re-renders
+        return JSON.stringify(prevEvents) === JSON.stringify(newEvents)
+          ? prevEvents
+          : newEvents;
+      });
     }
-  }, [currentWeek, isPending, data]);
+  }, [isPending, data]);
+
 
   // Custom event renderer
   const renderCustomEvent = (e) => (
@@ -71,16 +81,79 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching}) => {
   );
 
   const handleTeacherID = (id) => {
-    updateTeacherID(id); // Update teacherID globally
+    if (teacherID !== id) {
+      updateTeacherID(id);
+    }
   };
+
 
   // Custom toolbar renderer
   // const renderCustomToolbar = (toolbar) => (
   //   <CustomToolbar loading={loading} toolbar={toolbar} onTeacherSelect={handleTeacherID} />
   // );
 
+
+  const [addEventModalOpen, setaddEventModalOpen] = useState(false);
+
+
+  const { data: teacherData, isPending: isPendingTeacher, refetch: refetchTeacher } = useQuery({
+    queryKey: teacherID ? ["timetable", teacherID] : ["timetable"],
+    queryFn: () => teacherID ? getAllClasses(teacherID) : Promise.resolve([]), // Avoids unnecessary fetches
+    enabled: !!teacherID, // Ensures teacherID is valid before fetching
+    refetchOnWindowFocus: false, // Stops auto-refetch on window focus
+    refetchOnReconnect: false, // Stops auto-refetch on network reconnect
+    staleTime: 1000 * 60 * 5, // Cache results for 5 minutes
+    cacheTime: 1000 * 60 * 10, // Keeps data in cache for 10 minutes
+  });
+
+
+  console.log("teacher data ", teacherData);
+
+
   return (
-    <div className="flex">
+    <div className="flex relative">
+
+
+      <div className="">
+        {
+          addModalOpen && (
+            <>
+
+              <div className={`absolute top-0 right-0 lg:-right-5 flex-1 z-10 flex py-4 bg-white rounded-md shadow-sm shadow-grey/25`}
+              >
+                <FilterClassesModal
+                  setaddModalOpen={setaddEventModalOpen}
+                  classData={data}
+                  addModalOpen={addModalOpen}
+                  setAddModalOpen={setAddModalOpen}
+                />
+              </div>
+            </>
+          )
+        }
+      </div>
+
+      <div >
+        {
+          addScheduleModalOpen && (
+            <>
+              <div
+                className={`absolute top-0 right-0 lg:-right-5 flex-1 z-10 flex py-4 bg-white rounded-md shadow-sm shadow-grey/25`}
+              >
+                <SchedualClasses
+                  data={teacherData}
+                  isPending={isPendingTeacher}
+                  refetch={refetch}
+                  addScheduleModalOpen={addScheduleModalOpen}
+                  setAddScheduleModalOpen={setAddScheduleModalOpen}
+
+                />
+              </div>
+            </>
+          )
+        }
+      </div>
+
       {!isPending && (
         <Calendar
           style={{}}
@@ -96,7 +169,15 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching}) => {
           endAccessor="end"
           className="w-[100%] h-[80vh]"
           components={{
-            toolbar: (props) => <CustomToolbar {...props} onTeacherSelect={handleTeacherID} />, event: renderCustomEvent,
+            toolbar: (props) => <CustomToolbar
+              {...props}
+              onTeacherSelect={handleTeacherID}
+              addModalOpen={addModalOpen}
+              setAddModalOpen={setAddModalOpen}
+              addScheduleModalOpen={addScheduleModalOpen}
+              setAddScheduleModalOpen={setAddScheduleModalOpen}
+            />,
+            event: renderCustomEvent,
             timeGutterHeader: SideTimeHeader,
             timeGutterWrapper: SideTime,
             header: Header,

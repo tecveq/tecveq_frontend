@@ -1,203 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Custombutton from "./Custombutton";
 import logo from "../../../assets/logo.png";
-
 import { IoIosLogOut } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
 import { userLogout } from "../../../api/ForAllAPIs";
 import Loader from "../../../utils/Loader";
-import { useUser } from "../../../context/UserContext";
 import { useTeacher } from "../../../context/TeacherContext";
 
 const Sidebar = () => {
-
   const navigate = useNavigate();
-
-  const [quizes, setQuizes] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [reports, setReports] = useState(false);
-  const [dashboard, setDashboard] = useState(true);
-  const [classroom, setClassroom] = useState(false);
-  const [timetable, setTimetable] = useState(false);
-  const [attendence, setAttendence] = useState(false);
-  const [assignments, setAssignments] = useState(false);
-
-  const [isopen, setIsopen] = useState(false);
-
-  const toggleSidebar = () => {
-    console.log("here");
-    setIsopen(!isopen);
-  };
-
-  const handleAttendenceClick = async () => {
-    setDashboard(false);
-    setQuizes(false);
-    setReports(false);
-    setClassroom(false);
-    setAttendence(true);
-    setAssignments(false);
-    setTimetable(false);
-    setIsopen(false);
-    navigate("/teacher/attendence");
-  };
-
-  const handleDashboardClick = async () => {
-    setDashboard(true);
-    setQuizes(false);
-    setAttendence(false);
-    setReports(false);
-    setClassroom(false);
-    setIsopen(false);
-    setAssignments(false);
-    setTimetable(false);
-    navigate("/teacher/dashboard");
-  };
-
-  const handleReportsClick = async () => {
-    setDashboard(false);
-    setQuizes(false);
-    setReports(true);
-    setClassroom(false);
-    setIsopen(false);
-    setAssignments(false);
-    setAttendence(false);
-    setTimetable(false);
-    navigate("/teacher/reports");
-  };
-
-  const handleQuizzesClick = async () => {
-    setDashboard(false);
-    setQuizes(true);
-    setReports(false);
-    setIsopen(false);
-    setClassroom(false);
-    setAssignments(false);
-    setAttendence(false);
-    setTimetable(false);
-    navigate("/teacher/quizzes");
-  };
-
-  const handleAssignmentsClick = async () => {
-    setDashboard(false);
-    setQuizes(false);
-    setReports(false);
-    setIsopen(false);
-    setAttendence(false);
-    setClassroom(false);
-    setAssignments(true);
-    setTimetable(false);
-    navigate("/teacher/assignments");
-  };
-
-  const handleTimeTableClick = async () => {
-    setDashboard(false);
-    setQuizes(false);
-    setReports(false);
-    setIsopen(false);
-    setAttendence(false);
-    setClassroom(false);
-    setAssignments(false);
-    setTimetable(true);
-    navigate("/teacher/timetable");
-  };
-
-  const handleClassroomClick = async () => {
-    setDashboard(false);
-    setAttendence(false);
-    setQuizes(false);
-    setIsopen(false);
-    setReports(false);
-    setClassroom(true);
-    setAssignments(false);
-    setTimetable(false);
-    navigate("/teacher/classroom");
-  };
-
   const { setTeacherLogedIn } = useTeacher();
+
+  const [loading, setLoading] = useState(false);
+  const [isopen, setIsopen] = useState(false);
+  const [activeButton, setActiveButton] = useState("home"); // Default active button
+
+  // Load active button from localStorage on mount
+  useEffect(() => {
+    const storedActiveButton = localStorage.getItem("activeButton");
+    if (storedActiveButton) {
+      setActiveButton(storedActiveButton);
+    }
+  }, []);
+
+  const handleButtonClick = (buttonKey, route) => {
+    setActiveButton(buttonKey);
+    localStorage.setItem("activeButton", buttonKey);
+    setIsopen(false); // Close sidebar on mobile view
+    navigate(route);
+  };
 
   const handleLogoutClick = async () => {
     setLoading(true);
     localStorage.clear();
     setTeacherLogedIn(false);
     await userLogout();
-    setIsopen(false);
     navigate("/admin/login");
     setLoading(false);
   };
 
+  const menuItems = [
+    { key: "home", title: "Dashboard", icon: "home", route: "/teacher/dashboard" },
+    { key: "time", title: "Time Table", icon: "time", route: "/teacher/timetable" },
+    { key: "graph", title: "Student Reports", icon: "graph", route: "/teacher/reports" },
+    { key: "book", title: "Assignments", icon: "book", route: "/teacher/assignments" },
+    { key: "quiz", title: "Quizzes", icon: "quiz", route: "/teacher/quizzes" },
+    { key: "attendence", title: "Attendance", icon: "quiz", route: "/teacher/attendence" },
+    { key: "classroom", title: "Classroom", icon: "quiz", route: "/teacher/classroom" },
+  ];
+
   const Menubar = () => (
-    <div
-      className='w-72  shadow-lg  z-index  px-8 py-5 mt-4 bg-white md:h-screen '
-    >
-      <div className=" h-full z-50">
+    <div className="w-72 shadow-lg z-index px-8 py-5 mt-4 bg-white md:h-screen">
+      <div className="h-full z-50">
         <div className="flex justify-center">
           <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
         </div>
         <div className="flex flex-col h-full gap-1 py-2 border-b border-b-black">
-          <Custombutton
-            icon={"home"}
-            title={"Dashboard"}
-            active={dashboard}
-            onpress={handleDashboardClick}
-          />
-
-          <Custombutton
-            icon={"time"}
-            title={"Time Table"}
-            active={timetable}
-            onpress={handleTimeTableClick}
-          />
-          <Custombutton
-            icon={"graph"}
-            title={"Student Reports"}
-            active={reports}
-            onpress={handleReportsClick}
-          />
-          <Custombutton
-            icon={"book"}
-            title={"Assignments"}
-            active={assignments}
-            onpress={handleAssignmentsClick}
-          />
-          <Custombutton
-            icon={"quiz"}
-            title={"Quizzes"}
-            active={quizes}
-            onpress={handleQuizzesClick}
-          />
-          <Custombutton
-            icon={"quiz"}
-            title={"Attendence"}
-            active={attendence}
-            onpress={handleAttendenceClick}
-          />
-          <Custombutton
-            icon={"quiz"}
-            title={"Classroom"}
-            active={classroom}
-            onpress={handleClassroomClick}
-          />
+          {menuItems.map(({ key, title, icon, route }) => (
+            <Custombutton
+              key={key}
+              icon={icon}
+              title={title}
+              active={activeButton === key}
+              onpress={() => handleButtonClick(key, route)}
+            />
+          ))}
         </div>
-        {loading && <div className="flex"> <Loader /> </div>}
-        {!loading &&
-          <div
-            onClick={handleLogoutClick}
-            className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon`}
-          >
+        {loading ? (
+          <div className="flex"><Loader /></div>
+        ) : (
+          <div onClick={handleLogoutClick} className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon">
             <IoIosLogOut />
             <p>Logout</p>
           </div>
-        }
+        )}
       </div>
     </div>
   );
 
   return (
     <div className="flex flex-col">
-      <div
-        className="px-3 py-3 cursor-pointer lg:hidden h-20 flex justify-center items-center"
-        onClick={toggleSidebar}
-      >
+      <div className="px-3 py-3 cursor-pointer lg:hidden h-20 flex justify-center items-center" onClick={() => setIsopen(!isopen)}>
         <div className="flex justify-center bg-maroon w-9 h-fit">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
@@ -206,10 +89,10 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={` lg:hidden ${isopen ? "block" : "hidden"} fixed top-16`}>
+      <div className={`lg:hidden ${isopen ? "block" : "hidden"} fixed top-16`}>
         <Menubar />
       </div>
-      <div className="max-lg:hidden ">
+      <div className="max-lg:hidden">
         <Menubar />
       </div>
     </div>

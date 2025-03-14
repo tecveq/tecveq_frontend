@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
+import { useTeacher as useTeacherData } from "../../../utils/TeacherProvider";
 
 import {
   Header,
@@ -10,6 +11,10 @@ import {
   SideTimeHeader,
 } from "./calendarComponents";
 import { useTeacher } from "../../../context/TeacherContext";
+import SchedualClasses from "./SchedualClasses";
+import { useQuery } from "@tanstack/react-query";
+import { getAllClasses } from "../../../api/ForAllAPIs";
+import FilterClassesModal from "./FilterClassesModal";
 
 const localizer = momentLocalizer(moment);
 
@@ -19,6 +24,8 @@ const MyCalendar = ({ data, isPending, refetch }) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [addScheduleModalOpen, setAddScheduleModalOpen] = useState(false);
+
   const [activeFilteredField, setActiveFilteredField] = useState(null);
 
   // Current date range state
@@ -62,8 +69,62 @@ const MyCalendar = ({ data, isPending, refetch }) => {
     }
   }, [currentWeek, isPending, data]);
 
+
+  const { teacherID, updateTeacherID } = useTeacherData();
+
+
+  const { data: teacherData, isPending: isPendingTeacher, refetch: refetchTeacher, isRefetching } = useQuery({
+    queryKey: ["timetable", teacherID], // Use teacherID in query key to avoid unnecessary refetches
+    queryFn: () => getAllClasses(teacherID), // Fetch classes based on teacherID
+    enabled: teacherID !== undefined, // Only fetch if teacherID is neither undefined nor null
+  });
+
+  const [addEventModalOpen, setaddEventModalOpen] = useState(false);
+
+
+
+
   return (
-    <div className="flex">
+    <div className="flex relative">
+
+      <div className="">
+        {
+          addModalOpen && (
+            <>
+
+              <div className={`absolute top-0 right-0 flex-1 z-10 flex py-4 bg-white rounded-md shadow-sm shadow-grey/25`}
+              >
+                <FilterClassesModal
+                  setaddModalOpen={setaddEventModalOpen}
+                  addModalOpen={addModalOpen}
+                  setAddModalOpen={setAddModalOpen}
+                />
+              </div>
+            </>
+          )
+        }
+      </div>
+
+      <div >
+        {
+          addScheduleModalOpen && (
+            <>
+              <div
+                className={`absolute top-0 right-0 flex-1 z-10 flex py-4 bg-white rounded-md shadow-sm shadow-grey/25`}
+              >
+                <SchedualClasses
+                  data={teacherData}
+                  isPending={isPendingTeacher}
+                  refetch={refetchTeacher}
+                  addScheduleModalOpen={addScheduleModalOpen}
+                  setAddScheduleModalOpen={setAddScheduleModalOpen}
+
+                />
+              </div>
+            </>
+          )
+        }
+      </div>
       <Calendar
         style={{}}
         formats={{ dayRangeHeaderFormat }}
@@ -76,7 +137,7 @@ const MyCalendar = ({ data, isPending, refetch }) => {
         startAccessor="start"
         endAccessor="end"
         onNavigate={handleNavigate}
-        className="w-[99%] h-[80vh]"
+        className="w-[99%] h-[80vh] "
         dayLayoutAlgorithm="no-overlap"
         components={{
           toolbar: (toolbar) => (
@@ -87,11 +148,13 @@ const MyCalendar = ({ data, isPending, refetch }) => {
               setEvents={setEvents}
               addModalOpen={addModalOpen}
               setAddModalOpen={setAddModalOpen}
+              addScheduleModalOpen={addScheduleModalOpen}
+              setAddScheduleModalOpen={setAddScheduleModalOpen}
               toolbar={toolbar}
             />
           ),
           event: (eventProps) => (
-            <CustomEvent setEvents={setEvents} event={eventProps.event} refetch={refetch} />
+            <CustomEvent setEvents={setEvents} event={eventProps.event} refetch={refetch}  />
           ),
           timeGutterHeader: SideTimeHeader,
           timeGutterWrapper: SideTime,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import FilterButton from "./FilterButton";
 import IMAGES from "../../../assets/images";
@@ -9,9 +9,12 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useTeacher } from "../../../context/TeacherContext";
 import moment from "moment";
+import { IoClose } from "react-icons/io5";
+import { useBlur } from "../../../context/BlurContext";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
 
-const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPending, }) => {
+const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPending, }) => {
 
   const { allClasses } = useTeacher();
 
@@ -199,11 +202,29 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen, classData, isPendin
   }
 
 
+  const ref = useRef(null);
+
+  useClickOutside(ref, () => {
+    setAddModalOpen(false);
+
+  });
+
   return (
-    <div className="flex flex-col flex-1 bg-white rounded-md lg:w-72">
-      <div className="flex justify-end w-full">
-        <FilterButton text={"Schedual Classes"} className={"px-4"} clickHandler={() => setaddModalOpen(true)} />
+    <div className="flex flex-col flex-1 bg-white rounded-md lg:w-96" ref={ref}>
+
+      <div className="flex justify-between px-5 pb-4 border-b border-b-black/10">
+        <p className="text-xl font-medium">Filter Classes</p>
+        <IoClose
+          onClick={() => {
+            // onclose();
+            setAddModalOpen(false);
+          }}
+          className="cursor-pointer"
+        />
+
       </div>
+
+
       <div className="flex flex-col flex-1 gap-2">
         <div className="flex flex-col gap-1 p-3 bg-white rounded-lg">
           <div className="flex-1 p-2 ">

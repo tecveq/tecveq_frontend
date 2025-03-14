@@ -18,7 +18,7 @@
 
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
-  
+
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -62,8 +62,8 @@
   display: flex !important;
   justify-content: "center" !important;
   flex: 1 !important;
-  /* min-height: 100px !important; */
-  /* height: 50px !important; */
+  /* min-height: 100px !important;
+  height: 90px !important; */
   background-color: transparent !important;
   border: none !important;
   outline: none !important;
@@ -108,6 +108,11 @@
   border: none !important;
   width: 50px !important;
   height: 50px !important;
+}
+
+.rbc-event-content {
+  height: 20px !important;
+  width: 100px !important;
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
@@ -193,17 +198,25 @@
   0% {
     transform: translateX(0);
   }
+
   25% {
-    transform: translateX(-6px); /* Move left */
+    transform: translateX(-6px);
+    /* Move left */
   }
+
   50% {
-    transform: translateX(6px);  /* Move right */
+    transform: translateX(6px);
+    /* Move right */
   }
+
   75% {
-    transform: translateX(-6px); /* Move left */
+    transform: translateX(-6px);
+    /* Move left */
   }
+
   100% {
-    transform: translateX(0); /* Reset to original position */
+    transform: translateX(0);
+    /* Reset to original position */
   }
 }
 
