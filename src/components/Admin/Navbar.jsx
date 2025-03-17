@@ -134,7 +134,7 @@ const Navbar = ({ heading }) => {
             <div className="flex items-center gap-2">
               <p className="font-medium hidden md:block">{userData.name}</p>
               <img
-                src={profile || userData?.profilePic}
+                src={userData.profilePic || profile}
                 alt="Profile"
                 className="w-12 h-12 cursor-pointer rounded-full"
                 onClick={toggleProfielMenu}

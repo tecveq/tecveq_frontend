@@ -10,6 +10,7 @@ import { useBlur } from "../../../context/BlurContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteClassroom } from "../../../api/Admin/classroomApi";
 import { getAllClassrooms } from "../../../api/Teacher/ClassroomApi";
+import { toast } from "react-toastify";
 
 const Classroom = () => {
   const [isClassMenuOpen, setIsClassMenuOpen] = useState(false);
@@ -49,6 +50,7 @@ const Classroom = () => {
     mutationFn: async (id) => await deleteClassroom(id),
     onSettled: async () => {
       await refetch();
+      setIsClassMenuOpen(false)
       return toast.success("Classroom deleted successfully");
     }
   });

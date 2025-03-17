@@ -5,12 +5,13 @@ import QuizAssignmentRow from "../../../components/Teacher/QuizAssignment/QuizAs
 import CreateQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/CreateQuizAssignmentModal";
 
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useBlur } from "../../../context/BlurContext";
-import { getAllQuizes } from "../../../api/Teacher/Quiz";
+import { deleteQuiz, getAllQuizes } from "../../../api/Teacher/Quiz";
 import LargeLoader from "../../../utils/LargeLoader";
 import { MdDelete, MdEdit } from "react-icons/md";
 import EditQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/EditQuizAssignmentModal";
+import { toast } from "react-toastify";
 
 const Quizzes = () => {
   const [isAssignmentMenuOpen, setIsAssignmentMenuOpen] = useState(false);
@@ -25,6 +26,7 @@ const Quizzes = () => {
     setIsAssignmentMenuOpen(!isAssignmentMenuOpen);
   }
 
+  const { toggleBlur } = useBlur();
 
   const onViewSubmission = () => {
     navigate(`/teacher/quizzes/submissions`, { state: quizdata })
@@ -34,7 +36,7 @@ const Quizzes = () => {
     navigate(`/teacher/quizzes/GradingQuizzes`, { state: quizdata })
   }
 
- 
+
 
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
@@ -52,6 +54,14 @@ const Quizzes = () => {
   // }
 
 
+
+  const quizDellMutate = useMutation({
+    mutationFn: async (id) => await deleteQuiz(id),
+    onSettled: async () => {
+      await refetch();
+      return toast.success("Quiz deleted successfully");
+    }
+  });
   return (
     isPending || isRefetching ? <div className="flex justify-center flex-1"> <LargeLoader />  </div> :
       <>

@@ -26,9 +26,13 @@ const CreateQuizAssignmentModal = ({
   const { userData } = useUser();
   const { allClassrooms } = useTeacher();
   const ref = useRef(null);
+  const { toggleBlur } = useBlur();
 
   useClickOutside(ref, () => {
     setopen(false)
+    if (open) {
+      toggleBlur();
+    }
   });
 
   const [QADate, setQADate] = useState("");
@@ -131,7 +135,7 @@ const CreateQuizAssignmentModal = ({
     setLoading(false);
   }
 
-  
+
 
 
   const assignmentUpdateMutate = useMutation({
@@ -212,6 +216,7 @@ const CreateQuizAssignmentModal = ({
                 onClick={(e) => {
                   e.stopPropagation();
                   setopen(false);
+                  toggleBlur()
                 }}
               />
             </div>
