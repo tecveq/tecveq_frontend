@@ -11,6 +11,7 @@ import { useBlur } from "../../../context/BlurContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteAssignments, getAllAssignments } from "../../../api/Teacher/Assignments";
 import { MdDelete, MdEdit } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const Assignments = () => {
   const [isAssignmentMenuOpen, setIsAssignmentMenuOpen] = useState(false);
@@ -18,6 +19,7 @@ const Assignments = () => {
   const [selectedAssignments, setSelectedAssignments] = useState(null);
   const navigate = useNavigate();
   const [assignmentdata, setAssignmentData] = useState({});
+  const { data, isPending, isSuccess, isError, refetch, isRefetching } = useQuery({ queryKey: ["assignments"], queryFn: getAllAssignments });
 
   const toggleAssignmentMenuOpen = (data) => {
     setAssignmentData(data);
@@ -47,13 +49,11 @@ const Assignments = () => {
     mutationFn: async (id) => await deleteAssignments(id),
     onSettled: async () => {
       await refetch();
-      return toast.success("Assignment deleted successfully");
+      toast.success("Assignment deleted successfully");
     }
   });
 
-  const { data, isPending, isSuccess, isError, refetch, isRefetching } = useQuery({ queryKey: ["assignments"], queryFn: getAllAssignments });
 
-  console.log("all assignemtns are : ", data);
 
 
 
@@ -73,6 +73,7 @@ const Assignments = () => {
                       className="flex cursor-pointer bg-maroon rounded-3xl"
                       onClick={() => {
                         setCreateModalOpen(true);
+                        toggleBlur();
                       }}
                     >
                       <p className="px-4 py-2 text-white">Create new +</p>
@@ -135,7 +136,8 @@ const Assignments = () => {
           isQuiz={false}
           refetch={refetch}
           open={createModalOpen}
-          setopen={setCreateModalOpen}
+          setopen={setCreateModalOpen} // ✅ Pass correct setter
+
         />
         <CreateQuizAssignmentModal
           isQuiz={false}

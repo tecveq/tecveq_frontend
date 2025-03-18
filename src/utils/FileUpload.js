@@ -1,30 +1,33 @@
-import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { FaTrashCan } from "react-icons/fa6";
+import "../../init"
+import AWS from '../../aws.config';
 
-export const uploadFile = async (file, path) => {
-  const storage = getStorage();
-  const storageRef = ref(storage, `${path}/${file?.name}`);
+// Create an S3 instance
+const s3 = new AWS.S3();
 
-  const resp = await uploadBytes(storageRef, file);
-  let url = await getDownloadURL(resp.ref)
-  console.log("response is : ", url);
-  return url;
-}
-// export const default_profile = "https://firebasestorage.googleapis.com/v0/b/tca-backend-454ca.appspot.com/o/file-path?alt=media&token=88e392aa-8182-4f24-bbc1-e9f3e58082f0"
-export const deleteUploadedFile = async (url) => {
-  try {
+// Function to upload an image and generate a URL
+export const uploadFile = async (file) => {
 
-    const storage = getStorage();
-    let filename = url.split("/o/")[1].split("?")[0]
-    const storageRef = ref(storage, `${filename}`);
+  const uploadPath = import.meta.env.UPLOAD_PATH;
 
-    const resp = await deleteObject(storageRef);
-    console.log("file deleted successfully");
 
-    return true;
 
-  } catch (error) {
-    console.log("error in deleting file is : ", error);
-    return false;
+  const params = {
+    Bucket: 'timetech-lms-prod',
+    Key: `${uploadPath}/${Date.now()}-${file.name}`, // Add timestamp to avoid name conflicts
+    Body: file,
   }
-}
+
+  try {
+    // Upload the file to S3
+    const data = await s3.upload(params).promise();
+
+    // Return the URL of the uploaded file
+    return data.Location;
+  } catch (error) {
+    console.error('Error uploading image: ', error);
+    throw new Error('Error uploading image');
+  }
+};
+
+
+

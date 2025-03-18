@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import moment from "moment/moment";
 import Loader from "../../../utils/Loader";
 import profile from "../../../assets/profile.png";
@@ -7,6 +7,8 @@ import { IoClose } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import { getAllChatrooms, getChatroomData } from "../../../api/Admin/ChatroomApi";
 import IMAGES from "../../../assets/images";
+import { useBlur } from "../../../context/BlurContext";
+import useClickOutside from "../../../hooks/useClickOutlise";
 
 
 const RecentMessages = ({ onclose, dashboard }) => {
@@ -85,6 +87,14 @@ const RecentMessages = ({ onclose, dashboard }) => {
       img: "profile",
     },
   ];
+
+  const ref = useRef(null); // Reference to the modal container
+  const { toggleBlur } = useBlur(); // Access toggleBlur from the context
+
+  // Use the hook with the modal's reference and callback function
+  useClickOutside(ref, () => {
+    onclose()
+  });
 
   const Message = ({ data, onpress }) => {
     return (
@@ -165,6 +175,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
       <div
         className={` ${!dashboard ? "mt-10" : "mt-0"
           } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20  shadow-xl top-20 ${showFullChat ? "right-96" : "right-0"} w-96`}
+        ref={ref}
       >
         <div className="flex flex-col flex-1 font-poppins">
           <div className="flex justify-between py-5 ">

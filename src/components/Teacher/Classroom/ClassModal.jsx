@@ -13,6 +13,7 @@ import { CusotmInputField } from '../../../commonComponents/CusotmInputField';
 import CustomSelectableField from "../../../commonComponents/CustomSelectableField"
 import MultiSelectField from '../../../commonComponents/MultiSelectField';
 import useClickOutside from '../../../hooks/useClickOutlise';
+import { toast } from 'react-toastify';
 
 
 const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
@@ -82,7 +83,10 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
       await refetch();
       toggleBlur();
       setopen(false);
-    }
+    },
+    onSuccess: () => {
+      toast.success('Classroom created successfully!');
+    },
   })
 
 

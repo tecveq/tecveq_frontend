@@ -9,7 +9,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AdminProvider } from './context/AdminContext.jsx'
 import { TeacherProvider } from './context/TeacherContext.jsx'
 import { StudentProvider } from './context/StudentContext.jsx'
-import "../firebase.config.js"
+
+
 import { ParentProvider } from './context/ParentContext.jsx'
 
 const queryClient = new QueryClient({});

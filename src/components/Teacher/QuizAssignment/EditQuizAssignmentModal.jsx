@@ -15,10 +15,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz,
   const { userData } = useUser();
   const { allClassrooms } = useTeacher();
 
-  const ref = useRef(null);
-  useClickOutside(ref, () => {
-    setopen(false)
-  });
+
 
   // State Management
   const [QADate, setQADate] = useState("");
@@ -124,6 +121,14 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz,
 
     }
   };
+
+
+  const ref = useRef(null);
+
+  useClickOutside(ref, () => {
+    setIsEdit(false)
+    toggleBlur();
+  });
 
   return (
     <div
