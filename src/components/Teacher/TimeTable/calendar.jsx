@@ -10,7 +10,6 @@ import {
   CustomToolbar,
   SideTimeHeader,
 } from "./calendarComponents";
-import { useTeacher } from "../../../context/TeacherContext";
 import SchedualClasses from "./SchedualClasses";
 import { useQuery } from "@tanstack/react-query";
 import { getAllClasses } from "../../../api/ForAllAPIs";

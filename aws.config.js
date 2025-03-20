@@ -1,12 +1,11 @@
-// awsConfig.js
-import AWS from 'aws-sdk';
+import { S3Client } from "@aws-sdk/client-s3";
 
-const awsConfig = {
-    accessKeyId: 'REDACTED_ACCESS_KEY',
-    secretAccessKey: 'REDACTED_SECRET_KEY',
-    region: 'eu-north-1'
-};
+const s3 = new S3Client({
+  region: import.meta.env.VITE_AWS_REGION, // Use your region
+  credentials: {
+    accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+    secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  },
+});
 
-AWS.config.update(awsConfig);
-
-export default AWS;
+export default s3;
