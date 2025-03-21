@@ -13,6 +13,7 @@ import { updateUser } from "../../api/Admin/UsersApi";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { useBlur } from "../../context/BlurContext";
 import useClickOutside from "../../hooks/useClickOutlise";
+import { uploadFile } from "../../utils/FileUpload";
 
 const CustomInput = ({ label, value, status, icon, name, valuesObj, setValuesObj, isEmail }) => (
   <div className="my-1 text-sm w-full">
@@ -45,13 +46,7 @@ const ProfileDetails = ({ onClose }) => {
     bio: userData?.bio || "",
   });
 
-  const uploadFile = async (file) => {
-    if (!file) return null;
-    const storage = getStorage();
-    const storageRef = ref(storage, `profile_pictures/${userData._id}/${file.name}`);
-    const resp = await uploadBytes(storageRef, file);
-    return getDownloadURL(resp.ref);
-  };
+
 
   const ref = useRef(null); // Reference to the modal container
   const { toggleBlur } = useBlur(); // Access toggleBlur from the context
@@ -64,6 +59,8 @@ const ProfileDetails = ({ onClose }) => {
   const updateUserMutation = useMutation({
     mutationFn: async (data) => {
       if (selectedFile) {
+        console.log("i am working");
+
         const fileUrl = await uploadFile(selectedFile);
         data.profilePic = fileUrl;
       }
