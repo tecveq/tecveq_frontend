@@ -46,8 +46,6 @@ const AddCSVFileComponent = () => {
         const formData = new FormData();
         formData.append("file", file);
 
-
-
         try {
             const response = await axios.post(`${BACKEND_URL}/upload/csv-file`, formData, {
                 headers: {
@@ -58,21 +56,19 @@ const AddCSVFileComponent = () => {
             toast.success("File uploaded successfully.");
             setFile(null);
             setFileName("");
+            document.getElementById("fileInput").value = ""; // Reset input field
         } catch (error) {
             console.error("Error uploading file:", error);
-            // Check if the backend sends an array of errors in the response
             if (error.response && error.response.data && error.response.data.errors) {
                 error.response.data.errors.forEach(err => toast.error(err));
-                setFile(null);
-                setFileName("");
             } else {
                 toast.error("Error uploading file.");
-                setFile(null);
-                setFileName("");
             }
+            setFile(null);
+            setFileName("");
+            document.getElementById("fileInput").value = ""; // Reset input field
             setIsLoading(false);
         }
-
     };
 
     return (
