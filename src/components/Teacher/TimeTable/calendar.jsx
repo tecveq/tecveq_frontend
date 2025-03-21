@@ -96,6 +96,7 @@ const MyCalendar = ({ data, isPending, refetch }) => {
                 <FilterClassesModal
                   setaddModalOpen={setaddEventModalOpen}
                   addModalOpen={addModalOpen}
+                  classData={data}
                   setAddModalOpen={setAddModalOpen}
                 />
               </div>
@@ -153,7 +154,7 @@ const MyCalendar = ({ data, isPending, refetch }) => {
             />
           ),
           event: (eventProps) => (
-            <CustomEvent setEvents={setEvents} event={eventProps.event} refetch={refetch}  />
+            <CustomEvent setEvents={setEvents} event={eventProps.event} refetch={refetch} />
           ),
           timeGutterHeader: SideTimeHeader,
           timeGutterWrapper: SideTime,
