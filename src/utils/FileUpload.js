@@ -11,9 +11,9 @@ export const uploadFile = async (file) => {
   if (CLIENT === "test") {
     folderName = "test";
   } else if (CLIENT === "tcsravi") {
-    folderName = "tcsravi";
-  } else if (CLIENT === "tcsshamilar") {
-    folderName = "tcsshamilar";
+    folderName = "tcs-ravi";
+  } else if (CLIENT === "tcsshalimar") {
+    folderName = "tcs-shalimar";
   } else {
     folderName = "test";
   }
