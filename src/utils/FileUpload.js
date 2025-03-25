@@ -4,14 +4,24 @@ import s3 from "../../aws.config"
 
 
 export const uploadFile = async (file) => {
-  const uploadPath = import.meta.env.VITE_UPLOAD_PATH;
-
-  // Convert Blob to ArrayBuffer
+  const CLIENT = import.meta.env.VITE_CLIENT;
   const fileBuffer = await file.arrayBuffer();
+
+  let folderName;
+  if (CLIENT === "test") {
+    folderName = "test";
+  } else if (CLIENT === "tcsravi") {
+    folderName = "tcs-ravi";
+  } else if (CLIENT === "tcsshalimar") {
+    folderName = "tcs-shalimar";
+  } else {
+    folderName = "test";
+  }
+
 
   const params = {
     Bucket: "timetech-lms-prod",
-    Key: `${uploadPath}/${Date.now()}-${file.name}`,
+    Key: `${folderName}/${Date.now()}-${file.name}`,
     Body: fileBuffer, // Pass as ArrayBuffer instead of Blob
     ContentType: file.type, // Ensure correct MIME type
   };

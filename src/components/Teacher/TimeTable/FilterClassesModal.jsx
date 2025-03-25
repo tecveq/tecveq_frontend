@@ -15,7 +15,7 @@ import useClickOutside from "../../../hooks/useClickOutlise";
 
 const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPending, }) => {
 
-  const { allClasses } = useTeacher();
+  
 
   const [selectedDate, setSelectedDate] = useState(new Date(Date.now()).toDateString());
   const [filteredclasses, setFilteredClasses] = useState([]);
@@ -27,9 +27,9 @@ const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPen
   const filterClasses = () => {
     console.log("selected Date is : ", selectedDate);
     let arr = [];
-    arr = allClasses && allClasses.filter((item) => new Date(item.startTime).getDate() == new Date(selectedDate).getDate());
+    arr = classData && classData.filter((item) => new Date(item.startTime).getDate() == new Date(selectedDate).getDate());
     if (filterActive) {
-      arr = allClasses && allClasses.filter((item) => new Date(item.startTime).getDate() >= new Date(filterStartDate).getDate() && new Date(item.startTime).getDate() <= new Date(filterEndDate).getDate());
+      arr = classData && classData.filter((item) => new Date(item.startTime).getDate() >= new Date(filterStartDate).getDate() && new Date(item.startTime).getDate() <= new Date(filterEndDate).getDate());
     }
     console.log("filtererd are is : ", arr);
     setFilteredClasses(arr);
@@ -37,7 +37,7 @@ const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPen
 
   useEffect(() => {
     filterClasses();
-  }, [selectedDate, allClasses, filterActive]);
+  }, [selectedDate, classData, filterActive]);
 
   const EventComponet = ({ item }) => {
     return (
@@ -260,7 +260,7 @@ const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPen
                 ? ""
                 : "No Shcedualed classes at this date"}
             </div>
-            {filteredclasses && filteredclasses.map((item) => (
+            {filteredclasses && filteredclasses?.map((item) => (
               <EventComponet item={item} key={item} />
             ))}
           </div>
