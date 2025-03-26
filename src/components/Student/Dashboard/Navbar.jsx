@@ -4,7 +4,7 @@ import Notifications from "./Notifications";
 import IMAGES from "../../../assets/images";
 import RecentMessages from "./RecentMessages";
 import ProfileDetails from "./ProfileDetails";
-
+import profile from "../../../assets/images/profilepic.png";
 import { toast } from "react-toastify";
 import { CiBellOn } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
