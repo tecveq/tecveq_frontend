@@ -104,10 +104,10 @@ const SchedualClasses = ({ refetch, data, isPending, addScheduleModalOpen, setAd
 
     const ref = useRef(null);
 
-    useClickOutside(ref, () => {
-      setAddScheduleModalOpen(false);
+    // useClickOutside(ref, () => {
+    //   setAddScheduleModalOpen(false);
 
-    });
+    // });
 
 
     return (

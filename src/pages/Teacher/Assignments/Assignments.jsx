@@ -5,6 +5,7 @@ import AssignmentMenu from "../../../components/Teacher/QuizAssignment/Assignmen
 import QuizAssignmentRow from "../../../components/Teacher/QuizAssignment/QuizAssignmentRow";
 import CreateQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/CreateQuizAssignmentModal";
 import EditQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/EditQuizAssignmentModal";
+import { FaEye } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
 import { useBlur } from "../../../context/BlurContext";
@@ -12,10 +13,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteAssignments, getAllAssignments } from "../../../api/Teacher/Assignments";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { toast } from "react-toastify";
-
+import ShowQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/ShowQuizAssignmentModal"
 const Assignments = () => {
   const [isAssignmentMenuOpen, setIsAssignmentMenuOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isShow, setIsShow] = useState(false)
   const [selectedAssignments, setSelectedAssignments] = useState(null);
   const navigate = useNavigate();
   const [assignmentdata, setAssignmentData] = useState({});
@@ -116,6 +118,11 @@ const Assignments = () => {
                               setIsEdit(true)
                               toggleBlur();
                             }}><MdEdit className="w-6 h-6" /></span>
+                            <span className="text-[blue] cursor-pointer" onClick={() => {
+                              setSelectedAssignments(assignment);
+                              setIsShow(true)
+                              toggleBlur();
+                            }}><FaEye className="w-6 h-6" /></span>
                             <span className="text-red cursor-pointer " onClick={() => {
                               assignmentDellMutate.mutate(assignment?._id);
                             }}><MdDelete className="w-6 h-6" /></span>
@@ -163,6 +170,15 @@ const Assignments = () => {
             refetch={refetch}
             isQuiz={false}
             setIsEdit={setIsEdit}
+          />
+        )}
+
+        {isShow && selectedAssignments && (
+          <ShowQuizAssignmentModal
+            data={selectedAssignments}
+            setIsShow={setIsShow}
+            isQuiz={false}
+
           />
         )}
       </>

@@ -67,6 +67,9 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
       );
     };
 
+
+    const parsedTeacher = selectedTeacher ? JSON.parse(selectedTeacher) : null;
+
     const [classObj, setClassObj] = useState({
       title: "",
       startTime: "",
@@ -76,7 +79,6 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
       endEventDate: "",
       classroomID: "",
       subjectID: "",
-      teacher: { teacherID: userData._id, status: "absent" }
     })
 
     const handleSaveDetails = () => { };
@@ -85,8 +87,11 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
       const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime));
       const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.startTime));
 
+
+
       let myobj = {
         ...classObj,
+        teacher: { teacherID: parsedTeacher._id, status: "absent" },
         subjectID: JSON.parse(selectedSubject)._id,
         classroomID: JSON.parse(selectedClassroom)._id,
         startTime: isoFormattedStringStartTime,
@@ -115,19 +120,20 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
 
     const ref = useRef(null);
 
-    useClickOutside(ref, () => {
-      setAddScheduleModalOpen(false);
+    // useClickOutside(ref, () => {
+    //   setAddScheduleModalOpen(false);
 
-    });
+    // });
 
-    const parsedTeacher = selectedTeacher ? JSON.parse(selectedTeacher) : null;
+
+    console.log(parsedTeacher?._id, "parse teacher status");
 
     const { teacherSubject, isLoading, error } = useGetTeacherSubject(parsedTeacher?._id);
 
 
 
 
-    console.log(allSubjects, "Subject OF");
+    console.log(selectedTeacher, " teacher data loaded");
 
     return (
       <div

@@ -95,6 +95,9 @@ export default function ViewEventDetailsModal({
     }
   };
 
+
+  console.log(event ,"class event are here");
+  
   return (
     <div
       onClick={() => { }}
@@ -157,6 +160,7 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">Class</p>
               <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
                 <p className="text-sm text-custom-gray-3">{event.teacher.teacherID.name}</p>
+
               </div>
             </div>
           </div>

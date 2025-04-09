@@ -3,7 +3,7 @@ import Navbar from "../../../components/Teacher/Navbar";
 import AssignmentMenu from "../../../components/Teacher/QuizAssignment/AssignmentMenu";
 import QuizAssignmentRow from "../../../components/Teacher/QuizAssignment/QuizAssignmentRow";
 import CreateQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/CreateQuizAssignmentModal";
-
+import { FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useBlur } from "../../../context/BlurContext";
@@ -12,10 +12,13 @@ import LargeLoader from "../../../utils/LargeLoader";
 import { MdDelete, MdEdit } from "react-icons/md";
 import EditQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/EditQuizAssignmentModal";
 import { toast } from "react-toastify";
+import ShowQuizAssignmentModal from "../../../components/Teacher/QuizAssignment/ShowQuizAssignmentModal";
 
 const Quizzes = () => {
   const [isAssignmentMenuOpen, setIsAssignmentMenuOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+    const [isShow, setIsShow] = useState(false)
+  
   const [selectedAssignments, setSelectedAssignments] = useState(null);
   const navigate = useNavigate();
   const [quizdata, setQuizdata] = useState({});
@@ -118,6 +121,11 @@ const Quizzes = () => {
                               setIsEdit(true)
                               toggleBlur();
                             }}><MdEdit className="w-6 h-6" /></span>
+                            <span className="text-[blue] cursor-pointer" onClick={() => {
+                              setSelectedAssignments(assignment);
+                              setIsShow(true)
+                              toggleBlur();
+                            }}><FaEye className="w-6 h-6" /></span>
                             <span className="text-red cursor-pointer " onClick={() => {
                               quizDellMutate.mutate(assignment?._id);
                             }}><MdDelete className="w-6 h-6" /></span>
@@ -163,6 +171,14 @@ const Quizzes = () => {
             isEditTrue={true}
             isQuiz={true}
             setIsEdit={setIsEdit}
+          />
+        )}
+        {isShow && selectedAssignments && (
+          <ShowQuizAssignmentModal
+            data={selectedAssignments}
+            setIsShow={setIsShow}
+            isQuiz={true}
+
           />
         )}
       </>

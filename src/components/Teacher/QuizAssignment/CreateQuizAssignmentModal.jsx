@@ -43,6 +43,7 @@ const CreateQuizAssignmentModal = ({
   const [quizAssignmentDataObj, setQuizAssignmentDataObj] = useState({
     canSubmitAfterTime: false,
     title: isEditTrue ? data?.title : "",
+    text: isEditTrue ? data.text : "",
     dueDate: isEditTrue ? data?.dueDate : "",
     subjectID: isEditTrue ? data?.subjectID : "",
     totalMarks: isEditTrue ? data?.totalMarks : 0,
@@ -53,87 +54,124 @@ const CreateQuizAssignmentModal = ({
 
   const [selectedClassroom, setSelectedClassroom] = useState("");
 
+  // Just updating the key parts of your component. Keep the rest of your original code structure.
+
   const handleCreateAssignment = async () => {
     setLoading(true);
-    if (isEditTrue) {
-      let sendingObjdata = {
-        ...quizAssignmentDataObj,
-        dueDate: QADate + "T" + QATime + ":00.000Z"
-      }
-      assignmentUpdateMutate.mutate(sendingObjdata)
-    } else {
 
-      let subjectId = "";
+    const hasText = quizAssignmentDataObj?.text?.trim() !== "";
+    const hasFile = selectedFile && selectedFile.name;
 
-      JSON.parse(selectedClassroom).teachers.map((item) => {
-        if (userData._id == item.teacher) {
-          subjectId = item.subject;
-        }
-      })
-
-      let fileUrl = await uploadFile(selectedFile, "deliverable");
-
-      let fileObj = {
-        name: selectedFile.name,
-        url: fileUrl
-      }
-
-      let filesArr = [fileObj];
-
-
-      let sendingObj = {
-        ...quizAssignmentDataObj,
-        classroomID: JSON.parse(selectedClassroom)._id,
-        subjectID: subjectId,
-        files: filesArr,
-        dueDate: (QADate && QATime) ? QADate + "T" + QATime + ":00.000Z" : new Date(Date.now()).toISOString()
-      }
-
-      assignmentCreateMutate.mutate(sendingObj)
+    if (!hasText && !hasFile) {
+      toast.error("Please provide either text or file before creating the assignment.");
+      setLoading(false);
+      return;
     }
+
+    try {
+      let filesArr = [];
+
+      // Upload file only if it exists
+      if (hasFile) {
+        const fileUrl = await uploadFile(selectedFile, "deliverable");
+        filesArr.push({
+          name: selectedFile.name,
+          url: fileUrl
+        });
+      }
+
+      if (isEditTrue) {
+        const sendingObj = {
+          ...quizAssignmentDataObj,
+          dueDate: QADate + "T" + QATime + ":00.000Z",
+          files: filesArr
+        };
+        assignmentUpdateMutate.mutate(sendingObj);
+      } else {
+        let subjectId = "";
+        JSON.parse(selectedClassroom)?.teachers?.forEach((item) => {
+          if (userData._id === item.teacher) {
+            subjectId = item.subject;
+          }
+        });
+
+        const sendingObj = {
+          ...quizAssignmentDataObj,
+          classroomID: JSON.parse(selectedClassroom)?._id,
+          subjectID: subjectId,
+          files: filesArr,
+          dueDate: (QADate && QATime)
+            ? QADate + "T" + QATime + ":00.000Z"
+            : new Date().toISOString()
+        };
+        assignmentCreateMutate.mutate(sendingObj);
+      }
+    } catch (err) {
+      console.error("Error during assignment creation:", err);
+      toast.error("Something went wrong while creating the assignment.");
+    }
+
     setLoading(false);
-  }
+  };
+
 
   const handleCreateQuiz = async () => {
     setLoading(true);
-    if (isEditTrue) {
-      let sendingObjdata = {
-        ...quizAssignmentDataObj,
-        dueDate: QADate + "T" + QATime + ":00.000Z"
-      }
-      quizEditMutate.mutate(sendingObjdata)
-    } else {
 
+    const hasText = quizAssignmentDataObj?.text?.trim() !== "";
+    const hasFile = selectedFile && selectedFile.name;
 
-      let subjectId = "";
-
-      JSON.parse(selectedClassroom).teachers.map((item) => {
-        if (userData._id == item.teacher) {
-          subjectId = item.subject;
-        }
-      })
-
-      let fileUrl = await uploadFile(selectedFile, "deliverable");
-
-      let fileObj = {
-        name: selectedFile.name,
-        url: fileUrl
-      }
-
-      let filesArr = [fileObj];
-
-      let sendingObj = {
-        ...quizAssignmentDataObj,
-        classroomID: JSON.parse(selectedClassroom)._id,
-        subjectID: subjectId,
-        files: filesArr,
-        dueDate: QADate + "T" + QATime + ":00.000Z"
-      }
-      console.log("sending data to server is : ", sendingObj);
-      quizCreateMutate.mutate(sendingObj);
+    if (!hasText && !hasFile) {
+      toast.error("Please provide either text or file before creating the quiz.");
+      setLoading(false);
+      return;
     }
+
+    try {
+      let filesArr = [];
+
+      // Upload file only if it exists
+      if (hasFile) {
+        const fileUrl = await uploadFile(selectedFile, "deliverable");
+        filesArr.push({
+          name: selectedFile.name,
+          url: fileUrl
+        });
+      }
+
+      if (isEditTrue) {
+        const sendingObj = {
+          ...quizAssignmentDataObj,
+          dueDate: QADate + "T" + QATime + ":00.000Z",
+          files: filesArr
+        };
+        quizEditMutate.mutate(sendingObj);
+      } else {
+        let subjectId = "";
+        JSON.parse(selectedClassroom)?.teachers?.forEach((item) => {
+          if (userData._id === item.teacher) {
+            subjectId = item.subject;
+          }
+        });
+
+        const sendingObj = {
+          ...quizAssignmentDataObj,
+          classroomID: JSON.parse(selectedClassroom)?._id,
+          subjectID: subjectId,
+          files: filesArr,
+          dueDate: QADate + "T" + QATime + ":00.000Z"
+        };
+
+        quizCreateMutate.mutate(sendingObj);
+      }
+    } catch (err) {
+      console.error("Error during quiz creation:", err);
+      toast.error("Something went wrong while creating the quiz.");
+    }
+
     setLoading(false);
-  }
+  };
+
 
 
 
@@ -243,6 +281,19 @@ const CreateQuizAssignmentModal = ({
                   placeholder="Enter title"
                   value={quizAssignmentDataObj.title}
                   onChange={(e) => setQuizAssignmentDataObj({ ...quizAssignmentDataObj, title: e.target.value })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col flex-1 gap-1">
+              <p className="text-xs font-semibold text-grey_700">{isQuiz ? "Text Quiz" : "Text Assignment"}</p>
+              <div className="flex justify-between border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
+                <textarea
+                  className="text-sm outline-none text-custom-gray-3 w-full"
+                  placeholder="Enter title"
+                  value={quizAssignmentDataObj.text}
+                  onChange={(e) => setQuizAssignmentDataObj({ ...quizAssignmentDataObj, text: e.target.value })}
                 />
               </div>
             </div>

@@ -19,8 +19,9 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
         open={detailsModalOpen}
         setopen={setdetailsModalOpen}
       />
+
       <div
-        className={`text-xs flex  justify-center text-center items-center rounded-md h-full w-[100px] !overflow-hidden ${event.teacher.teacherID.name
+        className={`text-xs flex  justify-center text-center items-center rounded-md h-[50px] w-[100px]  ${event.teacher.teacherID.name
           ? "bg-maroon/10  text-black flex flex-col p-1"
           : "bg-green_dark/10  text-black"
           }`}
@@ -33,12 +34,15 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
           className="object-contain hidden md:block w-7 h-7 md:h-4 md:w-4"
           alt="subject img"
         /> */}
-        <div className="flex flex-row justify-between gap-2">
+        <div className="flex flex-col">
           <p className="text-[8px] text-wrap ml-1">
-            {event.teacher ? event.teacher.teacherID.name : ""}
+            teacher: {event.teacher ? event.teacher.teacherID.name : ""}
           </p>
-          <p className="text-[8px] text-wrap text-black/70">
-            {event.subjectID.name ? event.subjectID.name : ""}
+          <p className="text-[8px] text-wrap ml-1">
+            classroom: {event.classroom ? event.classroom.name : ""}
+          </p>
+          <p className="text-[8px] text-wrap ">
+            subject: {event.subjectID.name ? event.subjectID.name.slice(0, 4) : ""}
           </p>
         </div>
       </div>
@@ -55,8 +59,8 @@ export const SideTime = (props) => {
     <div className="flex flex-col w-[130px]">
       {times.map((time) => (
         <div
-          key={`${time}2`}
-          className="flex w-[110px] h-10 justify-center items-center"
+          key={`${time}`}
+          className="flex w-[110px] h-[60px] justify-center items-center"
         >
           <p className="text-[10px] text-grey">
             {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
@@ -64,7 +68,7 @@ export const SideTime = (props) => {
           <p className="text-[10px] text-grey">-</p>
           <p className="text-[10px] text-grey">
             {moment.utc(time[0])
-              .add(1, "hour")
+              .add(0.5, "hour")
               .tz("Asia/Karachi") // Convert to PKT
               .format("h:mm a")}
           </p>

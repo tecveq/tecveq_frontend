@@ -16,6 +16,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz,
   const { allClassrooms } = useTeacher();
 
 
+  console.log(data, "data");
 
   // State Management
   const [QADate, setQADate] = useState("");
@@ -25,6 +26,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz,
   const [quizAssignmentDataObj, setQuizAssignmentDataObj] = useState({
     canSubmitAfterTime: false,
     title: "",
+    text: "",
     totalMarks: 0,
     dueDate: "",
     files: "",
@@ -37,11 +39,12 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz,
   // Effect to load data into form when modal is opened for editing
   useEffect(() => {
     if (isEditTrue && data) {
-      const { title, totalMarks, dueDate, files, canSubmitAfterTime } = data;
+      const { title, text, totalMarks, dueDate, files, canSubmitAfterTime } = data;
       const formattedDueDate = new Date(dueDate);
       setQuizAssignmentDataObj({
         canSubmitAfterTime,
         title,
+        text,
         totalMarks,
         dueDate,
         files: data?.files ? data?.files[0] : "", // Assume single file upload
@@ -176,6 +179,19 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz,
               value={quizAssignmentDataObj.title}
               onChange={(e) =>
                 setQuizAssignmentDataObj({ ...quizAssignmentDataObj, title: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+            />
+          </FieldWithLabel>
+
+
+          <FieldWithLabel label="Text">
+            <textarea
+              type="text"
+              placeholder="Enter Text"
+              value={quizAssignmentDataObj.text}
+              onChange={(e) =>
+                setQuizAssignmentDataObj({ ...quizAssignmentDataObj, text: e.target.value })
               }
               className="w-full p-2 border rounded"
             />
