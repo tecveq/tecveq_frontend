@@ -37,15 +37,15 @@ const MultiSelectField = ({ options, placeholder, onChange, onSelect }) => {
     <>
       <div className="w-full">
         <p className="text-xs font-semibold text-grey_700">{placeholder}</p>
-        <div className="mb-4 flex items-center p-2">
+        <div className="mb-4 flex items-center p-2 w-full justify-end">
           <input
             type="checkbox"
             checked={allSelected}
             onChange={handleSelectAllChange}
-            className="form-checkbox"
+            className="form-checkbox w-3.5 h-3.5 mt-1"
             indeterminate={someSelected.toString()} // Optional: For visual indication of partial selection
           />
-          <span className="ml-2 font-medium">Select All</span>
+          <span className="ml-2  font-medium text-sm h-fit">Select All 🗂️</span>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start justify-items-start">
           {options.map((option) => (
@@ -54,7 +54,7 @@ const MultiSelectField = ({ options, placeholder, onChange, onSelect }) => {
                 type="checkbox"
                 checked={selectedOptions.includes(option)}
                 onChange={() => handleCheckboxChange(option)}
-                className="form-checkbox"
+                className="form-checkbox w-3.5 h-3.5"
               />
               <p className="bg-[#00000005] px-2 py-1 rounded-sm lg:text-xs flex items-center gap-1 font-medium ml-2">
                 <img

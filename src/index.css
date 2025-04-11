@@ -90,9 +90,15 @@
 
 .rbc-header {
   display: flex !important;
+  height: 60px !important;
   justify-content: center !important;
   align-items: center !important;
   border-bottom: none !important;
+}
+
+.rbc-row  {
+  height: 60px !important;
+
 }
 
 .rbc-time-header-gutter {
@@ -103,6 +109,9 @@
   margin: 0 !important;
 }
 
+.rbc-event{
+  height: 60px !important;
+}
 
 .rbc-time-slot {
   border: none !important;
@@ -118,7 +127,7 @@
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 /* timeslot box height check */
 .rbc-timeslot-group {
-  /* min-height: 100px !important; */
+  min-height: 60px !important;
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */

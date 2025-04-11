@@ -14,102 +14,51 @@ import MultiSelectField from '../../../commonComponents/MultiSelectField';
 import useClickOutside from '../../../hooks/useClickOutlise';
 
 
-const MultiSelect = ({ options, placeholder, onChange, onSelect }) => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const allSelected = selectedOptions.length === options.length;
-  const someSelected = selectedOptions.length > 0 && !allSelected;
 
-  const handleCheckboxChange = (option) => {
-    setSelectedOptions((prevSelected) => {
-      const updatedSelection = prevSelected.includes(option)
-        ? prevSelected.filter((item) => item !== option)
-        : [...prevSelected, option];
-
-      // Trigger the parent onSelect immediately
-      onSelect(updatedSelection);
-      return updatedSelection;
-    });
-  };
-
-  const handleSelectAllChange = () => {
-    if (allSelected) {
-      setSelectedOptions([]);
-      onSelect([]);
-    } else {
-      setSelectedOptions(options);
-      onSelect(options);
-    }
-  };
-
-  useEffect(() => {
-    onChange(selectedOptions);
-  }, [selectedOptions]);
-
-  return (
-    <div className="w-full">
-      <p className="text-xs font-semibold text-grey_700">{placeholder}</p>
-      <div className="mb-4 flex items-center p-2">
-        <input
-          type="checkbox"
-          checked={allSelected}
-          onChange={handleSelectAllChange}
-          className="form-checkbox"
-          indeterminate={someSelected.toString()} // Optional: For visual indication of partial selection
-        />
-        <span className="ml-2 font-medium">Select All</span>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start justify-items-start">
-        {options.map((option) => (
-          <div key={option._id} className="flex items-center p-2">
-            <input
-              type="checkbox"
-              checked={selectedOptions.includes(option)}
-              onChange={() => handleCheckboxChange(option)}
-              className="form-checkbox"
-            />
-            <p className="bg-[#00000005] px-2 py-1 rounded-sm flex items-center gap-1 font-medium ml-2">
-              <img
-                src={option.profilePic || IMAGES.ProfilePic}
-                alt=""
-                className="w-8 h-8 object-cover rounded-full"
-              />
-              {option.name}
-              <span className="font-normal text-[#00000040]">
-                {option?.qualification}
-              </span>
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
 const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
   return (
-    <div className='flex flex-col text-start py-1'>
-      <div className='flex flex-col gap-1'>
-        <div className='font-medium'>
-          {label}
-        </div>
-        <div>
-          <select
-
-            value={selectedOption ? JSON.stringify(selectedOption) : ""} // Set default value for the select
-            onChange={(e) => {
-              const selectedItem = JSON.parse(e.target.value); // Parse the selected option back to an object
-              setSelectedOption(selectedItem);  // Update the state
-            }}
-            className='border outline-none rounded-sm border-black/20 px-4 w-full py-[4px]'>
-            <option value="">Select Option</option>
-            {options.map((item) => {
-              return <option key={item._id} value={JSON.stringify(item)}>{item.name}</option>
-            })}
-          </select>
+    <div className="flex flex-col text-start py-3">
+      <label className="font-medium text-gray-800 mb-2">{label}</label>
+      <div className="relative">
+        <select
+          value={selectedOption ? JSON.stringify(selectedOption) : ""}
+          onChange={(e) => {
+            const selectedItem = JSON.parse(e.target.value);
+            setSelectedOption(selectedItem);
+          }}
+          className="block w-full px-4 py-2 text-sm text-grey_700 border border-grey_700 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none transition-all duration-200 ease-in-out"
+        >
+          <option value="">Select Option</option>
+          {options.map((item) => (
+            <option key={item._id} value={JSON.stringify(item)}>
+              {item.name}
+            </option>
+          ))}
+        </select>
+        <div className="absolute top-0 right-0 mt-2 mr-3 text-gray-500 pointer-events-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
         </div>
       </div>
     </div>
+
   )
 }
+
+
+
 
 
 const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
@@ -221,51 +170,55 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
 
 
-  const handleSubjectSelect = (teacherId, subject) => {
-    setTeachersArr((prev) => {
-      // Create a new copy of the array to ensure immutability
-      const updatedArr = [...prev];
-      let flag = true;
+  const handleSubjectCheckboxChange = (teacherId, subject, isChecked) => {
+    setSelectedSubjects(prev => {
+      const currentSubjects = prev[teacherId] || [];
+      let updatedSubjects;
 
-      // Update the existing teacher's subject or add a new entry
-      const newArr = updatedArr.map((item) => {
-        if (item.teacher === teacherId) {
-          item.subject = subject._id;
-          flag = false;
-        }
-        return item;
-      });
-
-      if (flag) {
-        newArr.push({ teacher: teacherId, subject: subject._id });
+      if (isChecked) {
+        updatedSubjects = [...currentSubjects, subject];
+      } else {
+        updatedSubjects = currentSubjects.filter(s => s._id !== subject._id);
       }
 
-      return newArr;
+      return { ...prev, [teacherId]: updatedSubjects };
     });
 
-    // Update selected subject state for this teacher
-    setSelectedSubjects((prev) => ({ ...prev, [teacherId]: subject }));
+    setTeachersArr(prev => {
+      const filtered = prev.filter(item => item.teacher !== teacherId);
+      const subjectEntries = (isChecked
+        ? [...(selectedSubjects[teacherId] || []), subject]
+        : (selectedSubjects[teacherId] || []).filter(s => s._id !== subject._id)
+      ).map(subj => ({
+        teacher: teacherId,
+        subject: subj._id
+      }));
+
+      return [...filtered, ...subjectEntries];
+    });
   };
+
+
+
 
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-3  md:p-8 w-[90%] md:w-[800px] lg:w-[900px] px-4 md:px-10 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-80 place-self-center ${open ? "" : "hidden"
-        }`}
+      className={`fixed z-10 mt-10 bg-white p-6 md:p-8 w-[90%] md:w-[800px] lg:w-[900px] px-4 md:px-10 border border-gray-300 shadow-lg text-gray-800 rounded-xl ml-5 md:ml-80 place-self-center ${open ? "" : "hidden"}`}
     >
-      <div className="flex flex-1 ">
-        <div className="flex flex-col w-full gap-4 overflow-y-auto max-h-[80vh] custom-scrollbar">
+      <div className="flex flex-1">
+        <div className="flex flex-col w-full gap-6 overflow-y-auto max-h-[80vh] custom-scrollbar">
           <div className='pr-2'>
             <div className="flex items-center justify-between">
-              <div className="flex justify-center flex-1 w-[fit] gap-2 items-center">
-                <p className="text-2xl font-semibold cursor-text">
-                  {isEditTrue ? "Edit" : "Create"} Classroom
+              <div className="flex justify-center flex-1 w-fit gap-2 items-center">
+                <p className="text-2xl font-semibold text-blue-600 cursor-text">
+                  {isEditTrue ? "✏️ Edit" : "🎓 Create"} Classroom
                 </p>
               </div>
               <div className="flex items-center gap-2 cursor-pointer">
                 <img
                   src={IMAGES.CloseIcon}
-                  className="w-[15px] h-[15px]"
+                  className="w-[18px] h-[18px]"
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleBlur();
@@ -275,13 +228,13 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col flex-1 gap-1">
-                <p className="text-xs font-semibold text-grey_700">Classroom Name</p>
-                <div className="flex flex-col border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
+            <div className="flex items-center gap-4 mt-6">
+              <div className="flex flex-col flex-1 gap-2">
+                <p className="text-xs font-semibold text-gray-700 mb-3">📚 Classroom Name</p>
+                <div className="flex flex-col border-[1px] py-2 px-4 rounded-lg w-full items-center border-gray-300 hover:border-blue-500 focus:ring-2 focus:ring-blue-500">
                   <input
-                    className="w-full text-sm outline-none text-custom-gray-3"
-                    placeholder="Enter subject name"
+                    className="w-full text-sm outline-none text-gray-700 placeholder-gray-500 "
+                    placeholder="Enter classroom name"
                     value={classroomName}
                     onChange={(e) => setClassroomName(e.target.value)}
                   />
@@ -289,9 +242,9 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               </div>
             </div>
 
-            <div className="flex items-center gap-3 flex-1">
-              <div className="flex flex-col flex-1 gap-1">
-                <p className="text-xs font-semibold text-grey_700 mt-2">Select Level</p>
+            <div className="flex items-center gap-4 mt-4">
+              <div className="flex flex-col flex-1 gap-2">
+                <p className="text-xs font-semibold text-gray-700">🎓 Select Level</p>
                 <Selectable
                   options={allLevels}
                   setSelectedOption={setSelectedLevel}
@@ -300,114 +253,97 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               </div>
             </div>
 
-            {
-              selectedLevel && (
-                <div className="flex flex-col">
-                  <div className="flex flex-col flex-1 gap-1">
-                    <p className="text-xs font-semibold text-grey_700">
-                      Select Head Teacher <span className="text-grey_500">(Optional)</span>
-                    </p>
-                    <Selectable
-                      options={adminUsersData.allTeachers} // Assuming the teachers are in this array
-                      setSelectedOption={setHeadTeacher || ""} // setHeadTeacher will be the state for the selected head teacher
-                      selectedOption={headTeacher}
-                    />
-                  </div>
+            {selectedLevel && (
+              <div className="flex flex-col mt-4">
+                <div className="flex flex-col flex-1 gap-2">
+                  <p className="text-xs font-semibold text-gray-700">👨‍🏫 Select Head Teacher <span className="text-gray-500">(Optional)</span></p>
+                  <Selectable
+                    options={adminUsersData.allTeachers}
+                    setSelectedOption={setHeadTeacher}
+                    selectedOption={headTeacher}
+                  />
                 </div>
-              )
-            }
+              </div>
+            )}
 
-
-
-            {
-              selectedLevel && (
-                <div className="flex flex-col">
-                  <div className="flex flex-col flex-1 gap-1">
-
-                    <MultiSelectField
-                      placeholder="Select Teachers"
-                      onSelect={setSelectedTeachers}
-                      options={adminUsersData.allTeachers}
-                      onChange={handleMultiSelectTeachersChange}
-                    />
-                  </div>
-                  {
-                    newSelectedTeachers.length === 0 ? (
-                      ""
-                    ) : (
-                      <div className="flex justify-end py-1 text-xs text-maroon">
-                        <p>Teachers Selected: {newSelectedTeachers.length}</p>
-                      </div>
-                    )
-                  }
-                </div>
-              )
-            }
-
-
-            {newSelectedTeachers && newSelectedTeachers.map((item) => (
-              selectedLevel && (
-                <div key={item._id} className="flex items-center gap-3">
-                  <div className="flex flex-col flex-1 gap-1">
-                    <p className="text-xs font-semibold text-grey_700">Select subject for teachers</p>
-                    <div className='flex gap-4 items-center'>
-                      <p>{item?.name}</p>
-                      <div className='flex-1'>
-                        <Selectable
-                          options={subjectWithLevel}
-                          setSelectedOption={(val) => handleSubjectSelect(item._id, val)}
-                          selectedOption={selectedSubjects[item._id]} // Pass the selected subject for this teacher
-                        />
-                      </div>
+            {selectedLevel && (
+              <div className="flex flex-col mt-4">
+                <div className="flex flex-col flex-1 gap-2">
+                  <MultiSelectField
+                    placeholder="👩‍🏫 Select Teachers"
+                    onSelect={setSelectedTeachers}
+                    options={adminUsersData.allTeachers}
+                    onChange={handleMultiSelectTeachersChange}
+                  />
+                  {newSelectedTeachers.length > 0 && (
+                    <div className="flex justify-end py-2 text-xs text-maroon">
+                      <p>Teachers Selected: {newSelectedTeachers.length}</p>
                     </div>
-                  </div>
+                  )}
                 </div>
-              )
+              </div>
+            )}
+
+            {newSelectedTeachers && newSelectedTeachers.map((teacher) => (
+              <div key={teacher._id} className="mb-4 border-b pb-2">
+                <p className="font-semibold text-sm mb-2">{teacher.name} 📚</p>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {subjectWithLevel.map((subject) => {
+                    const isChecked = selectedSubjects[teacher._id]?.some(s => s._id === subject._id);
+                    return (
+                      <label key={subject._id} className="flex items-center gap-2 text-sm">
+                        <input
+                          type="checkbox"
+                          checked={isChecked}
+                          onChange={(e) => handleSubjectCheckboxChange(teacher._id, subject, e.target.checked)}
+                          className="text-blue-500 focus:ring-2 focus:ring-blue-500"
+                        />
+                        {subject.name}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
             ))}
 
-
-
-            {
-              selectedLevel && (
-                <div className="flex flex-col">
-                  <div className="flex flex-col flex-1 gap-1">
-                    <MultiSelectField
-                      placeholder="Select Students"
-                      onSelect={setSelectedStudents}
-                      options={studentWithLevel}
-                      onChange={handleMultiSelectStudentsChange}
-                    />
-                  </div>
-                  {
-                    newSelectedStudents.length === 0 ? (
-                      ""
-                    ) : (
-                      <div className="flex justify-end py-1 text-xs text-maroon">
-                        <p>Students Selected: {newSelectedStudents.length}</p>
-                      </div>
-                    )
-                  }
+            {selectedLevel && (
+              <div className="flex flex-col mt-4">
+                <div className="flex flex-col flex-1 gap-2">
+                  <MultiSelectField
+                    placeholder="👩‍🎓 Select Students"
+                    onSelect={setSelectedStudents}
+                    options={studentWithLevel}
+                    onChange={handleMultiSelectStudentsChange}
+                  />
+                  {newSelectedStudents.length > 0 && (
+                    <div className="flex justify-end py-2 text-xs text-maroon">
+                      <p>Students Selected: {newSelectedStudents.length}</p>
+                    </div>
+                  )}
                 </div>
-              )
-            }
+              </div>
+            )}
 
             {createClassroomMutation.isPending && <div><Loader /></div>}
 
-            {!createClassroomMutation.isPending && <div className="flex items-center gap-3 mt-2">
-              <div
-                onClick={() => {
-                  handleCreateClass();
-                }}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
-              >
-                <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
+            {!createClassroomMutation.isPending && (
+              <div className="flex items-center gap-3 mt-6">
+                <div
+                  onClick={() => {
+                    handleCreateClass();
+                  }}
+                  className="flex items-center justify-center w-full py-3 text-center rounded-md cursor-pointer bg-gradient-to-r from-maroon to-maroon/70 hover:from-maroon/60 hover:to-maroon/50 transition duration-200"
+                >
+                  <p className="text-sm text-white font-semibold">{isEditTrue ? "🔄 Update" : "✨ Create"}</p>
+                </div>
               </div>
-            </div>}
+            )}
           </div>
-
         </div>
       </div>
-    </div >
+    </div>
+
   );
 };
 

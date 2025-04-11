@@ -28,7 +28,7 @@ const Teachers = () => {
     queryKey: ["teacherDetails"],
     queryFn: getAllTeachers,
   });
-  console.log("teacher data is : ", teacherQuery.data);
+  console.log("teacher data is : ", teacherQuery?.data);
 
   useEffect(() => {
     if (!teacherQuery.isPending) {
@@ -73,7 +73,7 @@ const Teachers = () => {
                   <DataRows
                     index={"Sr No."}
                     teacherName={"Name"}
-                    teacherId={"Teacher ID."}
+                    teacherId={"Classroom"}
                     subject={"Subject"}
                     classAvg={"Class Average"}
                     attendance={"Attandence"}
@@ -86,6 +86,8 @@ const Teachers = () => {
                     teacherData &&
                     teacherData.map((thr, index) => {
                       return thr.map((item) => {
+                        console.log(item, "item data is");
+
                         return (
                           <DataRows
                             key={JSON.stringify(item)}
@@ -94,8 +96,8 @@ const Teachers = () => {
                               item?.attendence?.classData?.length == 0
                                 ? 0
                                 : (item.attendence.attendnececount.presents /
-                                    item.attendence.classData.length) *
-                                  100
+                                  item.attendence.classData.length) *
+                                100
                             }
                             index={index + 1}
                             bgColor={"#FFFFFF"}
@@ -105,7 +107,7 @@ const Teachers = () => {
                               item?.teacher?.profilePic || IMAGES?.Profile
                             }
                             teacherName={item?.teacher?.name}
-                            teacherId={item?.teacher?._id.slice(0, 4)}
+                            teacherId={item?.classroomName}
                             onClickFunction={handleFunctionClick(item)}
                           />
                         );
@@ -129,8 +131,8 @@ const Teachers = () => {
                                 item.attendence.classData.length == 0
                                   ? 0
                                   : (item.attendence.attendnececount.presents /
-                                      item.attendence.classData.length) *
-                                    100
+                                    item.attendence.classData.length) *
+                                  100
                               }
                               teacherProfile={
                                 item?.teacher?.profilePic || IMAGES.Profile

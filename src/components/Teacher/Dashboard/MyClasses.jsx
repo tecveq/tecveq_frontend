@@ -7,6 +7,8 @@ const MyClasses = () => {
   console.log("All Classes room in dashboard are : ", allClassrooms);
 
   const SubjectComponent = ({ data }) => {
+    console.log("data", data);
+
     return (
       <div className="p-2 rounded-md custom-shadow">
         <div className="flex flex-wrap items-center justify-between px-3">
@@ -17,8 +19,8 @@ const MyClasses = () => {
                 data.subject == "Maths"
                   ? IMAGES.MathIcon
                   : data.subject == "Chemistry"
-                  ? IMAGES.ChemistryIcon
-                  : IMAGES.MathIcon
+                    ? IMAGES.ChemistryIcon
+                    : IMAGES.MathIcon
               }
               alt="math icon"
             />

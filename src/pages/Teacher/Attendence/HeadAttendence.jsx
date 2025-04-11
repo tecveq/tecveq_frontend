@@ -65,7 +65,7 @@ const HeadAttendence = () => {
     if (data) {
       const HeadTeacherClass = data.filter((item) =>
         item.teachers.some(
-          (teach) => teach.type === "head" || item.teacher === userData._id
+          (teach) => teach.type === "head" && teach?.teacher === userData?._id
         )
       );
       setClassOfHeadTeacher(HeadTeacherClass)
@@ -74,6 +74,10 @@ const HeadAttendence = () => {
 
     }
   }, [data, userData]);
+
+
+  console.log(classOfHeadTeacher, "class of head teacher");
+
 
 
 

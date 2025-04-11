@@ -13,6 +13,8 @@ import { useTeacher } from "../../../context/TeacherContext";
 import { useGetAllTeacherSubjects } from "../../../api/Teacher/TeacherSubjectApi";
 import { convertToISOWithTimezoneOffset } from "../../../utils/ConvertTimeZone";
 import CustomSelectableField from '../../../commonComponents/CustomSelectableField'
+import CustomMultiSelectableField from '../../../commonComponents/MultiSelectableField'
+
 import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
 import useClickOutside from "../../../hooks/useClickOutlise";
 
@@ -34,7 +36,7 @@ const SchedualClasses = ({ refetch, data, isPending, addScheduleModalOpen, setAd
 
 
     const [selectedSubject, setSelctedSubject] = useState();
-    const [selectedClassroom, setSelectedClassroom] = useState();
+    const [selectedClassrooms, setSelectedClassrooms] = useState([]);
 
     const [selectedDays, setSelectedDays] = useState(["Monday"]);
 
@@ -63,25 +65,28 @@ const SchedualClasses = ({ refetch, data, isPending, addScheduleModalOpen, setAd
     const handleSaveDetails = () => { };
 
     const handleSchedualClass = () => {
-      const isoFormattedStringEndTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime));
-      const isoFormattedStringStartTime = new Date(convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.startTime));
+      const isoFormattedStringEndTime = new Date(
+        convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.endTime)
+      );
+      const isoFormattedStringStartTime = new Date(
+        convertToISOWithTimezoneOffset(classObj.startEventDate, classObj.startTime)
+      );
 
+      selectedClassrooms.forEach((classroomID) => {
+        const myobj = {
+          ...classObj,
+          subjectID: JSON.parse(selectedSubject)._id,
+          classroomID, // Send one by one
+          startTime: isoFormattedStringStartTime,
+          endTime: isoFormattedStringEndTime,
+          selectedDays,
+        };
 
-      console.log(isoFormattedStringStartTime, "start time", isoFormattedStringEndTime, "end time", isoFormattedStringStartTime);
+        console.log("Sending to backend:", myobj);
+        classCreateMutate.mutate(myobj);
+      });
+    };
 
-      let myobj = {
-        ...classObj,
-        subjectID: JSON.parse(selectedSubject)._id,
-        classroomID: JSON.parse(selectedClassroom)._id,
-        startTime: isoFormattedStringStartTime,
-        endTime: isoFormattedStringEndTime,
-        selectedDays,
-      };
-
-
-      console.log("my obj is : ", myobj);
-      classCreateMutate.mutate(myobj);
-    }
 
 
     const classCreateMutate = useMutation({
@@ -104,10 +109,10 @@ const SchedualClasses = ({ refetch, data, isPending, addScheduleModalOpen, setAd
 
     const ref = useRef(null);
 
-    useClickOutside(ref, () => {
-      setAddScheduleModalOpen(false);
+    // useClickOutside(ref, () => {
+    //   setAddScheduleModalOpen(false);
 
-    });
+    // });
 
 
     return (
@@ -155,11 +160,12 @@ const SchedualClasses = ({ refetch, data, isPending, addScheduleModalOpen, setAd
                   setValue={setClassObj}
                 />
 
-                <CustomSelectableField
+                <CustomMultiSelectableField
                   label={"Select Classroom"}
                   options={allClassrooms}
-                  selectedOption={selectedClassroom}
-                  setSelectedOption={setSelectedClassroom}
+                  selectedOption={selectedClassrooms}
+                  setSelectedOption={setSelectedClassrooms}
+                  isMulti={true}
                 />
                 <CusotmInputField
                   type={"text"}
