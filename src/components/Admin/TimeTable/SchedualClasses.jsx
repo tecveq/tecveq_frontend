@@ -18,6 +18,7 @@ import CustomSelectableField from "../../../commonComponents/CustomSelectableFie
 import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
 import { useGetTeacherSubject } from "../../../api/Admin/SubjectsApi";
 import useClickOutside from "../../../hooks/useClickOutlise";
+import CustomMultiSelectableField from "../../../commonComponents/MultiSelectableField";
 
 const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpen }) => {
 
@@ -33,7 +34,7 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
     const [allClassrooms, setAllClassrooms] = useState([]);
     const [selectedSubject, setSelctedSubject] = useState();
     const [selectedTeacher, setSelectedTeacher] = useState();
-    const [selectedClassroom, setSelectedClassroom] = useState();
+    const [selectedClassrooms, setSelectedClassrooms] = useState([]);
     const [selectedDays, setSelectedDays] = useState(["Monday"]);
 
 
@@ -89,19 +90,24 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
 
 
 
-      let myobj = {
-        ...classObj,
-        teacher: { teacherID: parsedTeacher._id, status: "absent" },
-        subjectID: JSON.parse(selectedSubject)._id,
-        classroomID: JSON.parse(selectedClassroom)._id,
-        startTime: isoFormattedStringStartTime,
-        endTime: isoFormattedStringEndTime,
-        selectedDays
-      };
 
 
-      console.log("my obj is : ", myobj);
-      classCreateMutate.mutate(myobj);
+      selectedClassrooms.forEach((classroomID) => {
+        const myobj = {
+          ...classObj,
+          teacher: { teacherID: parsedTeacher._id, status: "absent" },
+          subjectID: JSON.parse(selectedSubject)._id,
+          classroomID, // Send one by one
+          startTime: isoFormattedStringStartTime,
+          endTime: isoFormattedStringEndTime,
+          selectedDays,
+        };
+
+        console.log("Sending to backend:", myobj);
+        classCreateMutate.mutate(myobj);
+      });
+
+
     }
 
     const classCreateMutate = useMutation({
@@ -186,12 +192,19 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
                   value={classObj.title}
                   setValue={setClassObj}
                 />
-                <CustomSelectableField
+                <CustomMultiSelectableField
+                  label={"Select Classroom"}
+                  options={allClassrooms}
+                  selectedOption={selectedClassrooms}
+                  setSelectedOption={setSelectedClassrooms}
+                  isMulti={true}
+                />
+                {/* <CustomSelectableField
                   label={"Select Classroom"}
                   options={allClassrooms}
                   selectedOption={selectedClassroom}
                   setSelectedOption={setSelectedClassroom}
-                />
+                /> */}
                 <div>
                   <CusotmInputField
                     icon={"cap"}
