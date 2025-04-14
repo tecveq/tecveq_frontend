@@ -114,8 +114,6 @@ const Selectable = ({ label, options, setSelectedOption, selectedOption }) => {
   );
 };
 
-
-
 const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
   const ref = useRef(null);
   const { adminUsersData, allLevels } = useAdmin();
@@ -149,29 +147,25 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
       const initialTeachers = [];
       const initialTeacherArr = [];
 
-      // Process all teachers (including head teacher)
       editData.teachers?.forEach(item => {
         const teacherId = item.teacher?._id;
         const subjectId = item.subject?._id;
 
         if (teacherId) {
-          // Add teacher to initialTeachers if not already present
           if (!initialTeachers.some(t => t._id === teacherId)) {
             initialTeachers.push(item.teacher);
           }
 
-          // Add subject to teacher's subjects array if valid
           if (subjectId) {
             initialSubjects[teacherId] = initialSubjects[teacherId] || [];
             if (!initialSubjects[teacherId].includes(subjectId)) {
               initialSubjects[teacherId].push(subjectId);
             }
 
-            // Add to teacherArr
             initialTeacherArr.push({
               teacher: teacherId,
               subject: subjectId,
-              type: item.type, // Preserve the type (head/teacher)
+              type: item.type,
             });
           }
         }
@@ -183,7 +177,6 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
     }
   }, [editData]);
 
-  // Subject toggle handler
   const toggleSubject = useCallback((teacherId, subjectId) => {
     setSelectedSubjects(prev => {
       const currentSubjects = prev[teacherId] || [];
@@ -192,11 +185,11 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
         : [...currentSubjects, subjectId];
 
       setTeachersArr(prevArr => {
-        const filtered = prevArr.filter(item => item.teacher !== teacherId || item.type === "head"); // Preserve head teacher entry
+        const filtered = prevArr.filter(item => item.teacher !== teacherId || item.type === "head");
         const newPairs = updatedSubjects.map(s => ({
           teacher: teacherId,
           subject: s,
-          type: "teacher", // Default to regular teacher unless head
+          type: "teacher",
         }));
         return [...filtered, ...newPairs];
       });
@@ -234,10 +227,16 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
       teachers: teacherArr.map(t => ({
         teacher: t.teacher,
         subject: t.subject,
-        type: t.type || "teacher", // Ensure type is included
+        type: t.type || "teacher",
       })),
-      headTeacher: headTeacher?._id || "",
     };
+
+    if (headTeacher) {
+      data.headTeacher = headTeacher._id;
+    } else {
+      // ✅ Remove any 'head' entries if no headTeacher selected
+      data.teachers = data.teachers.filter(t => t.type !== "head");
+    }
 
     updateClassroomMutation.mutate({ data, id: editData?._id });
   }, [classroomName, selectedLevel, newSelectedStudents, newSelectedTeachers, headTeacher, teacherArr, updateClassroomMutation, editData]);
