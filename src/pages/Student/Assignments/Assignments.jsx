@@ -47,10 +47,12 @@ const Assignments = () => {
                     bgColor={"#FFFFFF"}
                     header={false}
                     total_marks={assignment?.totalMarks}
-                    download={assignment.files[0].url}
+                    download={assignment?.files[0]?.url}
                     upload={true}
+                    text={assignment?.text}
                   />
                 ))}
+
                 {allAssignments.length == 0 &&
                   <div className='flex w-full justify-center'>
                     <p className='font-medium text-2xl py-4'>No assignments to display</p>
