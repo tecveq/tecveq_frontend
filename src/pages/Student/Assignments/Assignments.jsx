@@ -4,8 +4,10 @@ import QuizAssignmentRow from "../../../components/Student/QuizAssignment/QuizAs
 
 import { useBlur } from "../../../context/BlurContext";
 import { useStudent } from "../../../context/StudentContext";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const Assignments = () => {
+  const { isSidebarOpen } = useSidebar(); // new
 
   const { isBlurred } = useBlur();
   const { allAssignments } = useStudent();
@@ -20,7 +22,7 @@ const Assignments = () => {
         >
           <div className="h-screen pt-1">
             <Navbar heading={"Assignments"} />
-            <div className={`px-3 ${isBlurred ? "blur" : ""}`}>
+            <div className={`px-3 ${isBlurred ? "blur" : ""} relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto `}>
               <div className="mt-8 h-[80%] overflow-auto">
                 <QuizAssignmentRow
                   isQuiz={false}

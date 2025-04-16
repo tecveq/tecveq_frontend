@@ -6,12 +6,13 @@ import { useNavigate } from "react-router-dom";
 import { adminLogout } from "../../../api/Admin/AdminApi";
 import Loader from "../../../utils/Loader";
 import { useAdmin } from "../../../context/AdminContext";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const { setAdminLogedIn } = useAdmin();
+  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
 
-  const [isopen, setIsopen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("dashboard");
 
@@ -82,7 +83,10 @@ const Sidebar = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="px-3 py-3 cursor-pointer lg:hidden h-20 flex items-center justify-center" onClick={() => setIsopen(!isopen)}>
+      <div className="px-3 py-3 cursor-pointer lg:hidden h-20 flex items-center justify-center" onClick={() => {
+        setIsopen(!isopen)
+        setIsSidebarOpen(!isSidebarOpen)
+      }}>
         <div className="flex justify-center bg-maroon w-9 h-fit">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
@@ -91,7 +95,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isopen ? "block" : "hidden"} z-50 bg-white fixed top-16`}>
+      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} z-50 bg-white fixed top-16`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">

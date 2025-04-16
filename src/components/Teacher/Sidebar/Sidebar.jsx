@@ -6,13 +6,13 @@ import { IoIosLogOut } from "react-icons/io";
 import { userLogout } from "../../../api/ForAllAPIs";
 import Loader from "../../../utils/Loader";
 import { useTeacher } from "../../../context/TeacherContext";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const { setTeacherLogedIn } = useTeacher();
-
+  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
   const [loading, setLoading] = useState(false);
-  const [isopen, setIsopen] = useState(false);
   const [activeButton, setActiveButton] = useState("home"); // Default active button
 
   // Load active button from localStorage on mount
@@ -80,7 +80,11 @@ const Sidebar = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="px-3 py-3 cursor-pointer lg:hidden h-20 flex justify-center items-center" onClick={() => setIsopen(!isopen)}>
+      <div className="px-3 py-3 cursor-pointer lg:hidden h-20 flex justify-center items-center" onClick={() => {
+        setIsopen(!isopen)
+        setIsSidebarOpen(!isSidebarOpen)
+      }
+      }>
         <div className="flex justify-center bg-maroon w-9 h-fit">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
@@ -89,13 +93,13 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isopen ? "block" : "hidden"} fixed top-16`}>
+      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed top-16`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">
         <Menubar />
       </div>
-    </div>
+    </div >
   );
 };
 

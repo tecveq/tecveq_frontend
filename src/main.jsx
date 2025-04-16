@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AdminProvider } from './context/AdminContext.jsx'
 import { TeacherProvider } from './context/TeacherContext.jsx'
 import { StudentProvider } from './context/StudentContext.jsx'
-
+import { SidebarProvider } from './context/SidebarContext.jsx';
 
 import { ParentProvider } from './context/ParentContext.jsx'
 
@@ -24,9 +24,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <StudentProvider>
               <ParentProvider>
                 <UserProvider>
-                  <BlurProvider>
-                    <App />
-                  </BlurProvider>
+                  <SidebarProvider>
+                    <BlurProvider>
+                      <App />
+                    </BlurProvider>
+                  </SidebarProvider>
                 </UserProvider>
               </ParentProvider>
             </StudentProvider>
