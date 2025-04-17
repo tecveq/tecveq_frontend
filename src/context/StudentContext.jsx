@@ -11,6 +11,8 @@ export const useStudent = () => useContext(StudentContext);
 
 export const StudentProvider = ({ children }) => {
 
+  
+
     const [allQuizes, setAllQuizes] = useState([]);
     const [allClasses, setAllClasses] = useState([]);
     const [allSubjects, setAllSubjects] = useState([]);
@@ -41,6 +43,10 @@ export const StudentProvider = ({ children }) => {
             return results;
         }, staleTime: 300000, enabled: studentLogedIn
     });
+
+
+
+
 
     useEffect(() => {
         if (assignmentQuery.isSuccess) {

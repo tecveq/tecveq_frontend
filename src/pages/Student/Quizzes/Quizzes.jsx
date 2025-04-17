@@ -50,6 +50,7 @@ const Quizzes = () => {
                                         deadline={quiz.dueDate}
                                         total_marks={quiz.totalMarks}
                                         subject={quiz?.subjectID.name}
+                                        text={quiz?.text}
                                     />
                                 })}
                                 {allQuizes.length == 0 && <div className='flex w-full justify-center'><p className='font-medium text-2xl py-4'>No quizes to display</p> </div>}

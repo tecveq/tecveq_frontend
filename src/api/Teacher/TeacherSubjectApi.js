@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { BACKEND_URL } from "../../constants/api";
 import axios from "axios";
+import apiRequest from "../../utils/ApiRequest";
 
 
 export const useGetAllTeacherSubjects = (teacherId) => {
@@ -28,7 +29,7 @@ export const useGetAllTeacherSubjects = (teacherId) => {
     });
 
     if (error) {
-      toast.error(error.toString());
+        toast.error(error.toString());
     }
 
     return {
@@ -36,3 +37,10 @@ export const useGetAllTeacherSubjects = (teacherId) => {
         teacherSubjects,
     };
 };
+
+
+export const getTeacherSubjectsOfClassroom = apiRequest(async ({ classroomIDs }) => {
+    const url = `${BACKEND_URL}/subject/teacher-subjects-of-classrooms`;
+    const response = await axios.post(url, { classroomIDs });
+    return response;
+});

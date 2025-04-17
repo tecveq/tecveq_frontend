@@ -5,6 +5,7 @@ import QuizAssignmentRow from "../../../components/Student/QuizAssignment/QuizAs
 import { useBlur } from "../../../context/BlurContext";
 import { useStudent } from "../../../context/StudentContext";
 import { useSidebar } from "../../../context/SidebarContext";
+import { useUser } from "../../../context/UserContext";
 
 const Assignments = () => {
   const { isSidebarOpen } = useSidebar(); // new
@@ -12,8 +13,13 @@ const Assignments = () => {
   const { isBlurred } = useBlur();
   const { allAssignments } = useStudent();
 
-  console.log("all assignments instudent are : ", allAssignments);
+  const { userData } = useUser();
 
+
+  const studentAssignments = allAssignments.filter(assignment =>
+    userData.subjects.includes(assignment.subjectID._id)
+  );
+  console.log("Filtered Assignments:", studentAssignments);
   return (
     <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
       <div className="flex flex-1">
@@ -36,7 +42,7 @@ const Assignments = () => {
                   download={"Download"}
                   upload={"Upload"}
                 />
-                {allAssignments.map((assignment, index) => (
+                {studentAssignments?.map((assignment, index) => (
                   <QuizAssignmentRow
                     alldata={assignment}
                     isQuiz={false}
@@ -55,7 +61,7 @@ const Assignments = () => {
                   />
                 ))}
 
-                {allAssignments.length == 0 &&
+                {studentAssignments?.length == 0 &&
                   <div className='flex w-full justify-center'>
                     <p className='font-medium text-2xl py-4'>No assignments to display</p>
                   </div>

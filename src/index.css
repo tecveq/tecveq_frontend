@@ -233,3 +233,9 @@
 .animate-bellShake {
   animation: bellShake 1s ease-in-out infinite;
 }
+
+
+select[multiple] option:checked {
+  background-color: #3b82f6;
+  color: white;
+}

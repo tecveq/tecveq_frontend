@@ -207,6 +207,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
     },
     onError: () => toast.error("Failed to update classroom."),
   });
+  console.log(teacherArr ,"teacher arayjjjjjjj hhhhhhhhh");
 
   const handleUpdateClass = useCallback(() => {
     if (!classroomName || !selectedLevel || !newSelectedStudents.length || !newSelectedTeachers.length) {
@@ -220,24 +221,14 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
       return;
     }
 
+    
+
     const data = {
       name: classroomName,
       levelID: selectedLevel._id,
       students: newSelectedStudents.map(s => s._id),
-      teachers: teacherArr.map(t => ({
-        teacher: t.teacher,
-        subject: t.subject,
-        type: t.type || "teacher",
-      })),
+      teachers: teacherArr,
     };
-
-    if (headTeacher) {
-      data.headTeacher = headTeacher._id;
-    } else {
-      // ✅ Remove any 'head' entries if no headTeacher selected
-      data.teachers = data.teachers.filter(t => t.type !== "head");
-    }
-
     updateClassroomMutation.mutate({ data, id: editData?._id });
   }, [classroomName, selectedLevel, newSelectedStudents, newSelectedTeachers, headTeacher, teacherArr, updateClassroomMutation, editData]);
 
