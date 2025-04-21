@@ -4,11 +4,20 @@ import QuizAssignmentRow from '../../../components/Student/QuizAssignment/QuizAs
 
 import { useBlur } from '../../../context/BlurContext'
 import { useStudent } from '../../../context/StudentContext'
+import { useUser } from '../../../context/UserContext'
 
 const Quizzes = () => {
 
     const { allQuizes } = useStudent();
     console.log("all quizes in quiz are : ", allQuizes);
+
+    const { userData } = useUser();
+
+
+    const studentQuiz = allQuizes?.filter(quiz =>
+        userData.subjects.includes(quiz.subjectID._id)
+    );
+    console.log("Filtered Assignments:", studentQuiz);
     const { isBlurred } = useBlur();
 
     const handleUpload = (data, datad) => {
@@ -35,7 +44,7 @@ const Quizzes = () => {
                                     download={"Download"}
                                     upload={"Upload"}
                                 />
-                                {allQuizes?.map((quiz, index) => {
+                                { studentQuiz?.map((quiz, index) => {
                                     return <QuizAssignmentRow
                                         id={quiz._id}
                                         isQuiz={true}
@@ -53,7 +62,7 @@ const Quizzes = () => {
                                         text={quiz?.text}
                                     />
                                 })}
-                                {allQuizes.length == 0 && <div className='flex w-full justify-center'><p className='font-medium text-2xl py-4'>No quizes to display</p> </div>}
+                                { studentQuiz?.length == 0 && <div className='flex w-full justify-center'><p className='font-medium text-2xl py-4'>No quizes to display</p> </div>}
                             </div>
                         </div>
                     </div>

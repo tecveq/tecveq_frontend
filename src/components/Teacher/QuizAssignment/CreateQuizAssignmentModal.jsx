@@ -52,8 +52,8 @@ const CreateQuizAssignmentModal = ({
     classroomID: isEditTrue ? data?.classroomID : "",
     files: "",
   })
-  const [selectedFile, setSelectedFile] = useState("");
-
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const [selectedClassroom, setSelectedClassroom] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
 
@@ -137,11 +137,11 @@ const CreateQuizAssignmentModal = ({
   const handleCreateQuiz = async () => {
     setLoading(true);
 
-    const hasText = quizAssignmentDataObj?.text?.trim() !== "";
-    const hasFile = selectedFile && selectedFile.name;
+    const hasText = !!quizAssignmentDataObj?.text?.trim();
+    const hasFile = !!selectedFile?.name;
 
     if (!hasText && !hasFile) {
-      toast.error("Please provide either text or file before creating the quiz.");
+      toast.error("Please provide either text or a file before creating the quiz.");
       setLoading(false);
       return;
     }
@@ -149,46 +149,58 @@ const CreateQuizAssignmentModal = ({
     try {
       let filesArr = [];
 
-      // Upload file only if it exists
       if (hasFile) {
         const fileUrl = await uploadFile(selectedFile, "deliverable");
-        filesArr.push({
-          name: selectedFile.name,
-          url: fileUrl
-        });
+        filesArr.push({ name: selectedFile.name, url: fileUrl });
       }
+
+      const dueDate = QADate && QATime
+        ? `${QADate}T${QATime}:00.000Z`
+        : new Date().toISOString();
 
       if (isEditTrue) {
         const sendingObj = {
           ...quizAssignmentDataObj,
-          dueDate: QADate + "T" + QATime + ":00.000Z",
-          files: filesArr
+          dueDate,
+          files: filesArr,
         };
+
         quizEditMutate.mutate(sendingObj);
       } else {
-        let subjectId = "";
-        selectedClassroom?.teachers?.forEach((item) => {
-          if (userData._id === item.teacher) {
-            subjectId = item.subject;
-          }
-        });
+        // Loop through all selected classrooms for quiz creation
+        for (const classroom of selectedClassroom) {
+          const classroomID = classroom._id;
 
-        const sendingObj = {
-          ...quizAssignmentDataObj,
-          classroomID: selectedClassroom?._id,
-          subjectID: selectedSubject,
-          files: filesArr,
-          dueDate: QADate + "T" + QATime + ":00.000Z"
-        };
+          let subjectID = selectedSubject;
 
-        quizCreateMutate.mutate(sendingObj);
+          // (Optional) Dynamic subject detection based on teacher
+          // const teachEntry = classroom.teachers.find(
+          //   t => t.teacher === userData._id
+          // );
+          // if (teachEntry) subjectID = teachEntry.subject;
+
+          const sendingObj = {
+            ...quizAssignmentDataObj,
+            classroomID,
+            subjectID,
+            files: filesArr,
+            dueDate
+          };
+
+          await createQuiz(sendingObj); // replace with your direct API or mutation call
+        }
+
+        toast.success("Quizzes created for all selected classrooms!");
+        toggleBlur();
+        setopen(false);
+        await refetch();
       }
     } catch (err) {
       console.error("Error during quiz creation:", err);
       toast.error("Something went wrong while creating the quiz.");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
 
@@ -269,7 +281,23 @@ const CreateQuizAssignmentModal = ({
 
 
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
 
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onloadend = () => setPreviewUrl(reader.result);
+      reader.readAsDataURL(file);
+    } else {
+      setPreviewUrl(null);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    setPreviewUrl(null);
+  };
 
 
 
@@ -499,37 +527,68 @@ const CreateQuizAssignmentModal = ({
           }
           <div className="flex flex-1 border-2 rounded-lg border-[#00000010] py-6 px-16">
             <div className="flex flex-col items-center justify-center flex-1 gap-2">
+              {/* Upload Button */}
               <label htmlFor="assignmentQuiz">
                 <div className="flex p-4 rounded-lg shadow-sm border border-[#00000010] cursor-pointer">
                   <FiUploadCloud />
                 </div>
               </label>
-              <input type="file" onChange={(e) => { setSelectedFile(e.target.files[0]) }} className="hidden" id="assignmentQuiz" />
+
+              {/* Hidden Input */}
+              <input
+                type="file"
+                id="assignmentQuiz"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+
+              {/* Upload Instructions */}
               <div className="flex">
                 <p className="flex flex-wrap items-center justify-center text-sm text-center">
-                  <span className={`text-maroon font-medium`}>
-                    Click to upload
-                  </span>
+                  <span className="text-maroon font-medium">Click to upload </span>
                   <span>or drag and drop Files</span>
-                  <span>PNG, JPG, Word or PDF</span>
+                  <span> PNG, JPG, Word or PDF</span>
                 </p>
               </div>
-              {isEditTrue &&
+
+              {/* Preview Section */}
+              {selectedFile && (
+                <div className="mt-2 text-center">
+                  {previewUrl ? (
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className="w-32 h-32 object-cover rounded-lg mx-auto"
+                    />
+                  ) : (
+                    <p className="text-sm text-gray-600">{selectedFile?.name}</p>
+                  )}
+                  <p
+                    onClick={handleRemoveFile}
+                    className="text-red-500 text-xs mt-1 cursor-pointer hover:underline"
+                  >
+                    Remove File
+                  </p>
+                </div>
+              )}
+
+              {/* Existing File for Edit */}
+              {isEditTrue && !selectedFile && (
                 <div className="flex justify-between px-2 py-2 border rounded-lg w-60 border-black/20">
                   <div className="flex items-center gap-2">
-                    <img src={IMAGES.pdf} alt="pdf image" className="w-8 h-8" />
+                    <img src={IMAGES.pdf} alt="pdf icon" className="w-8 h-8" />
                     <div className="text-xs">
                       <p>Assignment 1.pdf</p>
                       <p>200 KB</p>
                     </div>
                   </div>
-                  <div className="">
+                  <div>
                     <p onClick={() => { }} className="cursor-pointer">
                       <IoCloseCircle size={16} />
                     </p>
                   </div>
                 </div>
-              }
+              )}
             </div>
           </div>
           {(loading || quizCreateMutate.isPending || quizEditMutate.isPending || assignmentCreateMutate.isPending || assignmentUpdateMutate.isPending) && <div><Loader /> </div>}

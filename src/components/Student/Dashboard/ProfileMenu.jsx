@@ -5,7 +5,7 @@ import { IoIosLogOut } from "react-icons/io";
 
 const ProfileMenu = ({ onProfileClick, onSettingsClick, onLogoutClick, dashboard, userData }) => {
   return (
-    <div className={`fixed flex ${!dashboard ? "mt-10" : "mt-2"} bg-white rounded-md shadow-lg right-10 top-16 w-60`}>
+    <div className={`fixed flex ${!dashboard ? "mt-10" : "mt-2"} bg-white z-50 rounded-md shadow-lg right-10 top-16 w-60`}>
       <div className="flex flex-col flex-1 gap-2 px-5 py-5">
         <div className="flex md:hidden items-center gap-2 font-medium my-3 border-b-2 border-black">
           {userData.name}
