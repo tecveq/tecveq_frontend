@@ -7,11 +7,12 @@ import LastDeliverables from "../../../components/Teacher/Dashboard/LastDelivera
 
 import { useBlur } from "../../../context/BlurContext";
 import { useTeacher } from "../../../context/TeacherContext";
-
+import { useSidebar } from "../../../context/SidebarContext"
 const Dashboard = () => {
 
   const { isBlurred } = useBlur();
   const { allAnnouncements } = useTeacher();
+  const { isSidebarOpen } = useSidebar(); // new
 
   return (
     <div className="flex flex-1 bg-[#f9f9f9]/50 font-poppins">
@@ -27,7 +28,7 @@ const Dashboard = () => {
             <div className="flex flex-[2]">
               <Announcements data={allAnnouncements} />
             </div>
-            <div className="flex flex-[3]">
+            <div className={`flex flex-[3] relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto`}>
               <UpcomingClasses />
             </div>
           </div>

@@ -8,11 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../../api/User/UserApi";
 import { useStudent } from "../../../context/StudentContext";
 import Loader from "../../../utils/Loader";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [isopen, setIsopen] = useState(false);
+  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
   const [activeTab, setActiveTab] = useState(() => localStorage.getItem("activeTab") || "dashboard");
 
   const menuItems = [
@@ -90,7 +91,10 @@ const Sidebar = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="px-3 cursor-pointer flex items-center lg:hidden h-20" onClick={toggleSidebar}>
+      <div className="px-3 cursor-pointer flex items-center lg:hidden h-20" onClick={() => {
+        toggleSidebar()
+        setIsSidebarOpen(!isSidebarOpen)
+      }}>
         <div className="flex justify-center bg-maroon w-9">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
@@ -99,7 +103,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isopen ? "block" : "hidden"} fixed top-16`}>
+      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed top-16`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">

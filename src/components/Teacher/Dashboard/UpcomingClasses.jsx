@@ -254,7 +254,7 @@ const UpcomingClasses = () => {
   };
 
   return (
-    <div className="flex flex-1">
+    <div className="flex flex-1 ">
       <div className="flex flex-col flex-1 gap-2">
         <div className="flex">
           <p className="flex text-lg font-medium">Upcoming Classes</p>

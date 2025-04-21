@@ -65,4 +65,18 @@ export const getStudentSubjectsForAdmin = apiRequest(async (id) => {
     const url = `${BACKEND_URL}/user/student-subjects/${id}`
     const response = await axios.get(url);
     return response;
-}) 
+})
+
+export const getStudentSubjectsWithLevel = apiRequest(async (id) => {
+    const url = `${BACKEND_URL}/user/student-subjects-with-level/${id}`
+    const response = await axios.get(url);
+    return response;
+})
+
+
+export const updateStudentSubjects = apiRequest(async ({ studentId, subjects }) => {
+    const url = `${BACKEND_URL}/user/admin/user/update-student-subject/${studentId}`
+    console.log("data for updating usr for admin is : ", subjects);
+    const response = await axios.put(url, subjects);
+    return response;
+})

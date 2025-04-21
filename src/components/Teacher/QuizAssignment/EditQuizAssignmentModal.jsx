@@ -1,275 +1,275 @@
 import React, { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { FiUploadCloud } from "react-icons/fi";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { uploadFile } from "../../../utils/FileUpload";
 import { useBlur } from "../../../context/BlurContext";
 import { useUser } from "../../../context/UserContext";
-import { editAssignment } from "../../../api/Teacher/Assignments";
 import { useTeacher } from "../../../context/TeacherContext";
+import { editAssignment } from "../../../api/Teacher/Assignments";
 import { editQuiz } from "../../../api/Teacher/Quiz";
 import useClickOutside from "../../../hooks/useClickOutlise";
+import { getTeacherSubjectsOfClassroom } from "../../../api/Teacher/TeacherSubjectApi";
 
-const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz, }) => {
+const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz }) => {
   const { toggleBlur } = useBlur();
   const { userData } = useUser();
   const { allClassrooms } = useTeacher();
 
-
-  console.log(data, "data");
-
   // State Management
-  const [QADate, setQADate] = useState("");
-  const [QATime, setQATime] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [quizAssignmentDataObj, setQuizAssignmentDataObj] = useState({
-    canSubmitAfterTime: false,
+  const [formData, setFormData] = useState({
     title: "",
     text: "",
     totalMarks: 0,
     dueDate: "",
     files: "",
+    canSubmitAfterTime: false,
   });
-  const [selectedClassroom, setSelectedClassroom] = useState(data?.classroomID);
+  const [dueDate, setDueDate] = useState("");
+  const [dueTime, setDueTime] = useState("");
+  const [selectedClassroom, setSelectedClassroom] = useState(null);
+  const [selectedSubject, setSelectedSubject] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const modalRef = useRef(null);
 
-  console.log(data, "data is available");
-
-  // Effect to load data into form when modal is opened for editing
+  // Initialize form with existing data
   useEffect(() => {
     if (isEditTrue && data) {
-      const { title, text, totalMarks, dueDate, files, canSubmitAfterTime } = data;
+      const { title, text, totalMarks, dueDate, files, canSubmitAfterTime, classroomID, subjectID } = data;
       const formattedDueDate = new Date(dueDate);
-      setQuizAssignmentDataObj({
-        canSubmitAfterTime,
+      
+      setFormData({
         title,
         text,
         totalMarks,
         dueDate,
-        files: data?.files ? data?.files[0] : "", // Assume single file upload
+        files: files?.[0] || "",
+        canSubmitAfterTime,
       });
-      setQADate(formattedDueDate.toISOString().split("T")[0]); // Date part
-      setQATime(formattedDueDate.toISOString().split("T")[1].slice(0, 5)); // Time part
+      
+      setDueDate(formattedDueDate.toISOString().split("T")[0]);
+      setDueTime(formattedDueDate.toISOString().split("T")[1].slice(0, 5));
+      setSelectedClassroom(classroomID);
+      setSelectedSubject(subjectID?._id || "");
     }
   }, [isEditTrue, data]);
 
-  const formatDueDate = () => `${QADate}T${QATime}:00.000Z`;
+  // Fetch teacher subjects for the selected classroom
+  const { data: teacherSubjects, isPending: isSubjectsPending } = useQuery({
+    queryKey: ["teacherSubjectsOfClassrooms", selectedClassroom?._id],
+    queryFn: async () => {
+      if (!selectedClassroom?._id) return null;
+      return await getTeacherSubjectsOfClassroom({ classroomIDs: [selectedClassroom._id] });
+    },
+    enabled: !!selectedClassroom?._id,
+  });
 
-  // File Upload Handler
+  // Close modal on outside click
+  useClickOutside(modalRef, () => {
+    setIsEdit(false);
+    toggleBlur();
+  });
+
+  // Format due date for submission
+  const formatDueDate = () => `${dueDate}T${dueTime}:00.000Z`;
+
+  // Handle file upload
   const handleFileUpload = async (file) => {
     try {
-      const fileUrl = await uploadFile(file, "deliverable");
-      return { name: file.name, url: fileUrl };
+      return await uploadFile(file, "deliverable");
     } catch (error) {
       toast.error("File upload failed.");
       return null;
     }
   };
 
-  let subjectId = "";
-
-  selectedClassroom?.teachers?.map((item) => {
-    if (userData._id == item.teacher) {
-      subjectId = item.subject;
-    }
-  })
-
-
-
-
+  // Handle form submission
   const handleSubmit = async () => {
-    setLoading(true);
-    const files = selectedFile
-      ? [await handleFileUpload(selectedFile)]
-      : (quizAssignmentDataObj.files ? [quizAssignmentDataObj.files] : []);
-
-    const payload = {
-      ...quizAssignmentDataObj,
-      subjectId,
-      classroomID: selectedClassroom?._id,
-      files,
-      dueDate: formatDueDate(),
-    };
-
-    console.log(payload, "payload");
-
+    setIsLoading(true);
+    
     try {
-      // Call API for creating or editing the assignment
-      // Call the API to update the assignment
-      if (!isQuiz) {
-        const response = await editAssignment(payload, data?._id);
+      const files = selectedFile
+        ? [await handleFileUpload(selectedFile)]
+        : (formData.files ? [formData.files] : []);
 
-        console.log(response, "response");
-        refetch();
-        toast.success("Assignment updated successfully!"); // Success toast
-        setIsEdit(false)
-        toggleBlur()
-      } else {
-        const response = await editQuiz(payload, data?._id);
+      const payload = {
+        ...formData,
+        subjectId: selectedSubject,
+        classroomID: selectedClassroom?._id,
+        files,
+        dueDate: formatDueDate(),
+      };
 
-        console.log(response, "response");
-        refetch();
+      const response = isQuiz
+        ? await editQuiz(payload, data?._id)
+        : await editAssignment(payload, data?._id);
 
-        toast.success("Quiz updated successfully!"); // Success toast
-        setIsEdit(false)
-        toggleBlur()
-      }
-
+      toast.success(`${isQuiz ? "Quiz" : "Assignment"} updated successfully!`);
+      refetch();
+      setIsEdit(false);
+      toggleBlur();
     } catch (error) {
-      console.log("error", error);
-      ; // Error toast
+      toast.error("Failed to update. Please try again.");
     } finally {
-      setLoading(false);
-
+      setIsLoading(false);
     }
   };
 
-
-  const ref = useRef(null);
-
-  useClickOutside(ref, () => {
-    setIsEdit(false)
-    toggleBlur();
-  });
+  // Handle input changes
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <div
-      ref={ref}
-      className=" fixed z-10 mt-10 bg-white max-h-[85vh] overflow-y-auto p-8 w-full md:w-[600px]  px-16 text-black rounded-xl ml-5 md:ml-96 custom-scrollbar"
+      ref={modalRef}
+      className="fixed z-10 mt-10 bg-white max-h-[85vh] overflow-y-auto p-8 w-full md:w-[600px] rounded-xl ml-5 md:ml-96 custom-scrollbar"
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">
-            {isQuiz ? "Edit Quiz" : "Edit Assignment"}
-          </h2>
+          <h2 className="text-2xl font-semibold">{isQuiz ? "Edit Quiz" : "Edit Assignment"}</h2>
           <button
             className="text-red-500 text-xl"
             onClick={() => {
+              setIsEdit(false);
               toggleBlur();
-              setIsEdit(false)
             }}
           >
             ✕
           </button>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="flex flex-col flex-1 gap-1">
-            <p className="text-xs font-semibold text-grey_700">Select Classroom</p>
-            <div className="flex justify-between border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
-              <select value={selectedClassroom.name} onChange={e => setSelectedClassroom(e.target.value)} className="text-sm outline-none text-custom-gray-3 w-full">
-                <option value="">Select Classroom</option>
-                {allClassrooms.map((item) => (
-                  <option key={item._id} value={item.name}>
-                    {item.name}
-                  </option>
+        {/* Classroom Selection */}
+        <FieldWithLabel label="Select Classroom">
+          <div className="relative">
+            <div
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="border border-gray-300 rounded-lg p-2 cursor-pointer"
+            >
+              {selectedClassroom?.name || "Select Classroom"}
+            </div>
+            {isDropdownOpen && (
+              <div className="absolute z-10 w-full max-h-40 overflow-y-auto border border-gray-300 rounded-lg bg-white mt-1">
+                {allClassrooms?.map((classroom) => (
+                  <div
+                    key={classroom._id}
+                    onClick={() => {
+                      setSelectedClassroom(classroom);
+                      setIsDropdownOpen(false);
+                    }}
+                    className="p-2 hover:bg-blue-50 cursor-pointer"
+                  >
+                    {classroom.name}
+                  </div>
                 ))}
-              </select>
-            </div>
-          </div>
-        </div>
-        {/* Form Fields */}
-        <div className="flex flex-col gap-3">
-          <FieldWithLabel label="Title">
-            <input
-              type="text"
-              placeholder="Enter title"
-              value={quizAssignmentDataObj.title}
-              onChange={(e) =>
-                setQuizAssignmentDataObj({ ...quizAssignmentDataObj, title: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-          </FieldWithLabel>
-
-
-          <FieldWithLabel label="Text">
-            <textarea
-              type="text"
-              placeholder="Enter Text"
-              value={quizAssignmentDataObj.text}
-              onChange={(e) =>
-                setQuizAssignmentDataObj({ ...quizAssignmentDataObj, text: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-          </FieldWithLabel>
-
-          <FieldWithLabel label="Total Marks">
-            <input
-              type="number"
-              placeholder="Enter marks"
-              value={quizAssignmentDataObj.totalMarks}
-              onChange={(e) =>
-                setQuizAssignmentDataObj({ ...quizAssignmentDataObj, totalMarks: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-          </FieldWithLabel>
-
-          <FieldWithLabel label="Deadline">
-            <div className="flex gap-3">
-              <input
-                type="date"
-                value={QADate}
-                onChange={(e) => setQADate(e.target.value)}
-                className="w-1/2 p-2 border rounded"
-              />
-              <input
-                type="time"
-                value={QATime}
-                onChange={(e) => setQATime(e.target.value)}
-                className="w-1/2 p-2 border rounded"
-              />
-            </div>
-          </FieldWithLabel>
-
-          {isQuiz &&
-            <div className="flex items-center gap-3">
-              <div className="flex flex-col flex-1 gap-1">
-                <p className="text-xs font-semibold text-grey_700">Can Submit after deadline</p>
-                <div className="flex justify-between border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
-                  <select
-                    value={quizAssignmentDataObj.canSubmitAfterTime}
-                    className="text-sm outline-none text-custom-gray-3 w-full"
-                    onChange={(e) => { setQuizAssignmentDataObj({ ...quizAssignmentDataObj, canSubmitAfterTime: e.target.value }) }} >
-                    <option value={false}>No</option>
-                    <option value={true}>Yes</option>
-                  </select>
-                </div>
               </div>
-            </div>
-          }
+            )}
+          </div>
+        </FieldWithLabel>
 
-          <FieldWithLabel label="Upload File">
-            <div className="flex flex-col justify-center items-start">
-              <label htmlFor="assignmentFile" className="cursor-pointer">
-                <div className="flex items-center gap-2 border p-2 rounded">
-                  <FiUploadCloud size={24} /> <span>Click to upload</span>
-                </div>
-                <span>or drag and drop Files</span>
-                <span>PNG, JPG, Word or PDF</span>
+        {/* Subject Selection */}
+        <FieldWithLabel label="Select Subject">
+          <select
+            value={selectedSubject}
+            onChange={(e) => setSelectedSubject(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+            disabled={isSubjectsPending}
+          >
+            <option value="">Select Subject</option>
+            {teacherSubjects?.subjects?.map((subject) => (
+              <option key={subject.subjectId} value={subject.subjectId}>
+                {subject.subjectName}
+              </option>
+            ))}
+          </select>
+        </FieldWithLabel>
 
-              </label>
-              <input
-                id="assignmentFile"
-                type="file"
-                className="hidden"
-                onChange={(e) => setSelectedFile(e.target.files[0])}
-              />
-            </div>
+        {/* Form Fields */}
+        <FieldWithLabel label="Title">
+          <input
+            type="text"
+            placeholder="Enter title"
+            value={formData.title}
+            onChange={(e) => handleInputChange("title", e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </FieldWithLabel>
+
+        <FieldWithLabel label="Text">
+          <textarea
+            placeholder="Enter text"
+            value={formData.text}
+            onChange={(e) => handleInputChange("text", e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </FieldWithLabel>
+
+        <FieldWithLabel label="Total Marks">
+          <input
+            type="number"
+            placeholder="Enter marks"
+            value={formData.totalMarks}
+            onChange={(e) => handleInputChange("totalMarks", e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-lg"
+          />
+        </FieldWithLabel>
+
+        <FieldWithLabel label="Deadline">
+          <div className="flex gap-3">
+            <input
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className="w-1/2 p-2 border border-gray-300 rounded-lg"
+            />
+            <input
+              type="time"
+              value={dueTime}
+              onChange={(e) => setDueTime(e.target.value)}
+              className="w-1/2 p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+        </FieldWithLabel>
+
+        {isQuiz && (
+          <FieldWithLabel label="Can Submit After Deadline">
+            <select
+              value={formData.canSubmitAfterTime}
+              onChange={(e) => handleInputChange("canSubmitAfterTime", e.target.value === "true")}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            >
+              <option value={false}>No</option>
+              <option value={true}>Yes</option>
+            </select>
           </FieldWithLabel>
-        </div>
+        )}
+
+        <FieldWithLabel label="Upload File">
+          <label htmlFor="assignmentFile" className="cursor-pointer">
+            <div className="flex items-center gap-2 border p-2 rounded-lg">
+              <FiUploadCloud size={24} /> <span>Click to upload</span>
+            </div>
+            <span className="text-sm text-gray-500">PNG, JPG, Word, or PDF</span>
+          </label>
+          <input
+            id="assignmentFile"
+            type="file"
+            className="hidden"
+            onChange={(e) => setSelectedFile(e.target.files[0])}
+          />
+        </FieldWithLabel>
 
         {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          disabled={loading}
-          className="w-full py-2 text-white bg-[blue] rounded hover:bg-blue-600"
+          disabled={isLoading}
+          className="w-full py-2 text-white bg-maroon rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
         >
-          {loading ? "Processing..." : isEditTrue ? "Update Assignment" : "Create Assignment"}
+          {isLoading ? "Processing..." : "Update"}
         </button>
       </div>
     </div>

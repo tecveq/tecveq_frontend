@@ -6,13 +6,14 @@ import Navbar from "../../../components/Admin/Navbar";
 import Card from "../../../components/Admin/StudentReports/Card";
 import ActivityCard from "../../../components/Admin/StudentReports/ActivityCard";
 import SystemOverview from "../../../components/Admin/StudentReports/SystemOverview"
-
+import { X } from "lucide-react";
 import { LuPhone } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
 import { IoMailOutline } from "react-icons/io5";
-import { useQuery } from "@tanstack/react-query";
-import { getStudentSubjectsForAdmin } from "../../../api/Admin/UsersApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getStudentSubjectsForAdmin, getStudentSubjectsWithLevel, updateStudentSubjects } from "../../../api/Admin/UsersApi";
 import { getStudentReport, getStudentSubjectReport } from "../../../api/Admin/AdminApi";
+import { toast } from "react-toastify";
 
 const SubjectReport = () => {
 
@@ -20,8 +21,10 @@ const SubjectReport = () => {
 
   const [studentData, setStudentData] = useState({});
   const [allSubjects, setAllSubjects] = useState([]);
+  const [editSubject, setEditSubject] = useState(false)
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subjectQueryFlag, setSubjectQueryFlag] = useState(false);
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
 
   // console.log("locatio state in subject report is : ", location.state);
 
@@ -30,7 +33,7 @@ const SubjectReport = () => {
   }, [location.state])
 
 
-  const { data, isPending, isError } = useQuery({
+  const { data: report, isPending, isError } = useQuery({
     queryKey: ["report"], queryFn: async () => {
       if (studentData) {
         return await getStudentReport(location.state?._id);
@@ -58,14 +61,47 @@ const SubjectReport = () => {
   }, [selectedSubject, studentAssignmentsQuizes.data, studentAssignmentsQuizes.isPending])
 
 
+
+  const { data: studentSubjectWithLevel, isSuccess: studentIsSuccess, isPending: studentSubjectPending } = useQuery({
+    queryKey: ["studentSubjectwithLevel"], queryFn: async () => await getStudentSubjectsWithLevel(studentData?.levelID)
+  });
+
+
+  console.log(studentSubjectWithLevel, "student subject with level ");
+
+
+  const handleCheckboxChange = (subjectId) => {
+    setSelectedSubjects((prevSelected) =>
+      prevSelected.includes(subjectId)
+        ? prevSelected.filter((id) => id !== subjectId)
+        : [...prevSelected, subjectId]
+    );
+  };
+
+
+
+
+  const mutation = useMutation({
+    mutationFn: updateStudentSubjects,
+    onSuccess: (data) => {
+      console.log("Subjects assigned successfully!", data);
+
+      toast.success("Subjects assigned successfully!");
+      // Optional: show toast, refetch data, close modal
+    },
+    onError: (error) => {
+      console.error("Error assigning subjects:", error.message);
+    },
+  });
+
   return (
-    isPending || subjectPending ?  <div className="flex justify-center flex-1"> <LargeLoader /> </div> :
+    isPending || subjectPending ? <div className="flex justify-center flex-1"> <LargeLoader /> </div> :
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
             <div className="flex-grow w-full px-5 lg:px-20 sm:px-10 lg:ml-72">
               <div className="pt-6">
-                <Navbar heading={"Subjects"} />
+                <Navbar heading={"Subjects Report"} />
                 <div className="mt-7">
                   <div className="flex flex-col items-center justify-center gap-1">
                     <img src={studentData.profilePic || IMAGES.Profile} alt="" className="w-40 h-40 rounded-full" />
@@ -79,6 +115,12 @@ const SubjectReport = () => {
                       <p>{studentData.email} </p>
                     </div>
                   </div>
+                </div>
+
+                <div className="w-full justify-end items-center flex">
+                  <button className="py-3 px-4 bg-maroon text-white rounded-full" onClick={() => {
+                    setEditSubject(!editSubject)
+                  }}>Subject Edit</button>
                 </div>
                 <div className="mt-7">
                   <div className="flex flex-col gap-2">
@@ -99,19 +141,19 @@ const SubjectReport = () => {
                             type={"Percentage"}
                             data={"Assignment"}
                             grade={studentAssignmentsQuizes.data?.assignments.avgGrade}
-                            percentage={studentAssignmentsQuizes.data?.assignments?.avgMarksPer ? studentAssignmentsQuizes.data?.assignments?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.assignments?.avgMarksPer: 0  : 0  }
+                            percentage={studentAssignmentsQuizes.data?.assignments?.avgMarksPer ? studentAssignmentsQuizes.data?.assignments?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.assignments?.avgMarksPer : 0 : 0}
                           />
                           <Card
                             data={"Quizes"}
                             type={"Percentage"}
                             grade={studentAssignmentsQuizes.data?.quizes?.avgGrade}
-                            percentage={studentAssignmentsQuizes.data?.quizes?.avgMarksPer ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer: 0  : 0  }
+                            percentage={studentAssignmentsQuizes.data?.quizes?.avgMarksPer ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer : 0 : 0}
                           />
                           <Card
                             data={"Attendence"}
                             type={"Percentage"}
                             // percentage={studentAssignmentsQuizes.data?.quizes?.avgMarksPer ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer: 0  : 0  }
-                            percentage={studentAssignmentsQuizes.data?.attendance?.avgAttendencePer ? studentAssignmentsQuizes.data?.attendance?.avgAttendencePer : 0 }
+                            percentage={studentAssignmentsQuizes.data?.attendance?.avgAttendencePer ? studentAssignmentsQuizes.data?.attendance?.avgAttendencePer : 0}
                           />
                         </>
                       }
@@ -140,6 +182,61 @@ const SubjectReport = () => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div>
+            {editSubject && studentSubjectWithLevel?.subjects?.length > 0 && (
+              <div className="absolute top-0 right-0 py-8 bg-white min-w-72 shadow-lg rounded-md z-50 p-4 space-y-3">
+                <div className="flex justify-between items-center mb-2">
+                  <h2 className="text-lg font-semibold">Select Subjects</h2>
+                  <button
+                    onClick={() => setEditSubject(false)}
+                    className="text-black hover:text-gray-300"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-2 max-h-60 overflow-y-auto">
+                  {studentSubjectWithLevel.subjects.map((subject) => (
+                    <label
+                      key={subject._id}
+                      className="flex items-center space-x-2 cursor-pointer hover:bg-white/10 px-2 py-1 rounded-md"
+                    >
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-maroon focus:ring-maroon"
+                        checked={selectedSubjects.includes(subject._id)}
+                        onChange={() => handleCheckboxChange(subject._id)}
+                      />
+                      <span className="text-sm">{subject.subjectName}</span>
+                    </label>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => {
+
+                    console.log(selectedSubjects ,"selected subject");
+                    
+                    if (!studentData?._id) {
+                      console.error("Student ID is missing");
+                      return;
+                    }
+
+                    mutation.mutate({
+                      studentId: studentData?._id,
+                      subjects: selectedSubjects,
+                    });
+
+                    setEditSubject(false);
+                  }}
+                  className="w-full mt-4 bg-maroon text-white font-semibold py-2 rounded-md hover:bg-gray-100 transition"
+                >
+                  Submit
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </>

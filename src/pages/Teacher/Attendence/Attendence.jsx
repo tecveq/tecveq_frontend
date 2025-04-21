@@ -131,7 +131,7 @@ const Attendence = () => {
                       classname={"Class Name"}
                       subject={"Subject"}
                       students={"Students"}
-                      teachers={"Teachers"}
+                      teachers={"Classroom"}
                       startDate={null}
                       bgColor={"#F9F9F9"}
                       header={true}
@@ -147,7 +147,7 @@ const Attendence = () => {
                         classname={cls.title}
                         subject={cls.subjectID.name}
                         students={cls.classroom.studentdetails.length}
-                        teachers={cls.teacher.teacherID.name}
+                        teachers={cls?.classroom?.name}
                         startDate={cls.startTime}
                         bgColor={"#FFFFFF"}
                         header={false}

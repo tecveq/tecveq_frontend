@@ -15,6 +15,8 @@ const ShowQuizAssignmentModal = ({ data, isQuiz, setIsShow }) => {
         setIsShow(false);
     });
 
+    console.log(data, "data");
+
     const {
         title,
         text,
@@ -104,13 +106,20 @@ const ShowQuizAssignmentModal = ({ data, isQuiz, setIsShow }) => {
                 {/* Teachers */}
                 <div>
                     <h3 className="font-semibold text-lg mb-2">👨‍🏫 Assigned Teachers</h3>
-                    {classroomID?.teachers?.some((t) => t.teacher._id === userData._id) ? (
+                    {classroomID?.teachers?.some(
+                        (t) => t.teacher._id === userData._id && t.subject._id === subjectID._id
+                    ) ? (
                         <ul className="space-y-1 text-sm">
                             {classroomID.teachers
-                                .filter((t) => t.teacher._id === userData._id)
+                                .filter(
+                                    (t) =>
+                                        t.teacher._id === userData._id &&
+                                        t.subject._id === subjectID._id
+                                )
                                 .map((t) => (
                                     <li key={t._id} className="bg-gray-50 px-3 py-2 rounded-md">
-                                        👤 <span className="font-medium">Name:</span> {t.teacher.name}<br />
+                                        👤 <span className="font-medium">Name:</span> {t.teacher.name}
+                                        <br />
                                         📘 <span className="font-medium">Subject:</span> {t.subject.name}
                                     </li>
                                 ))}
@@ -119,6 +128,8 @@ const ShowQuizAssignmentModal = ({ data, isQuiz, setIsShow }) => {
                         <p className="text-gray-500 italic">This assignment was not created by you.</p>
                     )}
                 </div>
+
+
 
                 {/* Students */}
                 <div>

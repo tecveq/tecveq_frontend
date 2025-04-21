@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Loader from '../../../utils/Loader';
 import IMAGES from '../../../assets/images/index';
-
+import { ClipboardCheck, ClipboardCopy } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
 import { submitQiuz } from '../../../api/Student/Quiz';
@@ -83,80 +83,117 @@ const QuizAssignmentRow = (props) => {
         return () => clearInterval(intervalId);
     }, [props.deadline]);
 
+
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(props.text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     return (
-        <div className='min-w-full'>
-            <div style={{ backgroundColor: props.bgColor, }} className={`md:py-5 py-2 md:pl-3 md:pr-5 flex flex-row items-center border-b border-grey mt-2`}>
-                <p className={`w-full md:flex-[1] flex-[1] md:text-[14px] text-[11px] text-center md:text-left ${props.header ? 'font-semibold' : ''}`}>{props.index + "."}</p>
-                <p className={`w-full md:flex-[3] my-1 md:my-0  md:text-[14px] text-[11px] md:text-center ${props.header ? 'font-semibold' : ''}`}>{props.subject}</p>
-                <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.title}</p>
-                <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.header ? props.deadline : formatDate(props.deadline)}</p>
-                <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.total_marks}</p>
-                <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>
-                    {props.header ? (
-                        "Download"
-                    ) : (
-                        <>
-                            <a href={props.download} id='download' target='_blank'>
-                                <img src={IMAGES.Download} alt='' className='md:w-[18px] cursor-pointer md:h-[18px] mx-auto block w-[16px] h-[16px]' />
-                            </a>
-                        </>
-                    )}
-                </p>
-                {
-                    props.header ? (
-                        <>
-                            <p className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px] text-[11px] ${props.header ? 'font-semibold' : ''}`}>
-                                Upload
-                            </p>
-                        </>
-                    ) : (
-                        !isUploaded ? (
-                            <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
-                                {quizAssignmentMutation.isPending && <div><Loader /></div>}
-                                {!quizAssignmentMutation.isPending &&
-                                    <label htmlFor={`upload-${props.id}`} className='bg-[#A41D30] cursor-pointer rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
+        <>
+            <div className='min-w-full'>
+                <div className='border-b border-grey md:py-5 py-2 md:pl-3 md:pr-5  '>
+                    <div style={{ backgroundColor: props.bgColor, }} className={`flex flex-row items-center  mt-2`}>
+                        <p className={`w-full md:flex-[1] flex-[1] md:text-[14px] text-[11px] text-center md:text-left ${props.header ? 'font-semibold' : ''}`}>{props.index + "."}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0  md:text-[14px] text-[11px] md:text-center ${props.header ? 'font-semibold' : ''}`}>{props.subject}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.title}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.header ? props.deadline : formatDate(props.deadline)}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.total_marks}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>
+                            {props.header ? (
+                                "Download"
+                            ) : (
+                                <>
+                                    <a href={props?.download} id='download' target='_blank'>
+                                        <img src={IMAGES.Download} alt='' className='md:w-[18px] cursor-pointer md:h-[18px] mx-auto block w-[16px] h-[16px]' />
+                                    </a>
+                                </>
+                            )}
+                        </p>
+                        {
+                            props.header ? (
+                                <>
+                                    <p className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px] text-[11px] ${props.header ? 'font-semibold' : ''}`}>
                                         Upload
-                                        <input id={`upload-${props.id}`} onChange={handleFileChange} type="file" className='hidden' />
-                                    </label>
-                                }
+                                    </p>
+                                </>
+                            ) : (
+                                !isUploaded ? (
+                                    <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
+                                        {quizAssignmentMutation.isPending && <div><Loader /></div>}
+                                        {!quizAssignmentMutation.isPending &&
+                                            <label htmlFor={`upload-${props.id}`} className='bg-[#A41D30] cursor-pointer rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
+                                                Upload
+                                                <input id={`upload-${props.id}`} onChange={handleFileChange} type="file" className='hidden' />
+                                            </label>
+                                        }
+                                    </div>
+                                ) : (
+                                    <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
+                                        <div className='bg-[#91919133] rounded-3xl flex items-center justify-center py-2 px-3 text-black md:text-[14px]  text-[11px]'>
+                                            Uploaded
+                                        </div>
+                                    </div>
+                                )
+                            )
+                        }
+
+                    </div>
+                    <div className="mt-4 relative">
+                        {props.text && (
+
+                            <>
+                                <h1 className='font-semibold text-xl '> Text Assignment</h1>
+                                <div className="max-h-[80px] overflow-y-scroll scrollbar-hide pr-2 text-gray-700 bg-gray-100 p-2 rounded relative">
+                                    {props.text}
+                                </div>
+
+                                <button
+                                    onClick={handleCopy}
+                                    className="absolute top-1 right-1 text-xs bg-[blue] hover:bg-[blue] text-white  px-2 py-1 rounded transition-all"
+                                >
+                                    {copied ? 'Copied!' : 'Copy'}
+                                </button>
+                            </>
+                        )}
+                    </div>
+
+                </div>
+                {
+                    props.isQuiz && !props.header && (
+                        !isUploaded ? (
+                            <div className='flex flex-row items-center justify-end'>
+                                {timePassed ? (
+                                    <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
+                                        Time Up!
+                                    </div>
+                                ) : (
+                                    <div className='flex flex-row items-center justify-end'>
+                                        <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
+                                            {timeLeft}
+                                        </div>
+                                    </div>
+                                )}
+
                             </div>
                         ) : (
-                            <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
-                                <div className='bg-[#91919133] rounded-3xl flex items-center justify-center py-2 px-3 text-black md:text-[14px]  text-[11px]'>
-                                    Uploaded
+                            <div className='flex flex-row items-center justify-end'>
+                                <div className='bg-[#108206]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#108206] md:text-[10px] text-[8px]'>
+                                    Submitted On Time!
                                 </div>
                             </div>
                         )
                     )
                 }
-            </div>
-            {
-                props.isQuiz && !props.header && (
-                    !isUploaded ? (
-                        <div className='flex flex-row items-center justify-end'>
-                            {timePassed ? (
-                                <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
-                                    Time Up!
-                                </div>
-                            ) : (
-                                <div className='flex flex-row items-center justify-end'>
-                                    <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
-                                        {timeLeft}
-                                    </div>
-                                </div>
-                            )}
 
-                        </div>
-                    ) : (
-                        <div className='flex flex-row items-center justify-end'>
-                            <div className='bg-[#108206]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#108206] md:text-[10px] text-[8px]'>
-                                Submitted On Time!
-                            </div>
-                        </div>
-                    )
-                )
-            }
-        </div>
+
+            </div>
+
+
+        </>
     )
 }
 

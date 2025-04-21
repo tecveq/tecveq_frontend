@@ -8,10 +8,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useBlur } from "../../../context/BlurContext";
 import { getAllClasses } from "../../../api/ForAllAPIs";
 import { useTeacher } from "../../../utils/TeacherProvider";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const TimeTable = () => {
 
   const { teacherID, updateTeacherID } = useTeacher();
+  const { isSidebarOpen } = useSidebar(); // new
 
   const { isBlurred } = useBlur();
 
@@ -47,7 +49,7 @@ const TimeTable = () => {
                 className={`flex px-4 flex-col md:px-10 lg:px-0  w-full gap-5 py-2 ${isBlurred ? "blur" : ""
                   }`}
               >
-                <div className="flex  gap-4 bg-white w-full ">
+                <div className={`flex  gap-4 bg-white w-full relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto`}>
                   <div className="border p-5 border-grey/30 rounded-md shadow-lg w-full">
                     <MyCalendar data={data} isPending={isPending} refetch={refetch} isRefetching={isRefetching} />
                   </div>

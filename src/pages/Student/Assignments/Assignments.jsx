@@ -4,14 +4,22 @@ import QuizAssignmentRow from "../../../components/Student/QuizAssignment/QuizAs
 
 import { useBlur } from "../../../context/BlurContext";
 import { useStudent } from "../../../context/StudentContext";
+import { useSidebar } from "../../../context/SidebarContext";
+import { useUser } from "../../../context/UserContext";
 
 const Assignments = () => {
+  const { isSidebarOpen } = useSidebar(); // new
 
   const { isBlurred } = useBlur();
   const { allAssignments } = useStudent();
 
-  console.log("all assignments instudent are : ", allAssignments);
+  const { userData } = useUser();
 
+
+  const studentAssignments = allAssignments.filter(assignment =>
+    userData.subjects.includes(assignment.subjectID._id)
+  );
+  console.log("Filtered Assignments:", studentAssignments);
   return (
     <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
       <div className="flex flex-1">
@@ -20,7 +28,7 @@ const Assignments = () => {
         >
           <div className="h-screen pt-1">
             <Navbar heading={"Assignments"} />
-            <div className={`px-3 ${isBlurred ? "blur" : ""}`}>
+            <div className={`px-3 ${isBlurred ? "blur" : ""} relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto `}>
               <div className="mt-8 h-[80%] overflow-auto">
                 <QuizAssignmentRow
                   isQuiz={false}
@@ -34,7 +42,7 @@ const Assignments = () => {
                   download={"Download"}
                   upload={"Upload"}
                 />
-                {allAssignments.map((assignment, index) => (
+                {studentAssignments?.map((assignment, index) => (
                   <QuizAssignmentRow
                     alldata={assignment}
                     isQuiz={false}
@@ -47,11 +55,13 @@ const Assignments = () => {
                     bgColor={"#FFFFFF"}
                     header={false}
                     total_marks={assignment?.totalMarks}
-                    download={assignment.files[0].url}
+                    download={assignment?.files[0]?.url}
                     upload={true}
+                    text={assignment?.text}
                   />
                 ))}
-                {allAssignments.length == 0 &&
+
+                {studentAssignments?.length == 0 &&
                   <div className='flex w-full justify-center'>
                     <p className='font-medium text-2xl py-4'>No assignments to display</p>
                   </div>
