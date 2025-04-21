@@ -216,13 +216,13 @@ const AddUserModal = ({ closeModal, refetch }) => {
             } else if (role === "teacher") {
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
-                const isValidPassword = passwordPattern.test(e.target[8].value);
+                const isValidPassword = passwordPattern.test(e.target[6].value);
 
                 if (!isValidName) return toast.error("Name cannot have digits or special characters.");
                 if (!isValidEmail) return toast.error("Invalid Email!");
-                if (e.target[8].value.length < 6) return toast.error("Password should be at least 6 characters.");
+                if (e.target[6].value.length < 6) return toast.error("Password should be at least 6 characters.");
 
-                let cvurl = await uploadFile(e.target[6].files[0], "CV");
+                // let cvurl = await uploadFile(e.target[6].files[0], "CV");
 
                 dataBody = {
                     userType: role,
@@ -230,11 +230,12 @@ const AddUserModal = ({ closeModal, refetch }) => {
                     email: e.target[2].value,
                     bio: e.target[3].value,
                     phoneNumber: e.target[4].value,
-                    qualification: e.target[5].value,
-                    cv: cvurl,
+                    referenceNo: e.target[5].value,
+                    // qualification: e.target[5].value,
+                    // cv: cvurl,
                     isAccepted: true,
-                    experience: e.target[7].value,
-                    password: e.target[8].value,
+                    // experience: e.target[7].value,
+                    password: e.target[6].value,
                     profilePic: default_profile,
                 };
 
@@ -307,9 +308,11 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                             <CustomInput label={"Email"} type="email" placeholder={"Enter your email"} required />
                                             <CustomInput label={"Bio"} type="text" placeholder={"Enter your Bio"} />
                                             <CustomInput label={"Phone"} type="text" placeholder={"Enter your phone no."} required />
-                                            <CustomSelectable label={"Qualification"} options={qualification} />
+                                            <CustomInput label={"Reference No"} type="text" placeholder={"Enter your Reference No"} />
+
+                                            {/* <CustomSelectable label={"Qualification"} options={qualification} />
                                             <CustomFileSelector label={"CV"} />
-                                            <CustomSelectable label={"Experience"} options={experience} />
+                                            <CustomSelectable label={"Experience"} options={experience} /> */}
                                             <CustomInput label={"Password"} type="password" placeholder={"Enter your Password"} required />
                                             <CustomInput label={"Confirm Password"} type="password" placeholder={"Confirm your Password"} required />
                                         </>}
