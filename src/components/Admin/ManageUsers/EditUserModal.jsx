@@ -62,6 +62,7 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
         gPhone: data.guardianPhoneNumber,
         gEmail: data.guardianEmail,
         gName: data.guardianName,
+        referenceNo: data.referenceNo,
     });
 
     const handleUpdateUser = async () => {
@@ -96,9 +97,9 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
                     <InputFiled label={"Occupation"} req={false} val={data.userType} dataObj={userObj} name={"occupation"} />
                     <InputFiled label={"Name"} req={false} val={userObj.name} dataObj={userObj} name={"name"} setDataObj={setUsrObj} />
                     <InputFiled label={"Email"} req={false} val={userObj.email} name={"email"} setDataObj={setUsrObj} />
-                    <InputFiled label={"Roll No"} req={false} val={userObj.rollNo} name={"rollNo"} setDataObj={setUsrObj} />
-
                     <InputFiled label={"Phone No."} req={false} val={userObj.phone} name={"phoneNumber"} setDataObj={setUsrObj} />
+                    <InputFiled label={"Reference No"} req={false} val={userObj.referenceNo} name={"referenceNo"} setDataObj={setUsrObj} />
+
                     <label htmlFor="">Gender</label>
                     <select
                         name="gender"
