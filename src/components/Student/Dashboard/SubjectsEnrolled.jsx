@@ -15,6 +15,12 @@ const SubjectsEnrolled = () => {
   const { userData } = useUser();
   const { setAllSubjects, studentLogedIn } = useStudent();
 
+
+  console.log(userData, "student login");
+
+
+
+
   const toggleClickTeacher = (item) => {
     setPopup(!popup);
     setClickedItem(item)
@@ -34,7 +40,12 @@ const SubjectsEnrolled = () => {
     }, staleTime: 300000, enabled: studentLogedIn
   });
 
-  console.log(subjectQuery.data);
+  const filteredSubjects = subjectQuery?.data?.subjects?.filter((item) =>
+    userData.subjects.includes(item.subject._id)
+  );
+
+  console.log(filteredSubjects, "Filtered Subjects for Student");
+
 
   // useEffect(() => subjectQuery.data && setAllSubjects(subjectQuery.data), [subjectQuery.isSuccess, subjectQuery.data]);
 
@@ -64,8 +75,8 @@ const SubjectsEnrolled = () => {
                     <div className="flex flex-1">
                       <Loader />
                     </div>
-                  ) : subjectQuery.data?.subjects?.length > 0 ? (
-                    subjectQuery.data.subjects.map((item, index) => {
+                  ) : filteredSubjects?.length > 0 ? (
+                    filteredSubjects?.map((item, index) => {
                       return (
                         <tr className="flex text-xs border-t border-t-black/10" key={index + 1}>
                           <td className="flex-[1] py-2 lg:py-3 flex justify-center">{index + 1}.</td>

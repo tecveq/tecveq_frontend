@@ -30,6 +30,7 @@ const Assignments = () => {
             <Navbar heading={"Assignments"} />
             <div className={`px-3 ${isBlurred ? "blur" : ""} relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto `}>
               <div className="mt-8 h-[80%] overflow-auto">
+
                 <QuizAssignmentRow
                   isQuiz={false}
                   index={"Sr. No"}

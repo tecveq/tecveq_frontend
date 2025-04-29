@@ -151,7 +151,9 @@ const AddUserModal = ({ closeModal, refetch }) => {
 
     // Use the hook with the modal's reference and callback function
     useClickOutside(ref, () => {
-        closeModal(); // Close the modal
+        // closeModal(); // Close the modal
+        console.log("i am working");
+
     });
 
 
@@ -259,7 +261,9 @@ const AddUserModal = ({ closeModal, refetch }) => {
 
 
     return (
-        <div className='absolute w-96 border h-screen border-black/20 z-10 bg-white right-0 top-0' ref={ref}>
+        <div className='absolute w-96 border h-screen border-black/20 z-10 bg-white right-0 top-0'
+            // ref={ref}
+        >
             <div className='flex flex-col gap-2 h-full'>
                 <div className=' border-b border-b-black/20'>
                     <div className='flex justify-between py-4 px-8'>

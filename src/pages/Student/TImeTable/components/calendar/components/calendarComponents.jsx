@@ -67,7 +67,7 @@ export const SideTime = (props) => {
         {times.map((time) => (
           <div
             key={`${time}2`}
-            className="flex w-[110px] h-10 justify-center items-center"
+            className="flex w-[110px] h-[60px]  justify-center items-center"
           >
             <p className="text-[10px] text-grey">
               {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
@@ -75,7 +75,7 @@ export const SideTime = (props) => {
             <p className="text-[10px] text-grey">-</p>
             <p className="text-[10px] text-grey">
               {moment.utc(time[0])
-                .add(1, "hour")
+                .add(0.5, "hour")
                 .tz("Asia/Karachi") // Convert to PKT
                 .format("h:mm a")}
             </p>

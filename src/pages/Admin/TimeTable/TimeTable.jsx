@@ -3,6 +3,7 @@ import Loader from "../../../utils/Loader";
 import Navbar from "../../../components/Admin/Navbar";
 import MyCalendar from "../../../components/Admin/TimeTable/calendar";
 import SchedualClasses from "../../../components/Admin/TimeTable/SchedualClasses";
+import { useLocation } from "react-router-dom";
 
 import { useQuery } from "@tanstack/react-query";
 import { useBlur } from "../../../context/BlurContext";
@@ -11,6 +12,14 @@ import { useTeacher } from "../../../utils/TeacherProvider";
 import { useSidebar } from "../../../context/SidebarContext";
 
 const TimeTable = () => {
+
+  const location = useLocation();
+  const pathSegments = location.pathname.split("/").filter(Boolean);
+  const pageName = pathSegments[pathSegments.length - 1] || "Home";
+
+
+  console.log(pageName, "page name hhhhhhh");
+
 
   const { teacherID, updateTeacherID } = useTeacher();
   const { isSidebarOpen } = useSidebar(); // new
@@ -35,6 +44,14 @@ const TimeTable = () => {
     }
   }, [teacherID, refetch]);
 
+  const [isChatOpen, setIsChatOpen] = useState(false); // new state for chat
+
+  const aiBtn = import.meta.env.VITE_BETA_VER === "true";
+
+
+  console.log(aiBtn, "hahahhahahahah");
+
+
 
   return (
     isPending || isRefetching ? <div className="flex flex-1 justify-start items-center" > <Loader /> </div> :
@@ -58,6 +75,51 @@ const TimeTable = () => {
                   </div> */}
                 </div>
               </div>
+
+
+
+              {/* Fixed AI Bot Button */}
+              {aiBtn && (
+                <div
+                  className="fixed bottom-6 right-6 bg-grey rounded-full w-14 h-14 flex items-center justify-center shadow-lg cursor-pointer hover:bg-gray-400 transition-all duration-300 animate-bounce"
+                  onClick={() => setIsChatOpen(prev => !prev)}
+                >
+                  <span className="text-white font-bold">AI</span>
+                </div>
+              )}
+
+
+
+              {/* Popup Chat Box */}
+              {isChatOpen && (
+                <div className="fixed bottom-24 right-6 w-80 h-96 bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden">
+                  <div className="bg-blue-500 text-white p-4 flex justify-between items-center">
+                    <span>AI Chat</span>
+                    <button onClick={() => setIsChatOpen(false)} className="font-bold">X</button>
+                  </div>
+                  <div className="flex-1 p-4 overflow-y-auto">
+                    {/* Show Welcome message + Page Name */}
+                    <p className="text-gray-700 mb-2">
+                      Welcome! You are currently on the page:
+                      <span className="font-semibold text-blue-600 capitalize"> {pageName}</span>
+                    </p>
+                    <p className="text-gray-600">How can I assist you today?</p>
+                  </div>
+                  <div className="p-2 border-t flex">
+                    <input
+                      type="text"
+                      placeholder="Type your message..."
+                      className="flex-1 p-2 rounded-l-lg border border-gray-300 focus:outline-none"
+                    />
+                    <button className="bg-maroon text-white p-2 rounded-r-lg hover:bg-maroon">
+                      Send
+                    </button>
+                  </div>
+                </div>
+              )}
+
+
+
             </div>
           </div>
         </div>
