@@ -14,6 +14,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMultipleAssignmentsForGrading, gradeAssignments } from "../../../api/Teacher/Assignments";
 import Loader from "../../../utils/Loader";
 import { useUser } from "../../../context/UserContext";
+import ProfileDetails from "../../../components/Admin/ProfileDetails";
 
 const GradingAssignments = () => {
 
@@ -48,7 +49,7 @@ const GradingAssignments = () => {
   };
 
   const toggleProfileDetails = () => {
-    toggleBlur();
+    // toggleBlur();
     setIsProfileDetails(!isProfileDetails);
   };
 
@@ -199,6 +200,8 @@ const GradingAssignments = () => {
               ) : (
                 ""
               )}
+              {isProfileDetails && <ProfileDetails onClose={toggleProfileDetails} />}
+
               {isProfileMenu ? (
                 <ProfileMenu
                   onProfileClick={onProfileClick}

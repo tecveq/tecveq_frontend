@@ -91,3 +91,46 @@ export const useGetTeacherSubject = (teacherId) => {
     error,
   };
 };
+
+
+
+// export const getAllSubjectOfStudent = apiRequest(async () => {
+//   const url = `${BACKEND_URL}/subject/student-subject`;
+//   const response = await axios.get(url);
+//   return response;
+// });
+
+
+
+export const useGetAllSubjectOfStudent = (studentId) => {
+
+
+  const getMyStudentSubjects = async () => {
+    const url = `${BACKEND_URL}/subject/student-subject/${studentId}`;
+    const response = await axios.get(url);
+
+    // Note: Axios does not use response.ok, so check the status code directly
+    if (response.status !== 200) {
+      throw new Error('Failed to get user');
+    }
+
+    return response.data; // Axios automatically parses the JSON response
+  };
+
+  // Updated useQuery call with object form
+  const { data: studentSubject, isLoading, error } = useQuery({
+    queryKey: ['get student subject', studentId],
+    queryFn: getMyStudentSubjects,
+    enabled: !!studentId, // Only run the query if levelId is truthy
+
+  });
+
+  // if (error) {
+  //   toast.error(error.toString());
+  // }
+
+  return {
+    isLoading,
+    studentSubject,
+  };
+};

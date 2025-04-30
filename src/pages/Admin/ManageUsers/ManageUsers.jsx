@@ -35,7 +35,7 @@ const ManageUsers = () => {
 
   const toggleAddUserModal = () => {
     setIsAddUserModal(!isAddUserModal);
-    toggleBlur();
+    // toggleBlur();
   }
 
   const toggleEditUserModal = () => {

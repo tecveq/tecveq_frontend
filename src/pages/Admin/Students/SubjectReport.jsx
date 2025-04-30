@@ -14,6 +14,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getStudentSubjectsForAdmin, getStudentSubjectsWithLevel, updateStudentSubjects } from "../../../api/Admin/UsersApi";
 import { getStudentReport, getStudentSubjectReport } from "../../../api/Admin/AdminApi";
 import { toast } from "react-toastify";
+import { useGetAllSubjectOfStudent } from "../../../api/Admin/SubjectsApi";
+import { useUser } from "../../../context/UserContext";
 
 const SubjectReport = () => {
 
@@ -25,6 +27,7 @@ const SubjectReport = () => {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [subjectQueryFlag, setSubjectQueryFlag] = useState(false);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
+
 
   // console.log("locatio state in subject report is : ", location.state);
 
@@ -93,6 +96,21 @@ const SubjectReport = () => {
       console.error("Error assigning subjects:", error.message);
     },
   });
+
+  
+
+
+
+  const { studentSubject } = useGetAllSubjectOfStudent(studentData?._id)
+
+
+  useEffect(() => {
+    if (editSubject && studentData?.subjects) {
+      // Initialize selectedSubjects with already assigned subjects
+      const assignedSubjects = studentSubject?.subjects.map((subj) => subj._id);
+      setSelectedSubjects(assignedSubjects);
+    }
+  }, [editSubject, studentData]);
 
   return (
     isPending || subjectPending ? <div className="flex justify-center flex-1"> <LargeLoader /> </div> :
@@ -217,8 +235,8 @@ const SubjectReport = () => {
                 <button
                   onClick={() => {
 
-                    console.log(selectedSubjects ,"selected subject");
-                    
+                    console.log(selectedSubjects, "selected subject");
+
                     if (!studentData?._id) {
                       console.error("Student ID is missing");
                       return;

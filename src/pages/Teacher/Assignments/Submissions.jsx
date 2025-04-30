@@ -13,6 +13,7 @@ import { useBlur } from "../../../context/BlurContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { getMultipleAssignmentsForGrading } from "../../../api/Teacher/Assignments";
+import ProfileDetails from "../../../components/Admin/ProfileDetails";
 
 
 const Submissions = () => {
@@ -46,8 +47,9 @@ const Submissions = () => {
   };
 
   const toggleProfileDetails = () => {
-    toggleBlur();
+    console.log("i am working");
     setIsProfileDetails(!isProfileDetails);
+    // toggleBlur();
   };
 
   const onProfileClick = () => {
@@ -93,8 +95,8 @@ const Submissions = () => {
 
 
 
-  console.log(data?.submissions ,"data submissions row");
-  
+  console.log(data?.submissions, "data submissions row");
+
 
 
   return (
@@ -175,6 +177,7 @@ const Submissions = () => {
                 ) : (
                   ""
                 )}
+                {isProfileDetails && <ProfileDetails onClose={toggleProfileDetails} />}
               </div>
               <div className="py-4">
                 <div className="flex items-center justify-between">
