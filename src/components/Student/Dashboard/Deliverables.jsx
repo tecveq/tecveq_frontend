@@ -3,12 +3,27 @@ import { useStudent } from "../../../context/StudentContext";
 import { formatDate } from "../../../constants/formattedDate";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../utils/Loader";
-
+import { useUser } from "../../../context/UserContext";
 const Deliverables = () => {
 
   const navigate = useNavigate();
   const { allAssignments, allQuizes, assignmentRefetch, quizRefetch, quizIsPending, assignmentIsPending } = useStudent();
   const [allDeliverables, setAllDeliverables] = useState([]);
+
+
+  const { userData } = useUser()
+
+
+
+  const matchedAssignments = allAssignments?.filter(assignment =>
+    userData.subjects.includes(assignment.subjectID._id)
+  );
+
+  const matchedAQuizes = allQuizes?.filter(quiz =>
+    userData.subjects.includes(quiz.subjectID._id)
+  );
+
+
 
   useEffect(() => {
 
@@ -21,7 +36,7 @@ const Deliverables = () => {
       // quizRefetch();
     }
     if (allAssignments.length > 0 || allQuizes.length) {
-      let arr = [...allAssignments, ...allQuizes];
+      let arr = [...matchedAssignments, ...matchedAQuizes];
       arr.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
 
       setAllDeliverables(arr);
