@@ -40,7 +40,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz 
     if (isEditTrue && data) {
       const { title, text, totalMarks, dueDate, files, canSubmitAfterTime, classroomID, subjectID } = data;
       const formattedDueDate = new Date(dueDate);
-      
+
       setFormData({
         title,
         text,
@@ -49,7 +49,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz 
         files: files?.[0] || "",
         canSubmitAfterTime,
       });
-      
+
       setDueDate(formattedDueDate.toISOString().split("T")[0]);
       setDueTime(formattedDueDate.toISOString().split("T")[1].slice(0, 5));
       setSelectedClassroom(classroomID);
@@ -89,7 +89,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz 
   // Handle form submission
   const handleSubmit = async () => {
     setIsLoading(true);
-    
+
     try {
       const files = selectedFile
         ? [await handleFileUpload(selectedFile)]
@@ -97,7 +97,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz 
 
       const payload = {
         ...formData,
-        subjectId: selectedSubject,
+        subjectID: selectedSubject,
         classroomID: selectedClassroom?._id,
         files,
         dueDate: formatDueDate(),
