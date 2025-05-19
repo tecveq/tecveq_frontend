@@ -66,6 +66,17 @@ const MarkAttendence = () => {
     console.log(classData, "class dta si");
 
 
+
+    const subjectId = classData?.subjectID?._id;
+
+    const matchedStudents = classData?.classroom?.studentdetails?.filter(student =>
+        student.subjects?.includes(subjectId)
+    );
+
+    // Example output:
+    console.log(matchedStudents);
+
+
     return (
         false ? <div className="flex justify-start flex-1"> <Loader /> </div> :
             <>
@@ -106,7 +117,7 @@ const MarkAttendence = () => {
                                             students={"Students"}
                                             teachers={"Teachers"}
                                         />
-                                        {classData?.classroom?.studentdetails?.map((cls, index) =>
+                                        {matchedStudents?.map((cls, index) =>
 
                                         (
 
@@ -121,7 +132,7 @@ const MarkAttendence = () => {
                                                 setAttendenceData={setAttendenceData}
                                             />
                                         ))}
-                                        {searchText && classData?.classroom?.studentdetails?.map((cls, index) => {
+                                        {searchText && matchedStudents?.map((cls, index) => {
                                             if (cls.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                                                 return <DataRow
                                                     data={cls}

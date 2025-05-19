@@ -176,8 +176,29 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
       setTeachersArr(initialTeacherArr);
     }
   }, [editData]);
+  useEffect(() => {
+    setTeachersArr(prev =>
+      prev.map(entry => {
+        // If headTeacher is null, convert all "head" types to "teacher"
+        if (!headTeacher || !headTeacher._id) {
+          return { ...entry, type: "teacher" };
+        }
+
+        // If headTeacher is present and matches the entry.teacher, keep it "head", else "teacher"
+        const isHead =
+          entry.teacher?.toString() === headTeacher._id.toString();
+        return {
+          ...entry,
+          type: isHead ? "head" : "teacher"
+        };
+      })
+    );
+  }, [headTeacher]);
+
 
   const toggleSubject = useCallback((teacherId, subjectId) => {
+    console.log("i am working");
+
     setSelectedSubjects(prev => {
       const currentSubjects = prev[teacherId] || [];
       const updatedSubjects = currentSubjects.includes(subjectId)
@@ -185,18 +206,29 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
         : [...currentSubjects, subjectId];
 
       setTeachersArr(prevArr => {
-        const filtered = prevArr.filter(item => item.teacher !== teacherId || item.type === "head");
-        const newPairs = updatedSubjects.map(s => ({
-          teacher: teacherId,
-          subject: s,
-          type: "teacher",
-        }));
+        const filtered = prevArr.filter(
+          item => item.teacher !== teacherId || item.type === "head"
+        );
+
+        const newPairs = updatedSubjects.map(s => {
+          const isHead =
+            headTeacher?._id &&
+            teacherId?.toString() === headTeacher._id.toString();
+
+          return {
+            teacher: teacherId,
+            subject: s,
+            type: isHead ? "head" : "teacher"
+          };
+        });
+
         return [...filtered, ...newPairs];
       });
 
       return { ...prev, [teacherId]: updatedSubjects };
     });
-  }, []);
+  }, [headTeacher]); // <- include headTeacher in dependencies
+
 
   const updateClassroomMutation = useMutation({
     mutationFn: updateClassroom,
@@ -207,7 +239,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
     },
     onError: () => toast.error("Failed to update classroom."),
   });
-  console.log(teacherArr ,"teacher arayjjjjjjj hhhhhhhhh");
+  console.log(teacherArr, "teacher arayjjjjjjj hhhhhhhhh");
 
   const handleUpdateClass = useCallback(() => {
     if (!classroomName || !selectedLevel || !newSelectedStudents.length || !newSelectedTeachers.length) {
@@ -221,7 +253,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
       return;
     }
 
-    
+
 
     const data = {
       name: classroomName,
@@ -300,7 +332,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
                   Subjects for {teacher.name} {teacher._id === headTeacher?._id ? "(Head Teacher)" : ""}
                 </p>
                 <div className="flex flex-wrap gap-3 mb-4">
-                  {subjectWithLevel.map(subject => (
+                  {subjectWithLevel?.map(subject => (
                     <label key={subject._id} className="flex items-center gap-2">
                       <input
                         type="checkbox"
