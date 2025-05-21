@@ -184,6 +184,8 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
       return { ...prev, [teacherId]: updatedSubjects };
     });
 
+    console.log(headTeacher, "head teacher ");
+
     setTeachersArr(prev => {
       const filtered = prev.filter(item => item.teacher !== teacherId);
       const subjectEntries = (isChecked
@@ -191,7 +193,9 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
         : (selectedSubjects[teacherId] || []).filter(s => s._id !== subject._id)
       ).map(subj => ({
         teacher: teacherId,
-        subject: subj._id
+        subject: subj._id,
+        type: headTeacher?._id && teacherId === headTeacher._id ? "head" : "teacher"
+
       }));
 
       return [...filtered, ...subjectEntries];

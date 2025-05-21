@@ -26,6 +26,14 @@ const Attendence = () => {
   const { data, isPending, refetch, isLoading: isLoadingClass } = useQuery({ queryKey: ["today-classes"], queryFn: getTodayClasses });
   const { data: classrooms, isLoading: isLoadingClassroom } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassrooms });
 
+
+
+
+ 
+
+
+
+
   const toggleClassMenuOpen = (data) => {
     console.log("data is in menu ", data)
     setEditClassData(data);
@@ -59,8 +67,6 @@ const Attendence = () => {
       return toast.success("Classroom deleted successfully");
     }
   });
-
-  console.log("Classroom", data)
 
 
 
