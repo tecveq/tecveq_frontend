@@ -15,6 +15,8 @@ const CreateAnnouncementModal = ({
     isEditTrue,
 }) => {
 
+    console.log(announcementData, "announcement");
+
     const { toggleBlur } = useBlur();
 
 
@@ -29,8 +31,8 @@ const CreateAnnouncementModal = ({
     const [announcemnetObj, setAnnouncementObj] = useState({
         title: isEditTrue ? announcementData?.title : "",
         description: isEditTrue ? announcementData?.description : "",
-        date: "",
-        time: "",
+        date: isEditTrue ? announcementData?.date?.slice(0, 10) : "", // YYYY-MM-DD
+        time: isEditTrue ? announcementData?.date?.slice(11, 16) : "", // HH:MM
         type: "annoouncement",
         visibility: isEditTrue ? announcementData?.visibility : "all",
     });

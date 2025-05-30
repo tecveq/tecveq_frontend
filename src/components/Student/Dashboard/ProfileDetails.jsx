@@ -7,7 +7,6 @@ import { IoClose } from "react-icons/io5";
 import { CusotmInput } from "./CustomInput";
 import { useUser } from "../../../context/UserContext";
 import { updateStudent } from "../../../api/Student/StudentApis";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import IMAGES from "../../../assets/images";
 import { GoMail, GoPencil, GoPerson } from "react-icons/go";
 import { MdPhone } from "react-icons/md";
@@ -16,6 +15,7 @@ import { FaGraduationCap } from "react-icons/fa6";
 import profile from "../../../assets/images/profilepic.png"
 import { useBlur } from "../../../context/BlurContext";
 import useClickOutside from "../../../hooks/useClickOutlise";
+import { uploadFile } from "../../../utils/FileUpload";
 const ProfileDetails = ({ onclose }) => {
 
   const { userData, setUserData } = useUser();
@@ -49,30 +49,21 @@ const ProfileDetails = ({ onclose }) => {
     setAllowedEdit(true);
   };
 
-  const uploadFile = async (file) => {
-    const storage = getStorage();
-    const storageRef = ref(storage, file?.name);
 
-    console.log("begin deploye")
-
-    const resp = await uploadBytes(storageRef, file);
-    console.log("resp : ", resp);
-    let url = await getDownloadURL(resp.ref)
-    console.log("response is : ", url);
-    return url;
-  }
-
+  let profilePic = ""
   const handleSaveDetails = async () => {
     setLoading(true);
 
-    let profilePicUrl = selectedFile;
-    if (selectedFile?.name !== undefined) {
-      profilePicUrl = await uploadFile(selectedFile);
+    if (selectedFile) {
+      console.log("i am working");
+
+      const fileUrl = await uploadFile(selectedFile);
+      profilePic = fileUrl;
     }
 
     const data = {
       name, email, bio, phoneNumber: phone, guardianName: parentName, guardianEmail: parentEmail,
-      guardianPhoneNumber: parentPhone, className, profilePic: profilePicUrl
+      guardianPhoneNumber: parentPhone, className, profilePic
     }
 
     console.log("data being sent is : ", data);
