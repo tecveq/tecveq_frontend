@@ -93,7 +93,7 @@ const SubjectReport = () => {
                       type={"Percentage"}
                     />
                     <Card
-                      percentage={data.attendance.avgAttendencePer}
+                      percentage={data.attendance.avgAttendencePer.toFixed(1)}
                       data={"Attendence"}
                       // grade={"F"}
                       type={"Percentage"}
