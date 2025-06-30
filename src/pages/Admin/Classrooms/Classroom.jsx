@@ -5,7 +5,7 @@ import DataRow from "../../../components/Admin/Classrooms/DataRow";
 import ClassMenu from "../../../components/Admin/Classrooms/ClassMenu";
 import ClassModal from "../../../components/Admin/Classrooms/ClassModal";
 import EditClassModel from "../../../components/Admin/Classrooms/EditClassModel"
-
+import PromoteModal from "../../../components/Admin/Classrooms/PromoteModal"
 import { BiSearch } from "react-icons/bi";
 import { useBlur } from "../../../context/BlurContext";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -19,15 +19,17 @@ const Classroom = () => {
   const [editClassData, setEditClassData] = useState({});
   const [isClassMenuOpen, setIsClassMenuOpen] = useState(false);
   const [createClassModal, setCreateClassModal] = useState(false);
-
+  const [promotePopupMenu, setPromotePopupMenu] = useState(false)
+  const [classroomData, setClassroomData] = useState({})
 
   const toggleClassMenuOpen = (data) => {
-    console.log("data on opening class menu si : ", data);
     setEditClassData(data);
+    setClassroomData(data)
     console.log("single data of classroom", data);
-
     setIsClassMenuOpen(!isClassMenuOpen);
   };
+
+
 
   const handleEditClass = () => {
     // TODO: Pending this function
@@ -51,6 +53,10 @@ const Classroom = () => {
       return toast.success("Classroom deleted successfully");
     }
   });
+
+  const handlePromoteStudents = () => {
+    setPromotePopupMenu(!promotePopupMenu)
+  }
 
   const { data, isPending, refetch, isRefetching } = useQuery({ queryKey: ["classroom"], queryFn: getAllClassroom });
 
@@ -169,7 +175,21 @@ const Classroom = () => {
           setIsOpen={setIsClassMenuOpen}
           editClassRoom={handleEditClass}
           deleteClassRoom={handleDeleteClass}
+          promoteStudentsPopup={handlePromoteStudents}
         />
+
+        <div>
+          {
+            promotePopupMenu && (
+              <>
+                <PromoteModal
+                  classrooms={data}
+                  setPromotePopupMenu={handlePromoteStudents}
+                  classroomStudents={classroomData} />
+              </>
+            )
+          }
+        </div>
       </>
   );
 };

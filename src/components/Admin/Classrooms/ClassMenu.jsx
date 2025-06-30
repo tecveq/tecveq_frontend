@@ -7,6 +7,7 @@ const ClassMenu = ({
   isopen,
   setIsOpen,
   deleteClassRoom,
+  promoteStudentsPopup,
   editClassRoom
 }) => {
   const ref = useRef(null);
@@ -36,6 +37,14 @@ const ClassMenu = ({
             }}>
               <RiDeleteBin6Line />
               <p>Delete</p>
+            </div>
+
+            <div className="flex items-center gap-2 cursor-pointer text-maroon " onClick={() => {
+              promoteStudentsPopup()
+              setIsOpen(false);
+            }}>
+              <div>🎓</div>
+              <p>Promote</p>
             </div>
           </div>
         </div>
