@@ -61,17 +61,18 @@ const Announcements = () => {
         setisQuote(true);
     }
 
-    const editAnnouncement = (data) =>{
+    const editAnnouncement = (data) => {
         console.log("edit annoucnemnet data ", data);
         setEditAnnouncementData(data);
         toggleEditAnnouncementModal();
     }
 
-    const editQuote = (data) =>{
-        console.log("edit Quote data ", data);
+    const editQuote = (data) => {
         setEditQuoteData(data);
         toggleEditQuoteModal();
     }
+    console.log("edit Quote data ", editQuoteData);
+
 
     const announceDellMutate = useMutation({
         mutationFn: async (id) => await deleteAnnouncements(id),
@@ -81,9 +82,9 @@ const Announcements = () => {
         }
     });
 
-    const { data: announcemnets, isPending, isSuccess, isError, refetch, isRefetching} = useQuery({ queryKey: ["announcemnets", "quotes"], queryFn: getAllAnnouncements });
+    const { data: announcemnets, isPending, isSuccess, isError, refetch, isRefetching } = useQuery({ queryKey: ["announcemnets", "quotes"], queryFn: getAllAnnouncements });
 
-    if(isError) toast.error("Error while getting the data!");
+    if (isError) toast.error("Error while getting the data!");
 
     useEffect(() => {
         if (isSuccess) {
@@ -150,7 +151,7 @@ const Announcements = () => {
                                         }
 
                                         if (searchText === "") {
-                                            return <QuoteCard refetch={refetch} editQuote={editQuote} deleteQuote={announceDellMutate.mutate} key={index} quote={item} /> 
+                                            return <QuoteCard refetch={refetch} editQuote={editQuote} deleteQuote={announceDellMutate.mutate} key={index} quote={item} />
                                         }
                                     }
                                 })}

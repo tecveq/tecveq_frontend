@@ -109,18 +109,20 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
 
 
     }
-
     const classCreateMutate = useMutation({
       mutationFn: async (data) => await createClasses(data),
-      onSettled: async (data, error) => {
-        if (!error) {
-          toast.success("Class created successfully");
-          await refetch();
-          setAddScheduleModalOpen(false);
-          setaddEventModalOpen(false);
-        }
+      onSuccess: async (data) => {
+        toast.success("Class created successfully");
+        await refetch();
+        setAddScheduleModalOpen(false);
+        setaddEventModalOpen(false);
+      },
+      onError: (error) => {
+        const message = error?.response?.data?.error || "An unexpected error occurred";
+        toast.error(message);
       }
     });
+
 
 
 

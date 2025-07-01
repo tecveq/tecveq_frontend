@@ -18,6 +18,8 @@ const CreateQuoteModal = ({
     isEditTrue,
     quoteData
 }) => {
+
+
     const { isBlurred, toggleBlur } = useBlur();
     const ref = useRef(null);
 
@@ -25,10 +27,12 @@ const CreateQuoteModal = ({
         title: isEditTrue ? quoteData?.title : "",
         description: isEditTrue ? quoteData?.description : "",
         date: isEditTrue ? quoteData?.date?.split("T")[0] : "",
-        time: "",
+        time: isEditTrue ? quoteData?.date?.slice(11, 16) : "", // HH:MM
         type: "quote",
         visibility: isEditTrue ? quoteData?.visibility : "all",
     })
+
+    console.log(quoteObj, "qute data sis ");
 
     const mutation = useMutation({
         mutationFn: async () => {
@@ -56,7 +60,7 @@ const CreateQuoteModal = ({
         <div
             onClick={() => { }}
             ref={ref}
-            className={`fixed z-10 mt-10 bg-white p-8 w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
+            className={`fixed z-10 mt-4 bg-white p-8 w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
                 }`}
         >
             <div className="flex gap-2">
@@ -64,7 +68,7 @@ const CreateQuoteModal = ({
                     <div className="flex items-center justify-between">
                         <div className="flex justify-center flex-1 w-[fit] gap-2 items-center">
                             <p className="text-2xl font-semibold cursor-text">
-                                {isEditTrue ? "Update Quote":  "Create new Quote" }
+                                {isEditTrue ? "Update Quote" : "Create new Quote"}
                             </p>
                         </div>
                         <div className="flex items-center gap-2 cursor-pointer">

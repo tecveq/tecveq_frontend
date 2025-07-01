@@ -59,7 +59,7 @@ const CreateAnnouncementModal = ({
     return (
         <div
             ref={ref}
-            className={`fixed z-10 mt-10 bg-white p-8 w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
+            className={`fixed z-10 mt-6 bg-white p-8 w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
                 }`}
         >
             <div className="flex gap-2">
