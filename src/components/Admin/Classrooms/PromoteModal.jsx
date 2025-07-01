@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAdmin } from '../../../context/AdminContext';
+import { useStudentPromotion } from '../../../api/Admin/promoteStudents';
 
 const PromoteModal = ({ classrooms = [], classroomStudents = {}, setPromotePopupMenu }) => {
   const { allLevels = [] } = useAdmin();
@@ -8,6 +9,12 @@ const PromoteModal = ({ classrooms = [], classroomStudents = {}, setPromotePopup
   const [description, setDescription] = useState('');
   const [file, setFile] = useState(null);
 
+  const [sourceClassroom, setSourceClassroom] = useState('');
+  const [sourceLevel, setSourceLevel] = useState('');
+  const [targetClassroom, setTargetClassroom] = useState('');
+  const [targetLevel, setTargetLevel] = useState('');
+
+  const { promoteStudents, isLoading } = useStudentPromotion();
   const students = classroomStudents?.students || [];
 
   const handleStudentToggle = (id) => {
@@ -17,12 +24,8 @@ const PromoteModal = ({ classrooms = [], classroomStudents = {}, setPromotePopup
   };
 
   const handleSelectAll = () => {
-    if (selectAll) {
-      setSelectedStudentIds([]);
-    } else {
-      const allIds = students.map((s) => s._id);
-      setSelectedStudentIds(allIds);
-    }
+    const allIds = students.map((s) => s._id);
+    setSelectedStudentIds(selectAll ? [] : allIds);
     setSelectAll(!selectAll);
   };
 
@@ -30,10 +33,35 @@ const PromoteModal = ({ classrooms = [], classroomStudents = {}, setPromotePopup
     setFile(e.target.files[0]);
   };
 
+  const handleSubmit = () => {
+    const selectedStudents = students
+      .filter((s) => selectedStudentIds.includes(s._id))
+      .map((s) => ({
+        id: s._id,
+        name: s.name,
+        rollNo: s.rollNo,
+      }));
+
+    const promotionData = {
+      sourceClassroom,
+      sourceLevel,
+      targetClassroom,
+      targetLevel,
+      promotorDescription: description,
+      students: selectedStudents,
+    };
+
+    console.log(promotionData, "promoted students are");
+
+
+    promoteStudents(promotionData);
+    setPromotePopupMenu(false); // close modal
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 py-8">
       <div className="relative w-full max-w-2xl max-h-screen overflow-y-auto bg-gradient-to-br from-white via-blue-50 to-white rounded-3xl shadow-2xl border border-gray-200 p-8 space-y-8">
-        {/* ❌ Close Button */}
+
         <button
           onClick={setPromotePopupMenu}
           className="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl font-bold"
@@ -41,43 +69,64 @@ const PromoteModal = ({ classrooms = [], classroomStudents = {}, setPromotePopup
           ×
         </button>
 
-        {/* Header */}
         <h2 className="text-4xl font-bold text-center text-blue-800 flex items-center justify-center gap-3">
           🎓 Promote Students 🚀
         </h2>
 
-        {/* Classroom & Level */}
+        {/* Source & Target Classroom & Level */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="classroomSelect" className="block mb-1 font-semibold text-gray-800">
-              🏫 Select Classroom
-            </label>
+            <label className="block font-semibold mb-1">📘 Source Classroom</label>
             <select
-              id="classroomSelect"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
+              className="w-full border px-3 py-2 rounded"
+              value={sourceClassroom}
+              onChange={(e) => setSourceClassroom(e.target.value)}
             >
-              <option value="">-- Choose Classroom --</option>
-              {classrooms.map((classroom) => (
-                <option key={classroom._id} value={classroom._id}>
-                  {classroom.name}
-                </option>
+              <option value="">-- Select --</option>
+              {classrooms.map((c) => (
+                <option key={c._id} value={c._id}>{c.name}</option>
               ))}
             </select>
           </div>
 
           <div>
-            <label htmlFor="levelSelect" className="block mb-1 font-semibold text-gray-800">
-              📘 Select Level
-            </label>
+            <label className="block font-semibold mb-1">🎒 Source Level</label>
             <select
-              id="levelSelect"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm"
+              className="w-full border px-3 py-2 rounded"
+              value={sourceLevel}
+              onChange={(e) => setSourceLevel(e.target.value)}
             >
-              <option value="">-- Choose Level --</option>
-              {allLevels.map((level) => (
-                <option key={level._id} value={level._id}>
-                  {level.name}
-                </option>
+              <option value="">-- Select --</option>
+              {allLevels.map((l) => (
+                <option key={l._id} value={l._id}>{l.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block font-semibold mb-1">🎯 Target Classroom</label>
+            <select
+              className="w-full border px-3 py-2 rounded"
+              value={targetClassroom}
+              onChange={(e) => setTargetClassroom(e.target.value)}
+            >
+              <option value="">-- Select --</option>
+              {classrooms.map((c) => (
+                <option key={c._id} value={c._id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block font-semibold mb-1">🏆 Target Level</label>
+            <select
+              className="w-full border px-3 py-2 rounded"
+              value={targetLevel}
+              onChange={(e) => setTargetLevel(e.target.value)}
+            >
+              <option value="">-- Select --</option>
+              {allLevels.map((l) => (
+                <option key={l._id} value={l._id}>{l.name}</option>
               ))}
             </select>
           </div>
@@ -85,88 +134,72 @@ const PromoteModal = ({ classrooms = [], classroomStudents = {}, setPromotePopup
 
         {/* Description */}
         <div>
-          <label htmlFor="description" className="block mb-1 font-semibold text-gray-800">
-            📝 Promotion Description
-          </label>
+          <label className="block font-semibold mb-1">📝 Promotion Description</label>
           <textarea
-            id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            rows="3"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none shadow-sm"
-            placeholder="Write a short reason for promotion..."
+            className="w-full border px-3 py-2 rounded"
+            rows={3}
+            placeholder="Reason for promotion..."
           />
         </div>
 
-        {/* File Upload */}
+        {/* File Upload (optional) */}
         <div>
-          <label className="block mb-1 font-semibold text-gray-800">📎 Attach File (optional)</label>
+          <label className="block font-semibold mb-1">📎 Upload File (Optional)</label>
           <input
             type="file"
             onChange={handleFileChange}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 bg-white text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 shadow-sm"
+            className="w-full border px-3 py-2 rounded"
           />
-          {file && <p className="text-sm text-gray-600 mt-1">📄 {file.name}</p>}
         </div>
 
-        {/* Student Selection */}
-        <div>
-          <div className="flex items-center justify-between mb-2">
-            <p className="font-semibold text-gray-800">🧑‍🎓 Select Students</p>
-            <label className="flex items-center gap-2 text-sm text-gray-600">
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAll}
-                className="accent-blue-600 w-4 h-4"
-              />
-              <span>✅ Select All</span>
+        {/* Student List */}
+        <div className="border rounded p-3 bg-gray-50 max-h-60 overflow-y-auto">
+          <div className="flex justify-between items-center mb-2">
+            <p className="font-semibold">🧑‍🎓 Select Students</p>
+            <label className="text-sm">
+              <input type="checkbox" checked={selectAll} onChange={handleSelectAll} />
+              <span className="ml-2">Select All</span>
             </label>
           </div>
 
-          <div className="max-h-60 overflow-y-auto border border-gray-200 rounded-md p-3 space-y-2 bg-gray-50 shadow-inner">
-            {students.length === 0 ? (
-              <p className="text-sm text-gray-500 text-center">❌ No students found in this classroom.</p>
-            ) : (
-              students.map((student) => (
-                <label
-                  key={student._id}
-                  className={`flex items-center justify-between p-2 rounded-md border transition-all duration-200 ${
-                    selectedStudentIds.includes(student._id)
-                      ? 'bg-blue-100 border-blue-400'
-                      : 'hover:bg-gray-100 border-gray-200'
+          {students.length === 0 ? (
+            <p>No students found.</p>
+          ) : (
+            students.map((student) => (
+              <label
+                key={student._id}
+                className={`block p-2 rounded border mb-1 ${selectedStudentIds.includes(student._id) ? 'bg-blue-100 border-blue-400' : 'border-gray-200'
                   }`}
-                >
-                  <span className="text-gray-800 text-sm">
-                    👤 {student.name}{' '}
-                    <span className="text-gray-500">({student.rollNo})</span>
-                  </span>
+              >
+                <div className="flex justify-between items-center">
+                  <span>{student.name} ({student.rollNo})</span>
                   <input
                     type="checkbox"
                     checked={selectedStudentIds.includes(student._id)}
                     onChange={() => handleStudentToggle(student._id)}
-                    className="accent-blue-600 w-5 h-5"
                   />
-                </label>
-              ))
-            )}
-          </div>
+                </div>
+              </label>
+            ))
+          )}
         </div>
 
         {/* Submit Button */}
         <button
-          className={`w-full py-3 rounded-lg font-semibold text-[#ffffff] transition duration-200 text-lg flex items-center justify-center gap-2 ${
-            selectedStudentIds.length > 0
-              ? 'bg-gradient-to-r from-[#4F46E5] to-[#3B82F6] hover:from-[#4338CA] hover:to-[#2563EB]'
-              : 'bg-[#9CA3AF] cursor-not-allowed'
-          }`}
-          disabled={selectedStudentIds.length === 0}
+          onClick={handleSubmit}
+          disabled={
+            !sourceClassroom || !sourceLevel || !targetClassroom || !targetLevel || selectedStudentIds.length === 0 || isLoading
+          }
+          className={`w-full py-3 mt-4 rounded-lg font-semibold ${selectedStudentIds.length > 0
+              ? 'bg-[#2563EB] hover:bg-[#1D4ED8] text-[#FFFFFF]'
+              : 'bg-[#D1D5DB] text-[#9CA3AF] cursor-not-allowed'
+            }`}
         >
-          🚀 Promote{' '}
-          {selectedStudentIds.length > 0
-            ? `${selectedStudentIds.length} Student${selectedStudentIds.length > 1 ? 's' : ''}`
-            : 'Student'}
+          🚀 {isLoading ? 'Promoting...' : `Promote ${selectedStudentIds.length} Student(s)`}
         </button>
+
       </div>
     </div>
   );

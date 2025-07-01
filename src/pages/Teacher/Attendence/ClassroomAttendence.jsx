@@ -6,208 +6,206 @@ import { BiSearch } from "react-icons/bi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBlur } from "../../../context/BlurContext";
 import { useMutation } from "@tanstack/react-query";
-import { markHeadAttendence, useGetAttandenceOfClassroom, useUpdateAttandenceOfClassroom } from "../../../api/Teacher/Attendence";
+import {
+  markHeadAttendence,
+  useGetAttandenceOfClassroom,
+  useUpdateAttandenceOfClassroom
+} from "../../../api/Teacher/Attendence";
 import { toast } from "react-toastify";
+import { useUser } from "../../../context/UserContext";
 
 const ClassroomAttendence = () => {
   const location = useLocation();
-
+  const { userData } = useUser();
+  const navigate = useNavigate();
   const { isBlurred } = useBlur();
+
+  const allData = location?.state;
+
+  // ✅ Find the logged-in teacher's subject
+  const matchedTeacher = allData?.teachers?.find((t) => t.teacher === userData._id);
+  const subjectId = matchedTeacher?.subject;
+  console.log(matchedTeacher, "matched teacher");
+  console.log(subjectId, "subject id");
+
   const [searchText, setSearchText] = useState("");
   const [attendenceData, setAttendenceData] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
-  const [currentDate, setCurrentDate] = useState(new Date().toISOString().split('T')[0])
-  const navigate = useNavigate();
-
-  const { getAttandence } = useGetAttandenceOfClassroom(location?.state?._id, currentDate)
-
-  const { updateAttandence } = useUpdateAttandenceOfClassroom()
-
+  const [currentDate, setCurrentDate] = useState(new Date().toISOString().split("T")[0]);
   const [showPopup, setShowPopup] = useState(false);
 
-  const updateFunction = () => {
-    setShowPopup(true); // Show the confirmation popup
-  };
+  const { getAttandence } = useGetAttandenceOfClassroom(location?.state?._id, currentDate);
+  const { updateAttandence } = useUpdateAttandenceOfClassroom();
 
-  const handleConfirmUpdate = () => {
-    setShowPopup(false); // Close the popup
-    try {
-      updateAttandence({ data: attendenceData, classroomID: location?.state?._id, date: currentDate });
-    } catch (error) {
-      console.error("Error updating attendance:", error);
+  // ✅ Fetch and filter students based on subject
+  useEffect(() => {
+    if (!location.state || !subjectId) return;
+
+    const students = allData?.studentDetails || [];
+    const matchedStudents = students.filter((student) =>
+      student.subjects?.includes(subjectId)
+    );
+
+    if (getAttandence) {
+      const fetchedAttendanceData = getAttandence?.students?.map((attendance) => ({
+        studentID: attendance.studentID,
+        isPresent: attendance.isPresent,
+        late: attendance.late || false
+      }));
+      setAttendenceData(fetchedAttendanceData);
+      setFilteredStudents(matchedStudents);
+    } else {
+      const initialAttendanceData = matchedStudents.map((student) => ({
+        studentID: student._id,
+        isPresent: true,
+        late: false
+      }));
+      setAttendenceData(initialAttendanceData);
+      setFilteredStudents(matchedStudents);
     }
-    console.log("Attendance updated!");
-  };
+  }, [getAttandence, location.state, subjectId]);
 
-  const handleCancelUpdate = () => {
-    setShowPopup(false); // Close the popup
-  };
-
+  // ✅ Filter by search text
+  useEffect(() => {
+    const students = allData?.studentDetails || [];
+    const matchedStudents = students.filter((student) =>
+      student.subjects?.includes(subjectId)
+    );
+    const filtered = searchText
+      ? matchedStudents.filter((student) =>
+          student.name.toLowerCase().includes(searchText.toLowerCase())
+        )
+      : matchedStudents;
+    setFilteredStudents(filtered || []);
+  }, [searchText, allData?.studentDetails, subjectId]);
 
   const attendenceMutation = useMutation({
     mutationKey: ["mark-attendence"],
     mutationFn: async () => {
-      const result = await markHeadAttendence(attendenceData, location?.state?._id, currentDate);
+      const result = await markHeadAttendence(
+        attendenceData,
+        location?.state?._id,
+        currentDate
+      );
       console.log(result, "result");
       return result;
     },
     onSettled: (data, error) => {
-      setFilteredStudents(data)
+      setFilteredStudents(data);
       if (error) {
-
-
         toast.error(error?.response?.data?.message);
         navigate("/teacher/classroom/head-attendence");
       } else {
         toast.success("Attendance submitted successfully!");
         navigate("/teacher/classroom/head-attendence");
       }
-    },
+    }
   });
 
-  useEffect(() => {
-    if (getAttandence) {
-      // Map the fetched attendance data to match the required structure
-      const fetchedAttendanceData = getAttandence?.students?.map((attendance) => ({
-        studentID: attendance.studentID,
-        isPresent: attendance.isPresent,
-        late: attendance.late || false, // Add late status if applicable
-      }));
+  const updateFunction = () => setShowPopup(true);
+  const handleCancelUpdate = () => setShowPopup(false);
 
-      setAttendenceData(fetchedAttendanceData);
-      setFilteredStudents(location.state?.studentDetails || []);
-    } else if (location.state?.studentDetails) {
-      // Fallback to initial attendance data if no fetched attendance is present
-      const students = location.state.studentDetails;
-      const initialAttendenceData = students.map((student) => ({
-        studentID: student._id,
-        isPresent: true,
-      }));
-
-      setAttendenceData(initialAttendenceData);
-      setFilteredStudents(students);
-    } else {
-      console.warn("No student details found in location.state");
+  const handleConfirmUpdate = () => {
+    setShowPopup(false);
+    try {
+      updateAttandence({
+        data: attendenceData,
+        classroomID: location?.state?._id,
+        date: currentDate
+      });
+      console.log("Attendance updated!");
+    } catch (error) {
+      console.error("Error updating attendance:", error);
     }
-  }, [getAttandence, location.state]);
-
-
-  useEffect(() => {
-    if (location.state?.studentDetails) {
-      const initialAttendance = location.state.studentDetails.map((student) => ({
-        studentID: student._id,
-        isPresent: true,
-        late: false,
-      }));
-      setAttendenceData(initialAttendance);
-      setFilteredStudents(location.state.studentDetails);
-    }
-  }, [location.state?.studentDetails]);
-
-  // Filter students by search text
-  useEffect(() => {
-    const filtered = searchText
-      ? location.state?.studentDetails?.filter((student) =>
-        student.name.toLowerCase().includes(searchText.toLowerCase())
-      )
-      : location.state?.studentDetails;
-
-    setFilteredStudents(filtered || []);
-  }, [searchText, location.state?.studentDetails]);
-
-
+  };
 
   return (
-    <>
-
-      <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
-        <div className="flex flex-1">
-          <div className={`w-full h-screen flex-grow lg:ml-72`}>
-            <div className="h-screen pt-1">
-              <Navbar heading={"Mark Attendance"} />
-              <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
-                <div className="py-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-col gap-2 w-full md:flex-row md:justify-between items-center ">
-                      <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
-                        <BiSearch />
-                        <input
-                          type="text"
-                          value={searchText}
-                          placeholder="Search"
-                          className="outline-none"
-                          onChange={(e) => setSearchText(e.target.value)}
-                        />
-                      </div>
-                      <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
-                        <input
-                          type="date"
-                          value={currentDate}
-                          placeholder="add date"
-                          onChange={(e) => setCurrentDate(e.target.value)}
-
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-8 h-[80%] overflow-auto">
-                  <DataRow
-                    isQuiz={true}
-                    header={true}
-                    index={"Sr. No"}
-                    classname={"Name"}
-                    bgColor={"#F9F9F9"}
-                    students={"Students"}
-                    teachers={"Teachers"}
-                  />
-                  {filteredStudents.length > 0 ? (
-                    filteredStudents.map((student, index) => (
-                      <DataRow
-                        key={index}
-                        data={student}
-                        header={false}
-                        classname={student.name}
-                        profile={student.profilePic}
-                        index={index + 1}
-                        bgColor={"#FFFFFF"}
-                        attendeceData={attendenceData}
-                        setAttendenceData={setAttendenceData}
+    <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
+      <div className="flex flex-1">
+        <div className={`w-full h-screen flex-grow lg:ml-72`}>
+          <div className="h-screen pt-1">
+            <Navbar heading={"Mark Attendance"} />
+            <div className={`px-3 lg:px-20 sm:px-10 ${isBlurred ? "blur" : ""}`}>
+              <div className="py-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-2 w-full md:flex-row md:justify-between items-center ">
+                    <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
+                      <BiSearch />
+                      <input
+                        type="text"
+                        value={searchText}
+                        placeholder="Search"
+                        className="outline-none"
+                        onChange={(e) => setSearchText(e.target.value)}
                       />
-                    ))
-                  ) : (
-                    <p>No students found</p>
-                  )}
-                </div>
-
-                {attendenceMutation.isPending && <Loader />}
-
-                {!attendenceMutation.isPending && (
-                  <div className="flex justify-end my-4 border-t border-black">
-                    <div className="flex justify-end py-4">
-
-                      {
-                        !getAttandence ? (<button
-                          onClick={attendenceMutation.mutate}
-                          className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon"
-                        >
-                          Submit
-                        </button>) : (
-                          <button
-                            onClick={updateFunction}
-                            className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon"
-                          >
-                            Update
-                          </button>
-                        )
-                      }
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
+                      <input
+                        type="date"
+                        value={currentDate}
+                        onChange={(e) => setCurrentDate(e.target.value)}
+                      />
                     </div>
                   </div>
+                </div>
+              </div>
+
+              <div className="mt-8 h-[80%] overflow-auto">
+                <DataRow
+                  isQuiz={true}
+                  header={true}
+                  index={"Sr. No"}
+                  classname={"Name"}
+                  bgColor={"#F9F9F9"}
+                  students={"Students"}
+                  teachers={"Teachers"}
+                />
+                {filteredStudents.length > 0 ? (
+                  filteredStudents.map((student, index) => (
+                    <DataRow
+                      key={index}
+                      data={student}
+                      header={false}
+                      classname={student.name}
+                      profile={student.profilePic}
+                      index={index + 1}
+                      bgColor={"#FFFFFF"}
+                      attendeceData={attendenceData}
+                      setAttendenceData={setAttendenceData}
+                    />
+                  ))
+                ) : (
+                  <p>No students found</p>
                 )}
               </div>
+
+              {attendenceMutation.isPending && <Loader />}
+
+              {!attendenceMutation.isPending && (
+                <div className="flex justify-end my-4 border-t border-black">
+                  <div className="flex justify-end py-4">
+                    {!getAttandence ? (
+                      <button
+                        onClick={attendenceMutation.mutate}
+                        className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon"
+                      >
+                        Submit
+                      </button>
+                    ) : (
+                      <button
+                        onClick={updateFunction}
+                        className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon"
+                      >
+                        Update
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
+
         {showPopup && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -230,8 +228,7 @@ const ClassroomAttendence = () => {
           </div>
         )}
       </div>
-
-    </>
+    </div>
   );
 };
 

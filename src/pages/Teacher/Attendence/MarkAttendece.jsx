@@ -74,7 +74,7 @@ const MarkAttendence = () => {
     );
 
     // Example output:
-    console.log(matchedStudents);
+    console.log(matchedStudents,"hhhhhhhhhhh");
 
 
     return (

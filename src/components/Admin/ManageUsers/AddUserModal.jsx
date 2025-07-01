@@ -218,12 +218,15 @@ const AddUserModal = ({ closeModal, refetch }) => {
             } else if (role === "teacher") {
                 const isValidName = namePattern.test(e.target[1].value);
                 const isValidEmail = emailPattern.test(e.target[2].value);
-                const isValidPassword = passwordPattern.test(e.target[6].value);
+                const password = e.target[6].value;
+                const confirmPassword = e.target[7].value;
+                const isValidPassword = passwordPattern.test(password);
 
                 if (!isValidName) return toast.error("Name cannot have digits or special characters.");
                 if (!isValidEmail) return toast.error("Invalid Email!");
-                if (e.target[6].value.length < 6) return toast.error("Password should be at least 6 characters.");
-
+                if (password.length < 6) return toast.error("Password should be at least 6 characters.");
+                // if (!isValidPassword) return toast.error("Password must include a capital letter, number, or symbol.");
+                if (password !== confirmPassword) return toast.error("Passwords do not match.");
                 // let cvurl = await uploadFile(e.target[6].files[0], "CV");
 
                 dataBody = {
@@ -262,7 +265,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
 
     return (
         <div className='absolute w-96 border h-screen border-black/20 z-10 bg-white right-0 top-0'
-            // ref={ref}
+        // ref={ref}
         >
             <div className='flex flex-col gap-2 h-full'>
                 <div className=' border-b border-b-black/20'>
