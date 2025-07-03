@@ -280,7 +280,11 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
                       {!classCreateMutate.isPending &&
                         <>
                           <FilterButton text={"Schedule Class"} className={"px-4 text-sm"} clickHandler={() => handleSchedualClass()} />
-                          <FilterButton text={"Cancel"} className={"px-8 text-sm bg-white border !text-maroon"} clickHandler={() => setaddEventModalOpen(false)} />
+                          <FilterButton text={"Cancel"} className={"px-8 text-sm bg-white border !text-maroon"} clickHandler={() => {
+                            setaddEventModalOpen(false)
+                            onclose();
+                            setAddScheduleModalOpen(false);
+                          }} />
                         </>
                       }
                     </div>

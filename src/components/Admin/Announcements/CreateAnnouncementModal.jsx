@@ -16,6 +16,7 @@ const CreateAnnouncementModal = ({
 }) => {
 
     console.log(announcementData, "announcement");
+    const [sendOnWhatsapp, setSendOnWhatsapp] = useState(false);
 
     const { toggleBlur } = useBlur();
 
@@ -48,7 +49,7 @@ const CreateAnnouncementModal = ({
             if (isEditTrue) {
                 results = await editAnnouncements({ ...announcemnetObj, date: datetime }, announcementData._id);
             } else {
-                results = await createAnnouncements({ ...announcemnetObj, date: datetime });
+                results = await createAnnouncements({ ...announcemnetObj, date: datetime}, sendOnWhatsapp);
             }
             await refetch();
             console.log("add or edit announcemnt : ", results)
@@ -126,12 +127,17 @@ const CreateAnnouncementModal = ({
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
+                        {/* Visibility Dropdown */}
                         <div className="flex flex-col flex-1 gap-1">
                             <p className="text-xs font-semibold text-grey_700">Visibility</p>
                             <div className="flex justify-between border-[1px] py-1 px-4 rounded-lg w-full items-center border-grey/50">
-                                <select value={announcemnetObj.visibility}
-                                    onChange={(e) => { setAnnouncementObj({ ...announcemnetObj, visibility: e.target.value }) }}
-                                    className=' outline-none rounded-sm border-black/20 w-full text-sm'>
+                                <select
+                                    value={announcemnetObj.visibility}
+                                    onChange={(e) =>
+                                        setAnnouncementObj({ ...announcemnetObj, visibility: e.target.value })
+                                    }
+                                    className="outline-none rounded-sm border-black/20 w-full text-sm"
+                                >
                                     <option value="student">Students</option>
                                     <option value="parent">Parents</option>
                                     <option value="teacher">Teachers</option>
@@ -139,7 +145,20 @@ const CreateAnnouncementModal = ({
                                 </select>
                             </div>
                         </div>
+
+                        {/* Conditional WhatsApp Checkbox */}
+                        {announcemnetObj.visibility === 'parent' && (
+                            <div className="flex flex-row gap-x-2 flex-1 items-center">
+                                <input
+                                    type="checkbox"
+                                    className="h-4 w-4"
+                                    checked={sendOnWhatsapp}
+                                    onChange={(e) => setSendOnWhatsapp(e.target.checked)} />
+                                <div className="text-[9px]">Do you want to send announcement on WhatsApp?</div>
+                            </div>
+                        )}
                     </div>
+
                     <div>
                         <textarea className="outline-none border border-black/20 w-full rounded-md p-2"
                             name="announcement"

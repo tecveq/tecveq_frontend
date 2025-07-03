@@ -13,7 +13,11 @@ export const getAllAnnouncements = apiRequest(async () => {
     return response;
 })
 
-export const createAnnouncements = apiRequest(async (data) => {
+export const createAnnouncements = apiRequest(async (data ,sendOnWhatsapp) => {
+
+    if(sendOnWhatsapp){
+        console.log(sendOnWhatsapp)
+    }
     const url = `${BACKEND_URL}/announcement/`
     const response = await axios.post(url, data);
     toast.success("Announcement added successfully");

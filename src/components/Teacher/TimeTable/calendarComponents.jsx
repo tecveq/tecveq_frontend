@@ -30,9 +30,9 @@ export const CustomEvent = ({ event, setevents, refetch }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md  h-[50px] w-[100px] !overflow-hidden ${event.teacher
-          ? "bg-maroon/10 text-black"
-          : "bg-green_dark/10 text-black"
+        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md  h-[80px] w-full !overflow-hidden ${event.teacher
+          ? "bg-[#7dd3fc] text-white"
+          : "bg-[#7dd3fc] text-white"
           }`}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
@@ -71,7 +71,7 @@ export const SideTime = (props) => {
         {times.map((time) => (
           <div
             key={`${time}2`}
-            className="flex w-[110px] h-[60px] justify-center items-center"
+            className="flex w-[110px] h-[80px] justify-center items-center"
           >
             <p className="text-[10px] text-grey">
               {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
