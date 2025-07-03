@@ -189,7 +189,7 @@ const UpcomingClasses = () => {
         return (
           <div
             key={formattedDate}
-            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-blue-500 text-white" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
+            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-grey/15 rounded-full text-maroon h-10 w-10" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
             onClick={() => {
               setSelectedDate(day);
               setDateForEvent(formattedDate);
@@ -265,7 +265,7 @@ const UpcomingClasses = () => {
           </div>
 
           <div className="flex flex-col flex-1 gap-1">
-            {filteredclasses && filteredclasses.length > 0 ? "" : "No Shcedualed classes right now"}
+            {filteredclasses && filteredclasses.length > 0 ? "" : "No Scheduled classes right now"}
             {filteredclasses && filteredclasses.map((item) => (
               <EventComponet item={item} key={item} />
             ))}

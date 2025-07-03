@@ -20,6 +20,9 @@ export const CustomEvent = ({ event, setevents }) => {
     return moment(latestDate).format("hh:mm a");
   };
 
+  console.log(event, "my event data");
+
+
   return (
     <div className="relative flex flex-1 w-full overflow-visible">
       <ViewEventDetailsModal
@@ -29,9 +32,9 @@ export const CustomEvent = ({ event, setevents }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex gap-1 justify-around text-center items-center px-1 py-1 rounded-md h-9 w-full !overflow-hidden ${event.teacher.teacherID.name
-          ? "bg-maroon/10 text-black"
-          : "bg-green_dark/10 text-black"
+        className={`text-xs flex gap-1 justify-around text-center items-center px-1 py-1 rounded-md h-[80px] w-full !overflow-hidden ${event.teacher.teacherID.name
+          ? "bg-[#38bdf8] text-white"
+          : "bg-[#38bdf8] text-white"
           }`}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
@@ -44,12 +47,15 @@ export const CustomEvent = ({ event, setevents }) => {
             alt="subject img"
           /> */}
         </div>
-        <div className="flex flex-row justify-between gap-2">
+        <div className="flex flex-col justify-between gap-2">
           <p className="text-xs text-wrap ">
-            {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
+            teacher: {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
           </p>
-          <p className="text-xs text-wrap text-black/70">
-            {event.subjectID.name ? event.subjectID.name : ""}
+          <p className="text-xs text-wrap ">
+            Title: {event?.title ? event.title : ""}
+          </p>
+          <p className="text-xs text-wrap ">
+            Subject: {event.subjectID.name ? event.subjectID.name : ""}
           </p>
         </div>
       </div>
@@ -67,7 +73,7 @@ export const SideTime = (props) => {
         {times.map((time) => (
           <div
             key={`${time}2`}
-            className="flex w-[110px] h-[60px]  justify-center items-center"
+            className="flex w-[110px] h-[80px]  justify-center items-center"
           >
             <p className="text-[10px] text-grey">
               {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
