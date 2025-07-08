@@ -96,7 +96,7 @@
   border-bottom: none !important;
 }
 
-.rbc-row  {
+.rbc-row {
   height: 80px !important;
 
 }
@@ -109,7 +109,7 @@
   margin: 0 !important;
 }
 
-.rbc-event{
+.rbc-event {
   height: 80px !important;
 }
 
@@ -238,4 +238,11 @@
 select[multiple] option:checked {
   background-color: #3b82f6;
   color: white;
+}
+
+
+@media print {
+  .export-button {
+    display: none !important;
+  }
 }

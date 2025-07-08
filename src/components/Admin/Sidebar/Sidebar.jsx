@@ -46,6 +46,8 @@ const Sidebar = () => {
     { key: "announcements", title: "Announcements", icon: "quiz", route: "/admin/announcements" },
     { key: "manageUsers", title: "Manage Users", icon: "quiz", route: "/admin/manageusers" },
     { key: "levels", title: "Levels", icon: "quiz", route: "/admin/levels" },
+    { key: "attendence-reprt", title: "Attendence Report", icon: "quiz", route: "/admin/attendence-report" },
+
     { key: "subjects", title: "Subjects", icon: "quiz", route: "/admin/subjects" },
     { key: "classroom", title: "Classroom", icon: "quiz", route: "/admin/classrooms" },
     { key: "settings", title: "Settings", icon: "setting", route: "/admin/settings" }

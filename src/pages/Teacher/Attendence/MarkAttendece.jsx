@@ -21,7 +21,11 @@ const MarkAttendence = () => {
 
     const [attendeceData, setAttendenceData] = useState([{ studentID: "no id", isPresent: true }]);
 
+    console.log(attendeceData, "all attendence")
+
     const attendenceMutation = useMutation({
+
+
         mutationKey: ["mark-attendence"], mutationFn: async () => {
             const result = await markAttendence(attendeceData, location?.state?._id, location?.state?.
                 classroomID, location?.state?.startTime
@@ -74,7 +78,7 @@ const MarkAttendence = () => {
     );
 
     // Example output:
-    console.log(matchedStudents,"hhhhhhhhhhh");
+    console.log(matchedStudents, "hhhhhhhhhhh");
 
 
     return (

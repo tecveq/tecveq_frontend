@@ -32,5 +32,6 @@ export default {
       inter: ["Inter", "Poppins"]
     },
   },
+  
   plugins: [],
 };
