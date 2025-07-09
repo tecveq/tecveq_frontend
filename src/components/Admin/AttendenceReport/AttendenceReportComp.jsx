@@ -16,6 +16,7 @@ const AttendanceReportComp = () => {
     const [filters, setFilters] = useState(INITIAL_FILTERS);
     const [isFilterExpanded, setIsFilterExpanded] = useState(true);
     const [attendanceData, setAttendanceData] = useState(null);
+    const reportRef = useRef();
 
     // Fetch classrooms
     const { data: myClassroomData, isPending: isLoadingClassrooms } = useQuery({
@@ -129,7 +130,6 @@ const AttendanceReportComp = () => {
         );
     }
 
-    const reportRef = useRef();
 
     const handlePrint = () => {
         const content = reportRef.current.innerHTML;
