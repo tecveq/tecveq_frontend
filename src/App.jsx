@@ -73,6 +73,7 @@ import Settings from "./pages/Admin/Settings/Settings";
 import { TeacherProvider } from "./utils/TeacherProvider";
 import ChangePassword from "./commonComponents/ChangePassword";
 import AddCSVFile from "./pages/Admin/AddCSVFile/AddCSVFile";
+import AttendenceReport from "./pages/Admin/AttendenceReport/AttendenceReport";
 
 function App() {
   return (
@@ -175,6 +176,15 @@ function App() {
               </AdminLayout>
             }
           />
+          <Route
+            path="/admin/attendence-report"
+            element={
+              <AdminLayout>
+                <AttendenceReport />
+              </AdminLayout>
+            }
+          />
+
           <Route
             path="/admin/classrooms"
             element={
