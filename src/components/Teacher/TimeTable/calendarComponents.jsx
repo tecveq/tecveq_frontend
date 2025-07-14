@@ -31,8 +31,8 @@ export const CustomEvent = ({ event, setevents, refetch }) => {
       />
       <div
         className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md  h-[80px] w-full !overflow-hidden ${event.teacher
-          ? "bg-[#7dd3fc] text-white"
-          : "bg-[#7dd3fc] text-white"
+          ? "bg-[#ffe4e6] text-maroon"
+          : "bg-[#ffe4e6] text-maroon"
           }`}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
@@ -46,13 +46,13 @@ export const CustomEvent = ({ event, setevents, refetch }) => {
           /> */}
         </div>
         <div className="flex flex-col">
-          <p className="text-[8px] text-wrap ml-3">
+          <p className="text-[11px] text-wrap ml-3 font-medium">
             teacher: {event.teacher ? event.teacher.teacherID.name : ""}
           </p>
-          <p className="text-[8px] text-wrap ml-1">
-            classroom: {event.classroom ? event.classroom.name : ""}
+          <p className="text-[11px] text-wrap ml-1 font-medium">
+            title: {event.title ? event.title : ""}
           </p>
-          <p className="text-[8px] text-wrap">
+          <p className="text-[11px] text-wrap font-medium">
             subject: {event.subjectID.name ? event.subjectID.name : ""}
           </p>
         </div>

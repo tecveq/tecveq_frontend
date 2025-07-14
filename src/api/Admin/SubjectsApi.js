@@ -118,7 +118,7 @@ export const useGetAllSubjectOfStudent = (studentId) => {
   };
 
   // Updated useQuery call with object form
-  const { data: studentSubject, isLoading, error } = useQuery({
+  const { data: studentSubject, isLoading, error, refetch } = useQuery({
     queryKey: ['get student subject', studentId],
     queryFn: getMyStudentSubjects,
     enabled: !!studentId, // Only run the query if levelId is truthy
@@ -132,5 +132,6 @@ export const useGetAllSubjectOfStudent = (studentId) => {
   return {
     isLoading,
     studentSubject,
+    refetch
   };
 };

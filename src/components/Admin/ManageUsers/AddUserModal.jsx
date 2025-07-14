@@ -184,7 +184,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                 if (!isValidEmail) return toast.error("Invalid Email!");
                 if (!isValidGuardianName) return toast.error("Guardian Name cannot have digits or special characters.");
                 if (!isValidGuardianEmail) return toast.error("Invalid Guardian Email!");
-                if (e.target[8].value.length < 15) return toast.error("Password should be at least 15 characters.");
+                if (e.target[8].value.length < 15) return toast.error("Password should be maximum 15 characters.");
                 if (e.target[13].value !== e.target[12].value) return toast.error("Password and Confirm Password do not match!");
 
                 dataBody = {
