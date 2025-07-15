@@ -22,8 +22,8 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
 
       <div
         className={`text-xs flex  justify-center text-center items-center rounded-md h-[80px] w-[100px]  ${event.teacher.teacherID.name
-          ? "bg-[#7dd3fc]  text-white flex flex-col p-1"
-          : "bg-[#7dd3fc]  text-white"
+          ? "bg-[#ffe4e6] text-maroon flex flex-col p-1"
+          : "bg-[#ffe4e6] text-maroon"
           }`}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
@@ -35,13 +35,13 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
           alt="subject img"
         /> */}
         <div className="flex flex-col">
-          <p className="text-[8px] text-wrap ml-1">
+          <p className="text-[11px] font-medium text-wrap ml-1">
             teacher: {event.teacher ? event.teacher.teacherID.name : ""}
           </p>
-          <p className="text-[8px] text-wrap ml-1">
-            classroom: {event.classroom ? event.classroom.name : ""}
+          <p className="text-[11px] font-medium text-wrap ml-1">
+            title: {event.title ? event.title : ""}
           </p>
-          <p className="text-[8px] text-wrap ">
+          <p className="text-[11px] font-medium text-wrap ">
             subject: {event.subjectID.name ? event.subjectID.name.slice(0, 4) : ""}
           </p>
         </div>

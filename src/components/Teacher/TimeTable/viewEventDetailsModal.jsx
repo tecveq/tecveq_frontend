@@ -16,6 +16,7 @@ import { useMutation } from "@tanstack/react-query";
 import { CusotmInputField } from "../../../commonComponents/CusotmInputField";
 import { convertToISOWithTimezoneOffset } from "../../../utils/ConvertTimeZone";
 // import { LuGalleryHorizontal } from "react-icons/lu";
+import { Pencil } from "lucide-react";
 
 
 const CusotmInput = ({ valuesObj, value, type, name, status, title, setValue }) => {
@@ -82,7 +83,10 @@ export default function ViewEventDetailsModal({
   const ref = useRef(null);
   const eventNameRef = useRef();
   const navigate = useNavigate();
-  useClickOutside(ref, () => setopen(false));
+  useClickOutside(ref, () => {
+    setopen(false)
+
+  });
   const [loading, setLoading] = useState(false);
   const [isOutside, setisOutside] = useState(false);
   const [editingName, seteditingName] = useState(false);
@@ -147,6 +151,29 @@ export default function ViewEventDetailsModal({
     }
   };
 
+  useEffect(() => {
+    if (open && event) {
+      const prevStartTime = moment.utc(event.startTime).tz('Asia/Karachi').format('HH:mm');
+      const prevEndTime = moment.utc(event.endTime).tz('Asia/Karachi').format('HH:mm');
+
+      setClassObj({
+        title: event.title,
+        startTime: prevStartTime,
+        endTime: prevEndTime,
+        oneTime: true,
+        meetingUrl: event.meetingUrl,
+        classroomID: event.classroomID,
+        subjectID: event.subjectID._id,
+        startEventDate: event.startEventDate,
+        endEventDate: event.endEventDate,
+        teacher: { teacherID: userData._id, status: "absent" },
+        updateSeries: false,
+      });
+
+      setStartDate(moment.utc(event.startTime).format("YYYY-MM-DD"));
+      setEventType(false); // reset checkbox too
+    }
+  }, [open, event, userData._id]);
 
 
 
@@ -183,7 +210,6 @@ export default function ViewEventDetailsModal({
       updateSeries: eventType,
     };
 
-    console.log(obj, "My Update Data");
 
     // Send updated data to backend
     classUpdateMutate.mutate(obj);
@@ -202,6 +228,9 @@ export default function ViewEventDetailsModal({
   });
 
 
+  const fullMeetingUrl = event?.meetingUrl?.startsWith("http")
+    ? event.meetingUrl
+    : `https://${event?.meetingUrl}`;
 
 
 
@@ -241,15 +270,18 @@ export default function ViewEventDetailsModal({
       <div className="flex gap-2">
         <div className="flex flex-col w-full gap-4">
           <div className="flex items-center justify-between">
-            <div className="flex w-[fit] gap-2 items-center">
+            <div className="flex w-fit gap-2 items-center">
               <p
-                className={`text-xl font-semibold cursor-text ${editingName ? "border p-3 bg-custom-light-1 rounded-lg" : ""
-                  }`}
-                onClick={(e) => e.stopPropagation()}
                 ref={eventNameRef}
                 contentEditable={editingName}
+                onClick={(e) => e.stopPropagation()}
                 dangerouslySetInnerHTML={{ __html: event.subjectID.name }}
+                className={`text-lg md:text-xl font-medium px-4 py-2 rounded-lg transition-all duration-200 ${editingName
+                  ? "bg-[#E5E7EB] border border-[#D1D5DB] shadow-sm focus:outline-none"
+                  : "hover:bg-[#EDEEF0] cursor-pointer"
+                  }`}
               />
+              {!editingName && <Pencil size={16} className="text-[#6B7280]" />}
             </div>
             <div className="flex items-center gap-2">
               <img
@@ -258,6 +290,8 @@ export default function ViewEventDetailsModal({
                 onClick={(e) => {
                   e.stopPropagation();
                   setopen(false);
+                  setClassObj({})
+
                 }}
               />
             </div>
@@ -267,6 +301,15 @@ export default function ViewEventDetailsModal({
               <p className="text-xs font-semibold text-grey_700">Instructor</p>
               <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
                 <p className="text-sm text-custom-gray-3">{event.teacher.teacherID.name}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col w-full items-center gap-3">
+            <div className="flex flex-col w-full gap-1">
+              <p className="text-xs font-semibold text-grey_700">Classroom</p>
+              <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
+                <p className="text-sm text-custom-gray-3">{event?.classroom?.name}</p>
               </div>
             </div>
           </div>
@@ -367,7 +410,7 @@ export default function ViewEventDetailsModal({
             {
               event.groupID ? (
                 <div className="flex flex-2 py-1 flex-col gap-2">
-                  <p className="text-sm  file: text-grey_700">Multi Events </p>
+                  <p className="text-sm  file: text-black">Update Series </p>
                   <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg  border-grey/30">
 
                     <input
@@ -375,7 +418,7 @@ export default function ViewEventDetailsModal({
                       checked={eventType} // Checkbox reflects the state
                       onChange={() => setEventType(!eventType)} // Toggle state on click
                     />
-                    <span className="text-xs">Are you sure change events</span>
+                    <span className="text-xs">Check this to update all series</span>
                   </div>
                 </div>
               ) : ""
@@ -384,14 +427,18 @@ export default function ViewEventDetailsModal({
           <div className="flex items-center gap-3"
           // onClick={handleTeacherAttendance}
           >
-            <a href={event.meetingUrl} target="_blank " className="w-full">
-              <div
-                className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon"
-              >
-                <img src={meet} alt="meet img" className="w-1/12" />
-                <p className="text-sm text-white"> Join Meeting</p>
+            <a
+              href={fullMeetingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full"
+            >
+              <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#800000] hover:bg-[#a10000] transition-colors duration-200">
+                <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
+                <p className="text-sm text-white">Join Meeting</p>
               </div>
             </a>
+
           </div>
 
           {loading && <div><Loader /> </div>}
@@ -402,7 +449,7 @@ export default function ViewEventDetailsModal({
                 onClick={handleUpdateClass}
                 className="flex items-center justify-center w-full py-2 text-center rounded-md border border-maroon"
               >
-                <p className="text-sm text-maroon">Edit Event Class</p>
+                <p className="text-sm text-maroon">Save Changes</p>
               </div>
             </div>
           }

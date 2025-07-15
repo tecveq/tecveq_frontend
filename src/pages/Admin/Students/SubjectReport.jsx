@@ -10,7 +10,7 @@ import { X } from "lucide-react";
 import { LuPhone } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
 import { IoMailOutline } from "react-icons/io5";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getStudentSubjectsForAdmin, getStudentSubjectsWithLevel, updateStudentSubjects } from "../../../api/Admin/UsersApi";
 import { getStudentReport, getStudentSubjectReport } from "../../../api/Admin/AdminApi";
 import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ import { useUser } from "../../../context/UserContext";
 const SubjectReport = () => {
 
   const location = useLocation();
+  const queryClient = useQueryClient();
 
   const [studentData, setStudentData] = useState({});
   const [allSubjects, setAllSubjects] = useState([]);
@@ -28,13 +29,9 @@ const SubjectReport = () => {
   const [subjectQueryFlag, setSubjectQueryFlag] = useState(false);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
 
-
-  // console.log("locatio state in subject report is : ", location.state);
-
   useEffect(() => {
     setStudentData(location.state);
   }, [location.state])
-
 
   const { data: report, isPending, isError } = useQuery({
     queryKey: ["report"], queryFn: async () => {
@@ -44,12 +41,17 @@ const SubjectReport = () => {
     }
   });
 
-  // console.log("unused activity data in subject report is : ", data);
+  const { data: subjects, isSuccess, isPending: subjectPending } = useQuery({ 
+    queryKey: ["subjectofstudents", location.state?._id], 
+    queryFn: async () => await getStudentSubjectsForAdmin(location.state?._id),
+    enabled: !!location.state?._id
+  });
 
-  const { data: subjects, isSuccess, isPending: subjectPending } = useQuery({ queryKey: ["subjectofstudents"], queryFn: async () => await getStudentSubjectsForAdmin(location.state?._id) });
-
-
-  const studentAssignmentsQuizes = useQuery({ queryKey: ["student-assignments-quizes"], queryFn: async () => await getStudentSubjectReport(location.state?._id, JSON.parse(selectedSubject).subject._id), enabled: subjectQueryFlag });
+  const studentAssignmentsQuizes = useQuery({ 
+    queryKey: ["student-assignments-quizes"], 
+    queryFn: async () => await getStudentSubjectReport(location.state?._id, JSON.parse(selectedSubject).subject._id), 
+    enabled: subjectQueryFlag 
+  });
 
   useEffect(() => {
     if (isSuccess) setAllSubjects(subjects);
@@ -63,15 +65,12 @@ const SubjectReport = () => {
     }
   }, [selectedSubject, studentAssignmentsQuizes.data, studentAssignmentsQuizes.isPending])
 
-
-
   const { data: studentSubjectWithLevel, isSuccess: studentIsSuccess, isPending: studentSubjectPending } = useQuery({
-    queryKey: ["studentSubjectwithLevel"], queryFn: async () => await getStudentSubjectsWithLevel(studentData?.levelID)
+    queryKey: ["studentSubjectwithLevel"], 
+    queryFn: async () => await getStudentSubjectsWithLevel(studentData?.levelID)
   });
 
-
   console.log(studentSubjectWithLevel, "student subject with level ");
-
 
   const handleCheckboxChange = (subjectId) => {
     setSelectedSubjects((prevSelected) =>
@@ -81,36 +80,50 @@ const SubjectReport = () => {
     );
   };
 
-
-
-
   const mutation = useMutation({
     mutationFn: updateStudentSubjects,
     onSuccess: (data) => {
       console.log("Subjects assigned successfully!", data);
-
       toast.success("Subjects assigned successfully!");
-      // Optional: show toast, refetch data, close modal
+      
+      // Invalidate specific queries to trigger refetch
+      queryClient.invalidateQueries({ queryKey: ["subjectofstudents", studentData?._id] });
+      queryClient.invalidateQueries({ queryKey: ["studentSubjects", studentData?._id] });
+      
+      // Refetch the student subjects manually
+      refetchStudentSubjects();
+      
+      // Don't close modal immediately, let the data update first
+      setTimeout(() => {
+        setEditSubject(false);
+      }, 100);
     },
     onError: (error) => {
       console.error("Error assigning subjects:", error.message);
+      toast.error("Error assigning subjects!");
     },
   });
 
-  
+  // Get student subjects with proper query key
+  const { studentSubject, refetch: refetchStudentSubjects } = useGetAllSubjectOfStudent(studentData?._id);
 
-
-
-  const { studentSubject } = useGetAllSubjectOfStudent(studentData?._id)
-
-
+  // This effect runs when editSubject opens OR when studentSubject data changes
   useEffect(() => {
-    if (editSubject && studentData?.subjects) {
+    if (editSubject && studentSubject?.subjects) {
+      console.log("Setting selected subjects:", studentSubject.subjects);
       // Initialize selectedSubjects with already assigned subjects
-      const assignedSubjects = studentSubject?.subjects.map((subj) => subj._id);
-      setSelectedSubjects(assignedSubjects);
+      const assignedSubjects = studentSubject.subjects.map((subj) => subj._id);
+      setSelectedSubjects(assignedSubjects || []);
     }
-  }, [editSubject, studentData]);
+  }, [editSubject, studentSubject]); // Added studentSubject as dependency
+
+  // Additional effect to handle when studentSubject changes while modal is open
+  useEffect(() => {
+    if (editSubject && studentSubject?.subjects) {
+      const assignedSubjects = studentSubject.subjects.map((subj) => subj._id);
+      setSelectedSubjects(assignedSubjects || []);
+    }
+  }, [studentSubject]); // This will run whenever studentSubject data changes
 
   return (
     isPending || subjectPending ? <div className="flex justify-center flex-1"> <LargeLoader /> </div> :
@@ -137,7 +150,9 @@ const SubjectReport = () => {
 
                 <div className="w-full justify-end items-center flex">
                   <button className="py-3 px-4 bg-maroon text-white rounded-full" onClick={() => {
-                    setEditSubject(!editSubject)
+                    // Refetch student subjects before opening modal
+                    refetchStudentSubjects();
+                    setEditSubject(!editSubject);
                   }}>Subject Edit</button>
                 </div>
                 <div className="mt-7">
@@ -147,7 +162,7 @@ const SubjectReport = () => {
                       <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
                         <select className="outline-none w-60" value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} >
                           <option value={""}>Select Subject</option>
-                          {isSuccess && subjects?.subjects?.map((sub) => <option value={JSON.stringify(sub)}>{sub.subject?.name}</option>)}
+                          {isSuccess && subjects?.subjects?.map((sub) => <option key={sub._id} value={JSON.stringify(sub)}>{sub.subject?.name}</option>)}
                         </select>
                       </div>
                     </div>
@@ -170,7 +185,6 @@ const SubjectReport = () => {
                           <Card
                             data={"Attendence"}
                             type={"Percentage"}
-                            // percentage={studentAssignmentsQuizes.data?.quizes?.avgMarksPer ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer !== "NaN" ? studentAssignmentsQuizes.data?.quizes?.avgMarksPer: 0  : 0  }
                             percentage={studentAssignmentsQuizes.data?.attendance?.avgAttendencePer ? studentAssignmentsQuizes.data?.attendance?.avgAttendencePer : 0}
                           />
                         </>
@@ -178,23 +192,6 @@ const SubjectReport = () => {
                     </div>
                   </div>
                 </div>
-                {/* <div className="mt-7 flex-1">
-                  <div className="flex flex-col gap-2 flex-1">
-                    <div className="flex flex-row items-center gap-2 w-full flex-1">
-                      <img src={IMAGES.deviceGraph} alt="" className="w-full h-full" />
-                    </div>
-                  </div>
-                </div> */}
-                {/* <div className="mt-7">
-                  <div className="flex flex-col gap-4">
-                  <p className="md:text-[20px]">Activity History</p>
-                  <div className="flex flex-col  gap-2">
-                  <ActivityCard />
-                  <ActivityCard />
-                  <ActivityCard />
-                  </div>
-                  </div>
-                  </div> */}
                 <div className="mt-7">
                   <SystemOverview />
                 </div>
@@ -216,7 +213,7 @@ const SubjectReport = () => {
                 </div>
 
                 <div className="space-y-2 max-h-60 overflow-y-auto">
-                  {studentSubjectWithLevel.subjects.map((subject) => (
+                  {studentSubjectWithLevel?.subjects.map((subject) => (
                     <label
                       key={subject._id}
                       className="flex items-center space-x-2 cursor-pointer hover:bg-white/10 px-2 py-1 rounded-md"
@@ -234,7 +231,6 @@ const SubjectReport = () => {
 
                 <button
                   onClick={() => {
-
                     console.log(selectedSubjects, "selected subject");
 
                     if (!studentData?._id) {
@@ -246,12 +242,11 @@ const SubjectReport = () => {
                       studentId: studentData?._id,
                       subjects: selectedSubjects,
                     });
-
-                    setEditSubject(false);
                   }}
-                  className="w-full mt-4 bg-maroon text-white font-semibold py-2 rounded-md hover:bg-gray-100 transition"
+                  disabled={mutation.isPending}
+                  className="w-full mt-4 bg-maroon text-white font-semibold py-2 rounded-md hover:bg-gray-100 transition disabled:opacity-50"
                 >
-                  Submit
+                  {mutation.isPending ? "Submitting..." : "Submit"}
                 </button>
               </div>
             )}
