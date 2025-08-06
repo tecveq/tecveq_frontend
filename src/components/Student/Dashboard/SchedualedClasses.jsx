@@ -26,9 +26,6 @@ const ScheduledClasses = () => {
   };
 
   const EventComponent = ({ item }) => {
-
-    console.log("my item is ahhaha", item);
-
     const [isStarted, setIsStarted] = useState(false);
 
     useEffect(() => {
