@@ -40,7 +40,7 @@ const ScheduledClasses = () => {
 
     return (
       <div className="flex flex-col w-full px-6 text-xs border-l-2 gap-1 py-2 rounded-lg lg:w-60"
-           style={{ borderLeftColor: item.subjectID.color, backgroundColor: `${item.subjectID.color}10` }}>
+        style={{ borderLeftColor: item.subjectID.color, backgroundColor: `${item.subjectID.color}10` }}>
         <div className="flex justify-between">
           <p>{item.subjectID.name}</p>
           <p>{item.teacher.teacherID.name}</p>
@@ -51,7 +51,7 @@ const ScheduledClasses = () => {
         {isStarted ? (
           <div className="flex items-center justify-between">
             <p className="text-green">Class has started...</p>
-            <a href={item?.meetLink} target="_blank" rel="noopener noreferrer">
+            <a href={item?.meetingUrl} target="_blank" rel="noopener noreferrer">
               <div className="flex items-center px-2 py-1 bg-green text-white rounded-3xl cursor-pointer">
                 <img src={meet} alt="Join" className="w-8 h-3" />
                 <p className="text-xs">Join class</p>
@@ -92,10 +92,10 @@ const ScheduledClasses = () => {
 
         return (
           <div key={formattedDate} className="text-center text-[12px] cursor-pointer hover:bg-gray-200 relative"
-               onClick={() => {
-                 setSelectedDate(day);
-                 setSelectedDateFromChild(formattedDate);
-               }}>
+            onClick={() => {
+              setSelectedDate(day);
+              setSelectedDateFromChild(formattedDate);
+            }}>
             <div className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${selectedDate.format('YYYY-MM-DD') === formattedDate ? "bg-maroon text-white" : ""} text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}>
               <div className="text-sm text-black group-hover:text-white">{day.format("D")}</div>
               {eventsForDay.length > 0 && <GoDotFill size={10} className="group-hover:text-white" />}
