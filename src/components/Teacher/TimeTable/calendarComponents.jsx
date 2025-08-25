@@ -46,14 +46,19 @@ export const CustomEvent = ({ event, setevents, refetch }) => {
           /> */}
         </div>
         <div className="flex flex-col">
+          {/* Teacher name isn't required in the teacher's page
           <p className="text-[11px] text-wrap ml-3 font-medium">
-            teacher: {event.teacher ? event.teacher.teacherID.name : ""}
-          </p>
+            <span className="font-bold">Teacher:</span>{" "}
+            {event.teacher ? event.teacher.teacherID.name : ""}
+          </p>  
+           */}
           <p className="text-[11px] text-wrap ml-1 font-medium">
-            title: {event.title ? event.title : ""}
+            <span className="font-bold">Title:</span>{" "}
+            {event.title ? event.title : ""}
           </p>
           <p className="text-[11px] text-wrap font-medium">
-            subject: {event.subjectID.name ? event.subjectID.name : ""}
+            <span className="font-bold">Subject:</span>{" "}
+            {event.subjectID.name ? event.subjectID.name : ""}
           </p>
         </div>
       </div>

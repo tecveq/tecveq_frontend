@@ -35,14 +35,17 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
           alt="subject img"
         /> */}
         <div className="flex flex-col">
-          <p className="text-[11px] font-medium text-wrap ml-1">
-            teacher: {event.teacher ? event.teacher.teacherID.name : ""}
+          <p className="text-[11px] text-wrap ml-3 font-medium">
+            <span className="font-bold">Teacher:</span>{" "}
+            {event.teacher ? event.teacher.teacherID.name : ""}
+          </p>  
+          <p className="text-[11px] text-wrap ml-1 font-medium">
+            <span className="font-bold">Title:</span>{" "}
+            {event.title ? event.title : ""}
           </p>
-          <p className="text-[11px] font-medium text-wrap ml-1">
-            title: {event.title ? event.title : ""}
-          </p>
-          <p className="text-[11px] font-medium text-wrap ">
-            subject: {event.subjectID.name ? event.subjectID.name.slice(0, 4) : ""}
+          <p className="text-[11px] text-wrap font-medium">
+            <span className="font-bold">Subject:</span>{" "}
+            {event.subjectID.name ? event.subjectID.name : ""}
           </p>
         </div>
       </div>

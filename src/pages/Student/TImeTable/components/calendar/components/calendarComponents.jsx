@@ -47,15 +47,18 @@ export const CustomEvent = ({ event, setevents }) => {
             alt="subject img"
           /> */}
         </div>
-        <div className="flex flex-col justify-between gap-2">
-          <p className="text-xs text-wrap ">
-            teacher: {event.teacher.teacherID.name ? event.teacher.teacherID.name : ""}
+        <div className="flex flex-col gap-0.5">
+          <p className="text-[10px] text-wrap font-medium">
+            <span className="font-bold">Teacher:</span>{" "}
+            {event.teacher ? event.teacher.teacherID.name : ""}
+          </p>  
+          <p className="text-[10px] text-wrap font-medium">
+            <span className="font-bold">Title:</span>{" "}
+            {event.title ? event.title : ""}
           </p>
-          <p className="text-xs text-wrap ">
-            Title: {event?.title ? event.title : ""}
-          </p>
-          <p className="text-xs text-wrap ">
-            Subject: {event.subjectID.name ? event.subjectID.name : ""}
+          <p className="text-[10px] text-wrap font-medium">
+            <span className="font-bold">Subject:</span>{" "}
+            {event.subjectID.name ? event.subjectID.name : ""}
           </p>
         </div>
       </div>

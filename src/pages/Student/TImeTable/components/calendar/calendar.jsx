@@ -10,7 +10,7 @@ import {
   SideTimeHeader,
 } from "./components/calendarComponents";
 import { useQuery } from "@tanstack/react-query";
-import { getAllClasses } from "../../../../../api/Student/Classes";
+import { getAllClasses } from "../../../../../api/ForAllAPIs";
 import { useUser } from "../../../../../context/UserContext";
 
 const localizer = momentLocalizer(moment);
@@ -51,9 +51,9 @@ const MyCalendar = () => {
     });
   };
 
-  const { data, isPending, isSuccess } = useQuery({ queryKey: ["timetable"], queryFn: getAllClasses });
+  const { data, isPending, isSuccess } = useQuery({ queryKey: ["classe"], queryFn: getAllClasses });
   if (!isPending) {
-    console.log("classea in studnets are : ", data)
+    console.log("classes in studnets are : ", data)
   }
   useEffect(() => {
     if (!isPending) {
@@ -67,15 +67,7 @@ const MyCalendar = () => {
         let end = new Date(item.endTime);
         let returnobj = { ...item, end: end, start: newdate }
         return returnobj
-      }).filter((item) => {
-        console.log(item, "new item");
-
-        if (!item?.subjectID?._id) return false;
-
-        return userData?.subjects?.some(
-          (id) => id.toString() === item.subjectID._id.toString()
-        );
-      });
+      }); // Remove subject filtering cuz backend already filters by classroom membership
 
 
 
@@ -105,7 +97,7 @@ const MyCalendar = () => {
         min={new Date(0, 0, 0, 0, 0, 0)}
         max={new Date(0, 0, 0, 23, 59, 59)}
         onNavigate={handleNavigate}
-        view="week"
+        defaultView="week"
         views={{ week: true }}
         localizer={localizer}
         events={events}
