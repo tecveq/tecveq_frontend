@@ -59,14 +59,10 @@
 }
 
 .rbc-event {
-  display: flex !important;
-  justify-content: "center" !important;
-  flex: 1 !important;
-  /* min-height: 100px !important;
-  height: 90px !important; */
   background-color: transparent !important;
   border: none !important;
   outline: none !important;
+  /* Let react-big-calendar handle EVERYTHING - no height constraints at all */
 }
 
 .rbc-event .rbc-event-label {
@@ -74,8 +70,9 @@
 }
 
 .rbc-time-slot {
-  height: 20px !important;
+  min-height: 20px !important;
   width: 20px !important;
+  /* Allow dynamic height based on time interval */
 }
 
 .rbc-time-gutter {
@@ -107,31 +104,51 @@
   width: 110px !important;
 }
 
-.rbc-events-container {
-  margin: 0 !important;
-}
+/* Removed duplicate rule - see below for the proper one */
 
-.rbc-event {
-  height: 80px !important;
-}
+/* Consolidated in the rule below */
 
 .rbc-time-slot {
   border: none !important;
   width: 50px !important;
-  height: 50px !important;
+  min-height: 30px !important;
+  /* Allow flexible height for time slots */
 }
 
-/*This is for the text in red boxes*/
-.rbc-event-content {
-  height: 20px !important;
-  width: 120px !important;
-}
+/*This is for the text in red boxes - rule moved below*/
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 /* for each timeslot background height*/
 .rbc-timeslot-group {
-  min-height: 80px !important;
+  min-height: 100px !important;
+  /* Increased to 100px for better spacing */
 }
+
+/* Remove any constraints on the day column */
+.rbc-day-slot {
+  /* Let react-big-calendar handle day slot sizing */
+}
+
+/* Ensure events can properly size within time columns */
+.rbc-events-container {
+  margin: 0 !important;
+  /* Let react-big-calendar handle container positioning */
+}
+
+/* Duplicate rule removed - consolidated above */
+
+/* Remove all constraints on event containers */
+.rbc-day-slot .rbc-events-container {
+  /* Completely hands-off approach */
+}
+
+/* Minimal styling for event content */
+.rbc-event-content {
+  width: 100% !important;
+  /* No height rules - let react-big-calendar handle it */
+}
+
+/* Minimal styling to avoid positioning conflicts */
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 

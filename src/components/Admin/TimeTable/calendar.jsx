@@ -168,6 +168,8 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
           startAccessor="start"
           endAccessor="end"
           className="w-[100%] h-[80vh]"
+          step={60}
+          timeslots={1}
           components={{
             toolbar: (props) => <CustomToolbar
               {...props}

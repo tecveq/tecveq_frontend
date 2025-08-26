@@ -139,6 +139,8 @@ const MyCalendar = ({ data, isPending, refetch }) => {
         onNavigate={handleNavigate}
         className="w-[99%] h-[80vh] "
         dayLayoutAlgorithm="no-overlap"
+        step={60}
+        timeslots={1}
         components={{
           toolbar: (toolbar) => (
             <CustomToolbar

@@ -8,6 +8,12 @@ import FilterButton from "./FilterButton";
 
 export const CustomEvent = ({ event, setevents, refetch }) => {
   const [detailsModalOpen, setdetailsModalOpen] = useState(false);
+  
+  // Calculate event duration in hours for height scaling
+  const startTime = new Date(event.startTime);
+  const endTime = new Date(event.endTime);
+  const durationHours = (endTime - startTime) / (1000 * 60 * 60); // Convert ms to hours
+  const eventHeight = Math.max(100, durationHours * 100); // Minimum 100px, scale by 100px per hour
 
   console.log("current event is : ", event);
 
@@ -30,36 +36,36 @@ export const CustomEvent = ({ event, setevents, refetch }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`text-xs flex gap-1 justify-center text-center items-center px-1 py-1 rounded-md  h-[80px] w-full !overflow-hidden ${event.teacher
-          ? "bg-[#ffe4e6] text-maroon"
-          : "bg-[#ffe4e6] text-maroon"
+        className={`cursor-pointer rounded-lg w-full transition-all duration-200 hover:shadow-md hover:scale-[1.02] ${event.teacher
+          ? "bg-gradient-to-br from-[#ffe4e6] to-[#ffd1d8] text-maroon border border-[#ffb3ba] shadow-sm"
+          : "bg-gradient-to-br from-[#ffe4e6] to-[#ffd1d8] text-maroon border border-[#ffb3ba] shadow-sm"
           }`}
+        style={{ height: `${eventHeight}px`, minHeight: `${eventHeight}px` }}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
         }}
       >
-        <div>
-          {/* <img
-            src={IMAGES.MathIcon}
-            className="object-contain w-7 h-7"
-            alt="subject img"
-          /> */}
-        </div>
-        <div className="flex flex-col">
-          {/* Teacher name isn't required in the teacher's page
-          <p className="text-[11px] text-wrap ml-3 font-medium">
-            <span className="font-bold">Teacher:</span>{" "}
-            {event.teacher ? event.teacher.teacherID.name : ""}
-          </p>  
-           */}
-          <p className="text-[11px] text-wrap ml-1 font-medium">
-            <span className="font-bold">Title:</span>{" "}
-            {event.title ? event.title : ""}
-          </p>
-          <p className="text-[11px] text-wrap font-medium">
-            <span className="font-bold">Subject:</span>{" "}
-            {event.subjectID.name ? event.subjectID.name : ""}
-          </p>
+        <div className="flex flex-col h-full justify-start p-3 space-y-2">
+          {/* Teacher name (not required)
+          <div className="text-[11px] leading-tight">
+            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Teacher:</span>
+            <div className="font-semibold text-slate-900 truncate mt-0.5" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+              {event.teacher ? event.teacher.teacherID.name : ""}
+            </div>
+          </div>
+          */}
+          <div className="text-[11px] leading-tight">
+            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Title:</span>
+            <div className="font-semibold text-slate-900 truncate mt-0.5" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+              {event.title ? event.title : ""}
+            </div>
+          </div>
+          <div className="text-[11px] leading-tight">
+            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Subject:</span>
+            <div className="font-semibold text-slate-900 truncate mt-0.5" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+              {event.subjectID.name ? event.subjectID.name : ""}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,23 +79,31 @@ export const SideTime = (props) => {
   return (
     <>
       <div className="flex flex-col w-[130px]">
-        {times.map((time) => (
-          <div
-            key={`${time}2`}
-            className="flex w-[110px] h-[80px] justify-center items-center"
-          >
-            <p className="text-[10px] text-grey">
-              {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
-            </p>
-            <p className="text-[10px] text-grey">-</p>
-            <p className="text-[10px] text-grey">
-              {moment.utc(time[0])
-                .add(0.5, "hour")
-                .tz("Asia/Karachi") // Convert to PKT
-                .format("h:mm a")}
-            </p>
-          </div>
-        ))}
+        {times.map((time, index) => {
+          const startTime = moment.utc(time[0]).tz("Asia/Karachi");
+          // Calculate end time based on slot duration or use next slot start
+          const endTime = index < times.length - 1 
+            ? moment.utc(times[index + 1][0]).tz("Asia/Karachi")
+            : startTime.clone().add(1, "hour"); // Default to 1 hour for last slot
+          
+          return (
+            <div
+              key={`${time}2`}
+              className="flex w-[110px] justify-center items-center border-b border-gray-200 py-2"
+              style={{ height: '100px', minHeight: '100px' }}
+            >
+              <div className="text-center">
+                <p className="text-[10px] text-grey font-medium">
+                  {startTime.format("h:mm a")}
+                </p>
+                <p className="text-[8px] text-grey opacity-60">-</p>
+                <p className="text-[10px] text-grey font-medium">
+                  {endTime.format("h:mm a")}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );
