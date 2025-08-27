@@ -38,31 +38,31 @@ export const CustomEvent = ({ event, setevents }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`cursor-pointer rounded-lg w-full transition-all duration-200 hover:shadow-md hover:scale-[1.02] ${event.teacher.teacherID.name
+        className={`cursor-pointer rounded-lg w-full transition-all duration-200 hover:shadow-md hover:scale-[1.02] mb-1 ${event.teacher.teacherID.name
           ? "bg-gradient-to-br from-[#38bdf8] to-[#0ea5e9] text-white border border-[#0284c7]"
           : "bg-gradient-to-br from-[#38bdf8] to-[#0ea5e9] text-white border border-[#0284c7]"
           }`}
-        style={{ height: `${eventHeight}px`, minHeight: `${eventHeight}px` }}
+        style={{ height: `${eventHeight - 4}px`, minHeight: `${eventHeight - 4}px` }}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
         }}
       >
-        <div className="flex flex-col h-full justify-start p-3 space-y-1">
+        <div className="flex flex-col h-full justify-start p-2 space-y-1">
           <div className="text-[10px] leading-tight">
-            <span className="font-bold text-blue-50" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>Teacher:</span>
-            <div className="font-semibold text-white truncate" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
+            <span className="font-bold text-blue-50">Teacher:</span>
+            <div className="font-semibold text-white truncate">
               {event.teacher ? event.teacher.teacherID.name : ""}
             </div>
           </div>
           <div className="text-[10px] leading-tight">
-            <span className="font-bold text-blue-50" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>Title:</span>
-            <div className="font-semibold text-white truncate" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
+            <span className="font-bold text-blue-50">Title:</span>
+            <div className="font-semibold text-white truncate">
               {event.title ? event.title : ""}
             </div>
           </div>
           <div className="text-[10px] leading-tight">
-            <span className="font-bold text-blue-50" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>Subject:</span>
-            <div className="font-semibold text-white truncate" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
+            <span className="font-bold text-blue-50">Subject:</span>
+            <div className="font-semibold text-white truncate">
               {event.subjectID.name ? event.subjectID.name : ""}
             </div>
           </div>

@@ -28,16 +28,14 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
       />
 
       <div
-        className={`cursor-pointer rounded-lg w-full min-w-[120px] transition-all duration-200 hover:shadow-md ${event.teacher.teacherID.name
-          ? "bg-[#ffe4e6] text-maroon border border-[#ffb3ba]"
-          : "bg-[#ffe4e6] text-maroon border border-[#ffb3ba]"
-          }`}
-        style={{ height: `${eventHeight}px`, minHeight: `${eventHeight}px` }}
+        className="cursor-pointer rounded-lg w-full min-w-[120px] transition-all duration-200 hover:shadow-md bg-[#ffe4e6] text-maroon border-2 border-[#ffb3ba] mb-1"
+        style={{ height: `${eventHeight - 4}px`, minHeight: `${eventHeight - 4}px` }}
         onClick={() => {
-          return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
+          console.log("Admin event clicked:", event);
+          setdetailsModalOpen(true);
         }}
       >
-        <div className="flex flex-col h-full justify-start p-2 space-y-1">
+        <div className="flex flex-col h-full justify-start items-start p-2 space-y-1">
           <div className="text-[10px] leading-tight">
             <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Teacher:</span>
             <div className="font-semibold text-slate-900 truncate" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>

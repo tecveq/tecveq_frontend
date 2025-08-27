@@ -36,11 +36,11 @@ export const CustomEvent = ({ event, setevents, refetch }) => {
         setopen={setdetailsModalOpen}
       />
       <div
-        className={`cursor-pointer rounded-lg w-full transition-all duration-200 hover:shadow-md hover:scale-[1.02] ${event.teacher
+        className={`cursor-pointer rounded-lg w-full transition-all duration-200 hover:shadow-md hover:scale-[1.02] mb-1 ${event.teacher
           ? "bg-gradient-to-br from-[#ffe4e6] to-[#ffd1d8] text-maroon border border-[#ffb3ba] shadow-sm"
           : "bg-gradient-to-br from-[#ffe4e6] to-[#ffd1d8] text-maroon border border-[#ffb3ba] shadow-sm"
           }`}
-        style={{ height: `${eventHeight}px`, minHeight: `${eventHeight}px` }}
+        style={{ height: `${eventHeight - 4}px`, minHeight: `${eventHeight - 4}px` }}
         onClick={() => {
           return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
         }}
