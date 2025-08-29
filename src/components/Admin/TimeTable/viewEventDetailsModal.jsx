@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import moment from "moment";
 import ConfirmModal from "./ConfirmModal";
+import { formatTimeInPKT } from "../../../utils/timeUtils";
 import Loader from "../../../utils/Loader";
 import IMAGES from "../../../assets/images";
 import useClickOutside from "../../../hooks/useClickOutlise";
@@ -41,8 +42,8 @@ export default function ViewEventDetailsModal({
   const [eventType, setEventType] = useState(false);
 
   // Initialize form state with event data
-  let prevStartTime = moment.utc(event.startTime).tz('Asia/Karachi').format('HH:mm');
-  let prevEndTime = moment.utc(event.endTime).tz('Asia/Karachi').format('HH:mm');
+  const prevStartTime = formatTimeInPKT(event.startTime, 'HH:mm');
+  const prevEndTime = formatTimeInPKT(event.endTime, 'HH:mm');
   
   const [startDate, setStartDate] = useState(
     moment.utc(event.startTime).format("YYYY-MM-DD")
@@ -287,7 +288,7 @@ export default function ViewEventDetailsModal({
                   <p className="text-xs font-semibold text-grey_700">Start Time</p>
                   <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                     <p className="text-sm text-custom-gray-3">
-                      {moment.utc(event.start).tz("Asia/Karachi").format("hh:mm a")}
+                                             {formatTimeInPKT(event.start, "hh:mm a")}
                     </p>
                   </div>
                 </div>
@@ -300,7 +301,7 @@ export default function ViewEventDetailsModal({
                   <p className="text-xs font-semibold text-grey_700">End Time</p>
                   <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
                     <p className="text-sm text-custom-gray-3">
-                      {moment.utc(event.end).tz("Asia/Karachi").format("hh:mm a")}
+                                             {formatTimeInPKT(event.end, "hh:mm a")}
                     </p>
                   </div>
                 </div>

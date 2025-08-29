@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import moment from "moment";
+import { calculateDurationHours } from "../../../../../../utils/timeUtils";
 import FilterButton from "./FilterButton";
 import IMAGES from "../../../../../../assets/images";
 import ViewEventDetailsModal from "./viewEventDetailsModal";
@@ -14,7 +15,7 @@ export const CustomEvent = ({ event, setevents }) => {
   // Calculate event duration in hours for height scaling
   const startTime = new Date(event.startTime);
   const endTime = new Date(event.endTime);
-  const durationHours = (endTime - startTime) / (1000 * 60 * 60); // Convert ms to hours
+  const durationHours = calculateDurationHours(startTime, endTime);
   const eventHeight = Math.max(100, durationHours * 100); // Minimum 100px, scale by 100px per hour
 
   const formatDate = (date) => {

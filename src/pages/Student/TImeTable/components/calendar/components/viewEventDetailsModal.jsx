@@ -228,7 +228,7 @@ export default function ViewEventDetailsModal({
                 <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon hover:bg-maroon-800 transition-colors">
                   <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
                   <p className="text-sm text-white">
-                    {isMeetingTime ? "Join Meeting" : "Join Meeting"}
+                    Join Meeting
                   </p>
                 </div>
               </a>

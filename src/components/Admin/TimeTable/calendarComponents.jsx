@@ -1,6 +1,7 @@
 import IMAGES from "../../../assets/images";
 import ViewEventDetailsModal from "./viewEventDetailsModal";
 import moment from 'moment-timezone';
+import { calculateDurationHours } from "../../../utils/timeUtils";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
@@ -13,7 +14,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
   // Calculate event duration in hours for height scaling
   const startTime = new Date(event.startTime);
   const endTime = new Date(event.endTime);
-  const durationHours = (endTime - startTime) / (1000 * 60 * 60); 
+  const durationHours = calculateDurationHours(startTime, endTime); 
   const eventHeight = Math.max(100, durationHours * 100); // Minimum 100px, scale by 100px per hour
   
   return (

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import meet from "../../../assets/meet.png";
 import moment from "moment";
 import ConfirmModal from "./ConfirmModal";
+import { formatTimeInPKT } from "../../../utils/timeUtils";
 import { GoArrowRight } from "react-icons/go";
 import IMAGES from "../../../assets/images";
 import useClickOutside from "../../../hooks/useClickOutlise";
@@ -62,8 +63,8 @@ export default function ViewEventDetailsModal({
     moment.utc(event.startTime).format("YYYY-MM-DD") // Format for <input type="date">
   );
 
-  let prevStartTime = moment.utc(event.startTime).tz('Asia/Karachi').format('HH:mm');
-  let prevEndTime = moment.utc(event.endTime).tz('Asia/Karachi').format('HH:mm');
+  let prevStartTime = formatTimeInPKT(event.startTime, 'HH:mm');
+  let prevEndTime = formatTimeInPKT(event.endTime, 'HH:mm');
 
   const [classObj, setClassObj] = useState({
     title: event.title,
@@ -153,8 +154,8 @@ export default function ViewEventDetailsModal({
 
   useEffect(() => {
     if (open && event) {
-      const prevStartTime = moment.utc(event.startTime).tz('Asia/Karachi').format('HH:mm');
-      const prevEndTime = moment.utc(event.endTime).tz('Asia/Karachi').format('HH:mm');
+        const prevStartTime = formatTimeInPKT(event.startTime, 'HH:mm');
+  const prevEndTime = formatTimeInPKT(event.endTime, 'HH:mm');
 
       setClassObj({
         title: event.title,
@@ -424,22 +425,21 @@ export default function ViewEventDetailsModal({
               ) : ""
             }
           </div>
-          <div className="flex items-center gap-3"
-          // onClick={handleTeacherAttendance}
-          >
-            <a
-              href={fullMeetingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full"
-            >
-              <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#800000] hover:bg-[#a10000] transition-colors duration-200">
-                <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
-                <p className="text-sm text-white">Join Meeting</p>
-              </div>
-            </a>
-
-          </div>
+                     <div className="flex items-center gap-3 flex-col">
+             {event?.meetingUrl && event?.meetingUrl.trim() !== "" && (
+               <a
+                 href={fullMeetingUrl}
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="w-full"
+               >
+                 <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#800000] hover:bg-[#a10000] transition-colors duration-200">
+                   <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
+                   <p className="text-sm text-white">Join Meeting</p>
+                 </div>
+               </a>
+             )}
+           </div>
 
           {loading && <div><Loader /> </div>}
 
