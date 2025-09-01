@@ -29,7 +29,8 @@ export const convertToPKTAndSubtractHours = (date, time, hoursToSubtract = 5) =>
   if (typeof date === 'string' && typeof time === 'string') {
     dateTimeString = `${date}T${time}`;
   } else if (moment.isMoment(date) && typeof time === 'string') {
-    dateTimeString = `${date.format('YYYY-MM-DD')}T${time.split('T')[1]}`;
+    const timePart = time.includes('T') ? time.split('T')[1] : time;
+    dateTimeString = `${date.format('YYYY-MM-DD')}T${timePart}`;
   } else if (moment.isMoment(date) && moment.isMoment(time)) {
     dateTimeString = `${date.format('YYYY-MM-DD')}T${time.format('HH:mm:ss')}`;
   } else if (typeof date === 'string' && time === undefined) {
