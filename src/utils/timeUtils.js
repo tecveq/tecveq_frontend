@@ -16,12 +16,29 @@ export const convertToPKT = (dateTime) => {
 
 /**
  * Convert UTC time to PKT and subtract specified hours
- * @param {Date|string} dateTime - Input date/time to convert
- * @param {number} hours - Hours to subtract (default: 5)
+ * @param {Date|string|moment} date - Date object, string, or moment object
+ * @param {string|moment|undefined} time - Time string, moment object, or undefined for backward compatibility
+ * @param {number} hoursToSubtract - Hours to subtract (default: 5)
  * @returns {moment.Moment} Moment object in PKT timezone with hours subtracted
  */
-export const convertToPKTAndSubtractHours = (dateTime, hours = 5) => {
-  return moment.utc(dateTime).tz('Asia/Karachi').subtract(hours, 'hours');
+
+// the same as the one in the backend
+export const convertToPKTAndSubtractHours = (date, time, hoursToSubtract = 5) => {
+  let dateTimeString;
+  
+  if (typeof date === 'string' && typeof time === 'string') {
+    dateTimeString = `${date}T${time}`;
+  } else if (moment.isMoment(date) && typeof time === 'string') {
+    dateTimeString = `${date.format('YYYY-MM-DD')}T${time.split('T')[1]}`;
+  } else if (moment.isMoment(date) && moment.isMoment(time)) {
+    dateTimeString = `${date.format('YYYY-MM-DD')}T${time.format('HH:mm:ss')}`;
+  } else if (typeof date === 'string' && time === undefined) {
+    dateTimeString = date;
+  } else {
+    throw new Error('Unsupported input types for date/time conversion. Expected: (moment, string), (string, string), (moment, moment), or (string) for backward compatibility');
+  }
+  
+  return moment.tz(dateTimeString, 'Asia/Karachi').subtract(hoursToSubtract, 'hours');
 };
 
 /**

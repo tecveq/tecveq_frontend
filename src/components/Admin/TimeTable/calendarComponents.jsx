@@ -45,7 +45,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
           </div>
           <div className="text-[10px] leading-tight">
             <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Title:</span>
-            <div className="font-semibold text-slate-900 truncate" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+            <div className="font-semibold text-slate-900" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
               {event.title ? event.title : ""}
             </div>
           </div>
