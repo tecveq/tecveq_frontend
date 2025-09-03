@@ -80,6 +80,7 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
       endEventDate: "",
       classroomID: "",
       subjectID: "",
+      meetingUrl: "",
     })
 
     const handleSaveDetails = () => { };
@@ -101,6 +102,7 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
           startTime: isoFormattedStringStartTime,
           endTime: isoFormattedStringEndTime,
           selectedDays,
+          meetingUrl: classObj.meetingUrl || "",
         };
 
         console.log("Sending to backend:", myobj);
@@ -271,6 +273,19 @@ const SchedualClasses = ({ refetch, addScheduleModalOpen, setAddScheduleModalOpe
                     value={classObj.endTime}
                   />
                 </div>
+
+                <CusotmInputField
+                  type={"text"}
+                  icon={"mail"}
+                  name={"meetingUrl"}
+                  title={"Meet Link (Optional)"}
+                  selectable={false}
+                  status={allowedEdit}
+                  valuesObj={classObj}
+                  value={classObj.meetingUrl}
+                  setValue={setClassObj}
+                  placeholder="https://meet.google.com/your-meeting-link"
+                />
 
 
                 <div className="py-8 border-t border-black/20">

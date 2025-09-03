@@ -104,6 +104,8 @@ const MyCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         className="w-[100%] h-[350vh]"
+        step={60}
+        timeslots={1}
         components={{
           toolbar: (toolbar) => (
             <CustomToolbar

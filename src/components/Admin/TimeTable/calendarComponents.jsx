@@ -1,6 +1,7 @@
 import IMAGES from "../../../assets/images";
 import ViewEventDetailsModal from "./viewEventDetailsModal";
 import moment from 'moment-timezone';
+import { calculateDurationHours } from "../../../utils/timeUtils";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa6";
@@ -9,6 +10,13 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import FilterButton from "./FilterButton";
 export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
   const [detailsModalOpen, setdetailsModalOpen] = useState(false);
+  
+  // Calculate event duration in hours for height scaling
+  const startTime = new Date(event.startTime);
+  const endTime = new Date(event.endTime);
+  const durationHours = calculateDurationHours(startTime, endTime); 
+  const eventHeight = Math.max(100, durationHours * 100); // Minimum 100px, scale by 100px per hour
+  
   return (
     <div className="relative flex flex-1 w-full overflow-visible">
       <ViewEventDetailsModal
@@ -21,32 +29,32 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
       />
 
       <div
-        className={`text-xs flex  justify-center text-center items-center rounded-md h-[80px] w-[100px]  ${event.teacher.teacherID.name
-          ? "bg-[#ffe4e6] text-maroon flex flex-col p-1"
-          : "bg-[#ffe4e6] text-maroon"
-          }`}
+        className="cursor-pointer rounded-lg w-full min-w-[120px] transition-all duration-200 hover:shadow-md bg-[#ffe4e6] text-maroon border-2 border-[#ffb3ba] mb-1"
+        style={{ height: `${eventHeight - 4}px`, minHeight: `${eventHeight - 4}px` }}
         onClick={() => {
-          return event.teacher.teacherID.name ? setdetailsModalOpen(true) : null;
+          console.log("Admin event clicked:", event);
+          setdetailsModalOpen(true);
         }}
       >
-        {/* <img
-          src={IMAGES.MathIcon}
-          className="object-contain hidden md:block w-7 h-7 md:h-4 md:w-4"
-          alt="subject img"
-        /> */}
-        <div className="flex flex-col">
-          <p className="text-[11px] text-wrap ml-3 font-medium">
-            <span className="font-bold">Teacher:</span>{" "}
-            {event.teacher ? event.teacher.teacherID.name : ""}
-          </p>  
-          <p className="text-[11px] text-wrap ml-1 font-medium">
-            <span className="font-bold">Title:</span>{" "}
-            {event.title ? event.title : ""}
-          </p>
-          <p className="text-[11px] text-wrap font-medium">
-            <span className="font-bold">Subject:</span>{" "}
-            {event.subjectID.name ? event.subjectID.name : ""}
-          </p>
+        <div className="flex flex-col h-full justify-start items-start p-2 space-y-1">
+          <div className="text-[10px] leading-tight">
+            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Teacher:</span>
+            <div className="font-semibold text-slate-900 truncate" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+              {event.teacher ? event.teacher.teacherID.name : ""}
+            </div>
+          </div>
+          <div className="text-[10px] leading-tight">
+            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Title:</span>
+            <div className="font-semibold text-slate-900" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+              {event.title ? event.title : ""}
+            </div>
+          </div>
+          <div className="text-[10px] leading-tight">
+            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Subject:</span>
+            <div className="font-semibold text-slate-900 truncate" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+              {event.subjectID.name ? event.subjectID.name : ""}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -60,23 +68,31 @@ export const SideTime = (props) => {
 
   return (
     <div className="flex flex-col w-[130px]">
-      {times.map((time) => (
-        <div
-          key={`${time}`}
-          className="flex w-[110px] h-[80px] justify-center items-center"
-        >
-          <p className="text-[10px] text-grey">
-            {moment.utc(time[0]).tz("Asia/Karachi").format("h:mm a")} {/* Convert to PKT */}
-          </p>
-          <p className="text-[10px] text-grey">-</p>
-          <p className="text-[10px] text-grey">
-            {moment.utc(time[0])
-              .add(0.5, "hour")
-              .tz("Asia/Karachi") // Convert to PKT
-              .format("h:mm a")}
-          </p>
-        </div>
-      ))}
+      {times.map((time, index) => {
+        const startTime = moment.utc(time[0]).tz("Asia/Karachi");
+        // Calculate end time based on slot duration or use next slot start
+        const endTime = index < times.length - 1 
+          ? moment.utc(times[index + 1][0]).tz("Asia/Karachi")
+          : startTime.clone().add(1, "hour"); // Default to 1 hour for last slot
+        
+        return (
+          <div
+            key={`${time}`}
+            className="flex w-[110px] justify-center items-center border-b border-gray-200 py-2"
+            style={{ height: '100px', minHeight: '100px' }}
+          >
+            <div className="text-center">
+              <p className="text-[10px] text-grey font-medium">
+                {startTime.format("h:mm a")}
+              </p>
+              <p className="text-[8px] text-grey opacity-60">-</p>
+              <p className="text-[10px] text-grey font-medium">
+                {endTime.format("h:mm a")}
+              </p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -217,17 +217,23 @@ export default function ViewEventDetailsModal({
               </div>
             </div>
           </div>
-          {isMeetingTime &&
+          {event?.meetingUrl && (
             <div className="flex items-center gap-3">
-              <div
-                // onClick={handleJoinMeeting}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon"
+              <a
+                href={event.meetingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
               >
-                <img src={meet} alt="meet img" className="w-1/6" />
-                <p className="text-sm text-white"> <a href={event.meetLink} target="_blank" >Join Meeting</a> </p>
-              </div>
+                <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon hover:bg-maroon-800 transition-colors">
+                  <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
+                  <p className="text-sm text-white">
+                    Join Meeting
+                  </p>
+                </div>
+              </a>
             </div>
-          }
+          )}
         </div>
       </div>
     </div>
