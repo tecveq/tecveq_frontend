@@ -26,7 +26,7 @@ const ProfileDetails = ({ onclose }) => {
 
 
 
-  console.log(selectedChild, "curent children object");
+  //console.log(selectedChild, "curent children object");
 
 
   const handleEditClick = () => {

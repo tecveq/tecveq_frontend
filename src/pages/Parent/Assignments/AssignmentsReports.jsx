@@ -15,7 +15,7 @@ const AssignmentsReports = () => {
 
   const { assignments } = useParams();
 
-  console.log(assignments, "assignments is");
+  //console.log(assignments, "assignments is");
 
 
   const { selectedChild } = useParent();
@@ -23,14 +23,14 @@ const AssignmentsReports = () => {
   const reportQuery = useQuery({
     queryKey: ["report", selectedChild._id, location?.state?.classroom?._id, location?.state?.subject?._id, location?.state?.teacher?._id], // Add dependencies
     queryFn: async () => {
-      console.log("selected child is : ", selectedChild);
+      //console.log("selected child is : ", selectedChild);
       let results = await getChildReport(
         selectedChild._id,
         location?.state?.classroom?._id,
         location?.state?.subject?._id,
         location?.state?.teacher?._id
       );
-      console.log(" report result is : ", results);
+      //console.log(" report result is : ", results);
       return results;
     },
     staleTime: 0,
@@ -41,7 +41,7 @@ const AssignmentsReports = () => {
   });
 
 
-  console.log(reportQuery?.data, "reportQuery data is ");
+  //console.log(reportQuery?.data, "reportQuery data is ");
 
 
 

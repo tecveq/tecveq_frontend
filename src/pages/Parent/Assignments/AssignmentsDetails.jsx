@@ -10,7 +10,7 @@ const AssignmentsDetails = () => {
   const { subject, title } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
-  console.log(state, "item of data is blaw blaw blaw blaw blaw blaw blaw blaw blaw");
+ // console.log(state, "item of data is blaw blaw blaw blaw blaw blaw blaw blaw blaw");
 
   let data = state;
 
@@ -21,7 +21,7 @@ const AssignmentsDetails = () => {
   const subTime = moment(data?.assignments[0]?.submissions[0]?.submittedAt).format("h:mm A");
 
 
-  console.log(date, "date is ", time, "time is");
+  //console.log(date, "date is ", time, "time is");
 
   return (
     <div className="flex flex-1 bg-[#F9F9F9] h-screen font-poppins overflow-auto ">

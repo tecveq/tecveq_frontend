@@ -19,7 +19,7 @@ import { uploadFile } from "../../../utils/FileUpload";
 const ProfileDetails = ({ onclose }) => {
 
   const { userData, setUserData } = useUser();
-  console.log("user data is : ", userData);
+  //console.log("user data is : ", userData);
 
   const ref = useRef(null);
 
@@ -66,14 +66,14 @@ const ProfileDetails = ({ onclose }) => {
       guardianPhoneNumber: parentPhone, className, profilePic
     }
 
-    console.log("data being sent is : ", data);
+    //console.log("data being sent is : ", data);
 
     const response = await updateStudent(data);
 
     if (response == "error") {
       console.log("error here");
     } else {
-      console.log("updated student response is : ", response);
+      //console.log("updated student response is : ", response);
       toast.success("Profile Updated successfully!");
       await setUserData(response);
       onclose();

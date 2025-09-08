@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const QuizAssignmentsTable = ({ data, type }) => {
     const params = useParams()
     const navigate = useNavigate()
-    console.log(data, "data is detailed");
+    //console.log(data, "data is detailed");
 
     return (
         <div className="flex flex-1">

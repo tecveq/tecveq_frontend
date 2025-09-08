@@ -35,7 +35,7 @@ const SubjectReport = () => {
 
   const { userData } = useUser();
   const location = useLocation();
-  console.log("location state in subject report is : ", location?.state);
+  //console.log("location state in subject report is : ", location?.state);
 
   const reportQuery = useQuery({
     queryKey: ["reports"], queryFn: async () => {
@@ -44,7 +44,7 @@ const SubjectReport = () => {
     }
   })
 
-  console.log("query for subject report data is : ", reportQuery.data);
+  //console.log("query for subject report data is : ", reportQuery.data);
 
 
   useEffect(() => {

@@ -228,8 +228,8 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
   };
 
   const handleApplyFilters = () => {
-    console.log("start date is : ", filterStartDate);
-    console.log("end date is : ", filterEndDate);
+    //console.log("start date is : ", filterStartDate);
+    //console.log("end date is : ", filterEndDate);
     setFilterActive(true);
   }
 

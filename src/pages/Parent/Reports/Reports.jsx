@@ -90,7 +90,7 @@ const Reports = () => {
   ];
 
   const handleFunctionClick = (report) => {
-    console.log("selected report is : ", report);
+    //console.log("selected report is : ", report);
     navigate(`/parent/reports/${report.subject.name}`, { state: report });
   };
 
@@ -104,7 +104,7 @@ const Reports = () => {
       const results = await getAllSubjects(selectedChild._id);
       setAllSubjects(results);
       console.log("inside dashboard");
-      console.log("subject report data is  : ", results);
+      //console.log("subject report data is  : ", results);
       return results
     }, staleTime: 300000, enabled: enableQuery
   });

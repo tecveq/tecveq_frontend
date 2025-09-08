@@ -19,7 +19,7 @@ const MyCalendar = () => {
   const { userData } = useUser()
 
 
-  console.log(userData, "userData");
+  //console.log(userData, "userData");
 
   const [loading, setloading] = useState(false);
   const [addModalOpen, setaddModalOpen] = useState(false);
@@ -53,7 +53,7 @@ const MyCalendar = () => {
 
   const { data, isPending, isSuccess } = useQuery({ queryKey: ["classe"], queryFn: getAllClasses });
   if (!isPending) {
-    console.log("classes in studnets are : ", data)
+    //console.log("classes in studnets are : ", data)
   }
   useEffect(() => {
     if (!isPending) {
@@ -61,8 +61,8 @@ const MyCalendar = () => {
       let allclassfilter = data?.map((item) => {
         // let newdate = moment.utc(item.startTime);
         let newdate = new Date(item?.startTime);
-        console.log(moment.utc(item.startTime).toString());
-        console.log("ne date is : ", newdate);
+        //console.log(moment.utc(item.startTime).toString());
+        //console.log("ne date is : ", newdate);
         // let end = moment.utc(item.endTime);
         let end = new Date(item.endTime);
         let returnobj = { ...item, end: end, start: newdate }
@@ -72,7 +72,7 @@ const MyCalendar = () => {
 
 
 
-      console.log("all class filter is : ", allclassfilter);
+      //console.log("all class filter is : ", allclassfilter);
       setEvents(allclassfilter);
     }
   }, [currentWeek, isSuccess, isPending, data]);
@@ -120,7 +120,7 @@ const MyCalendar = () => {
             />
           ),
           event: (e) => {
-            console.log("event is : ", e);
+            //console.log("event is : ", e);
             return <CustomEvent setevents={setEvents} event={e.event} />;
           },
           timeGutterHeader: SideTimeHeader,
