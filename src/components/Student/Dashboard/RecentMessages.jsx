@@ -88,7 +88,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     setSelectedChatParticipants(data.participants);
     conn.emit("join", { room: data._id });
     const result = await getChatsRoomData(data._id);
-    console.log("result form sever is : ", result);
+    //console.log("result form sever is : ", result);
     setMsgArray(result.messages);
     setLoading(false);
   }
@@ -108,9 +108,9 @@ const RecentMessages = ({ onclose, dashboard }) => {
   useEffect(() => {
     if (localSocket) {
       localSocket.on("message", (data) => {
-        console.log("data snd by teacher is  : ", data);
+        //console.log("data sent by teacher is  : ", data);
         let user = getParticipantData(data.message.sentBy);
-        console.log("user after compare is : ", user);
+        //console.log("user after compare is : ", user);
         setMsgArray((prev) => [...prev, { ...data.message, sentBy: user }]);
       })
     }
@@ -234,7 +234,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     }
     if (!chatquery.isPending) {
       setQueryData(chatquery?.data);
-      console.log("query data is : ", chatquery.data);
+      //console.log("query data is : ", chatquery.data);
       setEnableChatQuery(false);
     }
   }, [chatquery.isPending])

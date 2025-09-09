@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   const loginUser = async () => {
     const user = await studentLogin({ email: "tests@gmail.com", password: "password" })
-    console.log("user is : ", user);
+    //console.log("user is : ", user);
     // setUserData(user)
   }
 

@@ -14,7 +14,7 @@ const QuizzDetails = () => {
 
   const data = state;
 
-  console.log(data, "blaw , blaw , blaw , blaw , blaw , blaw , bl");
+  //console.log(data, "blaw , blaw , blaw , blaw , blaw , blaw , bl");
   const date = moment(data?.quizes[0]?.dueDate).format("DD/MM/YYYY");
   const time = moment(data?.quizes[0]?.dueDate).format("h:mm A");
 

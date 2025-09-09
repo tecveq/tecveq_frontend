@@ -58,7 +58,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("object is : ", { role: e.target[0].value, email: e.target[1].value, password: e.target[2].value })
+        //console.log("object is : ", { role: e.target[0].value, email: e.target[1].value, password: e.target[2].value })
         setLoading(true);
         try {
             const dataBody = {

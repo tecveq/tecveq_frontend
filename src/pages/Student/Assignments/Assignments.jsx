@@ -19,7 +19,7 @@ const Assignments = () => {
   const studentAssignments = allAssignments.filter(assignment =>
     userData.subjects.includes(assignment.subjectID._id)
   );
-  console.log("Filtered Assignments:", studentAssignments);
+  //console.log("Filtered Assignments:", studentAssignments);
   return (
     <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
       <div className="flex flex-1">

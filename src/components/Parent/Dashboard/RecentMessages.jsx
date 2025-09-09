@@ -65,12 +65,12 @@ const RecentMessages = ({ onclose, dashboard }) => {
     const conn = io(`${BACKEND_URL_SOCKET}/one-to-one`);
     setLocalSocket(conn);
     setSelectedChat(data);
-    console.log("parent data is : ", data);
+    //console.log("parent data is : ", data);
     conn.emit("join", [userData._id, data._id])
     console.log("join room emit")
     conn.emit("get-chats", [userData._id, data._id]);
     conn.on("chat-history", (chats) => {
-      console.log("parent full chat values is ", chats);
+      //console.log("parent full chat values is ", chats);
       setSelectedChatParticipants(chats?.participants);
       setMsgArray(chats?.messages);
     })
@@ -79,7 +79,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
   }
 
   const getParticipantData = (pid) => {
-    console.log("id sent is : ", pid);
+    //console.log("id sent is : ", pid);
     let user = {};
     selectedChatParticipants?.forEach((item) => {
       if (item._id === pid) {
@@ -93,9 +93,9 @@ const RecentMessages = ({ onclose, dashboard }) => {
   useEffect(() => {
     if (localSocket) {
       localSocket?.on("receive-message", (data) => {
-        console.log("data snd by student is  : ", data);
+        //console.log("data snd by student is  : ", data);
         let user = getParticipantData(data?.message?.sentBy);
-        console.log("user after compare is : ", user);
+        //console.log("user after compare is : ", user);
         setMsgArray((prev) => [...prev, { ...data?.message, sentBy: user }]);
       });
     }
@@ -221,7 +221,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     }
     if (!chatquery.isPending) {
       setQueryData(chatquery?.data);
-      console.log("teacher query data is : ", chatquery.data);
+      //console.log("teacher query data is : ", chatquery.data);
       setEnableChatQuery(false);
     }
   }, [chatquery.isPending])

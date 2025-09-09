@@ -5,7 +5,7 @@ import { Doughnut } from 'react-chartjs-2';
 const AttendanceTable = ({ data }) => {
 
 
-    console.log(data, "attendence table data");
+    //console.log(data, "attendence table data");
 
 
     return (

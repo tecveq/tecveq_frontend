@@ -9,7 +9,7 @@ import { useUser } from '../../../context/UserContext'
 const Quizzes = () => {
 
     const { allQuizes } = useStudent();
-    console.log("all quizes in quiz are : ", allQuizes);
+    //console.log("all quizes in quiz are : ", allQuizes);
 
     const { userData } = useUser();
 
@@ -17,11 +17,11 @@ const Quizzes = () => {
     const studentQuiz = allQuizes?.filter(quiz =>
         userData.subjects.includes(quiz.subjectID._id)
     );
-    console.log("Filtered Assignments:", studentQuiz);
+    //console.log("Filtered Assignments:", studentQuiz);
     const { isBlurred } = useBlur();
 
     const handleUpload = (data, datad) => {
-        console.log("select file is :", data, datad);
+        //console.log("select file is :", data, datad);
     }
 
     return (

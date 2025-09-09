@@ -27,7 +27,7 @@ export const CustomEvent = ({ event, setevents }) => {
     return moment(latestDate).format("hh:mm a");
   };
 
-  console.log(event, "my event data");
+  //console.log(event, "my event data");
 
 
   return (

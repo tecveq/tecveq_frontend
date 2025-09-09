@@ -15,8 +15,8 @@ const Notifications = ({ onclose, dashboard }) => {
 
   const { selectedChild } = useParent();
 
-  console.log(data, "active tab data ");
-  console.log(selectedChild, "selected child data is  ");
+  //console.log(data, "active tab data ");
+  //console.log(selectedChild, "selected child data is  ");
 
   const matchedData = data.filter(item => item.userID === selectedChild?._id);
 

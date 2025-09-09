@@ -57,7 +57,7 @@ export const ParentProvider = ({ children }) => {
 
     useEffect(() => {
         let child = localStorage.getItem("selectedChild");
-        console.log(child ,"child");
+        //console.log(child ,"child");
         
         if (child != null) {
             console.log("inside");
@@ -70,7 +70,7 @@ export const ParentProvider = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        console.log("parse dataa is is success", selectedChild);
+        //console.log("parse dataa is is success", selectedChild);
     }, [selectedChild]);
 
     return (

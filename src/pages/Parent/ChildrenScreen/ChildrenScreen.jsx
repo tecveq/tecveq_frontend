@@ -19,7 +19,7 @@ const ChildrenScreen = () => {
     const { userData } = useUser();
 
     const child1Click = (child) => {
-        console.log(child,"child1Click");
+        //console.log(child,"child1Click");
         
         setSelectedChild(child);
         localStorage.setItem("selectedChild", JSON.stringify(child));
@@ -38,7 +38,7 @@ const ChildrenScreen = () => {
     const {data, isPending, error, refetch} = useQuery({
         queryKey: ["childquery"], queryFn: async () => {
             const result = await getAllChildren(userData.email);
-            console.log(" parent children are : ",  result);
+            //console.log(" parent children are : ",  result);
             return result
         }, staleTime: 30000, enabled: parentLogedIn
     });

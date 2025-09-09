@@ -19,7 +19,7 @@ const AttendanceTable = ({ data }) => {
         },
     ];
 
-    console.log("data in table attendance is : ", data);
+    //console.log("data in table attendance is : ", data);
     return (
         <div className="flex w-full md:flex-1">
             <div className="flex flex-col w-full md:flex-1 gap-2">

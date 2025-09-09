@@ -69,7 +69,7 @@ const Navbar = ({ heading }) => {
       toast.success("Logged out successfully!");
       navigate("/login")
     }
-    console.log(response)
+    //console.log(response)
   };
 
   const notifyQuery = useQuery({

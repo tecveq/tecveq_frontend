@@ -101,7 +101,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
   };
 
   useEffect(() => {
-    console.log("user selected theachers is : ", selectedTeachers);
+    console.log("user selected teachers is : ", selectedTeachers);
     console.log("user selected students is : ", selectedStudents);
     if (selectedStudents.length > 0) {
       setNewSelectedStudents(selectedStudents);

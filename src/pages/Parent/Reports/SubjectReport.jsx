@@ -24,14 +24,14 @@ const SubjectReport = () => {
       location?.state?.teacher?._id,
     ],
     queryFn: async () => {
-      console.log("selected child is : ", selectedChild);
+      //console.log("selected child is : ", selectedChild);
       const results = await getChildReport(
         selectedChild._id,
         location?.state?.classroom?._id,
         location?.state?.subject?._id,
         location?.state?.teacher?._id
       );
-      console.log("report result is : ", results);
+      //console.log("report result is : ", results);
       return results;
     },
     // Enable query only when location.state exists
@@ -39,7 +39,7 @@ const SubjectReport = () => {
     staleTime: 30000, // Cache for 30 seconds
   });
 
-  console.log("query data is : ", reportQuery.data);
+  //console.log("query data is : ", reportQuery.data);
 
   const stats = [
     {

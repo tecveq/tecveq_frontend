@@ -12,19 +12,19 @@ const LastDeliverables = () => {
   const { allSubjects, setAllSubjects, selectedChild } = useParent();
 
 
-  console.log(selectedChild, "current selected child: ", allSubjects, "all subject of selected child: ");
+  //console.log(selectedChild, "current selected child: ", allSubjects, "all subject of selected child: ");
 
 
   const subjectQuery = useQuery({
     queryKey: ["subjects"], queryFn: async () => {
       const results = await getAllSubjects(selectedChild?._id);
-      console.log("subject in enrolled classes is : ", results);
+      //console.log("subject in enrolled classes is : ", results);
       setAllSubjects(results);
       return results
     }, staleTime: 300000, enabled: enableQuery
   });
 
-  console.log(subjectQuery, "subject query");
+  //console.log(subjectQuery, "subject query");
 
   useEffect(() => {
     if (allSubjects.length == 0) {
@@ -35,11 +35,11 @@ const LastDeliverables = () => {
   const lastDeliveredAssignmentreportQuery = useQuery({
     queryKey: ["report", selectedChild?._id],
     queryFn: async () => {
-      console.log("selected child is : ", selectedChild);
+      //console.log("selected child is : ", selectedChild);
       const results = await getChildLastDeliveredAssignmentReport(
         selectedChild?._id,
       );
-      console.log("report result is : ", results);
+      //console.log("report result is : ", results);
       return results;
     },
     enabled: !!selectedChild?._id,

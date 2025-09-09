@@ -25,7 +25,7 @@ const Notifications = ({ onclose, dashboard, data }) => {
   }, [])
 
   const chatquery = useQuery({ queryKey: ["chat"], queryFn: getMyChats })
-  console.log("chat query data is : ", chatquery.data);
+  //console.log("chat query data is : ", chatquery.data);
 
   const Notification = () => {
 

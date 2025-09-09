@@ -16,7 +16,7 @@ const SubjectsEnrolled = () => {
   const { setAllSubjects, studentLogedIn } = useStudent();
 
 
-  console.log(userData, "student login");
+  //console.log(userData, "student login");
 
 
 
@@ -44,7 +44,7 @@ const SubjectsEnrolled = () => {
     userData.subjects.includes(item.subject._id)
   );
 
-  console.log(filteredSubjects, "Filtered Subjects for Student");
+  //console.log(filteredSubjects, "Filtered Subjects for Student");
 
 
   // useEffect(() => subjectQuery.data && setAllSubjects(subjectQuery.data), [subjectQuery.isSuccess, subjectQuery.data]);

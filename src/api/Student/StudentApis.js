@@ -21,8 +21,8 @@ axios.defaults.withCredentials = true;
 export const studentLogin = apiRequest(async (data) => {
     const url = `${BACKEND_URL}/auth/login`
     const response = await axios.post(url, data, {withCredentials: true});
-    console.log("response config is : ", response.config);
-    console.log("response headers is : ", response.headers);
+    // console.log("response config is : ", response.config);
+    // console.log("response headers is : ", response.headers);
     return response;
 })
 

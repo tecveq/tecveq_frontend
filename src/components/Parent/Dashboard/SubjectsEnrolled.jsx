@@ -27,7 +27,7 @@ const SubjectsEnrolled = () => {
     queryKey: ["subjects", selectedChild?._id],
     queryFn: async () => {
       const results = await getAllSubjects(selectedChild?._id);
-      console.log("Subjects in enrolled classes:", results);
+      //console.log("Subjects in enrolled classes:", results);
       setAllSubjects(results);
       return results;
     },
@@ -42,10 +42,10 @@ const SubjectsEnrolled = () => {
     }
   }, [allSubjects, selectedChild]);
 
-  console.log(subjectQuery.data ,"subject query data");
+  //console.log(subjectQuery.data ,"subject query data");
 
 
-  console.log(allSubjects ,"all Subjects Of Parent ");
+  //console.log(allSubjects ,"all Subjects Of Parent ");
   
 
   return (
