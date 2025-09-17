@@ -247,11 +247,11 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
       return;
     }
 
-    const regex = /^[a-zA-Z0-9\s]+$/;
-    if (!regex.test(classroomName)) {
-      toast.error("Invalid classroom name (no special characters allowed).");
-      return;
-    }
+    // const regex = /^[a-zA-Z0-9\s]+$/;
+    // if (!regex.test(classroomName)) {
+    //   toast.error("Invalid classroom name (no special characters allowed).");
+    //   return;
+    // }
 
 
 
