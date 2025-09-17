@@ -114,6 +114,7 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
 
                     {data.userType == "student" &&
                         <>
+                            <InputFiled label={"Roll No."} req={false} val={userObj.rollNo} name={"rollNo"} setDataObj={setUsrObj}/>
                             <InputFiled label={"Enroll In."} req={false} val={data.levelID} />
                             <InputFiled label={"Guardian Name"} req={false} val={data.guardianName} />
                             <InputFiled label={"Guardian Email"} req={false} val={data.guardianEmail} />
