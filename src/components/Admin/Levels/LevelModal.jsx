@@ -108,7 +108,7 @@ const LevelModal = ({ open, setopen, refetch, isEditTrue, levelData, setEditTrue
               onClick={() => {
                 handleAddLevel();
               }}
-              className="flex items-center justify-center w-1/2 py-2 text-center rounded-3xl cursor-pointer bg-maroon"
+              className="flex items-center justify-center w-1/2 py-2 text-center rounded-3xl cursor-pointer bg-[#6A00FF]"
             >
               <p className="text-sm text-white">{isEditTrue? "Update": "Create"}</p>
             </div>

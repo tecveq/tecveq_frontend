@@ -157,7 +157,7 @@ const CreateQuoteModal = ({
                         <div className="w-32">
                             <div
                                 onClick={() => { mutation.mutate() }}
-                                className="flex items-center justify-center w-full py-2 text-center rounded-3xl cursor-pointer bg-maroon"
+                                className="flex items-center justify-center w-full py-2 text-center rounded-3xl cursor-pointer bg-[#0B1053]"
                             >
                                 <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
                             </div>

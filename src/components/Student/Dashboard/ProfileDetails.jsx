@@ -178,7 +178,7 @@ const ProfileDetails = ({ onclose }) => {
                 />
                 {loading && <div className="py-4"> <Loader /> </div>}
                 {!loading && allowedEdit && <div className="flex justify-center my-4">
-                  <p onClick={handleSaveDetails} className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon">Save</p>
+                  <p onClick={handleSaveDetails} className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-[#007EEA]">Save</p>
                 </div>}
               </div>
             </div>

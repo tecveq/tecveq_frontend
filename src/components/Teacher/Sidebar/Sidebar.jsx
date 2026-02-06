@@ -69,7 +69,7 @@ const Sidebar = () => {
         {loading ? (
           <div className="flex"><Loader /></div>
         ) : (
-          <div onClick={handleLogoutClick} className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon">
+          <div onClick={handleLogoutClick} className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-[#0B1053]">
             <IoIosLogOut />
             <p>Logout</p>
           </div>
@@ -85,7 +85,7 @@ const Sidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)
       }
       }>
-        <div className="flex justify-center bg-maroon w-9 h-fit">
+        <div className="flex justify-center bg-[#0B1053] w-9 h-fit">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
             <p className="w-6 bg-white h-0.5"></p>

@@ -220,7 +220,7 @@ const ProfileDetails = ({ onclose }) => {
                     </div>
                     <label
                       for="file"
-                      className="p-4 text-white rounded-sm cursor-pointer bg-maroon"
+                      className="p-4 text-white rounded-sm cursor-pointer bg-[#0B1053]"
                     >
                       <div className="">
                         <GoDownload />
@@ -236,7 +236,7 @@ const ProfileDetails = ({ onclose }) => {
                   <div className="flex justify-center my-4">
                     <p
                       onClick={handleSaveDetails}
-                      className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon"
+                      className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-[#0B1053]"
                     >
                       Save
                     </p>

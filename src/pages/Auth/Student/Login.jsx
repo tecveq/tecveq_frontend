@@ -147,7 +147,7 @@ const Login = () => {
                                             <Loader />
                                         </>
                                         : (
-                                            <button type='submit' className='flex bg-maroon text-white rounded-md py-2 px-4 justify-center items-center text-center cursor-pointer hover:bg-maroon/90'>Sign In</button>
+                                            <button type='submit' className='flex bg-[#6A00FF] text-white rounded-md py-2 px-4 justify-center items-center text-center cursor-pointer hover:bg-[#007EEA]'>Sign In</button>
                                         )}
                                     <p className='text-[#000000]/70 text-sm'>Don't have an account? <span onClick={handleGoToSignUp} className='text-[#000000]/50 cursor-pointer hover:text-[#00000090] font-medium underline'>Sign up</span> now</p>
                                 </div>

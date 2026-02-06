@@ -82,7 +82,7 @@ export default function ViewEventDetailsModal({
     <div
       onClick={() => { }}
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-8 w-[400px] text-black rounded-xl ml-60 ${open ? "" : "hidden"
+      className={`fixed z-10 mt-10 bg-white p-8 w-[400px] text-black rounded-xl ml-96 ${open ? "" : "hidden"
         }`}
       style={
         isOutside
@@ -225,12 +225,12 @@ export default function ViewEventDetailsModal({
                 rel="noopener noreferrer"
                 className="w-full"
               >
-                <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-maroon hover:bg-maroon-800 transition-colors">
+                <button className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#0B1053] hover:bg-[#007EEA] transition-colors">
                   <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
                   <p className="text-sm text-white">
                     Join Meeting
                   </p>
-                </div>
+                </button>
               </a>
             </div>
           )}

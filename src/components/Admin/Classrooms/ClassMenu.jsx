@@ -31,7 +31,7 @@ const ClassMenu = ({
               <FaRegEdit />
               <p>Edit</p>
             </div>
-            <div className="flex items-center gap-2 cursor-pointer text-maroon " onClick={() => {
+            <div className="flex items-center gap-2 cursor-pointer text-[#6A00FF] " onClick={() => {
               deleteClassRoom()
               setIsOpen(false);
             }}>
@@ -39,7 +39,7 @@ const ClassMenu = ({
               <p>Delete</p>
             </div>
 
-            <div className="flex items-center gap-2 cursor-pointer text-maroon " onClick={() => {
+            <div className="flex items-center gap-2 cursor-pointer text-[#6A00FF] " onClick={() => {
               promoteStudentsPopup()
               setIsOpen(false);
             }}>

@@ -156,7 +156,7 @@ const MarkAttendence = () => {
 
                                     {!attendenceMutation.isPending && <div className="flex justify-end my-4 border-t border-black">
                                         <div className="flex justify-end py-4">
-                                            <p onClick={attendenceMutation.mutate} className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon">Submit</p>
+                                            <p onClick={attendenceMutation.mutate} className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-[#0B1053]">Submit</p>
                                         </div>
                                     </div>}
                                 </div>

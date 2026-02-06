@@ -267,7 +267,7 @@ const EditQuizAssignmentModal = ({ isEditTrue, refetch, data, setIsEdit, isQuiz 
         <button
           onClick={handleSubmit}
           disabled={isLoading}
-          className="w-full py-2 text-white bg-maroon rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
+          className="w-full py-2 text-white bg-[#0B1053] rounded-lg hover:bg-blue-600 disabled:bg-blue-300"
         >
           {isLoading ? "Processing..." : "Update"}
         </button>

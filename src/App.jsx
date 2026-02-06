@@ -74,7 +74,9 @@ import { TeacherProvider } from "./utils/TeacherProvider";
 import ChangePassword from "./commonComponents/ChangePassword";
 import AddCSVFile from "./pages/Admin/AddCSVFile/AddCSVFile";
 import AttendenceReport from "./pages/Admin/AttendenceReport/AttendenceReport";
-
+import SuperAdminDashboard from "./pages/SuperAdmin/Dashboard";
+import ProtectedSuperAdmin from "./utils/ProtectedSuperAdmin";
+import SuperAdminLayout from "./layouts/SuperAdminLayout";
 function App() {
   return (
     <>
@@ -224,6 +226,16 @@ function App() {
               <AdminLayout>
                 <AddCSVFile />
               </AdminLayout>
+            }
+          />
+        </Route>
+        <Route element={<ProtectedSuperAdmin />}>
+          <Route
+            path="/superadmin/dashboard"
+            element={
+              <SuperAdminLayout>
+                <SuperAdminDashboard />
+              </SuperAdminLayout>
             }
           />
         </Route>

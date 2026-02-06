@@ -131,7 +131,7 @@ export const Header = (props) => {
   return (
     <div
       className={`flex flex-col items-center justify-between flex-1 w-full font-normal h-fit ${currentDate === date && currentMonth === month
-        ? "text-maroon"
+        ? "text-[#0B1053]"
         : "text-grey"
         } `}
     >
@@ -201,7 +201,7 @@ export const CustomToolbar = ({
               <MdKeyboardArrowLeft />
             </button>
 
-            <p className="mx-4 text-xl font-semibold text-maroon">
+            <p className="mx-4 text-xl font-semibold text-[#0B1053]">
               {moment(Date.now()).format("DD MMMM, YYYY")}
               <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>

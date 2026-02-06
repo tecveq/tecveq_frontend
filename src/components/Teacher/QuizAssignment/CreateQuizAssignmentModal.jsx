@@ -545,7 +545,7 @@ const CreateQuizAssignmentModal = ({
               {/* Upload Instructions */}
               <div className="flex">
                 <p className="flex flex-wrap items-center justify-center text-sm text-center">
-                  <span className="text-maroon font-medium">Click to upload </span>
+                  <span className="text-[#0B1053] font-medium">Click to upload </span>
                   <span>or drag and drop Files</span>
                   <span> PNG, JPG, Word or PDF</span>
                 </p>
@@ -597,7 +597,7 @@ const CreateQuizAssignmentModal = ({
             <div className="flex items-center gap-3">
               <div
                 onClick={() => { isQuiz ? handleCreateQuiz() : handleCreateAssignment() }}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
+                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#0B1053]"
               >
                 <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
               </div>

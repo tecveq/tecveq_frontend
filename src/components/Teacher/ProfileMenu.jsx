@@ -17,7 +17,7 @@ const ProfileMenu = ({onProfileClick, onSettingsClick, onLogoutClick, dashboard}
             <p>Settings</p>
           </div>
         </div>
-        <div className="flex items-center gap-2 cursor-pointer text-maroon hover:text-red" onClick={onLogoutClick}>
+        <div className="flex items-center gap-2 cursor-pointer text-[#0B1053] hover:text-[#007EEA]" onClick={onLogoutClick}>
           <IoIosLogOut />
           <p>Logout</p>
         </div>

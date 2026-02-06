@@ -52,7 +52,7 @@ const Deliverables = () => {
             </div>
             <div className="flex justify-end">
                 <div>
-                <p className="px-3 py-1 text-white bg-maroon rounded-3xl" style={{fontSize:8}}>{item.subject}</p>
+                <p className="px-3 py-1 text-white bg-[#0B1053] rounded-3xl" style={{fontSize:8}}>{item.subject}</p>
                 </div>
             </div>
           </div>
@@ -66,7 +66,7 @@ const Deliverables = () => {
         <div className="flex flex-col">
           <p className="text-lg font-medium">Deliverables</p>
         </div>
-        <div className="flex flex-col flex-1 gap-1 px-4 py-4 overflow-auto bg-white border-t-4 h-60 rounded-xl border-t-maroon">
+        <div className="flex flex-col flex-1 gap-1 px-4 py-4 overflow-auto bg-white border-t-4 h-60 rounded-xl border-t-[#0B1053]">
             {data.map((item) => (
                 <Deliverable item={item} key={item.id} />
             ) )}

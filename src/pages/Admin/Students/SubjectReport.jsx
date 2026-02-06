@@ -149,7 +149,7 @@ const SubjectReport = () => {
                 </div>
 
                 <div className="w-full justify-end items-center flex">
-                  <button className="py-3 px-4 bg-maroon text-white rounded-full" onClick={() => {
+                  <button className="py-3 px-4 bg-[#0B1053] text-white rounded-full" onClick={() => {
                     // Refetch student subjects before opening modal
                     refetchStudentSubjects();
                     setEditSubject(!editSubject);
@@ -220,7 +220,7 @@ const SubjectReport = () => {
                     >
                       <input
                         type="checkbox"
-                        className="w-4 h-4 text-maroon focus:ring-maroon"
+                        className="w-4 h-4 text-[#0B1053] focus:ring-[#0B1053]"
                         checked={selectedSubjects.includes(subject._id)}
                         onChange={() => handleCheckboxChange(subject._id)}
                       />
@@ -244,7 +244,7 @@ const SubjectReport = () => {
                     });
                   }}
                   disabled={mutation.isPending}
-                  className="w-full mt-4 bg-maroon text-white font-semibold py-2 rounded-md hover:bg-gray-100 transition disabled:opacity-50"
+                  className="w-full mt-4 bg-[#0B1053] text-white font-semibold py-2 rounded-md hover:bg-gray-100 transition disabled:opacity-50"
                 >
                   {mutation.isPending ? "Submitting..." : "Submit"}
                 </button>

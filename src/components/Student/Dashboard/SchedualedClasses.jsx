@@ -96,7 +96,7 @@ const ScheduledClasses = () => {
               setSelectedDate(day);
               setSelectedDateFromChild(formattedDate);
             }}>
-            <div className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${selectedDate.format('YYYY-MM-DD') === formattedDate ? "bg-maroon text-white" : ""} text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}>
+            <div className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${selectedDate.format('YYYY-MM-DD') === formattedDate ? "bg-[#cdd0fe] text-white" : ""} text-xs group text-[#0B1053] hover:bg-[#0B1053] hover:text-white rounded-3xl`}>
               <div className="text-sm text-black group-hover:text-white">{day.format("D")}</div>
               {eventsForDay.length > 0 && <GoDotFill size={10} className="group-hover:text-white" />}
             </div>

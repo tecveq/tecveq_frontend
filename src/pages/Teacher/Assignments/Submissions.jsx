@@ -195,7 +195,7 @@ const Submissions = () => {
                         placeholder="Search"
                       />
                     </div>
-                    <p className="flex cursor pointer items-center justify-center px-4 py-2 text-sm text-white bg-maroon rounded-3xl" onClick={handleDownloadAll}>
+                    <p className="flex cursor pointer items-center justify-center px-4 py-2 text-sm text-white bg-[#0B1053] rounded-3xl" onClick={handleDownloadAll}>
                       Download All
                     </p>
                   </div>

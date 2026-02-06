@@ -45,7 +45,7 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
     const CustomButton = ({ label, btnClick }) => {
         return (
             <div className='flex justify-center mt-2'>
-                <div onClick={btnClick} className='w-40 cursor-pointer bg-maroon rounded-3xl py-2 px-4 text-white justify-center flex items-center '>
+                <div onClick={btnClick} className='w-40 cursor-pointer bg-[#0B1053] rounded-3xl py-2 px-4 text-white justify-center flex items-center '>
                     <p>{label}</p>
                 </div>
             </div>

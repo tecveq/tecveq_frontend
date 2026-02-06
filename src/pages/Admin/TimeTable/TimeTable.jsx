@@ -111,7 +111,7 @@ const TimeTable = () => {
                       placeholder="Type your message..."
                       className="flex-1 p-2 rounded-l-lg border border-gray-300 focus:outline-none"
                     />
-                    <button className="bg-maroon text-white p-2 rounded-r-lg hover:bg-maroon">
+                    <button className="bg-[#6A00FF] text-white p-2 rounded-r-lg hover:bg-[#6A00FF]">
                       Send
                     </button>
                   </div>

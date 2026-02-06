@@ -104,7 +104,7 @@ const DataRow = (props) => {
                       }`}
                   >
                     <div className="flex gap-2" onClick={onPresentClick}>
-                      {present ? <IoMdRadioButtonOn className="text-maroon" /> : <IoMdRadioButtonOff className="text-maroon" />}
+                      {present ? <IoMdRadioButtonOn className="text-[#0B1053]" /> : <IoMdRadioButtonOff className="text-[#0B1053]" />}
                     </div>
                     Present
                   </div>
@@ -113,7 +113,7 @@ const DataRow = (props) => {
                       }`}
                   >
                     <div className="flex gap-2" onClick={onAbsentClick}>
-                      {absent ? <IoMdRadioButtonOn className="text-maroon" /> : <IoMdRadioButtonOff className="text-maroon" />}
+                      {absent ? <IoMdRadioButtonOn className="text-[#0B1053]" /> : <IoMdRadioButtonOff className="text-[#0B1053]" />}
                     </div>
                     Absent
                   </div>
@@ -122,7 +122,7 @@ const DataRow = (props) => {
                       }`}
                   >
                     <div className="flex gap-2" onClick={onLateClick}>
-                      {late ? <IoMdRadioButtonOn className="text-maroon" /> : <IoMdRadioButtonOff className="text-maroon" />}
+                      {late ? <IoMdRadioButtonOn className="text-[#0B1053]" /> : <IoMdRadioButtonOff className="text-[#0B1053]" />}
                     </div>
                     Late
                   </div>

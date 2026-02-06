@@ -59,7 +59,7 @@ const SubjectsEnrolled = () => {
           <div className="flex flex-1">
             <table className="flex flex-col flex-1 bg-white rounded-lg table-fixed">
 
-              <thead className="flex gap-5 px-2 py-3 border-t-4 rounded-tl-lg rounded-tr-lg border-t-maroon bg-maroon_10">
+              <thead className="flex gap-5 px-2 py-3 border-t-4 rounded-tl-lg rounded-tr-lg border-t-[#0B1053] bg-[#ECEEF0]">
                 <tr className="flex flex-1 font-medium">
                   <td className="flex-[1] flex justify-center">Sr No.</td>
                   <td className="flex-[3] flex justify-center">Subject Name</td>

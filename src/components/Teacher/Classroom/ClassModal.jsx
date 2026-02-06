@@ -167,7 +167,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
                 onChange={handleMultiSelectStudentsChange}
               />
             </div>
-            <div className="flex justify-end py-1 text-xs text-maroon">
+            <div className="flex justify-end py-1 text-xs text-[#0B1053]">
               <p>Students Selected: {newSelectedStudents.length}</p>
             </div>
           </div>
@@ -178,7 +178,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
                 onClick={() => {
                   handleCreateClass();
                 }}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
+                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#0B1053]"
               >
                 <p className="text-sm text-white">Create</p>
               </div>

@@ -188,14 +188,14 @@ const ClassroomAttendence = () => {
                     {!getAttandence ? (
                       <button
                         onClick={attendenceMutation.mutate}
-                        className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon"
+                        className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-[#0B1053]"
                       >
                         Submit
                       </button>
                     ) : (
                       <button
                         onClick={updateFunction}
-                        className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-maroon"
+                        className="flex cursor-pointer px-8 py-3 text-sm text-white rounded-3xl bg-[#0B1053]"
                       >
                         Update
                       </button>
@@ -220,7 +220,7 @@ const ClassroomAttendence = () => {
                 </button>
                 <button
                   onClick={handleConfirmUpdate}
-                  className="px-4 py-2 text-sm text-white bg-maroon rounded-md hover:bg-maroon-dark"
+                  className="px-4 py-2 text-sm text-white bg-[#0B1053] rounded-md hover:bg-maroon-dark"
                 >
                   Yes
                 </button>

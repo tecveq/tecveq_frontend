@@ -68,7 +68,7 @@ const QuizAssignmentRow = (props) => {
                     ) : (
                         props.upload ? (
                             <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
-                                <div className='bg-[#A41D30] rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
+                                <div className='bg-[#0B1053] rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
                                     Upload
                                 </div>
                             </div>
@@ -92,12 +92,12 @@ const QuizAssignmentRow = (props) => {
                     props.upload ? (
                         <div className='flex flex-row items-center justify-end'>
                             {timePassed ? (
-                                <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
+                                <div className='[#0B1053] md:text-[10px] text-[8px]'>
                                     Time Up!
                                 </div>
                             ) : (
                                 <div className='flex flex-row items-center justify-end'>
-                                    <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
+                                    <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#<div class="bg-[#<div class="bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#d1d4fe] md:text-[10px] text-[8px]">Time Up!</div>]rounded-xl flex items-center justify-center py-1 px-2 text-[#0B1053] md:text-[10px] text-[8px]">Time Up!</div>] md:text-[10px] text-[8px]'>
                                         {timeLeft}
                                     </div>
                                 </div>

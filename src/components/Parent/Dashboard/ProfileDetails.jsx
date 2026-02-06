@@ -131,7 +131,7 @@ const ProfileDetails = ({ onclose }) => {
                 icon={"phone"}
               />
               {allowedEdit ? <div className="flex justify-center my-4">
-                <p onClick={handleSaveDetails} className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon">Save</p>
+                <p onClick={handleSaveDetails} className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-[#0B1053]">Save</p>
               </div> : ""}
             </div>
           </div>

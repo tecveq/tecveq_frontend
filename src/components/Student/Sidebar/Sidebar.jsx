@@ -50,9 +50,9 @@ const Sidebar = () => {
   const toggleSidebar = () => setIsopen(!isopen);
 
   const Menubar = () => (
-    <div className="w-72 h-lvh shadow-lg mt-3 bg-white px-4 py-5 flex flex-col justify-between">
+    <div className="w-72 h-lvh shadow-lg mt-3 bg-[#0B1053] px-4 py-5 flex flex-col justify-between">
       <div>
-        <div className="flex justify-center">
+        <div className="flex justify-start">
           <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
         </div>
         <div className="flex flex-col gap-1 py-2 border-b border-b-black">
@@ -61,7 +61,7 @@ const Sidebar = () => {
           ))}
         </div>
         {loading ? <Loader /> : (
-          <div onClick={handleLogoutClick} className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon">
+          <div onClick={handleLogoutClick} className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-white">
             <IoIosLogOut />
             <p>Logout</p>
           </div>
@@ -72,7 +72,7 @@ const Sidebar = () => {
           <div className="flex justify-center">
             <img src={webinar} alt="sidebar images" className="w-2/3" />
           </div>
-          <div className="flex flex-col gap-3 text-xs text-center text-maroon">
+          <div className="flex flex-col gap-3 text-xs text-center text-[#0B1053]">
             <p>Your <span className="font-bold">{meetingStart?.event?.subjectID?.name}</span> class is in progress.</p>
             <p>You can instantly join from here.</p>
             <div className="flex justify-center">
@@ -95,7 +95,7 @@ const Sidebar = () => {
         toggleSidebar()
         setIsSidebarOpen(!isSidebarOpen)
       }}>
-        <div className="flex justify-center bg-maroon w-9">
+        <div className="flex justify-center bg-[#0B1053] w-9">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
             <p className="w-6 bg-white h-0.5"></p>

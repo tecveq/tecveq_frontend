@@ -168,7 +168,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
                   <p className="font-medium ">You</p>
                   <p className="">{moment(msg.time).format("dddd hh:mm a")} </p>
                 </div>
-                <div className="text-sm text-white flex font-medium w-60 bg-maroon flex-wrap px-2 py-3 rounded-br-lg rounded-bl-lg rounded-tl-lg">
+                <div className="text-sm text-white flex font-medium w-60 bg-[#0B1053] flex-wrap px-2 py-3 rounded-br-lg rounded-bl-lg rounded-tl-lg">
                   <p>{msg.message} </p>
                 </div>
               </div>
@@ -216,8 +216,8 @@ const RecentMessages = ({ onclose, dashboard }) => {
         <div className="px-10">
           <div className="flex items-center gap-2">
             <input type="text" value={msgstr} onChange={(e) => { setmsgStr(e.target.value) }} onKeyDown={handleKeyDown} placeholder="Message" className="border-black/20 border rounded-lg py-2 px-2 outline-none" />
-            <RiAttachment2 className=" text-maroon cursor-pointer" size={24} />
-            <BsFillSendFill className="bg-maroon text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { handleSendMessage(msgstr) }} />
+            <RiAttachment2 className=" text-[#0B1053] cursor-pointer" size={24} />
+            <BsFillSendFill className="bg-[#0B1053] text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { handleSendMessage(msgstr) }} />
           </div>
         </div>
 

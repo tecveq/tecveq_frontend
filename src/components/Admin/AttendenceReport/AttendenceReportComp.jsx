@@ -156,7 +156,7 @@ const AttendanceReportComp = () => {
     return (
         <div className="bg-white border border-[#e5e7eb] rounded-xl shadow-lg overflow-hidden">
             {/* Header */}
-            <div className="bg-maroon px-6 py-4">
+            <div className="bg-[#6A00FF] px-6 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                         <div className="bg-white/20 p-2 rounded-lg">
@@ -290,7 +290,7 @@ const AttendanceReportComp = () => {
                                 </h3>
                                 <button
                                     onClick={handleReset}
-                                    className="text-xs text-[#6b7280] hover:text-[#dc2626] transition-colors flex items-center"
+                                    className="text-xs text-[#6b7280] hover:text-[#6A00FF] transition-colors flex items-center"
                                 >
                                     <X className="h-3 w-3 mr-1" />
                                     Clear all
@@ -360,7 +360,7 @@ const AttendanceReportComp = () => {
                         <button
                             onClick={handleSearch}
                             disabled={!filters.classroomId || attendanceSearch.isPending}
-                            className="px-8 py-3 bg-maroon text-white rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="px-8 py-3 bg-[#6A00FF] text-white rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {attendanceSearch.isPending ? (
                                 <>
@@ -386,7 +386,7 @@ const AttendanceReportComp = () => {
                                     </h3>
                                     <button
                                         onClick={handlePrint}
-                                        className="export-button inline-flex items-center gap-2 px-4 py-2 bg-maroon hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                                        className="export-button inline-flex items-center gap-2 px-4 py-2 bg-[#6A00FF] hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                                     >
                                         <Download size={16} />
                                         Export

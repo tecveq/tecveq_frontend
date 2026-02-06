@@ -56,11 +56,11 @@ const SubmissionRow = (props) => {
             } */}
             {!props.header ?
               props?.submissionData?.file ?
-                <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-[#0B1053] rounded-3xl">
                   <a href={props?.submissionData?.file} download={`${props?.name}.pdf`} target="_blank" > Download</a>
                 </p>
                 :
-                <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-maroon rounded-3xl">
+                <p onClick={() => { }} className="px-4 py-2 text-sm text-white bg-[#0B1053] rounded-3xl">
                   Pending
                 </p>
               : "Files"}

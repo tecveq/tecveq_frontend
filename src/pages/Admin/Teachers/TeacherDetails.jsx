@@ -94,8 +94,8 @@ const TeacherDetails = () => {
               </div>
             </div>
             <div className="flex gap-2">
-              <p onClick={onReportClick} className={`cursor-pointer py-2 font-medium px-2 ${reportActive ? "border-b-2 border-maroon" : "text-black/50"} `}>Report</p>
-              <p onClick={onFeedbackClick} className={`cursor-pointer py-2 font-medium px-2 ${reportActive ? "text-black/50" : "border-b-2 border-maroon"} `}>Feedback</p>
+              <p onClick={onReportClick} className={`cursor-pointer py-2 font-medium px-2 ${reportActive ? "border-b-2 border-[#0B1053]" : "text-black/50"} `}>Report</p>
+              <p onClick={onFeedbackClick} className={`cursor-pointer py-2 font-medium px-2 ${reportActive ? "text-black/50" : "border-b-2 border-[#0B1053]"} `}>Feedback</p>
             </div>
 
             {reportActive ?

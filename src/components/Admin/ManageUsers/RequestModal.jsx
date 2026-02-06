@@ -46,16 +46,16 @@ const RequestModal = ({ refetch, data, onclose }) => {
                     <div className='flex flex-col gap-1 text-xs'>
                         <div className='flex items-center gap-2'>
                             <p className='font-medium text-lg'>{user.name} </p>
-                            <p className='text-xs bg-maroon px-2 rounded-3xl text-white'>{user.userType}</p>
+                            <p className='text-xs bg-[#0B1053] px-2 rounded-3xl text-white'>{user.userType}</p>
                         </div>
                         <div className='flex items-center gap-2'>
-                            <MdOutlinePhone size={10} className='text-maroon' />
+                            <MdOutlinePhone size={10} className='text-[#0B1053]' />
                             <p>{user.phoneNumber}</p>
                         </div>
 
                         <div className='flex items-center gap-2'>
                             <p onClick={() => accept(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-yellow_green_light/10 text-yellow_green_light cursor-pointer`}>Accept</p>
-                            <p onClick={() => reject(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-maroon/10 text-maroon cursor-pointer`}>Reject</p>
+                            <p onClick={() => reject(user._id)} className={`py-1 text-xs px-4 rounded-3xl bg-[#e0e1fa] text-[#0B1053] cursor-pointer`}>Reject</p>
                         </div>
 
                     </div>

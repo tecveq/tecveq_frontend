@@ -47,7 +47,7 @@ const AttandenceSetting = () => {
                 <div className='flex flex-col w-full justify-end items-end'>
                     <Link to="/admin/add-csv-file">
                         <button
-                            className="px-6 py-2 rounded-lg bg-red text-white"
+                            className="px-6 py-2 rounded-lg bg-[#6A00FF] text-white"
                         >
                             Import CSV
                         </button>

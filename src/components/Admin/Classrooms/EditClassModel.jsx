@@ -360,7 +360,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
 
         <div className="flex flex-col gap-2 mt-4 w-full">
           <button
-            className="px-6 py-2 rounded-lg bg-red text-white"
+            className="px-6 py-2 rounded-lg bg-[#6A00FF] text-white"
             onClick={() => setopen(false)}
           >
             Cancel

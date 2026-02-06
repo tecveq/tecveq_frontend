@@ -12,7 +12,7 @@ const TotalUsers = () => {
 
                 <div className='h-full md:h-full w-full md:w-full flex-1 relative flex justify-center items-center'>
                     <Circle percent={value< 100 ? value : (value/1000)*100}
-                        strokeColor="#E0ADB1"
+                        strokeColor="#6A00FF"
                         strokeWidth={9}
                         trailColor='#EAECF0'
                         trailWidth={9}

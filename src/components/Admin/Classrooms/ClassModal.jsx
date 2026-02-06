@@ -280,7 +280,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
                     onChange={handleMultiSelectTeachersChange}
                   />
                   {newSelectedTeachers.length > 0 && (
-                    <div className="flex justify-end py-2 text-xs text-maroon">
+                    <div className="flex justify-end py-2 text-xs text-[#6A00FF]">
                       <p>Teachers Selected: {newSelectedTeachers.length}</p>
                     </div>
                   )}
@@ -288,7 +288,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
               </div>
             )}
 
-            {newSelectedTeachers && newSelectedTeachers.map((teacher) => (
+            {newSelectedTeachers && newSelectedTeachers?.map((teacher) => (
               <div key={teacher._id} className="mb-4 border-b pb-2">
                 <p className="font-semibold text-sm mb-2">{teacher.name} 📚</p>
 
@@ -321,7 +321,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
                     onChange={handleMultiSelectStudentsChange}
                   />
                   {newSelectedStudents.length > 0 && (
-                    <div className="flex justify-end py-2 text-xs text-maroon">
+                    <div className="flex justify-end py-2 text-xs text-[#6A00FF]">
                       <p>Students Selected: {newSelectedStudents.length}</p>
                     </div>
                   )}
@@ -337,7 +337,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch, editData }) => {
                   onClick={() => {
                     handleCreateClass();
                   }}
-                  className="flex items-center justify-center w-full py-3 text-center rounded-md cursor-pointer bg-gradient-to-r from-maroon to-maroon/70 hover:from-maroon/60 hover:to-maroon/50 transition duration-200"
+                  className="flex items-center justify-center w-full py-3 text-center rounded-md cursor-pointer bg-gradient-to-r from-[#6A00FF] to-[#6A00FF]/70 hover:from-[#6A00FF]/60 hover:to-[#6A00FF]/50 transition duration-200"
                 >
                   <p className="text-sm text-white font-semibold">{isEditTrue ? "🔄 Update" : "✨ Create"}</p>
                 </div>

@@ -52,7 +52,7 @@ const ChildrenScreen = () => {
                     <img src={logo} alt="" className='w-32 h-32 object-contain' />
                 </div>
                 <div className='flex flex-col items-center gap-4 flex-1'>
-                    <p className='font-semibold text-3xl text-maroon font-poppins'>Select a Child Profile</p>
+                    <p className='font-semibold text-3xl text-[#0B1053] font-poppins'>Select a Child Profile</p>
                     <div className='flex gap-8 '>
                         {data.map((item) =>(
                             <Card active={child1} data={item} onpress={() => child1Click(item)} />

@@ -79,11 +79,11 @@ const Notifications = ({ onclose, dashboard }) => {
               >
                 {/* Announcement Header */}
                 <div
-                  className="p-5 cursor-pointer flex justify-between items-center hover:bg-gray-50 transition-colors duration-200" // Header styles
+                  className="p-5 cursor-pointer flex flex-col justify-between items-center hover:bg-gray-50 transition-colors duration-200" // Header styles
                   onClick={() => handleToggleDetails(announcement._id)}
                 >
                   <div>
-                    <p className="text-xs font-medium text-indigo-600 uppercase tracking-wide">{announcement.type}</p>
+                    <p className="text-xs text-center font-medium text-indigo-600 uppercase tracking-wide">{announcement.type}</p>
                     <h3 className="text-xl font-semibold text-gray-900 mt-1">{announcement.title}</h3>
                   </div>
                   <p className="text-sm text-gray-500 whitespace-nowrap">{new Date(announcement.date).toLocaleString()}</p>
@@ -113,14 +113,14 @@ const Notifications = ({ onclose, dashboard }) => {
           {/* Toggle Buttons */}
           <div className="p-3 border-2 border-black/10 rounded-2xl">
             <button
-              className={`px-3 py-1 ${activeTab === "notification" ? "bg-maroon text-white rounded-3xl" : "bg-gray-200"
+              className={`px-3 py-1 ${activeTab === "notification" ? "bg-[#0B1053] text-white rounded-3xl" : "bg-gray-200"
                 }`}
               onClick={() => setActiveTab("notification")}
             >
               Notification
             </button>
             <button
-              className={`px-3 py-1 ${activeTab === "announcement" ? "bg-maroon text-white rounded-3xl" : "bg-gray-200"
+              className={`px-3 py-1 ${activeTab === "announcement" ? "bg-[#0B1053] text-white rounded-3xl" : "bg-gray-200"
                 }`}
               onClick={() => setActiveTab("announcement")}
             >

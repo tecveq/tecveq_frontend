@@ -100,7 +100,7 @@ const FilterClassesModal = ({ addModalOpen, setAddModalOpen, classData, isPendin
         return (
           <div
             key={formattedDate}
-            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-yellow_green_light w-10 h-10 text-white rounded-full" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
+            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-[#6A00FF] w-10 h-10 text-white rounded-full" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
             onClick={() => {
               setSelectedDate(day);
               setDateForEvent(formattedDate);
@@ -109,23 +109,23 @@ const FilterClassesModal = ({ addModalOpen, setAddModalOpen, classData, isPendin
           >
             <div
               className={`flex flex-col w-10 h-10 items-center px-5 py-1 rounded-full ${!filterActive && selectedDateFromChild == formattedDate
-                ? "bg-maroon text-white"
+                ? "bg-[#6A00FF] text-white"
                 : ""
                 } ${filterActive &&
                   (new Date(formattedDate).toDateString() ===
                     new Date(filterStartDate).toDateString() ||
                     new Date(formattedDate).toDateString() ===
                     new Date(filterEndDate).toDateString())
-                  ? "bg-maroon text-white"
+                  ? "bg-[#6A00FF] text-white"
                   : ""
-                } group hover:bg-maroon hover:text-white`}
+                } group hover:bg-[#6A00FF] hover:text-white`}
             >
               <div className="text-sm">{day.format("D")}</div>
 
               {eventsForDay.length > 0 && (
                 <GoDotFill
                   size={10}
-                  className="text-maroon group-hover:text-white"
+                  className="text-[#6A00FF] group-hover:text-white"
                 />
               )}
             </div>
@@ -180,7 +180,7 @@ const FilterClassesModal = ({ addModalOpen, setAddModalOpen, classData, isPendin
       <div className="flex-1 mx-1 my-1">
         <div
           onClick={clickHandler}
-          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-maroon" : "bg-white"
+          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-[#6A00FF]" : "bg-white"
             }`}
         >
           <p className={`${color == "white" ? "text-white" : "text-black"}`}>

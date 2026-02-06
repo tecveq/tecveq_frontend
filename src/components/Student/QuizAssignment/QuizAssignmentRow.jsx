@@ -125,7 +125,7 @@ const QuizAssignmentRow = (props) => {
                                     <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
                                         {quizAssignmentMutation.isPending && <div><Loader /></div>}
                                         {!quizAssignmentMutation.isPending &&
-                                            <label htmlFor={`upload-${props.id}`} className='bg-[#A41D30] cursor-pointer rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
+                                            <label htmlFor={`upload-${props.id}`} className='bg-[#0B1053] cursor-pointer rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
                                                 Upload
                                                 <input id={`upload-${props.id}`} onChange={handleFileChange} type="file" className='hidden' />
                                             </label>
@@ -167,12 +167,12 @@ const QuizAssignmentRow = (props) => {
                         !isUploaded ? (
                             <div className='flex flex-row items-center justify-end'>
                                 {timePassed ? (
-                                    <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
+                                    <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#0B1053] md:text-[10px] text-[8px]'>
                                         Time Up!
                                     </div>
                                 ) : (
                                     <div className='flex flex-row items-center justify-end'>
-                                        <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#A41D30] md:text-[10px] text-[8px]'>
+                                        <div className='bg-[#A41D30]/10 rounded-xl flex items-center justify-center py-1 px-2 text-[#0B1053] md:text-[10px] text-[8px]'>
                                             {timeLeft}
                                         </div>
                                     </div>

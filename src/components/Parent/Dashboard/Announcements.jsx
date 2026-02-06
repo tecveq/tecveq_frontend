@@ -36,7 +36,7 @@ const Announcements = () => {
       <div className="flex">
         <p className="flex text-lg font-medium">Announcemnets</p>
       </div>
-      <div className="flex flex-col flex-1 px-6 py-4 bg-white border-t-4 rounded-lg border-t-maroon">
+      <div className="flex flex-col flex-1 px-6 py-4 bg-white border-t-4 rounded-lg border-t-[#007EEA]">
         {data.map((item) =>{
             return(
                 <Announcement item={item} />

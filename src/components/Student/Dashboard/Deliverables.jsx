@@ -69,7 +69,7 @@ const Deliverables = () => {
             </div>
             <div className="flex justify-end">
               <div>
-                <p className="px-3 py-1 text-white bg-maroon rounded-3xl" style={{ fontSize: 8 }}>{item.subjectID.name}</p>
+                <p className="px-3 py-1 text-white bg-[#0B1053] rounded-3xl" style={{ fontSize: 8 }}>{item.subjectID.name}</p>
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@ const Deliverables = () => {
           </div>
         )}
         {(!quizIsPending && !assignmentIsPending) && (
-          <div className="flex flex-col gap-1 px-4 py-4 bg-white overflow-y-auto register-scrollbar border-t-4 h-72 rounded-xl border-t-maroon">
+          <div className="flex flex-col gap-1 px-4 py-4 bg-white overflow-y-auto register-scrollbar border-t-4 h-72 rounded-xl border-t-[#0B1053]">
             {allDeliverables.length > 0 ? (
               allDeliverables.map((item) => <Deliverable item={item} key={item._id} />)
             ) : (

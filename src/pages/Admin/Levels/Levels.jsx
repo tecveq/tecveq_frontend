@@ -76,7 +76,7 @@ const Levels = () => {
                                                         onChange={(e) => setSearchText(e.target.value)}
                                                     />
                                                 </div>
-                                                <p onClick={onAddLevel} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-maroon rounded-3xl">
+                                                <p onClick={onAddLevel} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-[#6A00FF] rounded-3xl">
                                                     Add Level
                                                 </p>
                                             </div>

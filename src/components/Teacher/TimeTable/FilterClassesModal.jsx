@@ -49,7 +49,7 @@ const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPen
           <div className="flex flex-col justify-between">
             <div className="flex justify-between">
               <p className="text-sm font-semibold">{item.subjectID.name}</p>
-              <p className="text-maroon">Class {item.classroom.name}</p>
+              <p className="text-[#0B1053]">Class {item.classroom.name}</p>
             </div>
             <div className="flex gap-2 text-xs font-light">
               <p className="flex items-center gap-1">
@@ -113,23 +113,23 @@ const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPen
           >
             <div
               className={`flex flex-col w-10 h-10 items-center px-5 py-1 rounded-full ${!filterActive && selectedDateFromChild == formattedDate
-                ? "bg-maroon text-white"
+                ? "bg-[#0B1053] text-white"
                 : ""
                 } ${filterActive &&
                   (new Date(formattedDate).toDateString() ===
                     new Date(filterStartDate).toDateString() ||
                     new Date(formattedDate).toDateString() ===
                     new Date(filterEndDate).toDateString())
-                  ? "bg-maroon text-white"
+                  ? "bg-[#0B1053] text-white"
                   : ""
-                } group hover:bg-maroon hover:text-white`}
+                } group hover:bg-[#0B1053] hover:text-white`}
             >
               <div className="text-sm">{day.format("D")}</div>
 
               {eventsForDay.length > 0 && (
                 <GoDotFill
                   size={10}
-                  className="text-maroon group-hover:text-white"
+                  className="text-[#0B1053] group-hover:text-white"
                 />
               )}
             </div>
@@ -183,7 +183,7 @@ const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPen
       <div className="flex-1 mx-1 my-1">
         <div
           onClick={clickHandler}
-          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-maroon" : "bg-white"
+          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-[#0B1053]" : "bg-white"
             }`}
         >
           <p className={`${color == "white" ? "text-white" : "text-black"}`}>

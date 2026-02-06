@@ -76,7 +76,7 @@ const AddCSVFileComponent = () => {
             <div>
                 <button
                     onClick={handleDownloadAll}
-                    className="w-full flex items-center justify-center gap-2 bg-green/60 hover:bg-green/40 text-white py-2 rounded-md font-medium transition mb-4"
+                    className="w-full flex items-center justify-center gap-2 bg-[#6A00FF] hover:bg-[#6A00FF]/40 text-white py-2 rounded-md font-medium transition mb-4"
                 >
                     <Download className="w-5 h-5" />
                     Download All CSV Files
@@ -122,14 +122,14 @@ const AddCSVFileComponent = () => {
                         {/* Submit Button */}
                         {
                             isLoading ? (
-                                <button type="submit" disabled className="w-full flex items-center justify-center gap-2 bg-red/70 hover:bg-red/30 text-white py-2 rounded-md font-medium transition">
+                                <button type="submit" disabled className="w-full flex items-center justify-center gap-2 [#6A00FF]/70 hover:bg-red/30 text-white py-2 rounded-md font-medium transition">
                                     <span className="spinner-border spinner-border-sm text-white mr-2" role="status" aria-hidden="true" />
                                     Uploading...
                                 </button>
                             ) : (
                                 <button
                                     type="submit"
-                                    className="w-full bg-red/70 hover:bg-red/30 text-white py-2 rounded-md font-medium transition"
+                                    className="w-full bg-[#6A00FF]/70 hover:[#6A00FF]]/30 text-white py-2 rounded-md font-medium transition"
                                 >
                                     Upload File
                                 </button>

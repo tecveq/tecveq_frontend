@@ -128,7 +128,7 @@ const Navbar = ({ heading }) => {
         <div className="flex items-center  gap-2">
           <div className="flex gap-4">
             <div
-              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-maroon text-white" : ""
+              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-[#0B1053] text-white" : ""
                 }`}
               onClick={toggleMail}
             >

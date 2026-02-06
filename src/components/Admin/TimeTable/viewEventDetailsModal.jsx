@@ -234,8 +234,8 @@ export default function ViewEventDetailsModal({
                   console.log("Edit button clicked, current isEditMode:", isEditMode);
                   setIsEditMode(!isEditMode);
                 }}
-                className="px-4 py-2 text-sm font-medium bg-maroon text-white rounded-lg hover:bg-red-700 transition-colors shadow-sm border"
-                style={{ backgroundColor: '#800000', color: 'white' }}
+                className="px-4 py-2 text-sm font-medium bg-[#0B1053] text-white rounded-lg hover:bg-[#007EEA] transition-colors shadow-sm border"
+                style={{  color: 'white' }}
               >
                 {isEditMode ? "Cancel Edit" : "Edit Class"}
               </button>
@@ -396,7 +396,7 @@ export default function ViewEventDetailsModal({
                       type="checkbox"
                       checked={eventType}
                       onChange={() => setEventType(!eventType)}
-                      className="w-4 h-4 text-maroon bg-gray-100 border-gray-300 rounded focus:ring-maroon focus:ring-2"
+                      className="w-4 h-4 text-[#0B1053] bg-gray-100 border-gray-300 rounded focus:ring-[#0B1053] focus:ring-2"
                     />
                     <span className="text-sm text-gray-700">Update all Future Events</span>
                   </div>
@@ -412,7 +412,7 @@ export default function ViewEventDetailsModal({
                 rel="noopener noreferrer"
                 className="w-full"
               >
-                <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#800000] hover:bg-[#a10000] transition-colors duration-200">
+                <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#0B1053] hover:bg-[#007EEA] transition-colors duration-200">
                   <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
                   <p className="text-sm text-white">Join Meeting</p>
                 </div>
@@ -429,7 +429,7 @@ export default function ViewEventDetailsModal({
               <div className="flex items-center gap-3 w-full mt-6">
                 <button
                   onClick={handleUpdateClass}
-                  className="flex items-center justify-center w-full py-3 text-center rounded-lg bg-[#800000] text-white font-medium hover:bg-[#a10000] transition-colors shadow-md"
+                  className="flex items-center justify-center w-full py-3 text-center rounded-lg bg-[#0B1053] text-white font-medium hover:bg-[#0B1053] transition-colors shadow-md"
                 >
                   Save Changes
                 </button>
@@ -439,9 +439,9 @@ export default function ViewEventDetailsModal({
             {!loading && !isEditMode && (
               <div
                 onClick={handleCancelMeeting}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md border-[maroon] border cursor-pointer hover:bg-red-50 transition-colors"
+                className="flex items-center justify-center w-full py-2 text-center rounded-md border-[#0B1053] border cursor-pointer hover:bg-red-50 transition-colors"
               >
-                <p className="text-sm text-maroon">Cancel Class</p>
+                <p className="text-sm text-[#0B1053]">Cancel Class</p>
               </div>
             )}
           </div>

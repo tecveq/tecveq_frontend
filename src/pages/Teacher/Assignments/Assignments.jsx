@@ -72,7 +72,7 @@ const Assignments = () => {
                 <div className={`px-3`}>
                   <div className="flex justify-end my-2">
                     <div
-                      className="flex cursor-pointer bg-maroon rounded-3xl"
+                      className="flex cursor-pointer bg-[#0B1053] rounded-3xl"
                       onClick={() => {
                         setCreateModalOpen(true);
                         toggleBlur();

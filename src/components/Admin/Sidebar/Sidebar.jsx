@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { IoIosLogOut } from "react-icons/io";
+
+
 import Custombutton from "./Custombutton";
 import logo from "../../../assets/logo.png";
+import IMAGES from '../../../assets/images';
+
 import { useNavigate } from "react-router-dom";
 import { adminLogout } from "../../../api/Admin/AdminApi";
 import Loader from "../../../utils/Loader";
 import { useAdmin } from "../../../context/AdminContext";
 import { useSidebar } from "../../../context/SidebarContext";
+import { useUser } from "../../../context/UserContext";
+
+
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -42,21 +49,26 @@ const Sidebar = () => {
     { key: "dashboard", title: "Dashboard", icon: "home", route: "/admin/dashboard" },
     { key: "timetable", title: "Time Table", icon: "time", route: "/admin/timetable" },
     { key: "reports", title: "Student", icon: "graph", route: "/admin/reports" },
-    { key: "teachers", title: "Teachers", icon: "book", route: "/admin/teachers" },
-    { key: "announcements", title: "Announcements", icon: "quiz", route: "/admin/announcements" },
-    { key: "manageUsers", title: "Manage Users", icon: "quiz", route: "/admin/manageusers" },
-    { key: "levels", title: "Levels", icon: "quiz", route: "/admin/levels" },
-    { key: "attendence-reprt", title: "Attendence Report", icon: "quiz", route: "/admin/attendence-report" },
+    { key: "teachers", title: "Teachers", icon: "teachers", route: "/admin/teachers" },
+    { key: "announcements", title: "Announcements", icon: "announcement", route: "/admin/announcements" },
+    { key: "manageUsers", title: "Manage Users", icon: "manageUsers", route: "/admin/manageusers" },
+    { key: "levels", title: "Levels", icon: "levels", route: "/admin/levels" },
+    { key: "attendence-reprt", title: "Attendence Report", icon: "attendence-reprt", route: "/admin/attendence-report" },
 
-    { key: "subjects", title: "Subjects", icon: "quiz", route: "/admin/subjects" },
-    { key: "classroom", title: "Classroom", icon: "quiz", route: "/admin/classrooms" },
+    { key: "subjects", title: "Subjects", icon: "subjects", route: "/admin/subjects" },
+    { key: "classroom", title: "Classroom", icon: "classroom", route: "/admin/classrooms" },
     { key: "settings", title: "Settings", icon: "setting", route: "/admin/settings" }
   ];
 
+  const { userData } = useUser();
+  if (userData?.userType === 'super_admin') {
+    menuItems.unshift({ key: "superAdminDashboard", title: "Super Admin", icon: "home", route: "/superadmin/dashboard" });
+  }
+
   const Menubar = () => (
-    <div className="w-72 shadow-lg bg-white z-50 md:h-screen px-8 py-5 overflow-y-auto custom-scrollbar">
-      <div className="flex justify-center">
-        <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
+    <div className="w-72 shadow-lg bg-[#0B1053] z-50 md:h-screen px-8 py-5 overflow-y-auto custom-scrollbar">
+      <div className="flex justify-start ">
+        <img className="w-5/12 h-5/12" src={IMAGES?.logo} alt="logo-TCA" />
       </div>
       <div className="flex flex-col gap-1 py-2 border-b border-b-black">
         {menuItems.map(({ key, title, icon, route }) => (
@@ -74,7 +86,7 @@ const Sidebar = () => {
       ) : (
         <div
           onClick={handleLogoutClick}
-          className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-maroon"
+          className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-[#6A00FF]"
         >
           <IoIosLogOut />
           <p>Logout</p>
@@ -89,7 +101,7 @@ const Sidebar = () => {
         setIsopen(!isopen)
         setIsSidebarOpen(!isSidebarOpen)
       }}>
-        <div className="flex justify-center bg-maroon w-9 h-fit">
+        <div className="flex justify-center bg-[#0B1053] w-9 h-fit">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
             <p className="w-6 bg-white h-0.5"></p>

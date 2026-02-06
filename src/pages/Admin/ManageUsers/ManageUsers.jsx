@@ -144,8 +144,8 @@ const ManageUsers = () => {
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <p onClick={toggleRequestModal} className={`cursor-pointer flex py-2 px-4 rounded-3xl bg-maroon/10 text-maroon text-sm  items-center justify-center gap-2`}>Requests <span className="text-xs px-2 py-1 bg-tea text-maroon rounded-3xl">{requestCount}</span> </p>
-                        <p onClick={toggleAddUserModal} className={`cursor-pointer flex py-2 px-4 rounded-3xl bg-maroon text-white text-sm `}>Add User</p>
+                        <p onClick={toggleRequestModal} className={`cursor-pointer flex py-2 px-4 rounded-3xl bg-[#cccffa] text-[#0B1053] text-sm  items-center justify-center gap-2`}>Requests <span className="text-xs px-2 py-1 bg-[#a5aaf3] text-[#0B1053] rounded-3xl">{requestCount}</span> </p>
+                        <p onClick={toggleAddUserModal} className={`cursor-pointer flex py-2 px-4 rounded-3xl bg-[#6A00FF] text-white text-sm `}>Add User</p>
                       </div>
 
                     </div>

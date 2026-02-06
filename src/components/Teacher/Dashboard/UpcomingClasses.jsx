@@ -108,7 +108,7 @@ const UpcomingClasses = () => {
     return (
       <div
         className={`flex flex-col  w-full text-xs border-l-2 gap-1 ${item.subject == "Physics"
-          ? "border-l-maroon bg-maroon_100"
+          ? "border-l-[#0B1053] bg-maroon_100"
           : item.subjectID.name == "AI"
             ? "border-l-orange bg-orange_light"
             : item.subject == "Biology"
@@ -126,11 +126,11 @@ const UpcomingClasses = () => {
 
         {item?.status ? (
           <div className="flex items-center justify-between">
-            <p className="text-maroon">class has started...</p>
+            <p className="text-[#0B1053]">class has started...</p>
             <div>
               <div
                 onClick={handleJoinClass}
-                className="flex items-center justify-center px-2 py-1 text-center cursor-pointer bg-maroon rounded-3xl"
+                className="flex items-center justify-center px-2 py-1 text-center cursor-pointer bg-[#0B1053] rounded-3xl"
               >
                 <img src={meet} alt="" className="w-8 h-3" />
                 <p className="text-white " style={{ fontSize: 8 }}>
@@ -189,7 +189,7 @@ const UpcomingClasses = () => {
         return (
           <div
             key={formattedDate}
-            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-grey/15 rounded-full text-maroon h-10 w-10" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
+            className={`text-center text-[12px] cursor-pointer hover:bg-gray-200 ${isToday ? "bg-grey/15 rounded-full text-[#0B1053] h-10 w-10" : "text-black"} ${!isCurrentMonth ? "text-gray-400" : ""}`}
             onClick={() => {
               setSelectedDate(day);
               setDateForEvent(formattedDate);
@@ -198,23 +198,23 @@ const UpcomingClasses = () => {
           >
             <div
               className={`flex flex-col w-10 h-10 items-center px-5 py-1 rounded-full ${!filterActive && selectedDateFromChild == formattedDate
-                ? "bg-maroon text-white"
+                ? "bg-[#0B1053] text-white"
                 : ""
                 } ${filterActive &&
                   (new Date(formattedDate).toDateString() ===
                     new Date(filterStartDate).toDateString() ||
                     new Date(formattedDate).toDateString() ===
                     new Date(filterEndDate).toDateString())
-                  ? "bg-maroon text-white"
+                  ? "bg-[#0B1053] text-white"
                   : ""
-                } group hover:bg-maroon hover:text-white`}
+                } group hover:bg-[#0B1053] hover:text-white`}
             >
               <div className="text-sm">{day.format("D")}</div>
 
               {eventsForDay.length > 0 && (
                 <GoDotFill
                   size={10}
-                  className="text-maroon group-hover:text-white"
+                  className="text-[#0B1053] group-hover:text-white"
                 />
               )}
             </div>

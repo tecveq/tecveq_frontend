@@ -141,7 +141,7 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
                   ))}
                 </select>
               </div>
-              {errormsg && <p className="text-maroon text-sm self-center">Level is required!</p>}
+              {errormsg && <p className="text-[#6A00FF] text-sm self-center">Level is required!</p>}
             </div>
           </div>
 
@@ -152,7 +152,7 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
               onClick={() => {
                 handleAddSubject();
               }}
-              className="flex items-center justify-center w-1/2 py-2 text-center rounded-3xl cursor-pointer bg-maroon"
+              className="flex items-center justify-center w-1/2 py-2 text-center rounded-3xl cursor-pointer bg-[#6A00FF]"
             >
               <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
             </div>

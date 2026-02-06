@@ -111,7 +111,7 @@ const ProfileDetails = ({ onClose }) => {
               <FiEdit className="cursor-pointer " onClick={() => setIsEditing(true)} />
             </div>
           ) : (
-            <button onClick={() => updateUserMutation.mutate(userDataObj)} className="px-8 py-2 text-white bg-maroon rounded-md">
+            <button onClick={() => updateUserMutation.mutate(userDataObj)} className="px-8 py-2 text-white bg-[#0B1053] rounded-md">
               {updateUserMutation.isPending ? <Loader /> : "Save"}
             </button>
           )}

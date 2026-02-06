@@ -141,20 +141,21 @@ const SignUp = () => {
 
   return (
     <div
-      className="flex min-h-screen w-full flex-col md:flex-row flex-1 bg-hero-pattern"
-      style={{
-        background:
-          'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)',
-      }}
+      className="flex min-h-screen w-full flex-col md:flex-row flex-1 bg-[#0B1053]"
+      // style={{
+      //   background:
+      //     'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)',
+      // }}
     >
       <div className=" bg-cover bg-hero-pattern absolute w-60 h-60 lg:w-72 lg:h-72 2xl:h-96 2xl:w-96"></div>
       <div className="flex flex-[4] lg:flex-1 px-4 py-10 md:py-0 md:px-10 items-center justify-center">
         <div className="flex flex-col flex-1">
-          <div className="flex w-full items-center justify-center 2xl:items-center md:items-end md:justify-end 2xl:justify-center flex-[2] flex-col">
-            <img src={IMAGES.logo} alt="" className="w-60 h-44 2xl:w-96 2xl:h-64 bg-cover" />
-          </div>
-          <div className="flex items-end justify-center md:items-end md:justify-end flex-1 ">
-            <img src={IMAGES.register_girl} alt="" className="w-72 h-52 2xl:w-4/5 2xl:h-96 bg-contain" />
+          {/* <div className="flex w-full items-center justify-center 2xl:items-center md:items-end md:justify-end 2xl:justify-center flex-[2] flex-col">
+            <img src={IMAGES.logo} alt="" className="w-60 h-44 lg:auto lg:h-auto bg-cover" />
+          </div> */}
+          <div className="flex justify-center items-center  flex-1 flex-col ">
+            <img src={IMAGES.register_girl} alt="" className="w-72 h-52 lg:auto lg:auto  bg-contain" />
+            <p className='text-white text-md '>Technology with Vision, Excellence & Quality</p>
           </div>
         </div>
       </div>
@@ -210,7 +211,7 @@ const SignUp = () => {
                   ) : (
                     <button
                       type="submit"
-                      className="flex bg-maroon text-white rounded-md py-2 px-4 justify-center items-center text-center cursor-pointer hover:bg-maroon/90"
+                      className="flex bg-[#6A00FF] text-white rounded-md py-2 px-4 justify-center items-center text-center cursor-pointer hover:bg-[#007EEA]"
                     >
                       Sign up
                     </button>

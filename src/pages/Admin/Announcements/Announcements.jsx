@@ -109,8 +109,8 @@ const Announcements = () => {
                             <div className='flex flex-col gap-4 flex-1'>
                                 <div className='flex justify-between flex-wrap space-y-5 lg:space-y-0  items-center'>
                                     <div className='flex gap-2'>
-                                        <p onClick={announceClick} className={`cursor-pointer py-2 font-medium px-2 ${annouce ? "border-b-2 border-maroon" : "text-black/50"} `}>Announcements</p>
-                                        <p onClick={quoteClick} className={`cursor-pointer py-2 font-medium px-2 ${annouce ? "text-black/50" : "border-b-2 border-maroon"} `}>Motivational Quotes</p>
+                                        <p onClick={announceClick} className={`cursor-pointer py-2 font-medium px-2 ${annouce ? "border-b-2 border-[#6A00FF]" : "text-black/50"} `}>Announcements</p>
+                                        <p onClick={quoteClick} className={`cursor-pointer py-2 font-medium px-2 ${annouce ? "text-black/50" : "border-b-2 border-[#6A00FF]"} `}>Motivational Quotes</p>
                                     </div>
                                     <div className='flex gap-2 text-sm mb-5'>
                                         <div className='flex gap-2 border bg-white border-black/20 rounded-3xl py-1 px-2 items-center '>
@@ -126,7 +126,7 @@ const Announcements = () => {
 
                                         </div>
                                         <div>
-                                            <p onClick={() => { annouce ? toggleCreateAssignmentModal() : toggleQuoteModal() }} className='cursor-pointer px-6 py-2 rounded-3xl bg-maroon text-white items-center flex justify-center'>Create</p>
+                                            <p onClick={() => { annouce ? toggleCreateAssignmentModal() : toggleQuoteModal() }} className='cursor-pointer px-6 py-2 rounded-3xl bg-[#6A00FF] text-white items-center flex justify-center'>Create</p>
                                         </div>
                                     </div>
                                 </div>

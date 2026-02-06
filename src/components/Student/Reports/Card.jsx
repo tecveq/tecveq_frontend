@@ -7,7 +7,7 @@ const Card = (props) => {
             
             <div className='h-[70px] md:h-[100px] w-[70px] md:w-[100px] relative flex justify-center items-center'>
                 <Circle percent={props.percentage}
-                    strokeColor="#E0ADB1"
+                    strokeColor="#0B1053"
                     strokeWidth={9}
                     trailColor='#EAECF0'
                     trailWidth={9}

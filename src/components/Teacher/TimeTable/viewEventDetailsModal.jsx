@@ -433,7 +433,7 @@ export default function ViewEventDetailsModal({
                  rel="noopener noreferrer"
                  className="w-full"
                >
-                 <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#800000] hover:bg-[#a10000] transition-colors duration-200">
+                 <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#0B1053] hover:bg-[#0B1053] transition-colors duration-200">
                    <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
                    <p className="text-sm text-white">Join Meeting</p>
                  </div>
@@ -447,9 +447,9 @@ export default function ViewEventDetailsModal({
             <div className="flex items-center gap-3">
               <div
                 onClick={handleUpdateClass}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md border border-maroon"
+                className="flex items-center justify-center w-full py-2 text-center rounded-md border border-[#0B1053]"
               >
-                <p className="text-sm text-maroon">Save Changes</p>
+                <p className="text-sm text-[#0B1053]">Save Changes</p>
               </div>
             </div>
           }
@@ -458,9 +458,9 @@ export default function ViewEventDetailsModal({
             <div className="flex items-center gap-3">
               <div
                 onClick={handleCancelMeeting}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md border border-maroon"
+                className="flex items-center justify-center w-full py-2 text-center rounded-md border border-[#0B1053]"
               >
-                <p className="text-sm text-maroon">Cancel Meeting</p>
+                <p className="text-sm text-[#0B1053]">Cancel Meeting</p>
               </div>
             </div>
           }

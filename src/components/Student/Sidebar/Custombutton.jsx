@@ -12,22 +12,23 @@ const Custombutton = ({ title, active, onpress, icon }) => {
         onClick={() => {
           onpress();
         }}
-        className={`flex items-center justify-start gap-4 text-lg px-3 w-56 py-2  rounded-md cursor-pointer ${
-          active ? "bg-maroon_100" : "transparent"
+        className={`flex items-center  justify-start gap-4 text-lg px-3 w-56 py-2  rounded-md cursor-pointer ${
+          active ? "bg-white opacity-90" : "transparent"
         }`}
       >
+        
         {icon == "home" ? (
-          <GoHome color={`${active ? "maroon" : "#919191"}`} />
+          <GoHome color={`${active ? "#0B1053" : "white"}`} />
         ) : icon == "time" ? (
-          <CiCalendarDate color={`${active ? "maroon" : "#919191"}`} />
+          <CiCalendarDate color={`${active ? "#0B1053" : "white"}`} />
         ) : icon == "graph" ? (
-          <VscGraph color={`${active ? "maroon" : "#919191"}`} />
+          <VscGraph color={`${active ? "#0B1053" : "white"}`} />
         ) : icon == "book" ? (
-          <BiBookContent color={`${active ? "maroon" : "#919191"}`} />
+          <BiBookContent color={`${active ? "#0B1053" : "white"}`} />
         ) : (
-          (icon = "quiz" ? <LuCalendar color={`${active ? "maroon" : "#919191"}`} /> : "")
+          (icon = "quiz" ? <LuCalendar color={`${active ? "#0B1053" : "white"}`} /> : "")
         )}
-        <p className={`${active ? "text-maroon" : "text-grey"}`}>{title}</p>
+        <p className={`${active ? "text-[#0B1053]" : "text-white"}`}>{title}</p>
       </div>
     </div>
   );

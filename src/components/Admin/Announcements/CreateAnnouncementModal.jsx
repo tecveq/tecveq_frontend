@@ -174,7 +174,7 @@ const CreateAnnouncementModal = ({
                         <div className="w-32">
                             <div
                                 onClick={() => { mutation.mutate() }}
-                                className="flex items-center justify-center w-full py-2 text-center rounded-3xl cursor-pointer bg-maroon"
+                                className="flex items-center justify-center w-full py-2 text-center rounded-3xl cursor-pointer bg-[#6A00FF]"
                             >
                                 <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
                             </div>

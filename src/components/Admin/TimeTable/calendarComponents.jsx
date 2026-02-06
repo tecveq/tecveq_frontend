@@ -29,7 +29,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
       />
 
       <div
-        className="cursor-pointer rounded-lg w-full min-w-[120px] transition-all duration-200 hover:shadow-md bg-[#ffe4e6] text-maroon border-2 border-[#ffb3ba] mb-1"
+        className="cursor-pointer rounded-lg w-full min-w-[120px] transition-all duration-200 hover:shadow-md bg-[#007EEA] text-[#0B1053] border-2 border-[#0B1053] mb-1"
         style={{ height: `${eventHeight - 4}px`, minHeight: `${eventHeight - 4}px` }}
         onClick={() => {
           console.log("Admin event clicked:", event);
@@ -120,7 +120,7 @@ export const Header = (props) => {
   return (
     <div
       className={`flex flex-col items-center justify-between flex-1 w-full font-normal h-fit ${currentDate === date && currentMonth === month
-        ? "text-maroon"
+        ? "text-[#6A00FF]"
         : "text-grey"
         } `}
     >
@@ -198,7 +198,7 @@ export const CustomToolbar = (props) => {
               <MdKeyboardArrowLeft />
             </button>
 
-            <p className="mx-2 text-2xl lg:text-[16px] font-semibold text-maroon">
+            <p className="mx-2 text-2xl lg:text-[16px] font-semibold text-[#6A00FF]">
               {moment.utc(Date.now()).format("DD MMMM, YYYY")}
               <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>

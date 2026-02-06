@@ -73,6 +73,13 @@ const Login = () => {
                     localStorage.setItem("tcauser", JSON.stringify(response))
                     navigate("/admin/dashboard")
 
+                }
+                else if (response.userType == "super_admin") {
+                    setAdminLogedIn(true);
+                    toast.success("Login successful");
+                    localStorage.setItem("tcauser", JSON.stringify(response))
+                    navigate("/superadmin/dashboard")
+
                 } else if (response.userType == "teacher") {
                     const con = io(`${BACKEND_URL_SOCKET}`)
                     setSocketContext(con);
@@ -88,7 +95,13 @@ const Login = () => {
 
         } catch (error) {
             console.log("error in student login UI screen is : ", error);
-            // toast.error(error.message);
+            if (error.response && error.response.status === 403) {
+                toast.error(error.response.data.message);
+            } else if (error.response && error.response.data && error.response.data.message) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Login failed. Please try again.");
+            }
         }
         setLoading(false);
     }
@@ -98,11 +111,13 @@ const Login = () => {
     }
 
     return (
-        <div className='flex flex-col md:flex-row min-h-screen w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
+        <div className='flex flex-col md:flex-row min-h-screen w-full flex-1 bg-[#0B1053]'
+        // style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}
+        >
             <div className=' bg-cover bg-hero-pattern absolute w-72 h-72' ></div>
             <div className='flex flex-1 px-4 md:px-10 py-10 justify-center'>
                 <div className='flex items-center justify-center'>
-                    <img src={IMAGES.logo} alt="" className='w-72 h-52 bg-cover' />
+                    <img src={IMAGES.logo} alt="" className=' bg-cover' />
                 </div>
             </div>
             <div className='flex flex-1 '>
@@ -139,7 +154,7 @@ const Login = () => {
                                             <div className='flex flex-1' > <Loader /> </div>
                                         </>
                                         : (
-                                            <button type='submit' className='flex bg-maroon text-white rounded-md py-2 px-4 justify-center items-center text-center cursor-pointer hover:bg-maroon/90'>Sign In</button>
+                                            <button type='submit' className='flex bg-[#6A00FF] text-white rounded-md py-2 px-4 justify-center items-center text-center cursor-pointer hover:bg-[#007EEA]'>Sign In</button>
                                         )}
                                     <p className='text-[#000000]/70 text-sm'>Don't have an account? <span onClick={handleGoToSignUp} className='text-[#000000]/50 cursor-pointer hover:text-[#00000090] font-medium underline'>Sign up</span> now</p>
                                 </div>

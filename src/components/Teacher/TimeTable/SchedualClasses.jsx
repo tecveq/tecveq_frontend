@@ -249,7 +249,7 @@ const SchedualClasses = ({ refetch, data, isPending, addScheduleModalOpen, setAd
                       {!classCreateMutate.isPending && (
                         <>
                           <FilterButton text={"Schedual Class"} className={"px-4 text-sm"} clickHandler={() => handleSchedualClass()} />
-                          <FilterButton text={"Cancel"} className={"px-8 text-sm bg-white border !text-maroon"} clickHandler={() => setaddEventModalOpen(false)} />
+                          <FilterButton text={"Cancel"} className={"px-8 text-sm bg-white border !text-[#0B1053]"} clickHandler={() => setaddEventModalOpen(false)} />
                         </>
                       )}
                     </div>
@@ -261,7 +261,7 @@ const SchedualClasses = ({ refetch, data, isPending, addScheduleModalOpen, setAd
                   <div className="flex justify-center my-4">
                     <p
                       onClick={handleSaveDetails}
-                      className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-maroon"
+                      className="flex items-center justify-center w-1/2 px-1 py-2 text-center text-white cursor-pointer rounded-3xl bg-[#0B1053]"
                     >
                       Save
                     </p>

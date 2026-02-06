@@ -118,7 +118,7 @@ const FilterPopup = ({
                 applyFilter();
                 setopen(false);
               }}
-              className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-maroon"
+              className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#0B1053]"
             >
               <p className="text-sm text-white">Apply</p>
             </div>

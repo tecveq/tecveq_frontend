@@ -100,7 +100,7 @@ const LastDeliverables = () => {
   const CustomGradeComponent = () => {
     return (
       <div className="flex flex-col items-center justify-center w-full gap-2 bg-white rounded-md md:px-8 sm:flex-1 md:py-2 md:gap-3">
-        <div className="flex flex-col items-center justify-center w-28 h-28 md:flex-row bg-maroon/10 text-[#555555] rounded-full">
+        <div className="flex flex-col items-center justify-center w-28 h-28 md:flex-row bg-[#bfc3f4] text-[#555555] rounded-full">
           <div className=" flex flex-col items-center ">
             <span className="text-[7px] md:text-[10px]">Average Grade</span>
             <div className="flex">

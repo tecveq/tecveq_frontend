@@ -150,10 +150,10 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
             }}
           >
             <div
-              className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${!filterActive && selectedDateFromChild == formattedDate ? "bg-maroon text-white" : ""
-                } ${filterActive && new Date(formattedDate).toDateString() == new Date(filterStartDate).toDateString() ? "bg-maroon text-white" : ""}
-                ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-maroon text-white" : ""}
-                 text-xs group text-maroon hover:bg-maroon hover:text-white rounded-3xl`}
+              className={`flex flex-col w-10 h-10 items-center px-5 py-1 ${!filterActive && selectedDateFromChild == formattedDate ? "bg-[#d6d8f4] text-white" : ""
+                } ${filterActive && new Date(formattedDate).toDateString() == new Date(filterStartDate).toDateString() ? "bg-[#ced0f3] text-white" : ""}
+                ${filterActive && new Date(formattedDate).toDateString() == new Date(filterEndDate).toDateString() ? "bg-[#ced0f3] text-white" : ""}
+                 text-xs group text-[#0B1053] hover:bg-[#0B1053] hover:text-white rounded-3xl`}
             >
               <div className="text-sm text-black group-focus:text-white group-hover:text-white">
                 {day.format("D")}
@@ -216,7 +216,7 @@ const FilterClassesModal = ({ addModalOpen, setaddModalOpen }) => {
       <div className="flex-1 mx-1 my-1">
         <div
           onClick={clickHandler}
-          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-maroon" : "bg-white"
+          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-[#0B1053]" : "bg-white"
             }`}
         >
           <p className={`${color == "white" ? "text-white" : "text-black"}`}>

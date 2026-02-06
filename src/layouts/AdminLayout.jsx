@@ -7,6 +7,7 @@ const AdminLayout = ({children}) => {
     <div className="flex">
        <div className="fixed flex">
          <Sidebar />
+         
        </div>
        {children}
      </div>

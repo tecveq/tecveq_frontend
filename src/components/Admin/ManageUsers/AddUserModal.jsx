@@ -136,7 +136,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                         className="w-8 h-8 cursor-pointer"
                     />
                 </label>
-                <p className="text-maroon font-medium text-[10px] text-center">Click to Upload <span className='text-black font-normal'>drag and drop you CV</span> </p>
+                <p className="text-[#6A00FF] font-medium text-[10px] text-center">Click to Upload <span className='text-black font-normal'>drag and drop you CV</span> </p>
                 <p className='text-[10px]'>PNG, JPG, Word or PDF</p>
             </div>
         </div>
@@ -330,7 +330,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
                                         <div className='flex flex-1 '> <Loader /> </div>
                                     </>
                                     : (
-                                        <button type='submit' className='flex self-center bg-maroon text-white rounded-3xl py-2 px-4 justify-center items-center w-3/5 text-center cursor-pointer hover:bg-maroon/90'>Add User</button>
+                                        <button type='submit' className='flex self-center bg-[#6A00FF] text-white rounded-3xl py-2 px-4 justify-center items-center w-3/5 text-center cursor-pointer hover:bg-[#6A00FF]/90'>Add User</button>
                                     )}
                             </div>
                         </form>

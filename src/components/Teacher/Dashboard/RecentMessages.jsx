@@ -299,8 +299,8 @@ const RecentMessages = ({ onclose, dashboard }) => {
         <div className="px-10">
           <div className="flex items-center gap-2">
             <input type="text" value={msgstr} onChange={(e) => { setmsgStr(e.target.value) }} onKeyDown={handleKeyDown} placeholder="Message" className="border-black/20 border rounded-lg py-2 px-2 outline-none" />
-            <RiAttachment2 className=" text-maroon cursor-pointer" size={24} />
-            <BsFillSendFill className="bg-maroon text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessage(msgstr); setmsgStr(""); }} />
+            <RiAttachment2 className=" text-[#0B1053] cursor-pointer" size={24} />
+            <BsFillSendFill className="bg-[#0B1053] text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessage(msgstr); setmsgStr(""); }} />
           </div>
         </div>
       </div>
@@ -341,8 +341,8 @@ const RecentMessages = ({ onclose, dashboard }) => {
         <div className="px-10">
           <div className="flex items-center gap-2">
             <input type="text" value={msgstr} onChange={(e) => { setmsgStr(e.target.value) }} onKeyDown={handleKeyDown} placeholder="Message" className="border-black/20 border rounded-lg py-2 px-2 outline-none" />
-            <RiAttachment2 className=" text-maroon cursor-pointer" size={24} />
-            <BsFillSendFill className="bg-maroon text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessageParent(msgstr); setmsgStr(""); }} />
+            <RiAttachment2 className=" text-[#0B1053] cursor-pointer" size={24} />
+            <BsFillSendFill className="bg-[#0B1053] text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessageParent(msgstr); setmsgStr(""); }} />
           </div>
         </div>
       </div>

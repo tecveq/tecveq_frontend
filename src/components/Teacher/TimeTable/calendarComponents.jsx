@@ -37,8 +37,8 @@ export const CustomEvent = ({ event, setevents, refetch }) => {
       />
       <div
         className={`cursor-pointer rounded-lg w-full transition-all duration-200 hover:shadow-md hover:scale-[1.02] mb-1 ${event.teacher
-          ? "bg-gradient-to-br from-[#ffe4e6] to-[#ffd1d8] text-maroon border border-[#ffb3ba] shadow-sm"
-          : "bg-gradient-to-br from-[#ffe4e6] to-[#ffd1d8] text-maroon border border-[#ffb3ba] shadow-sm"
+          ? "bg-gradient-to-br from-[#c5c9fc] to-[#c5c9fc] text-[#0B1053] border border-[#0B1053] shadow-sm"
+          : "bg-gradient-to-br from-[#c5c9fc] to-[#c5c9fc] text-[#0B1053] border border-[#0B1053] shadow-sm"
           }`}
         style={{ height: `${eventHeight - 4}px`, minHeight: `${eventHeight - 4}px` }}
         onClick={() => {
@@ -133,7 +133,7 @@ export const Header = (props) => {
   return (
     <div
       className={`flex flex-col items-center justify-between flex-1 w-full font-normal h-fit ${currentDate === date && currentMonth === month
-        ? "text-maroon"
+        ? "text-[#0B1053]"
         : "text-grey"
         } `}
     >
@@ -205,7 +205,7 @@ export const CustomToolbar = ({
             >
               <MdKeyboardArrowLeft />
             </button>
-            <p className="mx-4 text-2xl lg:text-[16px]  font-semibold text-maroon">
+            <p className="mx-4 text-2xl lg:text-[16px]  font-semibold text-[#0B1053]">
               {moment(Date.now()).format("MMMM DD YYYY")}
               <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>
