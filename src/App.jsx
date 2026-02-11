@@ -111,6 +111,12 @@ function App() {
             <SignUp />
           }
         />
+        <Route
+          path="/"
+          element={
+            <LandingPage />
+          }
+        />
         <Route element={<ProtectedAdmin />} >
           <Route
             path="/admin/dashboard"
@@ -120,6 +126,8 @@ function App() {
               </AdminLayout>
             }
           />
+
+
           <Route
             path="/admin/timetable"
             element={
@@ -240,19 +248,20 @@ function App() {
           />
         </Route>
         <Route element={<ProtectedStudent />} >
-          <Route
-            path="/"
-            element={
-              <StudentLayout>
-                <Dashboard />
-              </StudentLayout>
-            }
-          />
+
           <Route
             path="/reports"
             element={
               <StudentLayout>
                 <Reports />
+              </StudentLayout>
+            }
+          />
+          <Route
+            path="/student/dashboard"
+            element={
+              <StudentLayout>
+                <Dashboard />
               </StudentLayout>
             }
           />

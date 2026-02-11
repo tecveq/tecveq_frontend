@@ -78,7 +78,7 @@ const Login = () => {
                             navigate("/change-password")
                         } else {
                             localStorage.setItem("tcauser", JSON.stringify(response));
-                            navigate("/");
+                            navigate("/student/dashboard");
                         }
 
                         setStudentLogedIn(true);
@@ -90,7 +90,7 @@ const Login = () => {
                     // navigate("/parent/dashboard");
                     setParentLogedIn(true);
                 } else {
-                    navigate("/login")
+                    navigate("/")
                 }
             }
         } catch (error) {
@@ -106,11 +106,11 @@ const Login = () => {
     }
 
     return (
-        <div className='flex min-h-screen flex-col md:flex-row w-full flex-1 bg-hero-pattern' style={{ background: 'linear-gradient(140.21deg, rgba(243, 233, 233, 0.4) -6.93%, rgba(246, 246, 246, 0) 98.1%)' }}>
+        <div className='flex min-h-screen flex-col md:flex-row w-full flex-1 bg-hero-pattern bg-[#0B1053]' >
             <div className=' bg-cover bg-hero-pattern absolute lg:w-72 lg:h-72' ></div>
             <div className='flex flex-1 sm:flex-[4] w-full  px-4 py-10 justify-center'>
                 <div className='flex items-center justify-center'>
-                    <img src={IMAGES.logo} alt="" className='w-full h-32 md:w-60 md:h-40 lg:w-72 lg:h-52 bg-cover' />
+                    <img src={IMAGES.logo} alt="" className='w-full h-32  lg:w-auto lg:h-auto bg-cover' />
                 </div>
             </div>
             <div className='flex flex-1 sm:flex-[6] '>

@@ -201,7 +201,7 @@ export const CustomToolbar = ({
               <MdKeyboardArrowLeft />
             </button>
 
-            <p className="mx-4 text-xl font-semibold text-[#0B1053]">
+            <p className="mx-4 text-xl font-semibold text-[#6A00FF]">
               {moment(Date.now()).format("DD MMMM, YYYY")}
               <span className="ml-2 text-xs font-normal text-grey/70">Today</span>
             </p>

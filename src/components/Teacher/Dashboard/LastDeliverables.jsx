@@ -20,8 +20,8 @@ const LastDeliverables = () => {
             trailColor="#EAECF0"
             trailWidth={12}
           />
-          <div className="absolute flex flex-col items-center">
-            <span className="text-[7px] md:text-[10px]">Submission</span>
+          <div className="absolute flex flex-col items-center z-10">
+            <span className="text-[7px] md:text-[10px] z-10">Submission</span>
             <div className="flex">
               <span className="text-[7px] text-base font-semibold">{((deliverable?.submissions?.length/deliverable?.classroomID?.students?.length)*100).toFixed(0)} %</span>
             </div>

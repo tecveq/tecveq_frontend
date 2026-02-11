@@ -3,8 +3,16 @@ import IMAGES from "../../../assets/images/index";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 const DataRow = (props) => {
+  const [showAdminPopup, setShowAdminPopup] = useState(false);
 
-  useEffect(() => { }, []);
+  // Hide popup automatically after 2 seconds
+  useEffect(() => {
+    if (showAdminPopup) {
+      const timer = setTimeout(() => setShowAdminPopup(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showAdminPopup]);
+
 
 
   return (
@@ -62,20 +70,31 @@ const DataRow = (props) => {
             {props.header ? props.status : props.status ? "Attendance Submitted" : "Not Submitted"}
           </p> */}
         </div>
-        <div className="flex ml-3 mr-2 lg:mr-5 cursor-pointer">
-          <p
-            onClick={() => {
-              props.toggleClassMenu(props);
-            }}
-            className={`w-full my-1 md:my-0 text-center md:text-center md:text-[20px] text-[14px] ${props.header ? "hidden" : ""
-              }`}
-          >
-            <div>
-              {props.threeDots ? <BsThreeDotsVertical /> : ""}
-            </div>
+        <div className="relative ml-3 mr-2 lg:mr-5">
+  <button
+    onClick={() => {
+      if (props.createdBy !== "admin") {
+        props.toggleClassMenu(props);
+      } else {
+        setShowAdminPopup(true);
+      }
+    }}
+    className={`p-1 text-[20px] ${props.header ? "hidden" : ""}`}
+  >
+    {props.threeDots && <BsThreeDotsVertical />}
+  </button>
 
-          </p>
-        </div>
+  {/* Popup for admin warning */}
+{showAdminPopup && (
+  <div
+    className="absolute top-8 right-0 bg-[#dadbf3] text-[#0B1053] text-xs py-2 px-3 rounded shadow-lg z-50 w-48"
+  >
+    You cannot delete admin entries!
+  </div>
+)}
+
+</div>
+
       </div>
     </div>
   );

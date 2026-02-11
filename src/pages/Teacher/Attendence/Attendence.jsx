@@ -115,7 +115,7 @@ const Attendence = () => {
                         {
                           head ? (<>
                             <div
-                              className={`cursor-pointer bg-maroon rounded-3xl`}
+                              className={`cursor-pointer bg-[#6A00FF] rounded-3xl`}
                               onClick={() => {
 
                                 navigate("/teacher/classroom/head-attendence", { state: data });

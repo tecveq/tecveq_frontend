@@ -66,7 +66,7 @@ const LastDeliverables = () => {
   const DeliverableComponent = ({ subjectQuery }) => {
     return (
       <div className="flex flex-col items-center justify-center w-full gap-2 bg-white rounded-md md:px-8 sm:flex-1 md:py-2 md:gap-3">
-        <div className="flex flex-col items-center justify-center w-28 h-36 md:flex-row relative">
+        <div className="flex flex-col items-center justify-center w-28 h-36 md:flex-row">
           {subjectQuery?.data?.length > 0 ? (
             subjectQuery.data.map((item, index) => (
               <div className="text-xs" key={index}>
@@ -79,14 +79,15 @@ const LastDeliverables = () => {
 
 
           <Circle
+            className=""
             percent={stats.percentage}
             strokeColor="#A41D30"
             strokeWidth={12}
             trailColor="#EAECF0"
             trailWidth={12}
           />
-          <div className="absolute flex flex-col items-center">
-            <span className="text-[7px] md:text-[10px]">Percentage</span>
+          <div className="z-0 absolute flex flex-col items-center">
+            <span className="z-0 text-[7px] md:text-[10px]">Percentage</span>
             <div className="flex">
               <span className="text-[7px] md:text-base font-semibold">{stats.percentage} %</span>
             </div>

@@ -597,7 +597,7 @@ const CreateQuizAssignmentModal = ({
             <div className="flex items-center gap-3">
               <div
                 onClick={() => { isQuiz ? handleCreateQuiz() : handleCreateAssignment() }}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#0B1053]"
+                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#6A00FF]"
               >
                 <p className="text-sm text-white">{isEditTrue ? "Update" : "Create"}</p>
               </div>

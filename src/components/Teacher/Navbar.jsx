@@ -57,7 +57,7 @@ const Navbar = ({ heading }) => {
 
   const onLogoutClick = async () => {
     localStorage.clear();
-    navigate("/admin/login");
+    navigate("/");
     await userLogout()
   };
 

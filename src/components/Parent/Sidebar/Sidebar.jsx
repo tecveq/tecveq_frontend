@@ -7,6 +7,7 @@ import meet from "../../../assets/meet.png";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../utils/Loader";
 import { logout } from "../../../api/User/UserApi";
+import { IoClose } from "react-icons/io5";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -71,21 +72,25 @@ const Sidebar = () => {
     const response = await logout();
     if (response == "error") {
       console.log("error loggin out")
-      navigate("/login")
+      navigate("/")
     } else {
       localStorage.clear()
-      navigate("/login")
+      navigate("/")
     }
     setLoading(false);
   };
 
   const Menubar = () => (
     <div
-      className={`w-72 h-lvh shadow-lg bg-white  px-8 py-5 flex flex-col justify-between z-50`}
+      className={`w-72 sm:w-75 h-lvh shadow-lg bg-[#0B1053]   px-4 md:px-8 flex flex-col justify-between z-50 relative`}
     >
-      <div className="z-50">
-        <div className="flex justify-center">
-          <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
+      <div className="py-5">
+      <div className="text-white flex justify-end items-center ">
+                <IoClose className="w-6 h-6 block lg:hidden hover:scale-105 cursor-pointer"  onClick={() => setIsopen(false)}  />
+              </div>
+      
+        <div className="flex justify-start">
+          <img className="w-5/12 h-5/12 mb-4" src={logo} alt="logo-TCA" />
         </div>
         <div className="flex flex-col gap-1 py-2 border-b border-b-black">
           <Custombutton
@@ -117,7 +122,7 @@ const Sidebar = () => {
         {!loading &&
           <div
             onClick={handleLogoutClick}
-            className={`flex items-center  gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-[#0B1053]`}
+            className={`flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-[#0B1053]`}
           >
             <IoIosLogOut />
             <p>Logout</p>
@@ -128,12 +133,13 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="flex flex-col">
+    <div className=" bg-[#0B1053]flex flex-col">
       <div
-        className="px-3 py-3 flex justify-center items-center cursor-pointer lg:hidden h-20"
+        className="px-3 py-3 flex justify-end items-center cursor-pointer lg:hidden h-20"
         onClick={toggleSidebar}
       >
-        <div className="flex justify-center bg-[#0B1053] w-9">
+        
+        <div className="flex justify-center bg-[#0B1053] border-2 rounded-md w-9 h-10">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
             <p className="w-6 bg-white h-0.5"></p>
@@ -141,7 +147,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isopen ? "block" : "hidden"} fixed top-16`}>
+      <div className={`lg:hidden ${isopen ? "block" : "hidden"} fixed`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">

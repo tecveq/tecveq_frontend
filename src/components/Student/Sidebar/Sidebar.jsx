@@ -9,6 +9,8 @@ import { logout } from "../../../api/User/UserApi";
 import { useStudent } from "../../../context/StudentContext";
 import Loader from "../../../utils/Loader";
 import { useSidebar } from "../../../context/SidebarContext";
+import { IoClose } from "react-icons/io5";
+
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const Sidebar = () => {
   const [activeTab, setActiveTab] = useState(() => localStorage.getItem("activeTab") || "dashboard");
 
   const menuItems = [
-    { key: "dashboard", icon: "home", title: "Dashboard", path: "/" },
+    { key: "dashboard", icon: "home", title: "Dashboard", path: "/student/dashboard" },
     { key: "assignments", icon: "book", title: "Assignments", path: "/assignments" },
     { key: "quizzes", icon: "quiz", title: "Quizzes", path: "/quizzes" },
     { key: "reports", icon: "graph", title: "Reports", path: "/reports" },
@@ -43,17 +45,20 @@ const Sidebar = () => {
     setAllAnnouncements([]);
 
     const response = await logout();
-    navigate("/login");
+    navigate("/");
     setLoading(false);
   };
 
   const toggleSidebar = () => setIsopen(!isopen);
 
   const Menubar = () => (
-    <div className="w-72 h-lvh shadow-lg mt-3 bg-[#0B1053] px-4 py-5 flex flex-col justify-between">
-      <div>
+    <div className="sm:w-72 w-75 h-lvh shadow-lg mt-3 bg-[#0B1053] px-4 flex flex-col justify-between z-50">
+      <div className="py-5">
+        <div className="text-white flex justify-end items-center ">
+          <IoClose className="w-6 h-6 block sm:hidden hover:scale-105 cursor-pointer" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
+        </div>
         <div className="flex justify-start">
-          <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
+          <img className="w-5/12 h-5/12 mb-4" src={logo} alt="logo-TCA" />
         </div>
         <div className="flex flex-col gap-1 py-2 border-b border-b-black">
           {menuItems.map(({ key, icon, title, path }) => (
@@ -69,7 +74,7 @@ const Sidebar = () => {
       </div>
       {meetingStart?.start && (
         <div className="flex flex-col gap-1 h-1/3">
-          <div className="flex justify-center">
+          <div className="flex justify-center mb-4">
             <img src={webinar} alt="sidebar images" className="w-2/3" />
           </div>
           <div className="flex flex-col gap-3 text-xs text-center text-[#0B1053]">
@@ -77,7 +82,7 @@ const Sidebar = () => {
             <p>You can instantly join from here.</p>
             <div className="flex justify-center">
               <a href={meetingStart?.event.meetLink} target="_blank" rel="noopener noreferrer">
-                <div className="flex items-center justify-center w-40 py-2 text-center rounded-md cursor-pointer bg-maroon">
+                <div className="flex items-center justify-center w-40 py-2 text-center rounded-md cursor-pointer bg-[#0B1053]">
                   <img src={meet} alt="meet png" className="w-1/6" />
                   <p className="text-sm text-white">Join Meeting</p>
                 </div>
@@ -95,7 +100,7 @@ const Sidebar = () => {
         toggleSidebar()
         setIsSidebarOpen(!isSidebarOpen)
       }}>
-        <div className="flex justify-center bg-[#0B1053] w-9">
+        <div className="flex justify-center bg-[#0B1053] border-2 rounded-md w-9">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
             <p className="w-6 bg-white h-0.5"></p>
@@ -103,7 +108,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed top-16`}>
+      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">

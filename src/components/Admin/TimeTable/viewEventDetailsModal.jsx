@@ -44,7 +44,7 @@ export default function ViewEventDetailsModal({
   // Initialize form state with event data
   const prevStartTime = formatTimeInPKT(event.startTime, 'HH:mm');
   const prevEndTime = formatTimeInPKT(event.endTime, 'HH:mm');
-  
+
   const [startDate, setStartDate] = useState(
     moment.utc(event.startTime).format("YYYY-MM-DD")
   );
@@ -185,265 +185,269 @@ export default function ViewEventDetailsModal({
   };
 
 
-  console.log(event ,"class event are here");
-  
+  console.log(event, "class event are here");
+
   return (
     <div
-      onClick={() => { }}
       ref={ref}
-      className={`fixed z-10 mt-5 bg-white p-6 ${isEditMode ? 'w-[700px] max-h-[90vh]' : 'w-[500px]'} text-black rounded-xl ml-60 ${open ? "" : "hidden"
-        }`}
-      style={
-        isOutside
-          ? {
-            boxShadow: "0px 4px 10px 0px #0000001F",
-            right: 0,
-            top: isYAxisOutside ? "-150px" : "70px",
-          }
-          : {
-            boxShadow: "0px 4px 10px 0px #0000001F",
-            left: 0,
-            top: isYAxisOutside ? "-150px" : "70px",
-          }
-      }
+      className={`
+    fixed inset-0 z-50 flex items-center justify-center
+    ${open ? "" : "hidden"}
+    px-4
+  `}
     >
-      <ConfirmModal
-        isOpen={confirmDeleteModalOpen}
-        title={"Confirm Delete"}
-        description={"Are you sure you want to delete this event?"}
-        onconfirm={(e) => {
-          e.stopPropagation();
-          handleDeleteEvent();
-        }}
-        onclose={(e) => {
-          e.stopPropagation();
-          setconfirmDeleteModalOpen(false);
-        }}
-      />
-      <div className="flex gap-2">
-        <div className="flex flex-col w-full gap-4 max-h-[80vh] overflow-y-auto">
-          <div className="flex items-center justify-between w-full mb-2">
-            <div className="flex-1">
-              <h2 className="text-xl font-semibold text-gray-800">
-                {event.subjectID.name}
-              </h2>
+      <div
+        className={`
+      bg-white text-black rounded-xl p-4 sm:p-6
+      w-full
+      ${isEditMode ? "max-w-3xl" : "max-w-lg"}
+      max-h-[90vh] overflow-y-auto
+      shadow-lg
+    `}
+      >
+
+
+        <ConfirmModal
+          isOpen={confirmDeleteModalOpen}
+          title={"Confirm Delete"}
+          description={"Are you sure you want to delete this event?"}
+          onconfirm={(e) => {
+            e.stopPropagation();
+            handleDeleteEvent();
+          }}
+          onclose={(e) => {
+            e.stopPropagation();
+            setconfirmDeleteModalOpen(false);
+          }}
+        />
+        <div className="flex gap-2">
+          <div className="flex flex-col w-full gap-4 max-h-[80vh] overflow-y-auto">
+            <div className="flex items-center justify-between w-full mb-2">
+              <div className="flex-1">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  {event.subjectID.name}
+                </h2>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => {
+                    console.log("Edit button clicked, current isEditMode:", isEditMode);
+                    setIsEditMode(!isEditMode);
+                  }}
+                  className="px-4 py-2 text-sm font-medium bg-[#0B1053] text-white rounded-lg hover:bg-[#007EEA] transition-colors shadow-sm border"
+                  style={{ color: 'white' }}
+                >
+                  {isEditMode ? "Cancel Edit" : "Edit Class"}
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setopen(false);
+                  }}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <img
+                    src={IMAGES.CloseIcon}
+                    className="w-4 h-4"
+                    alt="Close"
+                  />
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => {
-                  console.log("Edit button clicked, current isEditMode:", isEditMode);
-                  setIsEditMode(!isEditMode);
-                }}
-                className="px-4 py-2 text-sm font-medium bg-[#0B1053] text-white rounded-lg hover:bg-[#007EEA] transition-colors shadow-sm border"
-                style={{  color: 'white' }}
-              >
-                {isEditMode ? "Cancel Edit" : "Edit Class"}
-              </button>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setopen(false);
-                }}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <img
-                  src={IMAGES.CloseIcon}
-                  className="w-4 h-4"
-                  alt="Close"
-                />
-              </button>
-            </div>
-          </div>
-          {!isEditMode ? (
-            // View Mode
-            <>
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col flex-1 gap-1">
-                  <p className="text-xs font-semibold text-grey_700">Teacher</p>
-                  <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
-                    <p className="text-sm text-custom-gray-3">{event.teacher.teacherID.name}</p>
+            {!isEditMode ? (
+              // View Mode
+              <>
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col flex-1 gap-1">
+                    <p className="text-xs font-semibold text-grey_700">Teacher</p>
+                    <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
+                      <p className="text-sm text-custom-gray-3">{event.teacher.teacherID.name}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col flex-1 gap-1">
-                  <p className="text-xs font-semibold text-grey_700">Topic</p>
-                  <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
-                    <p className="text-sm text-custom-gray-3">{event.title}</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col flex-1 gap-1">
+                    <p className="text-xs font-semibold text-grey_700">Topic</p>
+                    <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
+                      <p className="text-sm text-custom-gray-3">{event.title}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col flex-1 gap-1">
-                  <p className="text-xs font-semibold text-grey_700">Date</p>
-                  <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
-                    <p className="text-sm text-custom-gray-3">
-                      {moment.utc(event.start).format("DD MMMM, YYYY")}
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col flex-1 gap-1">
+                    <p className="text-xs font-semibold text-grey_700">Date</p>
+                    <div className="flex justify-between border-[1.5px] py-2 px-4 rounded-lg w-full items-center border-grey/50">
+                      <p className="text-sm text-custom-gray-3">
+                        {moment.utc(event.start).format("DD MMMM, YYYY")}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-flex flex-col sm:flex-row sm:items-center sm:gap-3 w-full">
+                  <div className="flex flex-col w-full sm:w-auto">
+                    <p className="text-xs font-semibold text-grey_700">Start Time</p>
+                    <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
+                      <p className="text-sm text-custom-gray-3">
+                        {formatTimeInPKT(event.start, "hh:mm a")}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="sm:mt-5 display-none sm:display-block">
+                    <p className="mx-1">
+                      <GoArrowRight className="text-grey/70" />
                     </p>
                   </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex flex-col gap-1">
-                  <p className="text-xs font-semibold text-grey_700">Start Time</p>
-                  <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
-                    <p className="text-sm text-custom-gray-3">
-                                             {formatTimeInPKT(event.start, "hh:mm a")}
-                    </p>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-xs font-semibold text-grey_700">End Time</p>
+                    <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
+                      <p className="text-sm text-custom-gray-3">
+                        {formatTimeInPKT(event.end, "hh:mm a")}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="mt-5">
-                  <p className="mx-1">
-                    <GoArrowRight className="text-grey/70" />
-                  </p>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <p className="text-xs font-semibold text-grey_700">End Time</p>
-                  <div className="flex items-center justify-between gap-3 px-3 py-2 border-[1.5px] rounded-lg w-36 border-grey/30">
-                    <p className="text-sm text-custom-gray-3">
-                                             {formatTimeInPKT(event.end, "hh:mm a")}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            // Edit Mode
-            <>
-              <CustomSelectableField
-                label={"Select Teacher"}
-                selectedOption={selectedTeacher}
-                options={adminUsersData.allTeachers}
-                setSelectedOption={setSelectedTeacher}
-              />
-
-              <CustomSelectableField
-                options={teacherSubject || allSubjects}
-                label={"Select Subject"}
-                selectedOption={selectedSubject}
-                setSelectedOption={setSelectedSubject}
-              />
-
-              <CusotmInputField
-                type={"text"}
-                icon={"mail"}
-                name={"title"}
-                title={"Topic"}
-                selectable={false}
-                status={true}
-                valuesObj={classObj}
-                value={classObj.title}
-                setValue={setClassObj}
-              />
-
-              <CusotmInputField
-                icon={"cap"}
-                type={"date"}
-                title={"Event Date"}
-                name={"startEventDate"}
-                selectable={false}
-                status={true}
-                valuesObj={{ startEventDate: startDate }}
-                value={startDate}
-                setValue={(obj) => setStartDate(obj.startEventDate)}
-              />
-
-              <div className="flex gap-2">
-                <CusotmInputField
-                  type={"time"}
-                  icon={"calendar"}
-                  selectable={false}
-                  name={"startTime"}
-                  valuesObj={classObj}
-                  status={true}
-                  title={"Start Time"}
-                  setValue={setClassObj}
-                  value={classObj.startTime}
+              </>
+            ) : (
+              // Edit Mode
+              <>
+                <CustomSelectableField
+                  label={"Select Teacher"}
+                  selectedOption={selectedTeacher}
+                  options={adminUsersData.allTeachers}
+                  setSelectedOption={setSelectedTeacher}
                 />
-                <CusotmInputField
-                  type={"time"}
-                  icon={"cake"}
-                  name={"endTime"}
-                  title={"End Time"}
-                  selectable={false}
-                  status={true}
-                  valuesObj={classObj}
-                  setValue={setClassObj}
-                  value={classObj.endTime}
-                />
-              </div>
 
-              <div className="border-t pt-4 mt-2">
+                <CustomSelectableField
+                  options={teacherSubject || allSubjects}
+                  label={"Select Subject"}
+                  selectedOption={selectedSubject}
+                  setSelectedOption={setSelectedSubject}
+                />
+
                 <CusotmInputField
                   type={"text"}
                   icon={"mail"}
-                  name={"meetingUrl"}
-                  title={"Google Meet Link"}
+                  name={"title"}
+                  title={"Topic"}
                   selectable={false}
                   status={true}
                   valuesObj={classObj}
-                  value={classObj.meetingUrl}
+                  value={classObj.title}
                   setValue={setClassObj}
-                  placeholder="Enter meeting link"
                 />
-              </div>
 
-              {event.groupID && (
-                <div className="flex flex-col gap-3 mt-4">
-                  <p className="text-sm font-medium text-black">Update Future Events</p>
-                  <div className="flex items-center gap-3 px-4 py-3 border-[1.5px] rounded-lg border-grey/30 bg-gray-50/50">
-                    <input
-                      type="checkbox"
-                      checked={eventType}
-                      onChange={() => setEventType(!eventType)}
-                      className="w-4 h-4 text-[#0B1053] bg-gray-100 border-gray-300 rounded focus:ring-[#0B1053] focus:ring-2"
+                <CusotmInputField
+                  icon={"cap"}
+                  type={"date"}
+                  title={"Event Date"}
+                  name={"startEventDate"}
+                  selectable={false}
+                  status={true}
+                  valuesObj={{ startEventDate: startDate }}
+                  value={startDate}
+                  setValue={(obj) => setStartDate(obj.startEventDate)}
+                />
+
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+
+                  <div className="flex flex-col gap-1 w-full sm:w-auto">
+                    <CusotmInputField
+                      type={"time"}
+                      icon={"calendar"}
+                      selectable={false}
+                      name={"startTime"}
+                      valuesObj={classObj}
+                      status={true}
+                      title={"Start Time"}
+                      setValue={setClassObj}
+                      value={classObj.startTime}
                     />
-                    <span className="text-sm text-gray-700">Update all Future Events</span>
+                    <CusotmInputField
+                      type={"time"}
+                      icon={"cake"}
+                      name={"endTime"}
+                      title={"End Time"}
+                      selectable={false}
+                      status={true}
+                      valuesObj={classObj}
+                      setValue={setClassObj}
+                      value={classObj.endTime}
+                    />
                   </div>
                 </div>
-              )}
-            </>
-          )}
-          <div className="flex items-center gap-3 flex-col">
-            {!isEditMode && hasValidMeetingUrl && (
-              <a
-                href={fullMeetingUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full"
-              >
-                <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#0B1053] hover:bg-[#007EEA] transition-colors duration-200">
-                  <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
-                  <p className="text-sm text-white">Join Meeting</p>
+
+                <div className="border-t pt-4 mt-2">
+                  <CusotmInputField
+                    type={"text"}
+                    icon={"mail"}
+                    name={"meetingUrl"}
+                    title={"Google Meet Link"}
+                    selectable={false}
+                    status={true}
+                    valuesObj={classObj}
+                    value={classObj.meetingUrl}
+                    setValue={setClassObj}
+                    placeholder="Enter meeting link"
+                  />
                 </div>
-              </a>
-            )}
-            
-            {loading && (
-              <div className="flex justify-center items-center">
-                <Loader />
-              </div>
-            )}
 
-            {!loading && isEditMode && (
-              <div className="flex items-center gap-3 w-full mt-6">
-                <button
-                  onClick={handleUpdateClass}
-                  className="flex items-center justify-center w-full py-3 text-center rounded-lg bg-[#0B1053] text-white font-medium hover:bg-[#0B1053] transition-colors shadow-md"
+                {event.groupID && (
+                  <div className="flex flex-col gap-3 mt-4">
+                    <p className="text-sm font-medium text-black">Update Future Events</p>
+                    <div className="flex items-center gap-3 px-4 py-3 border-[1.5px] rounded-lg border-grey/30 bg-gray-50/50">
+                      <input
+                        type="checkbox"
+                        checked={eventType}
+                        onChange={() => setEventType(!eventType)}
+                        className="w-4 h-4 text-[#0B1053] bg-gray-100 border-gray-300 rounded focus:ring-[#0B1053] focus:ring-2"
+                      />
+                      <span className="text-sm text-gray-700">Update all Future Events</span>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+            <div className="flex items-center gap-3 flex-col">
+              {!isEditMode && hasValidMeetingUrl && (
+                <a
+                  href={fullMeetingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
                 >
-                  Save Changes
-                </button>
-              </div>
-            )}
+                  <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#6A00FF] hover:bg-[#007EEA] transition-colors duration-200">
+                    <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
+                    <p className="text-sm text-white">Join Meeting</p>
+                  </div>
+                </a>
+              )}
 
-            {!loading && !isEditMode && (
-              <div
-                onClick={handleCancelMeeting}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md border-[#0B1053] border cursor-pointer hover:bg-red-50 transition-colors"
-              >
-                <p className="text-sm text-[#0B1053]">Cancel Class</p>
-              </div>
-            )}
+              {loading && (
+                <div className="flex justify-center items-center">
+                  <Loader />
+                </div>
+              )}
+
+              {!loading && isEditMode && (
+                <div className="flex items-center gap-3 w-full mt-6">
+                  <button
+                    onClick={handleUpdateClass}
+                    className="flex items-center justify-center w-full py-3 text-center rounded-lg bg-[#0B1053] text-white font-medium hover:bg-[#0B1053] transition-colors shadow-md"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              )}
+
+              {!loading && !isEditMode && (
+                <div
+                  onClick={handleCancelMeeting}
+                  className="flex items-center justify-center w-full py-2 text-center rounded-md border-[#0B1053] border cursor-pointer hover:bg-red-50 transition-colors"
+                >
+                  <p className="text-sm text-[#0B1053]">Cancel Class</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

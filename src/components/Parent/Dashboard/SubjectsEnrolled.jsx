@@ -101,7 +101,7 @@ const SubjectsEnrolled = () => {
                         <div className="flex w-[90%] h-4 bg-grey/50 rounded-3xl">
                           <div
                             style={{ width: `${item.avgAttendancePer || 0}%` }}
-                            className="text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center text-white"
+                            className="text-xs h-4 bg-gradient-to-r from-[#0B1053] to-[#007EEA] rounded-3xl flex justify-center text-white"
                           >
                             {item?.avgAttendancePer || 0} %
                           </div>

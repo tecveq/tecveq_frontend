@@ -78,7 +78,7 @@ const Quizzes = () => {
                 <div className={`px-3 `}>
                   <div className="flex justify-end my-2">
                     <div
-                      className="flex cursor-pointer bg-[#0B1053] rounded-3xl"
+                      className="flex cursor-pointer bg-[#6A00FF] rounded-3xl"
                       onClick={() => {
                         setCreateModalOpen(true);
                         toggleBlur();

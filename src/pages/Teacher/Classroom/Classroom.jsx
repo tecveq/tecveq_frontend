@@ -88,7 +88,7 @@ const Classroom = () => {
                             onChange={(e) => setSearchText(e.target.value)}
                           />
                         </div>
-                        <p onClick={onAddClass} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-[#0B1053] rounded-3xl">
+                        <p onClick={onAddClass} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-[#6A00FF] rounded-3xl">
                           Add Classroom
                         </p>
                       </div>

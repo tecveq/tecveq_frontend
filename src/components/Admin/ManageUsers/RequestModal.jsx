@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import IMAGES from '../../../assets/images'
 import LoaderSmall from '../../../utils/LoaderSmall';
 
@@ -7,6 +7,21 @@ import { useMutation } from '@tanstack/react-query';
 import { acceptUser, rejectUser } from '../../../api/Admin/UsersApi';
 
 const RequestModal = ({ refetch, data, onclose }) => {
+
+    const modalRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (modalRef.current && !modalRef.current.contains(event.target)) {
+                onclose();
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [onclose]);
 
     const handleAcceptUser = async (id) => {
         acceptMutation.mutate(id);
@@ -65,7 +80,7 @@ const RequestModal = ({ refetch, data, onclose }) => {
     }
 
     return (
-        <div className='py-2 mt-10 w-72 right-10 absolute z-10 px-2 rounded-md border-black/20 shadow-md bg-white'>
+        <div ref={modalRef} className='py-2 mt-10 w-72 right-10 absolute z-10 px-2 rounded-md border-black/20 shadow-md bg-white'>
             <div className=''>
                 <div className='border-b border-black/10 py-2 flex items-center justify-center'>
                     <p>Request</p>

@@ -183,7 +183,7 @@ const FilterClassesModal = ({ setAddModalOpen, setaddModalOpen, classData, isPen
       <div className="flex-1 mx-1 my-1">
         <div
           onClick={clickHandler}
-          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-[#0B1053]" : "bg-white"
+          className={`px-6 w-[19/20] justify-center flex py-1 border rounded-lg cursor-pointer border-grey/50 ${bgcolor == "ghost" ? "bg-[#6A00FF]" : "bg-white"
             }`}
         >
           <p className={`${color == "white" ? "text-white" : "text-black"}`}>

@@ -178,7 +178,7 @@ const ClassModal = ({ open, setopen, isEditTrue, refetch }) => {
                 onClick={() => {
                   handleCreateClass();
                 }}
-                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#0B1053]"
+                className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#6A00FF]"
               >
                 <p className="text-sm text-white">Create</p>
               </div>

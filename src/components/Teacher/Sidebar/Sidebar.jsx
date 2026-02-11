@@ -7,6 +7,7 @@ import { userLogout } from "../../../api/ForAllAPIs";
 import Loader from "../../../utils/Loader";
 import { useTeacher } from "../../../context/TeacherContext";
 import { useSidebar } from "../../../context/SidebarContext";
+import { IoClose } from "react-icons/io5";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Sidebar = () => {
     localStorage.clear();
     setTeacherLogedIn(false);
     await userLogout();
-    navigate("/admin/login");
+    navigate("/");
     setLoading(false);
   };
 
@@ -50,10 +51,13 @@ const Sidebar = () => {
   ];
 
   const Menubar = () => (
-    <div className="w-72 shadow-lg z-index px-8 py-5 mt-4 bg-white md:h-screen">
-      <div className="h-full z-50">
-        <div className="flex justify-center">
-          <img className="w-5/12 h-5/12" src={logo} alt="logo-TCA" />
+    <div className="w-72 shadow-lg z-index px-4 sm:px-8 bg-[#0B1053] text-white h-screen">
+      <div className="text-white flex justify-end items-center ">
+        <IoClose className="w-6 h-6 mt-4 block sm:hidden hover:scale-105 cursor-pointer" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
+      </div>
+      <div className=" py-5 z-50">
+        <div className="flex justify-start">
+          <img className="w-25 h-8 mb-4" src={logo} alt="logo-TCA" />
         </div>
         <div className="flex flex-col h-full gap-1 py-2 border-b border-b-black">
           {menuItems.map(({ key, title, icon, route }) => (
@@ -69,7 +73,7 @@ const Sidebar = () => {
         {loading ? (
           <div className="flex"><Loader /></div>
         ) : (
-          <div onClick={handleLogoutClick} className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-[#0B1053]">
+          <div onClick={handleLogoutClick} className="flex items-center gap-4 px-5 py-3 text-lg rounded-md cursor-pointer text-white">
             <IoIosLogOut />
             <p>Logout</p>
           </div>
@@ -85,7 +89,7 @@ const Sidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)
       }
       }>
-        <div className="flex justify-center bg-[#0B1053] w-9 h-fit">
+        <div className="flex justify-center bg-[#0B1053] border-2 rounded-md w-9 h-fit">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
             <p className="w-6 bg-white h-0.5"></p>
@@ -93,7 +97,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed top-16`}>
+      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">

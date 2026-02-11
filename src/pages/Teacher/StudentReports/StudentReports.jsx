@@ -118,7 +118,7 @@ const FilterPopup = ({
                 applyFilter();
                 setopen(false);
               }}
-              className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#0B1053]"
+              className="flex items-center justify-center w-full py-2 text-center rounded-md cursor-pointer bg-[#6A00FF]"
             >
               <p className="text-sm text-white">Apply</p>
             </div>
@@ -214,7 +214,7 @@ const StudentReports = () => {
                       />
                     </div>
                     <div
-                      className="p-4 text-white rounded-lg cursor-pointer bg-maroon"
+                      className="p-4 text-white rounded-lg cursor-pointer bg-[#0B1053]"
                       onClick={() => {
                         setOpenFilterModal(true);
                       }}

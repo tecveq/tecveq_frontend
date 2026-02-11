@@ -125,7 +125,7 @@ const QuizAssignmentRow = (props) => {
                                     <div className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center`}>
                                         {quizAssignmentMutation.isPending && <div><Loader /></div>}
                                         {!quizAssignmentMutation.isPending &&
-                                            <label htmlFor={`upload-${props.id}`} className='bg-[#0B1053] cursor-pointer rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
+                                            <label htmlFor={`upload-${props.id}`} className='bg-[#6A00FF] cursor-pointer rounded-xl flex items-center justify-center py-1 text-white md:text-[14px] text-[11px]'>
                                                 Upload
                                                 <input id={`upload-${props.id}`} onChange={handleFileChange} type="file" className='hidden' />
                                             </label>

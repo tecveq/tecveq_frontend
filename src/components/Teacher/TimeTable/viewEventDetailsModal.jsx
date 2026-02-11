@@ -236,25 +236,14 @@ export default function ViewEventDetailsModal({
 
 
   return (
-    <div
-      onClick={() => { }}
-      ref={ref}
-      className={`fixed z-10 bg-white p-4 md:p-6 w-full md:w-[550px] text-black rounded-xl ml-72 ${open ? "" : "hidden"
-        }`}
-      style={
-        isOutside
-          ? {
-            boxShadow: "0px 4px 10px 0px #0000001F",
-            right: 0,
-            top: isYAxisOutside ? "-150px" : "70px",
-          }
-          : {
-            boxShadow: "0px 4px 10px 0px #0000001F",
-            left: 0,
-            top: isYAxisOutside ? "-150px" : "70px",
-          }
-      }
-    >
+ <div
+  ref={ref}
+  className={`fixed z-50 top-5 left-1/2 transform -translate-x-1/2 w-full max-w-md md:max-w-lg max-h-[90vh] overflow-y-auto bg-white text-[#0B1053] p-6 rounded-xl shadow-lg ${open ? "" : "hidden"}`}
+>
+
+
+
+      
       <ConfirmModal
         isOpen={confirmDeleteModalOpen}
         title={"Confirm Delete"}
@@ -268,7 +257,7 @@ export default function ViewEventDetailsModal({
           setconfirmDeleteModalOpen(false);
         }}
       />
-      <div className="flex gap-2">
+      <div className="flex justify-center items-start mt-12">
         <div className="flex flex-col w-full gap-4">
           <div className="flex items-center justify-between">
             <div className="flex w-fit gap-2 items-center">
@@ -381,7 +370,7 @@ export default function ViewEventDetailsModal({
             }
 
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col md:flex-row items-center gap-3">
             <div className="flex  gap-x-5">
               <CusotmInputField
                 type={"time"}
@@ -433,7 +422,7 @@ export default function ViewEventDetailsModal({
                  rel="noopener noreferrer"
                  className="w-full"
                >
-                 <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#0B1053] hover:bg-[#0B1053] transition-colors duration-200">
+                 <div className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#6A00FF] hover:bg-[#007EEA] transition-colors duration-200">
                    <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
                    <p className="text-sm text-white">Join Meeting</p>
                  </div>

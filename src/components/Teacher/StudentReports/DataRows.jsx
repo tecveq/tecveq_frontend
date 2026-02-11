@@ -62,7 +62,7 @@ const DataRows = ({
         ) : (
           <div className="md:flex-[3] w-full bg-grey/50 rounded-3xl overflow-hidden">
             <div
-              className="text-xs h-4 bg-gradient-to-r from-green to-yellow_green_light rounded-3xl flex justify-center items-center text-white md:text-[16px] text-[14px]"
+              className="text-xs h-4 bg-gradient-to-r from-[#0B1053] to-[#007EEA] rounded-3xl flex justify-center items-center text-white md:text-[16px] text-[14px]"
               style={{ width: `${attendance}%` }}
             >
               {`${Number(attendance).toFixed(2)}%`}

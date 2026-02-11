@@ -103,10 +103,10 @@ const Navbar = ({ heading }) => {
     const response = await logout();
     if (response == "error") {
       console.log("error loggin out")
-      navigate("/login")
+      navigate("/")
     } else {
       localStorage.clear()
-      navigate("/routes")
+      navigate("/")
     }
     // setLoading(false);
   };

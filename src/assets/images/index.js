@@ -12,7 +12,7 @@ const IMAGES = {
     Assignment: new URL('./assignment.svg', import.meta.url).href,
     Solution: new URL('./solution.svg', import.meta.url).href,
     DataReport: new URL('./datareport.svg', import.meta.url).href,
-    Download: new URL('./download.svg', import.meta.url).href,
+    Download: new URL('./download.png', import.meta.url).href,
     Search: new URL('./search.svg', import.meta.url).href,
     Profile: new URL('./profile.svg', import.meta.url).href,
     CloseIcon: new URL('./close2.png', import.meta.url).href,

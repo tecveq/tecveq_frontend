@@ -225,7 +225,7 @@ export default function ViewEventDetailsModal({
                 rel="noopener noreferrer"
                 className="w-full"
               >
-                <button className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#0B1053] hover:bg-[#007EEA] transition-colors">
+                <button className="flex items-center justify-center w-full py-2 text-center rounded-md bg-[#6A00FF] hover:bg-[#007EEA] transition-colors">
                   <img src={meet} alt="meet img" className="w-4 h-4 mr-2" />
                   <p className="text-sm text-white">
                     Join Meeting

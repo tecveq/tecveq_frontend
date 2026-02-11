@@ -97,7 +97,7 @@ const Navbar = ({ heading }) => {
   const onLogoutClick = async () => {
     localStorage.clear();
     await userLogout();
-    navigate("/admin/login");
+    navigate("/");
   };
 
   return (
@@ -121,7 +121,7 @@ const Navbar = ({ heading }) => {
                   className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 `}
                   onClick={handleBellClick}
                 >
-                  <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""}`}>
+                  <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""} z-0`}>
                     <CiBellOn />
                   </div>
 
