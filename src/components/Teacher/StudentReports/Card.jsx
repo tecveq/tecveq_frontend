@@ -1,10 +1,12 @@
 import React from 'react'
 import { Circle } from "rc-progress"
+import { useSidebar } from '../../../context/SidebarContext'
 
 const Card = (props) => {
+    const { isSidebarOpen } = useSidebar();
     return (
-        <div className="px-4 md:px-10 sm:flex-1 w-full py-4 md:py-7 border-2 border-[#00000040] rounded-md flex flex-col justify-center items-center bg-white gap-2 md:gap-3">
-            
+        <div className={`px-4 md:px-10 sm:flex-1 w-full py-4 md:py-7 border-2 border-[#00000040] rounded-md flex flex-col justify-center items-center bg-white gap-2 md:gap-3 ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
+
             <div className='h-[70px] md:h-[100px] w-[70px] md:w-[100px] relative flex justify-center items-center'>
                 <Circle percent={props.percentage}
                     strokeColor="#0B1053"

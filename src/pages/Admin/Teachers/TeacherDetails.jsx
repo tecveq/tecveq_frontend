@@ -78,7 +78,7 @@ const TeacherDetails = () => {
             <Navbar heading={"Teacher Reports"} />
             <div className="mt-7">
               <div className="flex flex-col items-center justify-center gap-1">
-                <img src={location.state.teacher.profilePic || IMAGES.Profile} alt="" className="w-40 h-40 rounded-full object-cover" />
+                <img src={location.state.teacher.profilePic || IMAGES.Profile} alt="" className="sm:w-40 sm:h-40 w-20 h-20 rounded-full object-cover" />
                 <p className="text-lg font-semibold">{location.state.teacher.name}</p>
                 <div className="flex items-center gap-2 text-xs">
                   <LuPhone />

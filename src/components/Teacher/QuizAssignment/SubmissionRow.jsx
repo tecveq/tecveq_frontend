@@ -29,7 +29,7 @@ const SubmissionRow = (props) => {
               }`}
           >
             {!props.header ? (
-              <img src={props?.profileLink} className="w-12 h-12 rounded-full object-cover" alt="profile link" />
+              <img src={props?.profileLink} className="sm:w-12 w-8 h-12 h-8 rounded-full object-cover" alt="profile link" />
             ) : (
               <></>
             )}

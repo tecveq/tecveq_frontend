@@ -12,16 +12,15 @@ const Custombutton = ({ title, active, onpress, icon }) => {
         onClick={() => {
           onpress();
         }}
-        className={`flex items-center justify-start gap-4 text-lg px-3 w-56 py-2  rounded-md cursor-pointer ${
-          active ? "bg-[#efeffa] text-[#0B1053]" : "transparent"
-        }`}
+        className={`flex items-center justify-start gap-4 text-lg px-3 w-56 py-2  rounded-md cursor-pointer ${active ? "bg-[#efeffa] text-[#0B1053]" : "transparent"
+          }`}
       >
         {icon == "home" ? (
-          <GoHome color={`${active ? "#0B1053" : "#white"}`} />
+          <GoHome color={`${active ? "#0B1053" : "white"}`} />
         ) : icon == "time" ? (
-          <CiCalendarDate color={`${active ? "#0B1053" : "#white"}`} />
+          <CiCalendarDate color={`${active ? "#0B1053" : "white"}`} />
         ) : icon == "graph" ? (
-          <VscGraph color={`${active ? "#0B1053" : "#white"}`} />
+          <VscGraph color={`${active ? "#0B1053" : "white"}`} />
         ) : icon == "book" ? (
           <BiBookContent color={`${active ? "#0B1053" : "white"}`} />
         ) : (

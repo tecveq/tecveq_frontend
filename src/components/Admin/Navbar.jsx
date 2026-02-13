@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllNotifications } from "../../api/Admin/NotificationApi";
 import moment from "moment";
 import { Dot } from "recharts";
+import { useSidebar } from "../../context/SidebarContext";
 
 
 const Navbar = ({ heading }) => {
@@ -28,6 +29,8 @@ const Navbar = ({ heading }) => {
   const navigate = useNavigate();
   const { userData } = useUser();
   const { isBlurred, toggleBlur } = useBlur();
+  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
+
 
   const { data } = useQuery({ queryKey: ["chat"], queryFn: getAllNotifications });
 
@@ -102,13 +105,13 @@ const Navbar = ({ heading }) => {
 
   return (
     <>
-      <div className="flex flex-1 h-20">
-        <div className={`flex justify-between flex-1 py-5 ${isBlurred ? "blur" : ""}`}>
-          <div className="flex flex-col justify-center">
-            <p className="text-sm  ml-10 md:ml-0 md:text-2xl font-medium">{heading} </p>
+      <div className="flex justify-end flex-1 h-20 -z-50">
+        <div className={`flex justify-between flex-1 py-5 ml-6 lg:ml-auto ${isBlurred ? "blur" : ""}`}>
+          <div className="flex flex-col justify-center px-2">
+            <p className="text-sm  ml-10 md:ml-0 md:text-2xl sm:font-medium font-normal">{heading} </p>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="flex gap-4">
+          <div className="flex items-center gap-1">
+            <div className="flex gap-2">
               <div
                 className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-[#0B1053] text-white" : ""
                   }`}
@@ -116,12 +119,12 @@ const Navbar = ({ heading }) => {
               >
                 <IoMailOutline />
               </div>
-              <div className="relative">
+              <div className={`relative ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
                 <div
                   className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 `}
                   onClick={handleBellClick}
                 >
-                  <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""} z-0`}>
+                  <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""}`}>
                     <CiBellOn />
                   </div>
 

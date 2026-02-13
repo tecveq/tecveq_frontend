@@ -64,7 +64,7 @@ const SubjectReport = () => {
               <Navbar heading={"Student Report"} />
               <div className="mt-7">
                 <div className="flex flex-col items-center justify-center gap-1">
-                  <img src={location.state.profilePic || IMAGES.Profile} alt="" className="w-40 h-40 rounded-full" />
+                  <img src={location.state.profilePic || IMAGES.Profile} alt="" className="sm:w-40 sm:h-40 w-20 h-20 rounded-full" />
                   <p className="text-lg font-semibold">{location.state.name}</p>
                   <div className="flex items-center gap-2 text-xs">
                     <LuPhone />

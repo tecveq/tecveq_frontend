@@ -109,7 +109,7 @@ const Submissions = () => {
           >
             <div className="h-screen pt-8 ">
               <div className="flex flex-row items-center justify-between flex-grow">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center  gap-4">
                   <p className="font-semibold text-[20px] md:text-[24px]">
                     Submissions
                   </p>

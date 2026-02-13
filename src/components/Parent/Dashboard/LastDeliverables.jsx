@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParent } from "../../../context/ParentContext";
 import { useQuery } from "@tanstack/react-query";
 import { getAllSubjects, getChildLastDeliveredAssignmentReport, getChildReport } from "../../../api/Parent/ParentApi";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const LastDeliverables = () => {
 
@@ -10,6 +11,7 @@ const LastDeliverables = () => {
   const [enableQuery, setEnableQuery] = useState(false);
 
   const { allSubjects, setAllSubjects, selectedChild } = useParent();
+  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
 
 
   //console.log(selectedChild, "current selected child: ", allSubjects, "all subject of selected child: ");
@@ -66,7 +68,7 @@ const LastDeliverables = () => {
   const DeliverableComponent = ({ subjectQuery }) => {
     return (
       <div className="flex flex-col items-center justify-center w-full gap-2 bg-white rounded-md md:px-8 sm:flex-1 md:py-2 md:gap-3">
-        <div className="flex flex-col items-center justify-center w-28 h-36 md:flex-row">
+        <div className="relative flex flex-col items-center justify-center w-28 h-36 md:flex-row">
           {subjectQuery?.data?.length > 0 ? (
             subjectQuery.data.map((item, index) => (
               <div className="text-xs" key={index}>
@@ -86,8 +88,8 @@ const LastDeliverables = () => {
             trailColor="#EAECF0"
             trailWidth={12}
           />
-          <div className="z-0 absolute flex flex-col items-center">
-            <span className="z-0 text-[7px] md:text-[10px]">Percentage</span>
+          <div className={`absolute flex flex-col items-center text-[7px] md:text-[10px] ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
+            <span className="text-[7px] md:text-[10px]">Percentage</span>
             <div className="flex">
               <span className="text-[7px] md:text-base font-semibold">{stats.percentage} %</span>
             </div>
@@ -115,7 +117,7 @@ const LastDeliverables = () => {
   };
 
   return (
-    <div className="flex flex-1">
+    <div className={`flex flex-1 ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
       <div className="flex flex-col flex-1 gap-2">
         <div className="flex">
           <p className="flex text-xl font-medium">Last Deliverable</p>

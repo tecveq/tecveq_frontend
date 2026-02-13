@@ -4,6 +4,7 @@ import { fetchStudentAttendanceReport, getMyAllClassroom } from '../../../api/Ad
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { Download } from "lucide-react";
+import { useSidebar } from '../../../context/SidebarContext';
 
 const INITIAL_FILTERS = {
     classroomId: '',
@@ -17,6 +18,7 @@ const AttendanceReportComp = () => {
     const [isFilterExpanded, setIsFilterExpanded] = useState(true);
     const [attendanceData, setAttendanceData] = useState(null);
     const reportRef = useRef();
+  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
 
     // Fetch classrooms
     const { data: myClassroomData, isPending: isLoadingClassrooms } = useQuery({
@@ -195,7 +197,7 @@ const AttendanceReportComp = () => {
                                 <Users className="h-4 w-4 text-[#2563eb]" />
                                 <span>Select Classroom</span>
                             </label>
-                            <div className="relative">
+                            <div className={`relative z-7  ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
                                 <select
                                     value={filters.classroomId}
                                     onChange={(e) => handleFilterChange('classroomId', e.target.value)}
@@ -222,7 +224,7 @@ const AttendanceReportComp = () => {
                                 <BookOpen className="h-4 w-4 text-[#059669]" />
                                 <span>Select Subject</span>
                             </label>
-                            <div className="relative">
+                            <div className={`relative  ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
                                 <select
                                     value={filters.subjectId}
                                     onChange={(e) => handleFilterChange('subjectId', e.target.value)}
@@ -360,7 +362,7 @@ const AttendanceReportComp = () => {
                         <button
                             onClick={handleSearch}
                             disabled={!filters.classroomId || attendanceSearch.isPending}
-                            className="px-8 py-3 bg-[#6A00FF] text-white rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                            className={`px-8 py-3 bg-[#6A00FF] text-white rounded-lg hover:from-[#1d4ed8] hover:to-[#1e40af] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] focus:ring-offset-2 transition-all duration-200 flex items-center justify-center gap-2 font-medium shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed ${isSidebarOpen ? "-z-50" : "z-auto"}`}
                         >
                             {attendanceSearch.isPending ? (
                                 <>

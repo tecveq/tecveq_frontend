@@ -29,6 +29,8 @@ const Sidebar = () => {
   const handleMenuClick = (key, path) => {
     setActiveTab(key);
     localStorage.setItem("activeTab", key);
+    setIsSidebarOpen(false);
+    setIsopen(false);
     navigate(path);
   };
 
@@ -44,6 +46,8 @@ const Sidebar = () => {
     setStudentLogedIn(false);
     setAllAnnouncements([]);
 
+    setIsSidebarOpen(false);
+    setIsopen(false);
     const response = await logout();
     navigate("/");
     setLoading(false);
@@ -108,8 +112,13 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed`}>
-        <Menubar />
+      <div className={`lg:hidden fixed inset-0 z-50 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="h-full w-fit" onClick={(e) => e.stopPropagation()}>
+          <Menubar />
+        </div>
+        {isSidebarOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 -z-10" onClick={() => setIsSidebarOpen(false)}></div>
+        )}
       </div>
       <div className="max-lg:hidden">
         <Menubar />

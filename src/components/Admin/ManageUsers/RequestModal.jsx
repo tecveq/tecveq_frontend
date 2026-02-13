@@ -80,7 +80,7 @@ const RequestModal = ({ refetch, data, onclose }) => {
     }
 
     return (
-        <div ref={modalRef} className='py-2 mt-10 w-72 right-10 absolute z-10 px-2 rounded-md border-black/20 shadow-md bg-white'>
+        <div ref={modalRef} className='py-2 mt-10 w-72 sm:right-10 right-3 absolute z-10 px-2 rounded-md border-black/20 shadow-md bg-white'>
             <div className=''>
                 <div className='border-b border-black/10 py-2 flex items-center justify-center'>
                     <p>Request</p>

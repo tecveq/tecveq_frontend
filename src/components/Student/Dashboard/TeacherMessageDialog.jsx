@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import useClickOutside from '../../../hooks/useClickOutlise';
 import profile from "../../../assets/profile.png"
 import { IoSend } from "react-icons/io5";
 import { useMutation } from '@tanstack/react-query';
@@ -37,9 +38,11 @@ const TeacherMessageDialog = ({ handleFeedback, item }) => {
         }
     })
 
+    const dialogRef = useRef(null);
+    useClickOutside(dialogRef, handleFeedback);
 
     return (
-        <div className='fixed z-10 flex py-4 bg-white rounded-lg shadow-lg top-40 w-72'>
+        <div ref={dialogRef} className='fixed z-10 flex py-4 bg-white rounded-lg shadow-lg top-40 w-72'>
             <div className='flex flex-col w-full'>
                 <div className='flex items-center gap-4 px-5 py-4 border-b border-b-black/30'>
                     <img src={item.profile || profile} alt="" className='w-16 h-16' />
@@ -67,7 +70,7 @@ const TeacherMessageDialog = ({ handleFeedback, item }) => {
                             onChange={(e) => setFeedback(e.target.value)}
                             className='px-2 py-1 w-full rounded-md outline-none bg-[#919191]/10 text-[#919191] text-[12px]'
                         />
-                        {feedbackMutation.isPending &&  <LoaderSmall />}
+                        {feedbackMutation.isPending && <LoaderSmall />}
                         {!feedbackMutation.isPending &&
                             <IoSend size={20} onClick={() => { feedbackMutation.mutate() }} className='cursor-pointer' color='maroon' />
                         }

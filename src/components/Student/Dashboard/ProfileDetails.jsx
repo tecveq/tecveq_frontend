@@ -84,7 +84,7 @@ const ProfileDetails = ({ onclose }) => {
 
   return (
     <div className="relative justify-end items-end" ref={ref}>
-      <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 ">
+      <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg sm:w-96 w-72 ">
         <div className="flex flex-col w-full">
           <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
             <p className="text-xl font-medium">My Profile</p>
@@ -110,7 +110,7 @@ const ProfileDetails = ({ onclose }) => {
                   }
                 </p>
               </div>
-              <div className="flex flex-col gap-2 px-5 py-10 overflow-auto h-96 custom-scrollbar">
+              <div className="flex flex-col gap-2 px-5 py-10 overflow-y-auto h-96 no-scrollbar">
                 {allowedEdit &&
                   <CusotmInput
                     value={bio}

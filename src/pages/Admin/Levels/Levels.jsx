@@ -65,18 +65,18 @@ const Levels = () => {
                                             <div className="">
                                                 <p className="text-black/60"></p>
                                             </div>
-                                            <div className="flex gap-2">
-                                                <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
+                                            <div className="flex flex-col-reverse lg:flex-row gap-2">
+                                                <div className="flex items-center gap-2 px-4  py-2 bg-white border border-black/10 rounded-3xl">
                                                     <BiSearch />
                                                     <input
-                                                        className="outline-none b"
+                                                        className="outline-none "
                                                         type="text"
                                                         placeholder="Search"
                                                         value={searchText}
                                                         onChange={(e) => setSearchText(e.target.value)}
                                                     />
                                                 </div>
-                                                <p onClick={onAddLevel} className="flex items-center justify-center px-4 py-2 text-sm text-white cursor-pointer bg-[#6A00FF] rounded-3xl">
+                                                <p onClick={onAddLevel} className="flex items-center justify-center text-sm px-4 py-2 text-white cursor-pointer bg-[#6A00FF] rounded-3xl">
                                                     Add Level
                                                 </p>
                                             </div>

@@ -70,7 +70,7 @@ const Sidebar = () => {
   const Menubar = () => (
     <>
 
-      <div className="w-72 shadow-lg bg-[#0B1053] text-white z-50 h-screen px-4 md:px-8 overflow-y-auto custom-scrollbar">
+      <div className="w-full sm:w-72 shadow-lg bg-[#0B1053] text-white z-50 h-screen px-4 md:px-8 overflow-y-auto custom-scrollbar">
         <div className="py-5">
         <div className="text-white flex justify-end items-center ">
           <IoClose className="w-6 h-6 block sm:hidden hover:scale-105 cursor-pointer fixed" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
@@ -111,12 +111,12 @@ const Sidebar = () => {
   );
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
       <div className="px-3 cursor-pointer lg:hidden h-20 flex items-center justify-center tex-white" onClick={() => {
         setIsopen(!isopen)
         setIsSidebarOpen(!isSidebarOpen)
       }}>
-        <div className="flex justify-center border-2 bg-[#0B1053] text-white border-[#0B1053] rounded-md ml-2 w-9 h-fit" onClick={() => { setIsopen(!isopen) }}>
+        <div className="z-50 fixed ml-12 flex justify-center border-2 bg-[#0B1053] text-white border-[#0B1053] rounded-md w-9 h-fit" onClick={() => { setIsopen(!isopen) }}>
           <IoMdMenu className="w-6 h-6" />
         </div>
       </div>

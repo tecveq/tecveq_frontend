@@ -176,7 +176,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     }
 
     return <>
-      <div className="w-96 top-20 flex flex-col justify-between pb-10 right-0 absolute bg-white z-50 h-[90vh]">
+      <div className="w-96 top-20 flex flex-col justify-between pb-10 absolute bg-white z-50 h-[90vh] fixed ">
 
         <div className="h-full">
           <div className="shadow-xl">
@@ -230,7 +230,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     <>
       <div
         className={` ${!dashboard ? "mt-10" : "mt-0"
-          } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20 shadow-xl top-20 ${showFullChat ? "right-96" : "right-0"} w-96`}
+          } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20 shadow-xl top-20 ${showFullChat ? "sm:right-96" : "right-0"} w-96`}
       >
         <div className={`flex flex-col flex-1 font-poppins`}>
           <div className="flex justify-between py-5 ">

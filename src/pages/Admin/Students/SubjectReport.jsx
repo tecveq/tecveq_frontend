@@ -135,7 +135,7 @@ const SubjectReport = () => {
                 <Navbar heading={"Subjects Report"} />
                 <div className="mt-7">
                   <div className="flex flex-col items-center justify-center gap-1">
-                    <img src={studentData.profilePic || IMAGES.Profile} alt="" className="w-40 h-40 rounded-full" />
+                    <img src={studentData.profilePic || IMAGES.Profile} alt="" className="sm:w-40 sm:h-40 w-20 h-20 rounded-full" />
                     <p className="text-lg font-semibold">{studentData.name}</p>
                     <div className="flex items-center gap-2 text-xs">
                       <LuPhone />
@@ -149,7 +149,7 @@ const SubjectReport = () => {
                 </div>
 
                 <div className="w-full justify-end items-center flex">
-                  <button className="py-3 px-4 bg-[#0B1053] text-white rounded-full" onClick={() => {
+                  <button className="sm:py-3 sm:px-4 py-2 px-2 bg-[#0B1053] text-white rounded-full" onClick={() => {
                     // Refetch student subjects before opening modal
                     refetchStudentSubjects();
                     setEditSubject(!editSubject);
@@ -157,7 +157,7 @@ const SubjectReport = () => {
                 </div>
                 <div className="mt-7">
                   <div className="flex flex-col gap-2">
-                    <div className="flex justify-between">
+                    <div className="flex flex-col md:flex-row justify-between">
                       <p className="md:text-[20px]">Overview</p>
                       <div className="flex items-center gap-4 border bg-white border-[#00000020] px-4 py-2 rounded-3xl">
                         <select className="outline-none w-60" value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)} >

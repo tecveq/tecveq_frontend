@@ -59,7 +59,7 @@ const ProfileDetails = ({ onclose }) => {
   };
 
   return (
-    <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96" ref={ref}>
+    <div className="absolute top-0  right-0 z-10 flex bg-white rounded-md shadow-lg sm:w-96 w-72" ref={ref}>
       <div className="flex flex-col">
         <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
           <p className="text-xl font-medium">My Profile</p>
@@ -73,7 +73,7 @@ const ProfileDetails = ({ onclose }) => {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center text-center">
-              <img src={IMAGES.Profile} alt="" className="w-28 h-28" />
+              <img src={IMAGES.Profile} alt="" className="sm:w-28 sm:h-28 w-20 h-20" />
               <p>{selectedChild.name}</p>
               <p>Bio</p>
               <p>

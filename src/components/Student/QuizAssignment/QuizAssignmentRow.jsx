@@ -9,12 +9,14 @@ import { uploadFile } from '../../../utils/FileUpload';
 import { formatDate } from '../../../constants/formattedDate';
 import { submitAssignment } from '../../../api/Student/Assignments';
 import { useUser } from '../../../context/UserContext';
+import { useSidebar } from '../../../context/SidebarContext';
 
 const QuizAssignmentRow = (props) => {
 
     const [timePassed, setTimePassed] = useState(false);
     const [timeLeft, setTimeLeft] = useState('');
     const [isUploaded, setIsUploadded] = useState(false);
+    const { isSidebarOpen } = useSidebar();
 
     const { userData } = useUser();
 
@@ -96,13 +98,13 @@ const QuizAssignmentRow = (props) => {
         <>
             <div className='min-w-full'>
                 <div className='border-b border-grey md:py-5 py-2 md:pl-3 md:pr-5  '>
-                    <div style={{ backgroundColor: props.bgColor, }} className={`flex flex-row items-center  mt-2`}>
-                        <p className={`w-full md:flex-[1] flex-[1] md:text-[14px] text-[11px] text-center md:text-left ${props.header ? 'font-semibold' : ''}`}>{props.index + "."}</p>
+                    <div style={{ backgroundColor: props.bgColor, }} className={`flex flex-row items-center  mt-2 space-x-3`}>
+                        <p className={`w-full md:flex-[1] flex-[1] md:text-[14px] sm:text-[11px] text-[9px] text-center md:text-left ${props.header ? 'font-semibold' : ''}`}>{props.index + "."}</p>
                         <p className={`w-full md:flex-[3] my-1 md:my-0  md:text-[14px] text-[11px] md:text-center ${props.header ? 'font-semibold' : ''}`}>{props.subject}</p>
-                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.title}</p>
-                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.header ? props.deadline : formatDate(props.deadline)}</p>
-                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>{props.total_marks}</p>
-                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? 'font-semibold' : ''}`}>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  sm:text-[11px] text-[9px] ${props.header ? 'font-semibold' : ''}`}>{props.title}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  sm:text-[11px] text-[9px] ${props.header ? 'font-semibold' : ''}`}>{props.header ? props.deadline : formatDate(props.deadline)}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  sm:text-[11px] text-[9px] ${props.header ? 'font-semibold' : ''}`}>{props.total_marks}</p>
+                        <p className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  sm:text-[11px] text-[9px] ${props.header ? 'font-semibold' : ''}`}>
                             {props.header ? (
                                 "Download"
                             ) : (
@@ -142,7 +144,7 @@ const QuizAssignmentRow = (props) => {
                         }
 
                     </div>
-                    <div className="mt-4 relative">
+                    <div className={`mt-4 relative ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
                         {props.text && (
 
                             <>

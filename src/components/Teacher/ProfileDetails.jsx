@@ -111,7 +111,7 @@ const ProfileDetails = ({ onclose }) => {
 
   return (
     <div className=" relative w-full justify-end items-end" ref={ref}>
-      <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg w-96 md:w-full">
+      <div className="absolute top-0 right-0 z-10 flex bg-white rounded-md shadow-lg sm:w-96 w-80 md:w-full">
         <div className="flex flex-col flex-1 w-full my-5">
           <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
             <p className="text-xl font-medium">My Profile</p>

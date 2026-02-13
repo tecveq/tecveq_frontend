@@ -3,11 +3,14 @@ import axios from "axios";
 import { BACKEND_URL } from "../../../constants/api";
 import { Upload, File, Info, Download } from "lucide-react";
 import { toast } from "react-toastify";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const AddCSVFileComponent = () => {
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+      const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
+    
 
 
 
@@ -106,7 +109,7 @@ const AddCSVFileComponent = () => {
                     {/* File Upload Form */}
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                         <label className="font-medium">Choose a CSV File</label>
-                        <div className="relative flex items-center">
+                        <div className={`relative flex items-center ${isSidebarOpen ? "-z-50" : "z-auto"} `}>
                             {/* Hidden File Input */}
                             <input type="file" accept=".csv" onChange={handleFileChange} className="hidden" id="fileInput" />
                             {/* Styled Label */}

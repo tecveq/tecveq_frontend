@@ -5,8 +5,11 @@ import { PiDotsThreeOutlineVerticalLight } from 'react-icons/pi'
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import moment from 'moment';
+import { useSidebar } from '../../../context/SidebarContext';
 
 const AnnouncementCard = ({announcement, deleteAnnouncement, editAnnouncement, refetch}) => {
+  
+    const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
 
     const DotsMenu = () => {
         return (
@@ -40,7 +43,7 @@ const AnnouncementCard = ({announcement, deleteAnnouncement, editAnnouncement, r
             <div className='flex flex-col gap-2'>
                 <div className='flex justify-between items-center'>
                     <p className='text-xl font-semibold'>{announcement.title}</p>
-                    <div className='flex gap-4 items-center text-xs relative text-black/50'>
+                    <div className={`flex gap-4 items-center text-xs relative text-black/50 ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
                         <div className='flex gap-2 items-center'>
                             <p><MdOutlinePerson2 size={16} /> </p>
                             <p>{announcement?.date?.split("T")[0]} { /*{moment.utc(announcement.date).format("hh:mm A")} */} </p>

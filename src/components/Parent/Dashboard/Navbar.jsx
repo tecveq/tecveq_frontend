@@ -16,6 +16,7 @@ import { getAllNotifications } from "../../../api/Admin/NotificationApi";
 import moment from "moment";
 import { Dot } from "recharts";
 import { useNavigate } from "react-router-dom";
+import { useSidebar } from "../../../context/SidebarContext";
 
 
 const Navbar = ({ heading }) => {
@@ -113,12 +114,15 @@ const Navbar = ({ heading }) => {
 
 
   const { userData } = useUser();
+    const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
+  
+
 
   return (
     <div className="flex flex-1 items-center justify-center h-20">
       <div className={`flex justify-end gap-2  md:justify-between flex-1 py-3 md:py-5 ${isBlurred ? "blur" : ""}`}>
         {heading ?
-          <div className="flex justify-start items-center text-xl md:text-3xl font-semibold">{heading}</div>
+          <div className="flex justify-start items-center text-base sm:text-xl md:text-3xl font-semibold">{heading}</div>
           :
           <div className=" flex-col hidden md:flex">
             <p className="text-xl font-semibold ">Hello {userData.name} </p>
@@ -126,20 +130,20 @@ const Navbar = ({ heading }) => {
           </div>
         }
         <div className="flex items-center  gap-2">
-          <div className="flex gap-4">
+          <div className="flex gap-2 sm:gap-4">
             <div
-              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-[#0B1053] text-white" : ""
+              className={`p-2 h-8 sm:auto border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${mail ? "bg-[#0B1053] text-white" : ""
                 }`}
               onClick={toggleMail}
             >
               <IoMailOutline />
             </div>
-            <div className="relative">
+            <div className={`relative ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
               <div
-                className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 `}
+                className={`p-2 h-8 sm:auto border cursor-pointer rounded-md border-black/50 transition-all duration-500 `}
                 onClick={handleBellClick}
               >
-                <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""}`}>
+                <div className={`${hasNewNotifications ? "animate-bellShake text-green_dark" : ""} `}>
                   <CiBellOn />
                 </div>
 
@@ -155,7 +159,7 @@ const Navbar = ({ heading }) => {
               alt="profile"
               src={IMAGES.Profile}
               onClick={toggleProfielMenu}
-              className="w-12 h-12 cursor-pointer"
+              className="sm:w-12 w-8 h-8 sm:h-12 cursor-pointer"
             />
             <FaChevronDown
               className="cursor-pointer"

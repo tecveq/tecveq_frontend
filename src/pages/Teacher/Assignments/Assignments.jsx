@@ -64,76 +64,72 @@ const Assignments = () => {
       <>
         <div className="flex flex-1 bg-[#F9F9F9] font-poppins">
           <div className="flex flex-1">
-            <div
-              className={`w-full h-screen lg:px-12 sm:px-10  flex-grow lg:ml-72`}
-            >
-              <div className="h-screen pt-1">
-                <Navbar heading={"Assignment"} />
-                <div className={`px-3`}>
-                  <div className="flex justify-end my-2">
-                    <div
-                      className="flex cursor-pointer bg-[#6A00FF] hover:bg-[#007EEA] rounded-3xl"
-                      onClick={() => {
-                        setCreateModalOpen(true);
-                        toggleBlur();
-                      }}
-                    >
-                      <p className="px-4 py-2 text-white">Create new +</p>
-                    </div>
+            <div className={`w-full flex-grow lg:ml-72`}>
+              <Navbar heading={"Assignment"} />
+              <div className="p-4 lg:px-12">
+                <div className="flex justify-end my-2">
+                  <div
+                    className="flex cursor-pointer bg-[#6A00FF] hover:bg-[#007EEA] rounded-3xl"
+                    onClick={() => {
+                      setCreateModalOpen(true);
+                      toggleBlur();
+                    }}
+                  >
+                    <p className="px-4 py-2 text-white">Create new +</p>
                   </div>
-                  <div className="mt-8 h-[80%] overflow-auto">
+                </div>
+                <div className="mt-8 h-[80%] overflow-auto">
 
+                  <QuizAssignmentRow
+                    isQuiz={false}
+                    index={"Sr. No"}
+                    assignedOn={"Assigned On"}
+                    title={"Title"}
+                    deadline={"Deadline"}
+                    bgColor={"#F9F9F9"}
+                    header={true}
+                    submissions={"Submissions"}
+                    actions={"Actions"}
+
+                  />
+
+                  {isSuccess && data.map((assignment, index) => (
                     <QuizAssignmentRow
+                      key={assignment._id}
+                      id={assignment._id}
+                      alldata={assignment}
+                      toggleAssignmentMenu={(e) => toggleAssignmentMenuOpen(e)}
+                      data={assignment}
                       isQuiz={false}
-                      index={"Sr. No"}
-                      assignedOn={"Assigned On"}
-                      title={"Title"}
-                      deadline={"Deadline"}
-                      bgColor={"#F9F9F9"}
-                      header={true}
-                      submissions={"Submissions"}
-                      actions={"Actions"}
-
+                      index={index + 1}
+                      assignedOn={assignment.createdAt}
+                      title={assignment.title}
+                      deadline={assignment.dueDate}
+                      bgColor={"#FFFFFF"}
+                      header={false}
+                      submissions={assignment.submissions.length}
+                      actions={
+                        <div className="flex gap-1 lg:gap-3 justify-center items-center">
+                          <span className="text-[blue] cursor-pointer" onClick={() => {
+                            setSelectedAssignments(assignment);
+                            setIsEdit(true)
+                            toggleBlur();
+                          }}><MdEdit className="w-6 h-6" /></span>
+                          <span className="text-[blue] cursor-pointer" onClick={() => {
+                            setSelectedAssignments(assignment);
+                            setIsShow(true)
+                            toggleBlur();
+                          }}><FaEye className="w-6 h-6" /></span>
+                          <span className="text-red cursor-pointer " onClick={() => {
+                            assignmentDellMutate.mutate(assignment?._id);
+                          }}><MdDelete className="w-6 h-6" /></span>
+                        </div>
+                      }
                     />
+                  ))}
 
-                    {isSuccess && data.map((assignment, index) => (
-                      <QuizAssignmentRow
-                        key={assignment._id}
-                        id={assignment._id}
-                        alldata={assignment}
-                        toggleAssignmentMenu={(e) => toggleAssignmentMenuOpen(e)}
-                        data={assignment}
-                        isQuiz={false}
-                        index={index + 1}
-                        assignedOn={assignment.createdAt}
-                        title={assignment.title}
-                        deadline={assignment.dueDate}
-                        bgColor={"#FFFFFF"}
-                        header={false}
-                        submissions={assignment.submissions.length}
-                        actions={
-                          <div className="flex gap-3 justify-center items-center">
-                            <span className="text-[blue] cursor-pointer" onClick={() => {
-                              setSelectedAssignments(assignment);
-                              setIsEdit(true)
-                              toggleBlur();
-                            }}><MdEdit className="w-6 h-6" /></span>
-                            <span className="text-[blue] cursor-pointer" onClick={() => {
-                              setSelectedAssignments(assignment);
-                              setIsShow(true)
-                              toggleBlur();
-                            }}><FaEye className="w-6 h-6" /></span>
-                            <span className="text-red cursor-pointer " onClick={() => {
-                              assignmentDellMutate.mutate(assignment?._id);
-                            }}><MdDelete className="w-6 h-6" /></span>
-                          </div>
-                        }
-                      />
-                    ))}
+                  {data.length == 0 && <div className="text-center py-4 text-3xl font-medium">No assignemnts to display!</div>}
 
-                    {data.length == 0 && <div className="text-center py-4 text-3xl font-medium">No assignemnts to display!</div>}
-
-                  </div>
                 </div>
               </div>
             </div>

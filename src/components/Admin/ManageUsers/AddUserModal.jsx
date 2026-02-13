@@ -264,7 +264,7 @@ const AddUserModal = ({ closeModal, refetch }) => {
 
 
     return (
-        <div className='absolute w-96 border h-screen border-black/20 z-10 bg-white right-0 top-0'
+        <div className='absolute sm:w-96 w-72 border h-screen border-black/20 z-10 bg-white right-0 top-0'
         // ref={ref}
         >
             <div className='flex flex-col gap-2 h-full'>

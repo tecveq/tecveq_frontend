@@ -76,7 +76,7 @@ const Notifications = ({ onclose, dashboard }) => {
   };
 
   return (
-    <div className={` ${!dashboard ? "mt-10" : "mt-0"} z-10 fixed flex h-screen px-5 md:overflow-auto bg-white shadow-xl top-20 right-0 md:right-2 w-80 md:w-96`}>
+    <div className={` ${!dashboard ? "mt-10" : "mt-0"} z-10 fixed flex h-screen px-5 md:overflow-auto bg-white shadow-xl top-20 right-0 md:right-2 md:w-96 w-72`}>
       <div className="flex flex-col w-full font-poppins">
         <div className="flex justify-between py-5 ">
           <p className="text-lg font-semibold">Announcements</p>

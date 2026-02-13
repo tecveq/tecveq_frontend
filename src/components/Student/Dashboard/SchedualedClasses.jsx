@@ -6,11 +6,13 @@ import { GoDotFill } from "react-icons/go";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useStudent } from "../../../context/StudentContext";
 import moment from "moment";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const ScheduledClasses = () => {
   const { allClasses } = useStudent();
   const [selectedDate, setSelectedDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [filteredClasses, setFilteredClasses] = useState([]);
+  const { isSidebarOpen } = useSidebar();
 
   useEffect(() => {
     if (allClasses.length > 0) {
@@ -125,7 +127,7 @@ const ScheduledClasses = () => {
         <div className="flex">
           <p className="text-lg font-medium">Scheduled Classes</p>
         </div>
-        <div className="flex flex-col gap-1 p-3 bg-white rounded-lg lg:flex-row">
+        <div className={`flex flex-col gap-1 p-3 bg-white rounded-lg lg:flex-row ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
           <div className="flex-1 p-2">
             <CustomCalendar setSelectedDateFromChild={setSelectedDate} classesArray={allClasses} />
           </div>

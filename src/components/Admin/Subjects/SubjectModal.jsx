@@ -85,8 +85,8 @@ const SubjectModal = ({ open, setopen, refetch, isEditTrue, subjectData, allLeve
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-8 w-[500px] px-20 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center flex ${open ? "" : "hidden"
-        }`}
+      className={`fixed z-10 mt-10 bg-white p-8 w-[300px] sm:w-[500px] sm:px-20 px-3 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center flex items-center justify-center py-2 ${open ? "" : "hidden"
+        } `}
     >
       <div className="flex flex-1 gap-2">
         <div className="flex flex-col w-full gap-4">

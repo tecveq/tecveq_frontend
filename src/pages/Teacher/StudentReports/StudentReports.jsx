@@ -54,7 +54,7 @@ const FilterPopup = ({
   return (
     <div
       ref={ref}
-      className={`absolute z-10 top-40 bg-white p-8 w-[400px] text-black rounded-xl right-48 ${open ? "" : "hidden"
+      className={`absolute z-10 top-40 bg-white p-8 w-[400px] text-black rounded-xl sm:right-48 ${open ? "" : "hidden"
         }`}
     >
       <div className="flex gap-2">

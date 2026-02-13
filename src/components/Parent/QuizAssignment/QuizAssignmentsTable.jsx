@@ -12,8 +12,8 @@ const QuizAssignmentsTable = ({ data, type }) => {
             <div className="flex flex-col flex-1 gap-2">
                 <div className="flex flex-1">
                     <table className="flex flex-col flex-1 bg-white rounded-lg table-fixed">
-                        <thead className="flex gap-5 px-2 py-3 rounded-tl-lg rounded-tr-lg border-t-[#0B1053] bg-[#b1b5ee]">
-                            <tr className="flex flex-1">
+                        <thead className="flex gap-8 px-2 py-3 rounded-tl-lg rounded-tr-lg border-t-[#0B1053] bg-[#b1b5ee]">
+                            <tr className="flex flex-1 space-x-5">
                                 <td className="flex-[1] flex justify-center md:text-[15px] text-[13px]">Sr No.</td>
                                 <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Title</td>
                                 <td className="flex-[3] flex justify-center md:text-[15px] text-[13px]">Obtained Marks</td>

@@ -18,11 +18,11 @@ const Announcements = () => {
 
         <div className="flex flex-col gap-3 bg-grey_600/10 w-full p-4 rounded-2xl">
           {/* <RxDotFilled /> */}
-          <div className="flex justify-between items-center w-full">
+          <div className="flex flex-col sm:flex-row justify-between items-center w-full">
             <div className="font-bold">{item.title}  </div>
             <div>{new Date(item.date).toLocaleString()}</div>
           </div>
-          <p>
+          <p align="center">
             {item.description}
 
           </p>

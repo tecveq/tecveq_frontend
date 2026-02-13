@@ -314,7 +314,7 @@ const CreateQuizAssignmentModal = ({
         <div className="flex flex-col w-full gap-4">
           <div className="flex items-center justify-between">
             <div className="flex justify-center flex-1 w-[fit] gap-2 items-center">
-              <p className="text-2xl font-semibold cursor-text">
+              <p className="text-xl sm:text-2xl font-medium sm:font-semibold cursor-text">
                 Create new {isQuiz ? "Quiz" : "Assignment"}
               </p>
             </div>

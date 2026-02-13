@@ -119,15 +119,15 @@ const Submissions = () => {
           <div className="flex flex-1">
             <div
               className={`w-full ${isBlurred ? "blur" : ""
-                } h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
+                } flex-grow lg:ml-72 px-4 md:px-10 lg:px-20`}
             >
-              <div className="h-screen pt-8 ">
-                <div className="flex flex-row items-center justify-between flex-grow">
-                  <div className="flex items-center gap-4">
-                    <p className="font-semibold text-[20px] md:text-[24px]">
+              <div className="pt-8 ">
+                <div className="ml-7 sm:auto flex flex-row items-center justify-between flex-grow">
+                  <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
+                    <p className="ml-3 font-semibold text-[20px] md:text-[24px]">
                       Submissions
                     </p>
-                    <div className="flex items-center gap-1 text-xs">
+                    <div className="flex items-center gap-1 text-[10px] md:text-xs">
                       <IoBookOutline />
                       <MdOutlineKeyboardArrowRight />
                       <p className="cursor-pointer" onClick={onAssignmentClick}>
@@ -147,7 +147,7 @@ const Submissions = () => {
                         alt=""
                         className="md:w-[22px] md:h-[22px] w-[13px] h-[13px]"
                       />
-            
+
                     </div>
                     <div className="p-1 bg-white rounded-sm cursor-pointer border-1 border-grey">
                       <img
@@ -198,7 +198,7 @@ const Submissions = () => {
                     <div className="">
                       <p className="text-black/60">Total Submissions: {data?.submissions.length}</p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <div className="flex items-center gap-2 px-4 py-2 bg-white border border-black/10 rounded-3xl">
                         <BiSearch />
                         <input
@@ -209,7 +209,7 @@ const Submissions = () => {
                           placeholder="Search"
                         />
                       </div>
-                      <p className="flex items-center justify-center px-4 py-2 text-sm text-white bg-maroon rounded-3xl cursor-pointer" onClick={handleDownloadAll}>
+                      <p className="flex items-center justify-center px-4 py-2 text-sm text-white bg-[#6A00FF] rounded-3xl cursor-pointer" onClick={handleDownloadAll}>
                         Download All
                       </p>
                     </div>

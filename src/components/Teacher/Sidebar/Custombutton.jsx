@@ -14,9 +14,8 @@ const Custombutton = ({ title, active, onpress, icon }) => {
         onClick={() => {
           onpress();
         }}
-        className={`flex items-center justify-start gap-4 text-lg px-3 w-56 py-2  rounded-md cursor-pointer ${
-          active ? "bg-[#e8e9f5] text-white" : "transparent"
-        }`}
+        className={`flex items-center justify-start gap-4 text-lg px-3 w-56 py-2  rounded-md cursor-pointer ${active ? "bg-[#e8e9f5] text-white" : "transparent"
+          }`}
       >
         {icon == "home" ? (
           <GoHome color={`${active ? "#0B1053" : "white"}`} />
@@ -29,7 +28,7 @@ const Custombutton = ({ title, active, onpress, icon }) => {
         ) : (
           (icon = "quiz" ? <LuCalendar color={`${active ? "#0B1053" : "white"}`} /> : "")
         )}
-        <p className={`${active ? "text-[#0B1053]" : "white"}`}>{title}</p>
+        <p className={`${active ? "text-[#0B1053]" : "text-white"}`}>{title}</p>
       </div>
     </div>
   );

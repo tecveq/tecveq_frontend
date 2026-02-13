@@ -296,11 +296,11 @@ const RecentMessages = ({ onclose, dashboard }) => {
           }
         </div>
         <div ref={msgEndRef} />
-        <div className="px-10">
+        <div className="px-5 sm:px-10">
           <div className="flex items-center gap-2">
-            <input type="text" value={msgstr} onChange={(e) => { setmsgStr(e.target.value) }} onKeyDown={handleKeyDown} placeholder="Message" className="border-black/20 border rounded-lg py-2 px-2 outline-none" />
-            <RiAttachment2 className=" text-[#0B1053] cursor-pointer" size={24} />
-            <BsFillSendFill className="bg-[#0B1053] text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessage(msgstr); setmsgStr(""); }} />
+            <input type="text" value={msgstr} onChange={(e) => { setmsgStr(e.target.value) }} onKeyDown={handleKeyDown} placeholder="Message" className="flex-1 border-black/20 border rounded-lg py-2 px-2 outline-none w-full" />
+            <RiAttachment2 className=" text-[#0B1053] cursor-pointer shrink-0" size={24} />
+            <BsFillSendFill className="bg-[#0B1053] text-white p-2 rounded-md cursor-pointer shrink-0" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessage(msgstr); setmsgStr(""); }} />
           </div>
         </div>
       </div>
@@ -318,7 +318,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     }
 
     return <>
-      <div className="w-96 top-20 flex flex-col justify-between pb-10 right-0 absolute bg-white z-50 h-[90vh]">
+      <div className="sm:w-96 w-72 top-20 flex flex-col justify-between pb-10 right-0 absolute bg-white z-50 h-[90vh]">
         <div className="h-full">
           <div className="shadow-xl">
             <div className="flex justify-between px-10 py-5 items-center">
@@ -338,11 +338,11 @@ const RecentMessages = ({ onclose, dashboard }) => {
             </div>}
         </div>
         <div ref={msgEndRef} />
-        <div className="px-10">
+        <div className="px-5 sm:px-10">
           <div className="flex items-center gap-2">
-            <input type="text" value={msgstr} onChange={(e) => { setmsgStr(e.target.value) }} onKeyDown={handleKeyDown} placeholder="Message" className="border-black/20 border rounded-lg py-2 px-2 outline-none" />
-            <RiAttachment2 className=" text-[#0B1053] cursor-pointer" size={24} />
-            <BsFillSendFill className="bg-[#0B1053] text-white p-2 rounded-md cursor-pointer" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessageParent(msgstr); setmsgStr(""); }} />
+            <input type="text" value={msgstr} onChange={(e) => { setmsgStr(e.target.value) }} onKeyDown={handleKeyDown} placeholder="Message" className="flex-1 border-black/20 border rounded-lg py-2 px-2 outline-none w-full" />
+            <RiAttachment2 className=" text-[#0B1053] cursor-pointer shrink-0" size={24} />
+            <BsFillSendFill className="bg-[#0B1053] text-white p-2 rounded-md cursor-pointer shrink-0" size={34} onClick={() => { msgstr == "" ? toast.error("Cannot send an empty message") : handleSendMessageParent(msgstr); setmsgStr(""); }} />
           </div>
         </div>
       </div>
@@ -377,7 +377,7 @@ const RecentMessages = ({ onclose, dashboard }) => {
     <>
       <div
         className={` ${!dashboard ? "mt-10" : "mt-0"
-          } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20  shadow-xl top-20 ${showFullChat || showParentChat ? "right-96" : "right-0"} w-96`}
+          } fixed z-10 flex h-screen px-5 overflow-auto bg-white border-r border-black/20  shadow-xl top-20 ${showFullChat || showParentChat ? "sm:right-96 right-0" : "right-0"} sm:w-96 w-full`}
         ref={msgEndRef}
       >
         <div className={`flex flex-col flex-1 font-poppins`}>

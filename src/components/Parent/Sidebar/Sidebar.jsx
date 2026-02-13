@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../../utils/Loader";
 import { logout } from "../../../api/User/UserApi";
 import { IoClose } from "react-icons/io5";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -17,12 +18,12 @@ const Sidebar = () => {
   const [assignments, setAssignments] = useState(false);
   const [dashboard, setDashboard] = useState(true);
   const [loading, setLoading] = useState(false);
-
-  const [isopen, setIsopen] = useState(false);
+  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
 
   const toggleSidebar = () => {
     console.log("here");
     setIsopen(!isopen);
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   const handleDashboardClick = async () => {
@@ -31,7 +32,8 @@ const Sidebar = () => {
     setReports(false);
     setAssignments(false);
     setTimetable(false);
-    setIsopen(!isopen);
+    setIsSidebarOpen(false);
+    setIsopen(false);
     navigate("/parent/dashboard");
   };
 
@@ -41,7 +43,8 @@ const Sidebar = () => {
     setReports(true);
     setAssignments(false);
     setTimetable(false);
-    setIsopen(!isopen);
+    setIsSidebarOpen(false);
+    setIsopen(false);
     navigate("/parent/reports");
   };
 
@@ -51,7 +54,8 @@ const Sidebar = () => {
     setReports(false);
     setAssignments(false);
     setTimetable(false);
-    setIsopen(!isopen);
+    setIsSidebarOpen(false);
+    setIsopen(false);
     navigate("/parent/quizzes");
   };
 
@@ -61,7 +65,8 @@ const Sidebar = () => {
     setReports(false);
     setAssignments(true);
     setTimetable(false);
-    setIsopen(!isopen);
+    setIsSidebarOpen(false);
+    setIsopen(false);
     navigate("/parent/assignments");
   };
 
@@ -82,15 +87,18 @@ const Sidebar = () => {
 
   const Menubar = () => (
     <div
-      className={`w-72 sm:w-75 h-lvh shadow-lg bg-[#0B1053]   px-4 md:px-8 flex flex-col justify-between z-50 relative`}
+      className={`sm:w-72 w-full h-screen  shadow-lg bg-[#0B1053]   px-4 md:px-8 flex flex-col justify-between z-50 relative`}
     >
-      <div className="py-5">
-      <div className="text-white flex justify-end items-center ">
-                <IoClose className="w-6 h-6 block lg:hidden hover:scale-105 cursor-pointer"  onClick={() => setIsopen(false)}  />
-              </div>
-      
+      <div>
+        <div className="text-white flex justify-end items-center ">
+          <IoClose className="w-6 h-6 mt-3 block lg:hidden hover:scale-105 cursor-pointer" onClick={() => {
+            setIsopen(false)
+            setIsSidebarOpen(false)
+          }} />
+        </div>
+
         <div className="flex justify-start">
-          <img className="w-5/12 h-5/12 mb-4" src={logo} alt="logo-TCA" />
+          <img className="sm:w-32 sm:h-10 w-5/12 h-5/12 mb-4 sm:mt-6" src={logo} alt="logo-TCA" />
         </div>
         <div className="flex flex-col gap-1 py-2 border-b border-b-black">
           <Custombutton
@@ -133,21 +141,21 @@ const Sidebar = () => {
   );
 
   return (
-    <div className=" bg-[#0B1053]flex flex-col">
+    <div className="flex flex-col">
       <div
         className="px-3 py-3 flex justify-end items-center cursor-pointer lg:hidden h-20"
         onClick={toggleSidebar}
       >
-        
-        <div className="flex justify-center bg-[#0B1053] border-2 rounded-md w-9 h-10">
+
+        <div className="flex justify-center items-center bg-[#0B1053] border-2 rounded-md w-8 h-8">
           <div className="flex flex-col gap-2 py-2">
-            <p className="w-6 bg-white h-0.5"></p>
-            <p className="w-6 bg-white h-0.5"></p>
-            <p className="w-6 bg-white h-0.5"></p>
+            <p className="w-5 bg-white h-0.5"></p>
+            <p className="w-5 bg-white h-0.5"></p>
+            <p className="w-5 bg-white h-0.5"></p>
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isopen ? "block" : "hidden"} fixed`}>
+      <div className={`h-full lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed z-50`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">

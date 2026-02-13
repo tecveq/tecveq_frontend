@@ -3,10 +3,12 @@ import { Circle } from "rc-progress";
 import React from "react";
 import { getAllAssignments } from "../../../api/Teacher/Assignments";
 import Loader from "../../../utils/Loader";
+import { useSidebar } from "../../../context/SidebarContext";
 
 const LastDeliverables = () => {
 
   const { data, isPending, isSuccess, isError, refetch, isRefetching } = useQuery({ queryKey: ["assignments"], queryFn: getAllAssignments });
+  const { isSidebarOpen } = useSidebar();
   console.log("deliverable is : ", data)
 
   const DeliverableComponent = ({deliverable}) => {
@@ -20,7 +22,7 @@ const LastDeliverables = () => {
             trailColor="#EAECF0"
             trailWidth={12}
           />
-          <div className="absolute flex flex-col items-center z-10">
+          <div className={`absolute flex flex-col items-cente ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
             <span className="text-[7px] md:text-[10px] z-10">Submission</span>
             <div className="flex">
               <span className="text-[7px] text-base font-semibold">{((deliverable?.submissions?.length/deliverable?.classroomID?.students?.length)*100).toFixed(0)} %</span>

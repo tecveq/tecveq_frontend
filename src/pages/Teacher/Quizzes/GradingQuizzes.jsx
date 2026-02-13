@@ -133,15 +133,15 @@ const GradingQuizzes = () => {
       <div className="flex flex-1">
         <div
           className={`w-full ${isBlurred ? "blur" : ""
-            } h-screen lg:px-20 sm:px-10 px-3 flex-grow lg:ml-72`}
+            } flex-grow lg:ml-72 px-4 md:px-10 lg:px-20`}
         >
-          <div className="h-screen pt-8 ">
+          <div className="pt-8 ">
             <div className="flex flex-row items-center justify-between flex-grow">
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
                 <p className="font-semibold text-[20px] md:text-[24px]">
                   Grading Quizzes
                 </p>
-                <div className="flex items-center gap-1 text-xs">
+                <div className="flex items-center gap-1 text-[10px] md:text-xs">
                   <IoBookOutline />
                   <MdOutlineKeyboardArrowRight />
                   <p className="cursor-pointer" onClick={onAssignmentClick}>
@@ -255,21 +255,21 @@ const GradingQuizzes = () => {
               ))}
 
               {!gradingData.isPending && searchText !== "" && gradingData?.map((submission, index) => {
-                if(submission?.studentID?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())){
+                if (submission?.studentID?.name?.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())) {
                   return <GradeQuizAssignmentRow
-                  isQuiz={false}
-                  header={false}
-                  index={index + 1}
-                  bgColor={"#FFFFFF"}
-                  grade={submission?.grade}
-                  marks={submission?.marks}
-                  profileLink={submission.studentID.profilePic || IMAGES.Profile}
-                  setInputField={setInputField}
-                  id={submission?.studentID?._id}
-                  feedback={submission?.feedback}
-                  name={submission?.studentID?.name}
-                  marksObtained={submission?.marksObtained}
-                  submission={submission?.submission?.submittedAt || "Not Submitted Yet"}
+                    isQuiz={false}
+                    header={false}
+                    index={index + 1}
+                    bgColor={"#FFFFFF"}
+                    grade={submission?.grade}
+                    marks={submission?.marks}
+                    profileLink={submission.studentID.profilePic || IMAGES.Profile}
+                    setInputField={setInputField}
+                    id={submission?.studentID?._id}
+                    feedback={submission?.feedback}
+                    name={submission?.studentID?.name}
+                    marksObtained={submission?.marksObtained}
+                    submission={submission?.submission?.submittedAt || "Not Submitted Yet"}
                   />
                 }
               }

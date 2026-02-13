@@ -29,7 +29,7 @@ const DataRows = ({
             }`}
         >
           <img
-            className=" rounded-full h-9 w-9 object-cover"
+            className=" rounded-full md:h-7 md:w-7 sm:h-5 sm:w-5 object-cover"
             src={studentProfile}
             alt="Student Profile"
           />{" "}

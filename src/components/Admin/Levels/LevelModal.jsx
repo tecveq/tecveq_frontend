@@ -63,7 +63,7 @@ const LevelModal = ({ open, setopen, refetch, isEditTrue, levelData, setEditTrue
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-8 w-[500px] px-20 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center flex ${open ? "" : "hidden"
+      className={`fixed z-10 mt-10 bg-white p-8 sm:w-[500px] w-72 sm:px-20 px-5 border border-black/20 shadow-md text-black rounded-xl ml-5 md:ml-96 place-self-center flex ${open ? "" : "hidden"
         }`}
     >
       <div className="flex flex-1 gap-2">

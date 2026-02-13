@@ -114,7 +114,7 @@ const Notifications = ({ onclose, dashboard, data }) => {
   };
 
   return (
-    <div className={` ${!dashboard ? "mt-10" : "mt-0"} z-10 fixed flex h-full px-5 md:overflow-auto custom-scrollbar bg-white shadow-xl top-0 right-0 md:right-2 w-80 md:w-96`}>
+    <div className={` ${!dashboard ? "mt-10 h-[calc(100vh-2.5rem)]" : "mt-0 h-full"} z-10 fixed flex px-5 overflow-y-auto no-scrollbar bg-white shadow-xl top-0 right-0 md:right-2 w-80 md:w-96`}>
       <div className="flex flex-col w-full font-poppins">
         <div className="flex justify-between py-5 ">
           {/* Toggle Buttons */}

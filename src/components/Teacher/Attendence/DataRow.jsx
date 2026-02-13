@@ -18,19 +18,19 @@ const DataRow = (props) => {
       >
         <div className="flex flex-row items-center flex-1 py-[4px] mt-1 md:pl-3 md:pr-5 ">
           <p
-            className={`w-full md:flex-[1] flex-[1] md:text-[14px] text-[11px] text-center md:text-left ${props.header ? "font-semibold" : ""
+            className={`w-full md:flex-[1] flex-[1] md:text-[14px] sm:text-[11px] text-[9px] text-center md:text-left ${props.header ? "font-semibold" : ""
               }`}
           >
             {props.index + "."}
           </p>
           <p
-            className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+            className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px] sm:text-[11px]  text-[9px] ${props.header ? "font-semibold" : ""
               }`}
           >
             {props.classname}
           </p>
           <p
-            className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+            className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px] sm:text-[11px] text-[9px] ${props.header ? "font-semibold" : ""
               }`}
           >
             {props.subject}
@@ -43,19 +43,19 @@ const DataRow = (props) => {
             {props.classesSchedualled}
           </p> */}
           <p
-            className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+            className={`w-full md:flex-[2] my-1 md:my-0 text-center md:text-center md:text-[14px] sm:text-[11px] text-[9px] ${props.header ? "font-semibold" : ""
               }`}
           >
             {props.students}
           </p>
           <p
-            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px] sm:text-[11px] text-[9px] ${props.header ? "font-semibold" : ""
               }`}
           >
             {props.teachers}
           </p>
           <p
-            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px]  text-[11px] ${props.header ? "font-semibold" : ""
+            className={`w-full md:flex-[3] my-1 md:my-0 text-center md:text-center md:text-[14px] sm:text-[11px] text-[9px] ${props.header ? "sm:font-semibold" : ""
               }`}
           >
             {props?.startDate && !isNaN(new Date(props.startDate))

@@ -81,7 +81,7 @@ const ProfileDetails = ({ onClose }) => {
   }, [userData]);
 
   return (
-    <div className="absolute top-0 right-0 z-10 flex bg-white h-full rounded-md shadow-lg w-96" ref={ref}>
+    <div className="absolute top-0 right-0 z-10 flex bg-white h-full rounded-md shadow-lg sm:w-96 w-72" ref={ref}>
       <div className="flex flex-col w-full p-5">
         <div className="flex justify-between border-b pb-3">
           <p className="text-xl font-medium">My Profile</p>

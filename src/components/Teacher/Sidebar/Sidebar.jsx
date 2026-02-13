@@ -27,7 +27,8 @@ const Sidebar = () => {
   const handleButtonClick = (buttonKey, route) => {
     setActiveButton(buttonKey);
     localStorage.setItem("activeButton", buttonKey);
-    setIsopen(false); // Close sidebar on mobile view
+    setIsSidebarOpen(false);
+    setIsopen(false);
     navigate(route);
   };
 
@@ -35,6 +36,8 @@ const Sidebar = () => {
     setLoading(true);
     localStorage.clear();
     setTeacherLogedIn(false);
+    setIsSidebarOpen(false);
+    setIsopen(false);
     await userLogout();
     navigate("/");
     setLoading(false);
@@ -51,7 +54,7 @@ const Sidebar = () => {
   ];
 
   const Menubar = () => (
-    <div className="w-72 shadow-lg z-index px-4 sm:px-8 bg-[#0B1053] text-white h-screen">
+    <div className="sm:w-72 w-full shadow-lg z-index px-4 sm:px-8 bg-[#0B1053] text-white h-screen">
       <div className="text-white flex justify-end items-center ">
         <IoClose className="w-6 h-6 mt-4 block sm:hidden hover:scale-105 cursor-pointer" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
       </div>
@@ -97,8 +100,13 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className={`lg:hidden ${isSidebarOpen ? "block" : "hidden"} fixed`}>
-        <Menubar />
+      <div className={`lg:hidden fixed inset-0 z-50 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="h-full w-fit" onClick={(e) => e.stopPropagation()}>
+          <Menubar />
+        </div>
+        {isSidebarOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 -z-10" onClick={() => setIsSidebarOpen(false)}></div>
+        )}
       </div>
       <div className="max-lg:hidden">
         <Menubar />

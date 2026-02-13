@@ -64,11 +64,11 @@ const Navbar = ({ heading }) => {
   return (
     <>
       <div className="flex flex-1 h-20">
-        <div className={`flex justify-end  md:justify-between flex-1 px-4 ${isBlurred ? "blur" : ""}`}>
-          <div className="md:flex flex-col hidden items-center justify-center md:justify-center md:items-start  ">
+        <div className={`ml-9 space-x-3 flex justify-end  md:justify-between flex-1 px-4 ${isBlurred ? "blur" : ""}`}>
+          <div className="flex flex-col items-start justify-center">
             {heading ?
-              <div className="ml-14">
-                <p className="font-medium text-3xl">{heading}</p>
+              <div className="md:ml-14">
+                <p className="font-medium md:text-xl text-sm sm:mr-3 md:text-3xl">{heading}</p>
               </div> :
               <div className="hidden md:flex flex-col">
                 <p className="text-xl font-semibold">Hello {userData.name} </p>
