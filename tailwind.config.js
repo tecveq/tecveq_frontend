@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'hero-pattern': `url('./src/assets/images/login-bg.png')`,
-        'center-img': `url('./src/assets/images/login-boy.png')`,
+        'hero-pattern': `url('/src/assets/images/login-bg.png')`,
+        'center-img': `url('/src/assets/images/login-boy.png')`,
       },
     },
     colors: {
