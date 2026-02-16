@@ -60,7 +60,7 @@ const CreateQuoteModal = ({
         <div
             onClick={() => { }}
             ref={ref}
-            className={`fixed z-10 mt-4 bg-white p-8 w-[600px] px-16 text-black rounded-xl ml-5 md:ml-96 ${open ? "" : "hidden"
+            className={`fixed z-10 mt-4 bg-white p-8 sm:w-[600px] w-[320px] sm:px-16 px-4 text-black rounded-xl ml-5 md:ml-96 max-h-[90vh] overflow-y-auto no-scrollbar ${open ? "" : "hidden"
                 }`}
         >
             <div className="flex gap-2">

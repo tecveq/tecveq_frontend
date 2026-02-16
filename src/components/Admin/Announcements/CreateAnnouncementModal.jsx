@@ -61,7 +61,7 @@ const CreateAnnouncementModal = ({
         <div className="fixed inset-0 z-10 flex items-center justify-center p-4">
             <div
                 ref={ref}
-                className={`bg-white p-6 sm:p-8 w-full max-w-[600px] sm:px-16 text-black rounded-xl max-h-[90vh] overflow-y-auto custom-scrollbar ${open ? "" : "hidden"
+                className={`bg-white p-6 sm:p-8 w-[90%] sm:w-full max-w-[600px] sm:px-16 text-black rounded-xl max-h-[90vh] overflow-y-auto custom-scrollbar ${open ? "" : "hidden"
                     }`}
             >
                 <div className="flex gap-2">

@@ -149,7 +149,7 @@ const SubjectReport = () => {
                 </div>
 
                 <div className="w-full justify-end items-center flex">
-                  <button className="sm:py-3 sm:px-4 py-2 px-2 bg-[#0B1053] text-white rounded-full" onClick={() => {
+                  <button className="mt-5 sm:auto sm:py-3 sm:px-4 py-2 px-2 bg-[#0B1053] text-white rounded-full" onClick={() => {
                     // Refetch student subjects before opening modal
                     refetchStudentSubjects();
                     setEditSubject(!editSubject);

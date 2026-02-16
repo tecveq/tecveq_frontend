@@ -19,7 +19,7 @@ const DataRows = ({
       <div
         style={{ backgroundColor: bgColor, cursor: "pointer" }}
         onClick={onClickFunction}
-        className={`  py-1 md:pl-5 md:pr-10 flex flex-row items-center justify-around border-b border-grey mt-1`}
+        className={`  py-1 md:pl-5 md:pr-10 space-x-5 flex flex-row items-center justify-around border-b border-grey mt-1`}
       >
         <p
           className={`w-full md:flex-[1] flex-[1] text-sm text-center md:text-left ${header ? "font-semibold" : ""

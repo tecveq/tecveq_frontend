@@ -122,18 +122,18 @@ const Submissions = () => {
                 } flex-grow lg:ml-72 px-4 md:px-10 lg:px-20`}
             >
               <div className="pt-8 ">
-                <div className="ml-7 sm:auto flex flex-row items-center justify-between flex-grow">
-                  <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
-                    <p className="ml-3 font-semibold text-[20px] md:text-[24px]">
+                <div className="flex flex-row items-center justify-between flex-grow">
+                  <div className="ml-11 sm:ml-0 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4">
+                    <p className="font-semibold text-[18px] sm:text-[20px] md:text-[24px]">
                       Submissions
                     </p>
                     <div className="flex items-center gap-1 text-[10px] md:text-xs">
                       <IoBookOutline />
                       <MdOutlineKeyboardArrowRight />
-                      <p className="cursor-pointer" onClick={onAssignmentClick}>
+                      <p className="hidden sm:block cursor-pointer" onClick={onAssignmentClick}>
                         Quizz
                       </p>
-                      <MdOutlineKeyboardArrowRight />
+                      <MdOutlineKeyboardArrowRight className="hidden sm:block" />
                       <p className="px-2 font-medium rounded-sm bg-tea">
                         Submissions
                       </p>
@@ -182,6 +182,7 @@ const Submissions = () => {
                   ) : (
                     ""
                   )}
+                  {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
                   {isProfileMenu ? (
                     <ProfileMenu
                       onProfileClick={onProfileClick}

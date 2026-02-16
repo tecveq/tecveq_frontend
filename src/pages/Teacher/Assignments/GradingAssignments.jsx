@@ -14,7 +14,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getMultipleAssignmentsForGrading, gradeAssignments } from "../../../api/Teacher/Assignments";
 import Loader from "../../../utils/Loader";
 import { useUser } from "../../../context/UserContext";
-import ProfileDetails from "../../../components/Admin/ProfileDetails";
+import ProfileDetails from "../../../components/Teacher/ProfileDetails";
 
 const GradingAssignments = () => {
 
@@ -142,17 +142,17 @@ const GradingAssignments = () => {
         >
           <div className="pt-8 ">
             <div className="flex flex-row items-center justify-between flex-grow">
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
-                <p className="font-semibold text-[20px] md:text-[24px]">
+              <div className="ml-11 sm:ml-0 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4">
+                <p className="font-semibold text-[18px] sm:text-[20px] md:text-[24px]">
                   Grading Assignments
                 </p>
                 <div className="flex items-center gap-1 text-[10px] md:text-xs">
                   <IoBookOutline />
                   <MdOutlineKeyboardArrowRight />
-                  <p className="cursor-pointer" onClick={onAssignmentClick}>
+                  <p className="hidden sm:block cursor-pointer" onClick={onAssignmentClick}>
                     Assignment
                   </p>
-                  <MdOutlineKeyboardArrowRight />
+                  <MdOutlineKeyboardArrowRight className="hidden sm:block" />
                   <p className="px-2 font-medium rounded-sm bg-tea">
                     Grading Assignments
                   </p>
@@ -200,7 +200,7 @@ const GradingAssignments = () => {
               ) : (
                 ""
               )}
-              {isProfileDetails && <ProfileDetails onClose={toggleProfileDetails} />}
+              {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
 
               {isProfileMenu ? (
                 <ProfileMenu

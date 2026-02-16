@@ -98,7 +98,7 @@ const GradeQuizAssignmentRow = React.memo ((props) => {
         className={`min-w-full border-b flex flex-col border-grey justify-center`}
       >
         <div className="flex items-center min-w-full">
-          <div className="flex flex-row items-center flex-1 py-2 mt-2 overflow-x-auto  md:py-5 md:pl-3 md:pr-5">
+          <div className="flex flex-row items-center flex-1 py-2 mt-2 overflow-x-auto  md:py-5 md:pl-3 md:pr-5 space-x-5">
             <p
               className={`w-full md:flex-1 flex-1 md:text-[14px] text-[11px] text-center md:text-left ${props.header ? "font-semibold" : ""
                 }`}
@@ -110,7 +110,7 @@ const GradeQuizAssignmentRow = React.memo ((props) => {
                 }`}
             >
               {!props.header ? (
-                <img src={props?.profileLink} alt="profile link" className="w-12 h-12 rounded-full object-cover" />
+                <img src={props?.profileLink} alt="profile link" className="sm:w-12 w-8 h-8 sm:h-12 rounded-full object-cover" />
               ) : (
                 <></>
               )}

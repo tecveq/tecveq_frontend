@@ -157,7 +157,7 @@ const Announcements = () => {
                                 })}
 
                                 {(annouce && !isAnnouncementExist) ? <div className='flex justify-center w-full py-4'><p className='font-medium text-3xl'>No Announcements to display</p></div>
-                                    : (!annouce && !isQuotesExist) ? <div className='flex justify-center w-full py-4 font-medium text-3xl'>No Quotes to display</div> : <></>
+                                    : (!annouce && !isQuotesExist) ? <div className='flex justify-center w-full py-4 font-medium sm:text-3xl text-xl'>No Quotes to display</div> : <></>
                                 }
                             </div>
                         </div>

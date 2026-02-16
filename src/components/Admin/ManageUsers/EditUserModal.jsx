@@ -85,7 +85,7 @@ const EditUserModal = ({ closeModal, refetch, data }) => {
     if (mutation.error) return <div className='ml-72 px-10 py-10 text-3xl'>Error Occured</div>
 
     return (
-        <div className='absolute w-96 border overflow-y-auto h-screen border-black/20 z-10 bg-white right-0 top-0' ref={ref}>
+        <div className='absolute sm:w-96 w-72 border overflow-y-auto h-screen border-black/20 z-10 bg-white right-0 top-0' ref={ref}>
             <div className='flex flex-col gap-2'>
                 <div className=' border-b border-b-black/20'>
                     <div className='flex justify-between py-4 px-8 '>

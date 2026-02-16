@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import IMAGES from "../../../assets/images";
 import ProfileMenu from "../../../components/Student/Dashboard/ProfileMenu";
 import Notifications from "../../../components/Student/Dashboard/Notifications";
+import ProfileDetails from "../../../components/Teacher/ProfileDetails";
 import GradeQuizAssignmentRow from "../../../components/Teacher/QuizAssignment/GradeQuizAssignmentRow";
 
 import { toast } from "react-toastify";
@@ -137,17 +138,17 @@ const GradingQuizzes = () => {
         >
           <div className="pt-8 ">
             <div className="flex flex-row items-center justify-between flex-grow">
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4">
-                <p className="font-semibold text-[20px] md:text-[24px]">
+              <div className="ml-11 sm:ml-0 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4">
+                <p className="font-semibold text-[18px] sm:text-[20px] md:text-[24px]">
                   Grading Quizzes
                 </p>
                 <div className="flex items-center gap-1 text-[10px] md:text-xs">
                   <IoBookOutline />
                   <MdOutlineKeyboardArrowRight />
-                  <p className="cursor-pointer" onClick={onAssignmentClick}>
+                  <p className="hidden sm:block cursor-pointer" onClick={onAssignmentClick}>
                     Quizzes
                   </p>
-                  <MdOutlineKeyboardArrowRight />
+                  <MdOutlineKeyboardArrowRight className="hidden sm:block" />
                   <p className="px-2 font-medium rounded-sm bg-tea">
                     Grading Quizzes
                   </p>
@@ -195,6 +196,7 @@ const GradingQuizzes = () => {
               ) : (
                 ""
               )}
+              {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
               {isProfileMenu ? (
                 <ProfileMenu
                   onProfileClick={onProfileClick}
@@ -280,7 +282,7 @@ const GradingQuizzes = () => {
 
             {!gradeMutation.isPending && <div className="flex justify-end my-4 border-t border-black">
               <div className="flex justify-end py-4">
-                <p onClick={handleGradeQuiz} className="flex px-8 py-3 text-sm text-white cursor-pointer rounded-3xl bg-maroon">Submit</p>
+                <p onClick={handleGradeQuiz} className="flex px-8 py-3 text-sm text-white cursor-pointer rounded-3xl bg-[#6A00FF]">Submit</p>
               </div>
             </div>}
           </div>

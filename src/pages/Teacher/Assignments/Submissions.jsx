@@ -13,7 +13,7 @@ import { useBlur } from "../../../context/BlurContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { getMultipleAssignmentsForGrading } from "../../../api/Teacher/Assignments";
-import ProfileDetails from "../../../components/Admin/ProfileDetails";
+import ProfileDetails from "../../../components/Teacher/ProfileDetails";
 
 
 const Submissions = () => {
@@ -109,17 +109,17 @@ const Submissions = () => {
           >
             <div className="h-screen pt-8 ">
               <div className="flex flex-row items-center justify-between flex-grow">
-                <div className="flex items-center  gap-4">
-                  <p className="font-semibold text-[20px] md:text-[24px]">
+                <div className="ml-11 sm:ml-0 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-4">
+                  <p className="font-semibold text-[18px] sm:text-[20px] md:text-[24px]">
                     Submissions
                   </p>
-                  <div className="flex items-center gap-1 text-xs">
+                  <div className="flex items-center gap-1 text-[10px] md:text-xs">
                     <IoBookOutline />
                     <MdOutlineKeyboardArrowRight />
-                    <p className="cursor-pointer" onClick={onAssignmentClick}>
+                    <p className="hidden sm:block cursor-pointer" onClick={onAssignmentClick}>
                       Assignment
                     </p>
-                    <MdOutlineKeyboardArrowRight />
+                    <MdOutlineKeyboardArrowRight className="hidden sm:block" />
                     <p className="px-2 font-medium rounded-sm bg-tea">
                       Submissions
                     </p>
@@ -177,7 +177,7 @@ const Submissions = () => {
                 ) : (
                   ""
                 )}
-                {isProfileDetails && <ProfileDetails onClose={toggleProfileDetails} />}
+                {isProfileDetails && <ProfileDetails onclose={toggleProfileDetails} />}
               </div>
               <div className="py-4">
                 <div className="flex items-center justify-between">
