@@ -98,6 +98,8 @@
   height: 80px !important;
 }
 
+
+
 /*this is for the Date and Day row in header of timetable*/
 .rbc-header {
   display: flex !important;
@@ -110,12 +112,12 @@
 /*this is for header lower border line height*/
 .rbc-row {
   height: 80px !important;
-
 }
+
 
 /*for width of the first cell containing GTM+5*/
 .rbc-time-header-gutter {
-  width: 110px !important;
+  min-width: 130px !important;
 }
 
 /* Removed duplicate rule - see below for the proper one */
@@ -135,31 +137,28 @@
 /* for each timeslot background height*/
 .rbc-timeslot-group {
   min-height: 100px !important;
+  min-width: 100px !important;
   /* Increased to 100px for better spacing */
-}
-
-/* Remove any constraints on the day column */
-.rbc-day-slot {
-  /* Let react-big-calendar handle day slot sizing */
 }
 
 /* Ensure events can properly size within time columns */
 .rbc-events-container {
   margin: 0 !important;
-  /* Let react-big-calendar handle container positioning */
 }
 
-/* Duplicate rule removed - consolidated above */
 
-/* Remove all constraints on event containers */
+
+
 .rbc-day-slot .rbc-events-container {
-  /* Completely hands-off approach */
+ width: auto !important;
+}
+.rbc-time-column {
+  width: auto !important;
 }
 
 /* Minimal styling for event content */
 .rbc-event-content {
   width: 100% !important;
-  /* No height rules - let react-big-calendar handle it */
 }
 
 /* Minimal styling to avoid positioning conflicts */

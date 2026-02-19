@@ -49,7 +49,6 @@ const TimeTable = () => {
   const aiBtn = import.meta.env.VITE_BETA_VER === "true";
 
 
-  console.log(aiBtn, "hahahhahahahah");
 
 
 
@@ -67,7 +66,7 @@ const TimeTable = () => {
                   }`}
               >
                 <div className={`flex flex-1 gap-2 sm:gap-4 bg-white w-full relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto overflow-hidden max-h-[calc(100vh-8rem)]`}>
-                  <div className="border p-2 sm:p-3 lg:p-4 border-grey/30 rounded-md shadow-lg w-full overflow-auto">
+                  <div className="border p-2 sm:p-3 lg:p-4 border-grey/30 rounded-md shadow-lg w-screen lg:w-auto overflow-auto">
                     <MyCalendar data={data} isPending={isPending} refetch={refetch} isRefetching={isRefetching} />
                   </div>
                   {/* <div className="flex-1 p-5 border rounded-md shadow-lg border-grey/30">

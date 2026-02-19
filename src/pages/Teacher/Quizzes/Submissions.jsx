@@ -45,11 +45,12 @@ const Submissions = () => {
   };
 
   const toggleProfileDetails = () => {
-    toggleBlur();
+    // toggleBlur();
     setIsProfileDetails(!isProfileDetails);
   };
 
   const onProfileClick = () => {
+    // toggleBlur();
     toggleProfielMenu();
     toggleProfileDetails();
   };

@@ -87,7 +87,7 @@ const ProfileDetails = ({ onClose }) => {
           <p className="text-xl font-medium">My Profile</p>
           <IoClose onClick={() => onClose()} className="cursor-pointer" />
         </div>
-
+ 
         <div className="flex flex-col items-center py-4">
           <label htmlFor="profile" className="cursor-pointer">
             <img src={profile || userData.profilePic} alt="Profile" className="w-28 h-28 rounded-full" />

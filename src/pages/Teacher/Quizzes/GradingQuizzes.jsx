@@ -48,7 +48,7 @@ const GradingQuizzes = () => {
   };
 
   const toggleProfileDetails = () => {
-    toggleBlur();
+    // toggleBlur();
     setIsProfileDetails(!isProfileDetails);
   };
 

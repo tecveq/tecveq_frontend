@@ -91,10 +91,10 @@ const Dashboard = () => {
                 <Navbar heading={"Admin Dashboard"} />
               </div>
               <div
-                className={`flex flex-col md:px-10 lg:px-0 lg:mt-0 mt-16 sm:mt-1 md:mt-1 lg:flex-row flex-1 gap-5 my-2 ${isBlurred ? "blur" : ""
-                  } relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto`}
+                className={`flex flex-col md:px-10 lg:px-0 lg:mt-0 mt-16 sm:mt-1 md:mt-1 lg:flex-row flex-1 gap-5 my-2  ${isBlurred ? "blur" : ""
+                  } ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto`}
               >
-                <div className="flex flex-[5] flex-col gap-3">
+                <div className="flex flex-[5] flex-col gap-3 ">
                   <p className="text-xl font-semibold">System Overview</p>
                   <SystemOverview />
                 </div>

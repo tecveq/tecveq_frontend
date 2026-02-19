@@ -10,13 +10,13 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import FilterButton from "./FilterButton";
 export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
   const [detailsModalOpen, setdetailsModalOpen] = useState(false);
-  
+
   // Calculate event duration in hours for height scaling
   const startTime = new Date(event.startTime);
   const endTime = new Date(event.endTime);
-  const durationHours = calculateDurationHours(startTime, endTime); 
+  const durationHours = calculateDurationHours(startTime, endTime);
   const eventHeight = Math.max(100, durationHours * 100); // Minimum 100px, scale by 100px per hour
-  
+
   return (
     <div className="relative flex flex-1 w-full overflow-visible">
       <ViewEventDetailsModal
@@ -29,7 +29,7 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
       />
 
       <div
-        className="cursor-pointer rounded-lg w-full min-w-[120px] transition-all duration-200 hover:shadow-md bg-[#007EEA] text-[#0B1053] border-2 border-[#0B1053] mb-1"
+        className="cursor-pointer rounded-lg w-full min-w-[120px] transition-all duration-200 hover:shadow-md  text-[#0B1053] border-2 border-[#0B1053] mb-1"
         style={{ height: `${eventHeight - 4}px`, minHeight: `${eventHeight - 4}px` }}
         onClick={() => {
           console.log("Admin event clicked:", event);
@@ -38,26 +38,26 @@ export const CustomEvent = ({ event, setevents, refetch, isRefetching }) => {
       >
         <div className="flex flex-col h-full justify-start items-start p-2 space-y-1">
           <div className="text-[10px] leading-tight">
-            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Teacher:</span>
+            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>T.Name:</span>
             <div className="font-semibold text-slate-900 truncate" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
               {event.teacher ? event.teacher.teacherID.name : ""}
             </div>
           </div>
-          <div className="text-[10px] leading-tight">
+          {/* <div className="text-[10px] leading-tight">
             <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Title:</span>
             <div className="font-semibold text-slate-900" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
               {event.title ? event.title : ""}
-            </div>
-          </div>
-          <div className="text-[10px] leading-tight">
-            <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Subject:</span>
-            <div className="font-semibold text-slate-900 truncate" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
-              {event.subjectID.name ? event.subjectID.name : ""}
-            </div>
+            </div> */}
+        {/* </div> */}
+        <div className="text-[10px] leading-tight">
+          <span className="font-bold text-slate-800" style={{ textShadow: '0 1px 3px rgba(255,255,255,0.8)' }}>Subject:</span>
+          <div className="font-semibold text-slate-900 truncate" style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}>
+            {event.subjectID.name ? event.subjectID.name : ""}
           </div>
         </div>
       </div>
     </div>
+    </div >
   );
 };
 
@@ -71,10 +71,10 @@ export const SideTime = (props) => {
       {times.map((time, index) => {
         const startTime = moment.utc(time[0]).tz("Asia/Karachi");
         // Calculate end time based on slot duration or use next slot start
-        const endTime = index < times.length - 1 
+        const endTime = index < times.length - 1
           ? moment.utc(times[index + 1][0]).tz("Asia/Karachi")
           : startTime.clone().add(1, "hour"); // Default to 1 hour for last slot
-        
+
         return (
           <div
             key={`${time}`}
@@ -119,7 +119,7 @@ export const Header = (props) => {
 
   return (
     <div
-      className={`flex flex-col items-center justify-between flex-1 w-full font-normal h-fit ${currentDate === date && currentMonth === month
+      className={`flex flex-col items-center justify-between  font-normal ${currentDate === date && currentMonth === month
         ? "text-[#6A00FF]"
         : "text-grey"
         } `}

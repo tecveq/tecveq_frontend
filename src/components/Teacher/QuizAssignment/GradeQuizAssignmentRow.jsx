@@ -3,19 +3,17 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { formatDate } from "../../../constants/formattedDate";
 import moment from "moment";
 
-const GradeQuizAssignmentRow = React.memo ((props) => {
+const GradeQuizAssignmentRow = React.memo((props) => {
   const [timePassed, setTimePassed] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [arrowActive, setArrowActive] = useState(false);
+
 
   const handleChange = (field) => (event) => {
     console.log("field data is : ", field, event.target.value)
     props.setInputField(props.id, field, event.target.value);
   };
-  
-  // useEffect(() =>{
-  //   handleChange();
-  // }, [props.marks])
+
 
   const toggleArrowActive = () => {
     setArrowActive(!arrowActive);
@@ -41,7 +39,6 @@ const GradeQuizAssignmentRow = React.memo ((props) => {
     }
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const formattedDateTimeString = props.submission
