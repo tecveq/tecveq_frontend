@@ -6,6 +6,7 @@ import profile from "../../../assets/profile.png";
 import { IoClose } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import { getAllChatrooms, getChatroomData } from "../../../api/Admin/ChatroomApi";
+import { getChatsRoomData, getMyChats } from "../../../api/UserApis";
 import IMAGES from "../../../assets/images";
 import { useBlur } from "../../../context/BlurContext";
 import useClickOutside from "../../../hooks/useClickOutlise";
@@ -21,7 +22,8 @@ const RecentMessages = ({ onclose, dashboard }) => {
   const [individualActive, setIndividualActive] = useState(true);
 
 
-  const { data, isPending } = useQuery({ queryKey: ["chat"], queryFn: getAllChatrooms });
+  const { data: groupChats, isPending: groupIsPending } = useQuery({ queryKey: ["chat"], queryFn: getAllChatrooms });
+  const { data: individualChats, isPending: individualIsPending } = useQuery({ queryKey: ["individualChats"], queryFn: getMyChats });
 
   const toggleGroupActive = () => {
     setGroupActive(!groupActive);
@@ -34,14 +36,20 @@ const RecentMessages = ({ onclose, dashboard }) => {
   };
 
 
-  const openFullchat = async (data) => {
+  const openFullchat = async (chatData, isGroup = false) => {
     setLoading(true);
     setShowFullChat(true);
-    console.log("selected data is : ", data);
-    setSelectedChat(data);
-    const result = await getChatroomData(data?._id);
-    console.log("result form sever is : ", result);
-    setMsgArray(result[0]?.messages);
+    console.log("selected data is : ", chatData);
+    setSelectedChat(chatData);
+    let result;
+    if (isGroup) {
+      result = await getChatroomData(chatData?._id);
+      setMsgArray(result[0]?.messages || []);
+    } else {
+      result = await getChatsRoomData(chatData?._id);
+      setMsgArray(result?.messages || []);
+    }
+    console.log("result form server is : ", result);
     setLoading(false);
   }
   // close full chat modal
@@ -201,14 +209,14 @@ const RecentMessages = ({ onclose, dashboard }) => {
             </div>
           </div>
           <div className="py-2">
-            {isPending && <div><Loader /> </div>}
-            {individualActive &&
-              groupData.map((item) => {
-                return <Message data={item} onpress={() => { openFullchat(item) }} />
+            {(individualIsPending || groupIsPending) && <div><Loader /> </div>}
+            {individualActive && !individualIsPending &&
+              individualChats?.map((item) => {
+                return <Message key={item._id} data={item} onpress={() => { openFullchat(item, false) }} />
               })}
-            {groupActive && !isPending &&
-              data?.map((item) => {
-                return <Message data={item} onpress={() => { openFullchat(item) }} />
+            {groupActive && !groupIsPending &&
+              groupChats?.map((item) => {
+                return <Message key={item._id} data={item} onpress={() => { openFullchat(item, true) }} />
               })}
           </div>
         </div>

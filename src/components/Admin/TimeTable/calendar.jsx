@@ -107,11 +107,10 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
   });
 
 
-  console.log("teacher data ", teacherData);
 
 
   return (
-    <div className="flex relative">
+    <div className="flex relative ">
 
 
       <div className="">
@@ -167,7 +166,7 @@ const MyCalendar = ({ data, isPending, refetch, isRefetching }) => {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          className="w-[100%] h-[80vh]"
+          className=" h-[100vh] lg:h-[80vh]"
           step={60}
           timeslots={1}
           components={{

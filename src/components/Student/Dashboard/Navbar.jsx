@@ -107,7 +107,7 @@ const Navbar = ({ heading }) => {
               <IoMailOutline />
             </div>
             <div
-              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${bell ? "bg-maroon text-white" : ""
+              className={`p-2 border cursor-pointer rounded-md border-black/50 transition-all duration-500 ${bell ? "bg-[#0B1053] text-white" : ""
                 }`}
               onClick={togglebell}
             >

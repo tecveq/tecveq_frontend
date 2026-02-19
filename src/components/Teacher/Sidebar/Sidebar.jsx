@@ -54,7 +54,7 @@ const Sidebar = () => {
   ];
 
   const Menubar = () => (
-    <div className="sm:w-72 w-full shadow-lg z-index px-4 sm:px-8 bg-[#0B1053] text-white h-screen">
+    <div className="w-full lg:w-72 min-h-screen  shadow-lg px-4 sm:px-8 bg-[#0B1053] text-white">
       <div className="text-white flex justify-end items-center ">
         <IoClose className="w-6 h-6 mt-4 block sm:hidden hover:scale-105 cursor-pointer" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
       </div>
@@ -92,7 +92,7 @@ const Sidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)
       }
       }>
-        <div className="flex justify-center bg-[#0B1053] border-2 rounded-md w-9 h-fit">
+        <div className="flex justify-center bg-[#0B1053] border-2 rounded-md w-9 h-fit z-50">
           <div className="flex flex-col gap-2 py-2">
             <p className="w-6 bg-white h-0.5"></p>
             <p className="w-6 bg-white h-0.5"></p>
