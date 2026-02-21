@@ -84,7 +84,7 @@ const MyCalendar = ({ data, isPending, refetch }) => {
 
 
   return (
-    <div className="flex relative">
+    <div className="flex">
 
       <div className="">
         {

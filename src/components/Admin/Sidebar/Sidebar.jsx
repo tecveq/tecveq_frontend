@@ -70,12 +70,12 @@ const Sidebar = () => {
   const Menubar = () => (
     <>
 
-      <div className="w-full sm:w-72 shadow-lg bg-[#0B1053] text-white z-50 h-screen px-4 md:px-8 overflow-y-auto custom-scrollbar">
+      <div className="w-full sm:w-72 shadow-lg bg-[#0B1053] text-white z-50 h-full px-4 md:px-8 overflow-y-auto custom-scrollbar">
         <div className="py-5">
-        <div className="text-white flex justify-end items-center ">
-          <IoClose className="w-6 h-6 block sm:hidden hover:scale-105 cursor-pointer fixed" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
-        </div>
-        
+          <div className="text-white flex justify-end items-center ">
+            <IoClose className="w-6 h-6 block sm:hidden hover:scale-105 cursor-pointer fixed" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
+          </div>
+
 
           <div className="flex justify-start ">
             <img className="w-8/12 h-6/12 mb-3" src={IMAGES?.logo} alt="logo-TCA" />
@@ -120,7 +120,7 @@ const Sidebar = () => {
           <IoMdMenu className="w-6 h-6" />
         </div>
       </div>
-      <div className={`lg:hidden fixed top-0 left-0 h-screen z-50 bg-white transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <div className={`lg:hidden fixed top-0 left-0 h-full z-50 bg-white transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <Menubar />
       </div>
       <div className="max-lg:hidden">

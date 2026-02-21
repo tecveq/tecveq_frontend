@@ -28,7 +28,7 @@ const Dashboard = () => {
             <div className="flex flex-[2]">
               <Announcements data={allAnnouncements} />
             </div>
-            <div className={`flex flex-[3] relative ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto`}>
+            <div className={`flex flex-[3] ${isSidebarOpen ? "-z-10" : "z-auto"} lg:z-auto`}>
               <UpcomingClasses />
             </div>
           </div>

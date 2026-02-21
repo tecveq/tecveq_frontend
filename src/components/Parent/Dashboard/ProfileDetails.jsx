@@ -59,9 +59,9 @@ const ProfileDetails = ({ onclose }) => {
   };
 
   return (
-    <div className="absolute top-0  right-0 z-10 flex bg-white rounded-md shadow-lg sm:w-96 w-72" ref={ref}>
-      <div className="flex flex-col">
-        <div className="flex justify-between px-5 py-5 border-b border-b-black/10">
+    <div className="absolute top-0 right-0 z-10 flex bg-white border-b-black/10 rounded-md shadow-lg sm:w-96 w-72" ref={ref}>
+      <div className="flex flex-col bg-white">
+        <div className="flex justify-between px-5  py-5 border-b border-b-black/10">
           <p className="text-xl font-medium">My Profile</p>
           <IoClose onClick={onclose} className="cursor-pointer" />
         </div>

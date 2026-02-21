@@ -135,15 +135,15 @@ const SubjectReport = () => {
                 <Navbar heading={"Subjects Report"} />
                 <div className="mt-7">
                   <div className="flex flex-col items-center justify-center gap-1">
-                    <img src={studentData.profilePic || IMAGES.Profile} alt="" className="sm:w-40 sm:h-40 w-20 h-20 rounded-full" />
+                    {/* <img src={studentData.profilePic || IMAGES.Profile} alt="student profile" className="sm:w-40 sm:h-40 w-20 h-20 rounded-full" /> */}
                     <p className="text-lg font-semibold">{studentData.name}</p>
                     <div className="flex items-center gap-2 text-xs">
                       <LuPhone />
-                      <p>{studentData.phoneNumber} </p>
+                      <p>{studentData.phoneNumber}</p>
                     </div>
                     <div className="flex items-center gap-2 text-xs">
                       <IoMailOutline />
-                      <p>{studentData.email} </p>
+                      <p>{studentData.email}</p>
                     </div>
                   </div>
                 </div>

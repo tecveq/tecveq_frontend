@@ -54,7 +54,7 @@ const Sidebar = () => {
   ];
 
   const Menubar = () => (
-    <div className="w-full lg:w-72 min-h-screen  shadow-lg px-4 sm:px-8 bg-[#0B1053] text-white">
+    <div className="w-full h-full lg:w-72 min-h-screen  shadow-lg px-4 sm:px-8 bg-[#0B1053] text-white">
       <div className="text-white flex justify-end items-center ">
         <IoClose className="w-6 h-6 mt-4 block sm:hidden hover:scale-105 cursor-pointer" onClick={() => setIsSidebarOpen(!isSidebarOpen)} />
       </div>
@@ -101,7 +101,7 @@ const Sidebar = () => {
         </div>
       </div>
       <div className={`lg:hidden fixed inset-0 z-50 transition-transform duration-300 ease-in-out ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="h-full w-fit" onClick={(e) => e.stopPropagation()}>
+        <div className="h-full" onClick={(e) => e.stopPropagation()}>
           <Menubar />
         </div>
         {isSidebarOpen && (
