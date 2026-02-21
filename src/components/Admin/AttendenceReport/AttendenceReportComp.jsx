@@ -6,6 +6,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Download } from "lucide-react";
 import { useSidebar } from '../../../context/SidebarContext';
 
+
 const INITIAL_FILTERS = {
     classroomId: '',
     subjectId: '',
@@ -18,7 +19,7 @@ const AttendanceReportComp = () => {
     const [isFilterExpanded, setIsFilterExpanded] = useState(true);
     const [attendanceData, setAttendanceData] = useState(null);
     const reportRef = useRef();
-  const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
+    const { isSidebarOpen, setIsSidebarOpen, isopen, setIsopen } = useSidebar();
 
     // Fetch classrooms
     const { data: myClassroomData, isPending: isLoadingClassrooms } = useQuery({
@@ -179,9 +180,9 @@ const AttendanceReportComp = () => {
                         )}
                         <button
                             onClick={() => setIsFilterExpanded(!isFilterExpanded)}
-                            className="bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors"
+                            className={`bg-white/20 hover:bg-white/30 p-2 rounded-lg transition-colors ${isSidebarOpen ? "-z-50" : "z-auto"}`}
                         >
-                            <Filter className={`h-4 w-4 text-white transition-transform ${isFilterExpanded ? 'rotate-180' : ''}`} />
+                            <Filter className={`h-4 w-4 text-white transition-transform  ${isFilterExpanded ? 'rotate-180' : ''}`} />
                         </button>
                     </div>
                 </div>
@@ -197,7 +198,7 @@ const AttendanceReportComp = () => {
                                 <Users className="h-4 w-4 text-[#2563eb]" />
                                 <span>Select Classroom</span>
                             </label>
-                            <div className={`relative z-7  ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
+                            <div className={` ${isSidebarOpen ? "-z-50" : "z-auto"}`}>
                                 <select
                                     value={filters.classroomId}
                                     onChange={(e) => handleFilterChange('classroomId', e.target.value)}

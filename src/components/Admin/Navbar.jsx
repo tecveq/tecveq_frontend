@@ -108,7 +108,7 @@ const Navbar = ({ heading }) => {
       <div className="flex justify-end flex-1 h-20">
         <div className={`flex justify-between flex-1 py-5 ml-6 lg:ml-auto ${isBlurred ? "blur" : ""}`}>
           <div className="flex flex-col justify-center px-2">
-            <p className="text-sm  ml-10 md:ml-0 md:text-2xl sm:font-medium font-normal">{heading} </p>
+            <p className="text-[12px]  ml-10 md:ml-0 md:text-2xl sm:font-medium font-normal">{heading} </p>
           </div>
           <div className="flex items-center gap-1">
             <div className="flex gap-2">

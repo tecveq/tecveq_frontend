@@ -1,6 +1,7 @@
 import React from "react";
 import { SlArrowRight } from "react-icons/sl";
 import IMAGES from "../../../assets/images";
+import ProfilePic from "../../../assets/images/profilepic.png";
 
 const DataRows = ({
   index,
@@ -15,7 +16,7 @@ const DataRows = ({
   onClickFunction,
 }) => {
   return (
-    <div className=" min-w-full">
+    <div className="min-w-full">
       <div
         style={{ backgroundColor: bgColor, cursor: "pointer" }}
         onClick={onClickFunction}
@@ -35,7 +36,7 @@ const DataRows = ({
         >
           <img
             className=" rounded-full h-10 w-10 object-cover "
-            src={studentProfile || IMAGES.Profile}
+             src={ProfilePic}
             alt="Student Profile"
           />{" "}
         </p>

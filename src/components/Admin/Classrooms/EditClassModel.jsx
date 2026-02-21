@@ -283,7 +283,7 @@ const EditClassModel = ({ open, setopen, isEditTrue, refetch, editData }) => {
   return (
     <div
       ref={ref}
-      className={`fixed z-10 mt-10 bg-white p-4 md:p-8 w-[90%] md:w-[800px] lg:w-[900px] border border-black/20 shadow-md rounded-xl ${open ? "" : "hidden"}`}
+      className={`fixed z-10 mt-10 bg-white p-4 md:p-8 w-[90%] md:w-[800px] lg:w-[60%] lg:ml-80 ml-7 border border-black/20 shadow-md rounded-xl ${open ? "" : "hidden"}`}
     >
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-semibold">{isEditTrue ? "Edit" : "Create"} Classroom</h2>
